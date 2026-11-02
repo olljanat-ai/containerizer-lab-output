@@ -3,8 +3,8 @@
     "provider": "github",
     "org": "onek8s",
     "registry": "localhost:5000/sandbox",
-    "tag": "1.20261102.1716",
-    "started": "2026-11-02T17:16:45+00:00",
+    "tag": "1.20261102.1923",
+    "started": "2026-11-02T19:23:12+00:00",
     "stale_days": 183,
     "verify": false,
     "gate": true
@@ -223,26 +223,776 @@
       "org": "onek8s",
       "project": "_",
       "repo": "containerization-challenge",
-      "status": "error",
-      "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+      "status": "no-a-components",
+      "reason": "33 applications (scenarios/*): 0 deployed, 20 not rated A, 0 skipped, 13 failed",
       "web_url": "https://github.com/onek8s/containerization-challenge",
-      "clone_url": "",
-      "branch": "",
-      "commit": "",
-      "last_commit": "",
+      "clone_url": "https://github.com/onek8s/containerization-challenge.git",
+      "branch": "main",
+      "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
+      "last_commit": "2026-10-30T13:09:19+00:00",
       "app": "containerization-challenge",
       "path": "",
-      "rating": "",
+      "rating": "B",
       "components": [],
-      "excluded": [],
-      "processed_at": "",
+      "excluded": [
+        {
+          "component": "scenarios/account-statements: AccountStatements.Api",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/account-statements: AccountStatements.Distribution",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/account-statements: AccountStatements.Web",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/b2b-integration: b2bdeploy",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/b2b-integration: VanArsdel.Integration.Gateway",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/b2b-integration: VanArsdel.Integration.OpsPortal",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/b2b-integration: VanArsdel.Integration.SlaMonitor",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/b2b-integration: VanArsdel.Integration.Tracking",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/batch-release: BatchRelease.Portal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/batch-release: BatchRelease.SigningHost",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/broker-quotes: Humongous.Identity",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/broker-quotes: Humongous.PolicyService",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/broker-quotes: Humongous.Quoting.Api",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/city-permits: permits-admin",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/city-permits: CityPermits.BackOffice",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/city-permits: CityPermits.Citizen",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/city-permits: CityPermits.Jobs",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/city-permits: CityPermits.MailIntake",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/city-permits: CityPermits.MapService",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: SouthridgeBilling",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: SouthridgeInterfaceEngine",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: Southridge.Clinic.PatientWeb",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: SouthridgeReminders",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: Southridge.Clinic.Services",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: Southridge.Clinic.StaffWeb",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/clinic-scheduling: Southridge.Clinic.WebServices",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/consumer-loans: Lucerne.Lending.Api",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/consumer-loans: Lucerne.Lending.BackOffice",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/consumer-loans: Lucerne.Lending.Collections",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/consumer-loans: Lucerne.Lending.LoanTape",
+          "reason": "keeps local state"
+        },
+        {
+          "component": "scenarios/control-tower: ControlTower.Booking.Web",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/control-tower: ControlTower.Identity",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/control-tower: ControlTower.Jobs",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/control-tower: ControlTower.Portal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/control-tower: ControlTower.Scanning.Api",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/credit-desk: CreditDesk.CreditService",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/credit-desk: CreditDesk.LetterService",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/credit-desk: CreditDesk.Web",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/customer-care: CustomerCare.Archive",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/customer-care: CustomerCare.Import",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/customer-care: CustomerCare.Integration",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/customer-care: CustomerCare.Web",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.AxConnector",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.DealerPortal",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.DocumentService",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.EdiGateway",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.Notifications",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.PriceSync",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/dealer-orders: Tailspin.DealerOrders.SalesDesk",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/document-control: Litware.DocControl.Indexer",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/document-control: Litware.DocControl.Packager",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/document-control: Litware.DocControl.Web",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/expense-claims: ExpenseClaims.Jobs",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/field-sales: FieldSales.Api",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/field-sales: FieldSales.Backoffice",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/field-service: FieldService.Web",
+          "reason": "keeps local state"
+        },
+        {
+          "component": "scenarios/freight-rates: FreightRates.Admin",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/freight-rates: FreightRates.RatingHost",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/furnace-records: FurnaceRecords.Daq",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/housing-management: Fabrikam.Housing.BackOffice",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/housing-management: Fabrikam.Housing.ContractorApi",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/housing-management: FabrikamDocumentService",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/housing-management: Fabrikam.Housing.Identity",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/housing-management: Fabrikam.Housing.Jobs",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/housing-management: Fabrikam.Housing.TenantPortal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/meter-billing: MeterBilling.Engine",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/meter-billing: MeterBilling.Lookup",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/order-hub: OrderHub.Fulfilment",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/order-hub: OrderHub.Intake",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/order-hub: OrderHub.Partners",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/order-hub: OrderHub.Portal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/order-hub: OrderHub.ShopSync",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/parts-catalog: PartsCatalog",
+          "reason": "keeps local state"
+        },
+        {
+          "component": "scenarios/policy-changes: PolicyChanges.DeskRunner",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/policy-changes: PolicyChanges.Portal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/product-returns: ProductReturns.Api",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/product-returns: ProductReturns.Jobs",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/product-returns: ProductReturns.Labels",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/product-returns: ProductReturns.Portal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/project-sites: psadmin",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/project-sites: Lucerne.ProjectSites.Dashboards",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/project-sites: LucerneProjectSync",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/property-inspections: Inspections.Intake",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/property-inspections: Inspections.Jobs",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/property-inspections: Inspections.Service",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/property-inspections: Inspections.Web",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/purchase-requests: Purchasing.Api",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/purchase-requests: Purchasing.Jobs",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/purchase-requests: Purchasing.Web",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/retail-backoffice: VanArsdel.ErpConnector",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/retail-backoffice: VanArsdel.PosFeed",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/retail-backoffice: VanArsdel.Reporting.Api",
+          "reason": "keeps local state"
+        },
+        {
+          "component": "scenarios/shift-clock: ShiftClock.Service",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/staff-onboarding: StaffOnboarding.Portal",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/staff-onboarding: StaffOnboarding.Provisioning",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/staff-onboarding: StaffOnboarding.WorkflowHost",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/study-data: StudyData.Edc.Web",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/study-data: StudyData.Jobs",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/study-data: StudyData.Monitor.Api",
+          "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/supplier-invoices: Invoices.Admin",
+          "reason": "rated B (refactor)"
+        },
+        {
+          "component": "scenarios/supplier-invoices: Invoices.ErpLink",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/supplier-invoices: Invoices.Gateway",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/supplier-invoices: Invoices.Processor",
+          "reason": "rated C (rewrite)"
+        },
+        {
+          "component": "scenarios/trade-rebates: TradeRebates.Portal",
+          "reason": "rated B (refactor)"
+        }
+      ],
+      "processed_at": "2026-11-02T19:23:14+00:00",
       "overridden": [],
-      "seconds": 365.8,
+      "seconds": 510.9,
       "source_key": "",
       "dev_database": {},
       "lab_services": {},
       "migration": {},
-      "llm_usage": {}
+      "llm_usage": {},
+      "apps": [
+        {
+          "folder": "scenarios/account-statements",
+          "app": "containerization-challenge-account-statements",
+          "status": "no-a-components",
+          "reason": "none of 3 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/account-statements",
+          "components": []
+        },
+        {
+          "folder": "scenarios/b2b-integration",
+          "app": "containerization-challenge-b2b-integration",
+          "status": "no-a-components",
+          "reason": "none of 5 server components qualifies",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/b2b-integration",
+          "components": []
+        },
+        {
+          "folder": "scenarios/batch-release",
+          "app": "containerization-challenge-batch-release",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/batch-release",
+          "components": []
+        },
+        {
+          "folder": "scenarios/broker-quotes",
+          "app": "containerization-challenge-broker-quotes",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
+          "components": []
+        },
+        {
+          "folder": "scenarios/city-permits",
+          "app": "containerization-challenge-city-permits",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/city-permits",
+          "components": []
+        },
+        {
+          "folder": "scenarios/clinic-scheduling",
+          "app": "containerization-challenge-clinic-scheduling",
+          "status": "no-a-components",
+          "reason": "none of 7 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/clinic-scheduling",
+          "components": []
+        },
+        {
+          "folder": "scenarios/consumer-loans",
+          "app": "containerization-challenge-consumer-loans",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/consumer-loans",
+          "components": []
+        },
+        {
+          "folder": "scenarios/control-tower",
+          "app": "containerization-challenge-control-tower",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/control-tower",
+          "components": []
+        },
+        {
+          "folder": "scenarios/credit-desk",
+          "app": "containerization-challenge-credit-desk",
+          "status": "no-a-components",
+          "reason": "none of 3 server components qualifies",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/credit-desk",
+          "components": []
+        },
+        {
+          "folder": "scenarios/customer-care",
+          "app": "containerization-challenge-customer-care",
+          "status": "no-a-components",
+          "reason": "none of 4 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/customer-care",
+          "components": []
+        },
+        {
+          "folder": "scenarios/dealer-orders",
+          "app": "containerization-challenge-dealer-orders",
+          "status": "no-a-components",
+          "reason": "none of 7 server components qualifies",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/dealer-orders",
+          "components": []
+        },
+        {
+          "folder": "scenarios/document-control",
+          "app": "containerization-challenge-document-control",
+          "status": "no-a-components",
+          "reason": "none of 3 server components qualifies",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/document-control",
+          "components": []
+        },
+        {
+          "folder": "scenarios/expense-claims",
+          "app": "containerization-challenge-expense-claims",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/expense-claims",
+          "components": []
+        },
+        {
+          "folder": "scenarios/field-sales",
+          "app": "containerization-challenge-field-sales",
+          "status": "no-a-components",
+          "reason": "none of 2 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-sales",
+          "components": []
+        },
+        {
+          "folder": "scenarios/field-service",
+          "app": "containerization-challenge-field-service",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-service",
+          "components": []
+        },
+        {
+          "folder": "scenarios/freight-rates",
+          "app": "containerization-challenge-freight-rates",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/freight-rates",
+          "components": []
+        },
+        {
+          "folder": "scenarios/furnace-records",
+          "app": "containerization-challenge-furnace-records",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/furnace-records",
+          "components": []
+        },
+        {
+          "folder": "scenarios/housing-management",
+          "app": "containerization-challenge-housing-management",
+          "status": "no-a-components",
+          "reason": "none of 6 server components qualifies",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/housing-management",
+          "components": []
+        },
+        {
+          "folder": "scenarios/label-station",
+          "app": "containerization-challenge-label-station",
+          "status": "no-a-components",
+          "reason": "no server component",
+          "rating": "E",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/label-station",
+          "components": []
+        },
+        {
+          "folder": "scenarios/meter-billing",
+          "app": "containerization-challenge-meter-billing",
+          "status": "no-a-components",
+          "reason": "none of 2 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/meter-billing",
+          "components": []
+        },
+        {
+          "folder": "scenarios/order-hub",
+          "app": "containerization-challenge-order-hub",
+          "status": "no-a-components",
+          "reason": "none of 5 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/order-hub",
+          "components": []
+        },
+        {
+          "folder": "scenarios/parts-catalog",
+          "app": "containerization-challenge-parts-catalog",
+          "status": "no-a-components",
+          "reason": "none of 1 server components qualifies",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/parts-catalog",
+          "components": []
+        },
+        {
+          "folder": "scenarios/policy-changes",
+          "app": "containerization-challenge-policy-changes",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/policy-changes",
+          "components": []
+        },
+        {
+          "folder": "scenarios/product-returns",
+          "app": "containerization-challenge-product-returns",
+          "status": "no-a-components",
+          "reason": "none of 4 server components qualifies",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/product-returns",
+          "components": []
+        },
+        {
+          "folder": "scenarios/project-sites",
+          "app": "containerization-challenge-project-sites",
+          "status": "no-a-components",
+          "reason": "none of 3 server components qualifies",
+          "rating": "D",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/project-sites",
+          "components": []
+        },
+        {
+          "folder": "scenarios/property-inspections",
+          "app": "containerization-challenge-property-inspections",
+          "status": "no-a-components",
+          "reason": "none of 4 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/property-inspections",
+          "components": []
+        },
+        {
+          "folder": "scenarios/purchase-requests",
+          "app": "containerization-challenge-purchase-requests",
+          "status": "no-a-components",
+          "reason": "none of 3 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/purchase-requests",
+          "components": []
+        },
+        {
+          "folder": "scenarios/retail-backoffice",
+          "app": "containerization-challenge-retail-backoffice",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/retail-backoffice",
+          "components": []
+        },
+        {
+          "folder": "scenarios/shift-clock",
+          "app": "containerization-challenge-shift-clock",
+          "status": "no-a-components",
+          "reason": "none of 1 server components qualifies",
+          "rating": "E",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/shift-clock",
+          "components": []
+        },
+        {
+          "folder": "scenarios/staff-onboarding",
+          "app": "containerization-challenge-staff-onboarding",
+          "status": "no-a-components",
+          "reason": "none of 3 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/staff-onboarding",
+          "components": []
+        },
+        {
+          "folder": "scenarios/study-data",
+          "app": "containerization-challenge-study-data",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "E",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/study-data",
+          "components": []
+        },
+        {
+          "folder": "scenarios/supplier-invoices",
+          "app": "containerization-challenge-supplier-invoices",
+          "status": "no-a-components",
+          "reason": "none of 4 server components qualifies",
+          "rating": "C",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/supplier-invoices",
+          "components": []
+        },
+        {
+          "folder": "scenarios/trade-rebates",
+          "app": "containerization-challenge-trade-rebates",
+          "status": "error",
+          "reason": "OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work'",
+          "rating": "B",
+          "path": "",
+          "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/trade-rebates",
+          "components": []
+        }
+      ],
+      "split_hint": {}
     }
   ]
 }
