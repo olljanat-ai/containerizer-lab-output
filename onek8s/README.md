@@ -1,8 +1,8 @@
 # onek8s (github)
 
-Last run 2026-11-02T17:08:32+00:00 with tag `1.20261102.1708`, images in `localhost:5000/sandbox`. Only components rated A are deployed.
+Last run 2026-11-02T17:16:45+00:00 with tag `1.20261102.1716`, images in `localhost:5000/sandbox`. Only components rated A are deployed.
 
-disabled: 8
+disabled: 8 · error: 1
 
 | Project | Repository | Status | Rating | Components deployed | Not deployed |
 | --- | --- | --- | --- | --- | --- |
@@ -14,3 +14,4 @@ disabled: 8
 | _ | [aks-terraform](https://github.com/onek8s/aks-terraform) | disabled (disabled by an administrator) |  |  |  |
 | _ | [azure-lab-fw](https://github.com/onek8s/azure-lab-fw) | disabled (disabled by an administrator) |  |  |  |
 | _ | [azure-landing-zone](https://github.com/onek8s/azure-landing-zone) | disabled (disabled by an administrator) |  |  |  |
+| _ | [containerization-challenge](https://github.com/onek8s/containerization-challenge) | error (OSError: [Errno 30] Read-only file system: '/usr/lib/containerizer/app/.work') |  |  |  |
