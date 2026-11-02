@@ -1,0 +1,20 @@
+# Read-only access for `containerizer sandbox verify`. Apply it as a
+# cluster admin after the namespaces exist; it grants nothing cluster-wide and no access to Secrets.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: containerizer-verify
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    pod-security.kubernetes.io/enforce: restricted
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: containerizer-verifier
+  namespace: containerizer-verify
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
