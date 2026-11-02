@@ -165,6 +165,32 @@
       "lab_services": {},
       "migration": {},
       "llm_usage": {}
+    },
+    {
+      "provider": "github",
+      "org": "onek8s",
+      "project": "_",
+      "repo": "azure-lab-fw",
+      "status": "disabled",
+      "reason": "disabled by an administrator",
+      "web_url": "https://github.com/onek8s/azure-lab-fw",
+      "clone_url": "https://github.com/onek8s/azure-lab-fw.git",
+      "branch": "main",
+      "commit": "",
+      "last_commit": "",
+      "app": "azure-lab-fw",
+      "path": "",
+      "rating": "",
+      "components": [],
+      "excluded": [],
+      "processed_at": "2026-11-02T17:08:43+00:00",
+      "overridden": [],
+      "seconds": 0.0,
+      "source_key": "",
+      "dev_database": {},
+      "lab_services": {},
+      "migration": {},
+      "llm_usage": {}
     }
   ]
 }
