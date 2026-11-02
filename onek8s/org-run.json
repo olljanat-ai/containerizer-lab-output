@@ -191,6 +191,32 @@
       "lab_services": {},
       "migration": {},
       "llm_usage": {}
+    },
+    {
+      "provider": "github",
+      "org": "onek8s",
+      "project": "_",
+      "repo": "azure-landing-zone",
+      "status": "disabled",
+      "reason": "disabled by an administrator",
+      "web_url": "https://github.com/onek8s/azure-landing-zone",
+      "clone_url": "https://github.com/onek8s/azure-landing-zone.git",
+      "branch": "main",
+      "commit": "",
+      "last_commit": "",
+      "app": "azure-landing-zone",
+      "path": "",
+      "rating": "",
+      "components": [],
+      "excluded": [],
+      "processed_at": "2026-11-02T17:08:45+00:00",
+      "overridden": [],
+      "seconds": 0.0,
+      "source_key": "",
+      "dev_database": {},
+      "lab_services": {},
+      "migration": {},
+      "llm_usage": {}
     }
   ]
 }

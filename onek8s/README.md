@@ -2,7 +2,7 @@
 
 Last run 2026-11-02T17:08:32+00:00 with tag `1.20261102.1708`, images in `localhost:5000/sandbox`. Only components rated A are deployed.
 
-disabled: 7
+disabled: 8
 
 | Project | Repository | Status | Rating | Components deployed | Not deployed |
 | --- | --- | --- | --- | --- | --- |
@@ -13,3 +13,4 @@ disabled: 7
 | _ | [aks-hello](https://github.com/onek8s/aks-hello) | disabled (disabled by an administrator) |  |  |  |
 | _ | [aks-terraform](https://github.com/onek8s/aks-terraform) | disabled (disabled by an administrator) |  |  |  |
 | _ | [azure-lab-fw](https://github.com/onek8s/azure-lab-fw) | disabled (disabled by an administrator) |  |  |  |
+| _ | [azure-landing-zone](https://github.com/onek8s/azure-landing-zone) | disabled (disabled by an administrator) |  |  |  |
