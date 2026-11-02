@@ -113,6 +113,32 @@
       "lab_services": {},
       "migration": {},
       "llm_usage": {}
+    },
+    {
+      "provider": "github",
+      "org": "onek8s",
+      "project": "_",
+      "repo": "aks-hello",
+      "status": "disabled",
+      "reason": "disabled by an administrator",
+      "web_url": "https://github.com/onek8s/aks-hello",
+      "clone_url": "https://github.com/onek8s/aks-hello.git",
+      "branch": "main",
+      "commit": "",
+      "last_commit": "",
+      "app": "aks-hello",
+      "path": "",
+      "rating": "",
+      "components": [],
+      "excluded": [],
+      "processed_at": "2026-11-02T17:08:40+00:00",
+      "overridden": [],
+      "seconds": 0.0,
+      "source_key": "",
+      "dev_database": {},
+      "lab_services": {},
+      "migration": {},
+      "llm_usage": {}
     }
   ]
 }
