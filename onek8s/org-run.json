@@ -139,6 +139,32 @@
       "lab_services": {},
       "migration": {},
       "llm_usage": {}
+    },
+    {
+      "provider": "github",
+      "org": "onek8s",
+      "project": "_",
+      "repo": "aks-terraform",
+      "status": "disabled",
+      "reason": "disabled by an administrator",
+      "web_url": "https://github.com/onek8s/aks-terraform",
+      "clone_url": "https://github.com/onek8s/aks-terraform.git",
+      "branch": "main",
+      "commit": "",
+      "last_commit": "",
+      "app": "aks-terraform",
+      "path": "",
+      "rating": "",
+      "components": [],
+      "excluded": [],
+      "processed_at": "2026-11-02T17:08:42+00:00",
+      "overridden": [],
+      "seconds": 0.0,
+      "source_key": "",
+      "dev_database": {},
+      "lab_services": {},
+      "migration": {},
+      "llm_usage": {}
     }
   ]
 }

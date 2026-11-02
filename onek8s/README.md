@@ -2,7 +2,7 @@
 
 Last run 2026-11-02T17:08:32+00:00 with tag `1.20261102.1708`, images in `localhost:5000/sandbox`. Only components rated A are deployed.
 
-disabled: 5
+disabled: 6
 
 | Project | Repository | Status | Rating | Components deployed | Not deployed |
 | --- | --- | --- | --- | --- | --- |
@@ -11,3 +11,4 @@ disabled: 5
 | _ | [aks-fluxcd-example](https://github.com/onek8s/aks-fluxcd-example) | disabled (disabled by an administrator) |  |  |  |
 | _ | [aks-fluxcd-platform](https://github.com/onek8s/aks-fluxcd-platform) | disabled (disabled by an administrator) |  |  |  |
 | _ | [aks-hello](https://github.com/onek8s/aks-hello) | disabled (disabled by an administrator) |  |  |  |
+| _ | [aks-terraform](https://github.com/onek8s/aks-terraform) | disabled (disabled by an administrator) |  |  |  |
