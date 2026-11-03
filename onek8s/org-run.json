@@ -3,8 +3,8 @@
     "provider": "github",
     "org": "onek8s",
     "registry": "localhost:5000/sandbox",
-    "tag": "1.20261103.758",
-    "started": "2026-11-03T07:58:29+00:00",
+    "tag": "1.20261103.1010",
+    "started": "2026-11-03T10:10:54+00:00",
     "stale_days": 183,
     "verify": false,
     "gate": true
@@ -277,7 +277,7 @@
         },
         {
           "component": "scenarios/batch-release: BatchRelease.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T07:59:32Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:11:42Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/broker-quotes: Humongous.Identity",
@@ -297,11 +297,11 @@
         },
         {
           "component": "scenarios/broker-quotes: Humongous.Documents",
-          "reason": "security gate: base scan failed: 2026-11-03T08:03:37Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:14:08Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/broker-quotes: Humongous.Workbench",
-          "reason": "security gate: base scan failed: 2026-11-03T08:01:52Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:12:29Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/city-permits: permits-admin",
@@ -333,7 +333,7 @@
         },
         {
           "component": "scenarios/city-permits: CityPermits.OpenData",
-          "reason": "security gate: base scan failed: 2026-11-03T08:05:43Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:15:34Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/clinic-scheduling: SouthridgeBilling",
@@ -385,7 +385,7 @@
         },
         {
           "component": "scenarios/consumer-loans: Lucerne.Lending.Documents",
-          "reason": "security gate: base scan failed: 2026-11-03T08:10:39Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:19:49Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Booking.Web",
@@ -409,15 +409,15 @@
         },
         {
           "component": "scenarios/control-tower: ControlTower.CarrierGateway",
-          "reason": "security gate: base scan failed: 2026-11-03T08:12:13Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:20:44Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Events",
-          "reason": "security gate: base scan failed: 2026-11-03T08:13:20Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:21:19Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Telematics",
-          "reason": "security gate: base scan failed: 2026-11-03T08:13:20Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:21:19Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Tower.Api",
@@ -497,7 +497,7 @@
         },
         {
           "component": "scenarios/expense-claims: ExpenseClaims.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:17:14Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:24:18Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/expense-claims: expenses-web",
@@ -517,7 +517,7 @@
         },
         {
           "component": "scenarios/field-service: FieldService.Worker",
-          "reason": "security gate: base scan failed: 2026-11-03T08:20:16Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:26:28Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/freight-rates: FreightRates.Admin",
@@ -529,7 +529,7 @@
         },
         {
           "component": "scenarios/freight-rates: FreightRates.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:21:13Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:27:05Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/furnace-records: FurnaceRecords.Daq",
@@ -537,7 +537,7 @@
         },
         {
           "component": "scenarios/furnace-records: FurnaceRecords.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:22:17Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:27:46Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/furnace-records: FurnaceRecords.Portal",
@@ -545,7 +545,7 @@
         },
         {
           "component": "scenarios/furnace-records: FurnaceRecords.Worker",
-          "reason": "security gate: base scan failed: 2026-11-03T08:23:34Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:28:44Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/housing-management: Fabrikam.Housing.BackOffice",
@@ -613,7 +613,7 @@
         },
         {
           "component": "scenarios/policy-changes: PolicyChanges.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:25:25Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:30:09Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/product-returns: ProductReturns.Api",
@@ -685,47 +685,47 @@
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Allocation.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.BackOffice",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Catalog.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Customers.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Gateway",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Inventory.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Notifications",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Orders.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Pricing.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Returns.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Scheduler",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.StoreManager",
@@ -733,7 +733,7 @@
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.StoreOps.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:27:31Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:31:41Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/shift-clock: ShiftClock.Service",
@@ -765,7 +765,7 @@
         },
         {
           "component": "scenarios/study-data: StudyData.Sponsor.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:46:30Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:43:09Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/supplier-invoices: Invoices.Admin",
@@ -789,16 +789,16 @@
         },
         {
           "component": "scenarios/trade-rebates: TradeRebates.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T08:47:42Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:43:59Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/trade-rebates: TradeRebates.StatementWorker",
-          "reason": "security gate: base scan failed: 2026-11-03T08:48:35Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: base scan failed: 2026-11-03T10:44:32Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         }
       ],
-      "processed_at": "2026-11-03T07:58:32+00:00",
+      "processed_at": "2026-11-03T10:10:56+00:00",
       "overridden": [],
-      "seconds": 3047.9,
+      "seconds": 2043.8,
       "source_key": "",
       "dev_database": {},
       "lab_services": {},
