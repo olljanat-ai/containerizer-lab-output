@@ -10,4 +10,3 @@ containerization-challenge-policy-changes
 containerization-challenge-retail-backoffice
 containerization-challenge-study-data
 containerization-challenge-trade-rebates
-containerization-challenge-trade-rebates-refactor-172
