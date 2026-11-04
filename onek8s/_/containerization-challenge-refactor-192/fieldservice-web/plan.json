@@ -1,0 +1,72 @@
+{
+  "component": "FieldService.Web",
+  "kind": "dotnet",
+  "role": "web",
+  "project": "src/FieldService.Web/FieldService.Web.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "ASPNETCORE_HTTP_PORTS": "8080",
+    "DOTNET_ENVIRONMENT": "Production",
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/home/app/.aspnet/DataProtection-Keys"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": 8080,
+  "health": null,
+  "entry": "FieldService.Web.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-dataprotection-keys"
+  ],
+  "reasons": [
+    {
+      "rule": "plan-dataprotection-keys",
+      "why": "ASP.NET Core Data Protection keeps its key ring under the user's home folder. The generated manifests mount one key there, read-only, from a Secret that External Secrets Operator generates once in the cluster, so every replica and restart shares it (PersistKeysTo* in code takes over when present).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "redis",
+      "ports": [
+        {
+          "port": 6379,
+          "protocol": "TCP"
+        },
+        {
+          "port": 6380,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": [
+    {
+      "id": "file-uploads",
+      "why": "ASP.NET Core buffers uploads larger than 64 KB to temporary files."
+    }
+  ]
+}

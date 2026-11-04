@@ -1,0 +1,40 @@
+{
+  "component": "FieldService.Worker",
+  "kind": "dotnet",
+  "role": "worker",
+  "project": "src/FieldService.Worker/FieldService.Worker.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "DOTNET_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": null,
+  "health": null,
+  "entry": "FieldService.Worker.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}
