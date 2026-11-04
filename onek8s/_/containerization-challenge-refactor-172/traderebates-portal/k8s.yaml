@@ -1,0 +1,302 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traderebates-portal
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traderebates-portal
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traderebates-portal
+      app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: traderebates-portal
+        app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+      annotations:
+        containerizer.io/exceptions: kerberos-keytab,file-uploads
+        containerizer.io/exception.kerberos-keytab: Windows authentication on Linux
+          needs the service keytab (from a Secret, never the image) and a writable
+          credential cache.
+        containerizer.io/exception.file-uploads: ASP.NET Core buffers uploads larger
+          than 64 KB to temporary files.
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1654
+        runAsGroup: 1654
+      automountServiceAccountToken: false
+      containers:
+      - name: traderebates-portal
+        image: localhost:5000/sandbox/containerization-challenge-trade-rebates-refactor-172/traderebates-portal:1.20261104.1146-refactor.172
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__TradeRebates
+          valueFrom:
+            secretKeyRef:
+              name: lab-sqlserver
+              key: connection-string
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTP_PORTS
+          value: '8080'
+        - name: DOTNET_ENVIRONMENT
+          value: Production
+        - name: DOTNET_ROLL_FORWARD
+          value: Major
+        - name: KRB5_KTNAME
+          value: /etc/krb5/keytab/service.keytab
+        - name: KRB5CCNAME
+          value: FILE:/tmp/krb5cc_app
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
+          appArmorProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 64Mi
+          limits:
+            memory: 512Mi
+            ephemeral-storage: 2Gi
+        volumeMounts:
+        - name: w0-dataprotection-keys
+          mountPath: /home/app/.aspnet/DataProtection-Keys
+        - name: w1-tmp
+          mountPath: /tmp
+        - name: x-keytab
+          mountPath: /etc/krb5/keytab
+          readOnly: true
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 20
+          initialDelaySeconds: 20
+        startupProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: w0-dataprotection-keys
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w1-tmp
+        emptyDir:
+          sizeLimit: 1Gi
+      - name: x-keytab
+        secret:
+          secretName: traderebates-portal-keytab
+          optional: true
+          defaultMode: 288
+      enableServiceLinks: false
+      serviceAccountName: traderebates-portal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traderebates-portal
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+spec:
+  selector:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: traderebates-portal
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  annotations:
+    containerizer.io/egress: sql-server,active-directory,lab-sqlserver
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: traderebates-portal
+      app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+        - 169.254.170.2/32
+        - 100.100.100.200/32
+    - ipBlock:
+        cidr: ::/0
+        except:
+        - fd00:ec2::254/128
+    - namespaceSelector: {}
+    ports:
+    - port: 1433
+      protocol: TCP
+    - port: 88
+      protocol: TCP
+    - port: 88
+      protocol: UDP
+    - port: 389
+      protocol: TCP
+    - port: 636
+      protocol: TCP
+    - port: 464
+      protocol: TCP
+    - port: 3268
+      protocol: TCP
+    - port: 3269
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: sqlserver
+    ports:
+    - port: 1433
+      protocol: TCP
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-trade-rebates-refactor-172--traderebates-portal); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: traderebates-portal-keytab
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: traderebates-portal-keytab
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: service.keytab
+    remoteRef:
+      key: containerization-challenge-trade-rebates-refactor-172--traderebates-portal
+      property: service.keytab
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-trade-rebates-refactor-172--traderebates-portal); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: traderebates-portal-secrets
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: traderebates-portal-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: ConnectionStrings__TradeRebates
+    remoteRef:
+      key: containerization-challenge-trade-rebates-refactor-172--traderebates-portal
+      property: ConnectionStrings__TradeRebates
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traderebates-portal
+  labels:
+    app.kubernetes.io/name: traderebates-portal
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates-refactor-172
+  annotations:
+    containerizer.io/url: https://traderebates-portal-containerization-challenge-trade-r-ca741207.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - traderebates-portal-containerization-challenge-trade-r-ca741207.sandbox.lab
+  rules:
+  - host: traderebates-portal-containerization-challenge-trade-r-ca741207.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traderebates-portal
+            port:
+              name: http
