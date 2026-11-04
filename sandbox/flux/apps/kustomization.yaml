@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../../onek8s/_/containerization-challenge-refactor-175/gitops/flux
+- ../../../onek8s/_/containerization-challenge-refactor-186/gitops/flux
 - ../../../onek8s/_/containerization-challenge@batch-release/gitops/flux
 - ../../../onek8s/_/containerization-challenge@broker-quotes/gitops/flux
 - ../../../onek8s/_/containerization-challenge@city-permits/gitops/flux
