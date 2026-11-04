@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-furnace-records
+resources:
+- namespace.yaml
+- security.yaml
+- furnacerecords-api/k8s.yaml
+- furnacerecords-portal/k8s.yaml
+- furnacerecords-worker/k8s.yaml
+- lab/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-portal
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-portal:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-worker:tag"}

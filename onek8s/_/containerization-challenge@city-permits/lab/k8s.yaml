@@ -1,0 +1,21 @@
+# SQL Server in the lab: the appliance's lab agent puts the credentials in the secret store (remote key containerization-challenge-city-permits--cz-lab-sqlserver)
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: lab-sqlserver
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-service: sqlserver
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: lab-sqlserver
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  dataFrom:
+  - extract:
+      key: containerization-challenge-city-permits--cz-lab-sqlserver

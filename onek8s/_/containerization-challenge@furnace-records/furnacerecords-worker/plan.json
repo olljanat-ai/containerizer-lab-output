@@ -1,0 +1,92 @@
+{
+  "component": "FurnaceRecords.Worker",
+  "kind": "dotnet",
+  "role": "worker",
+  "project": "src/FurnaceRecords.Worker/FurnaceRecords.Worker.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "Worker__CertificateFolder": "/data/certificates",
+    "DOTNET_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/data/certificates"
+  ],
+  "publish_args": [],
+  "remove_files": [
+    "global.json"
+  ],
+  "single_replica": false,
+  "uid": 1654,
+  "port": null,
+  "health": null,
+  "entry": "FurnaceRecords.Worker.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-global-json"
+  ],
+  "reasons": [
+    {
+      "rule": "config-windows-paths",
+      "why": "Windows paths in configuration (drive letters, UNC shares) are overridden with environment variables to folders under /data, which the manifests mount as volumes; the application code is not changed.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    },
+    {
+      "rule": "plan-global-json",
+      "why": "global.json pins an SDK version that the build image may not have; it is removed in the build stage only (never in the repository) so the image's SDK builds the project.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/tools/global-json"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "smtp",
+      "ports": [
+        {
+          "port": 25,
+          "protocol": "TCP"
+        },
+        {
+          "port": 465,
+          "protocol": "TCP"
+        },
+        {
+          "port": 587,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "http-apis",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP"
+        },
+        {
+          "port": 80,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

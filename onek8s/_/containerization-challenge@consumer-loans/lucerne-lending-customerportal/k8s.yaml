@@ -1,0 +1,288 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: lucerne-lending-customerportal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lucerne-lending-customerportal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: lucerne-lending-customerportal
+      app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: lucerne-lending-customerportal
+        app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1654
+        runAsGroup: 1654
+      automountServiceAccountToken: false
+      containers:
+      - name: lucerne-lending-customerportal
+        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261104.1641
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__PortalIdentity
+          valueFrom:
+            secretKeyRef:
+              name: lab-sqlserver
+              key: connection-string
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTP_PORTS
+          value: '8080'
+        - name: DOTNET_ENVIRONMENT
+          value: Production
+        - name: DOTNET_ROLL_FORWARD
+          value: Major
+        - name: DataProtection__KeysFolder
+          value: /data/consumerloans/portal/keys
+        - name: NLog__variables__logDir
+          value: /data/logs/consumerloans/portal
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
+          appArmorProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 64Mi
+          limits:
+            memory: 512Mi
+            ephemeral-storage: 1Gi
+        volumeMounts:
+        - name: w0-logs
+          mountPath: /app/logs
+        - name: w1-keys
+          mountPath: /data/consumerloans/portal/keys
+        - name: w2-portal
+          mountPath: /data/logs/consumerloans/portal
+        - name: w3-tmp
+          mountPath: /tmp
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 20
+          initialDelaySeconds: 20
+        startupProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: w0-logs
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w1-keys
+        persistentVolumeClaim:
+          claimName: lucerne-lending-customerportal-w1-keys
+      - name: w2-portal
+        persistentVolumeClaim:
+          claimName: lucerne-lending-customerportal-w2-portal
+      - name: w3-tmp
+        emptyDir:
+          sizeLimit: 256Mi
+      enableServiceLinks: false
+      serviceAccountName: lucerne-lending-customerportal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lucerne-lending-customerportal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+spec:
+  selector:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lucerne-lending-customerportal-w1-keys
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lucerne-lending-customerportal-w2-portal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lucerne-lending-customerportal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  annotations:
+    containerizer.io/egress: sql-server,lab-sqlserver
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lucerne-lending-customerportal
+      app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+        - 169.254.170.2/32
+        - 100.100.100.200/32
+    - ipBlock:
+        cidr: ::/0
+        except:
+        - fd00:ec2::254/128
+    - namespaceSelector: {}
+    ports:
+    - port: 1433
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: sqlserver
+    ports:
+    - port: 1433
+      protocol: TCP
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-consumer-loans--lucerne-lending-customerportal); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: lucerne-lending-customerportal-secrets
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: lucerne-lending-customerportal-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: ConnectionStrings__PortalIdentity
+    remoteRef:
+      key: containerization-challenge-consumer-loans--lucerne-lending-customerportal
+      property: ConnectionStrings__PortalIdentity
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lucerne-lending-customerportal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+  annotations:
+    containerizer.io/url: https://lucerne-lending-customerportal-containerization-challe-9dd739dd.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - lucerne-lending-customerportal-containerization-challe-9dd739dd.sandbox.lab
+  rules:
+  - host: lucerne-lending-customerportal-containerization-challe-9dd739dd.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lucerne-lending-customerportal
+            port:
+              name: http

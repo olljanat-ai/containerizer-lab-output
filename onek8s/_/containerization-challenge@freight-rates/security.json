@@ -1,0 +1,104 @@
+{
+  "app": "containerization-challenge-freight-rates",
+  "policy": {
+    "fail_on": "CRITICAL",
+    "ignore_unfixed": true
+  },
+  "passed": true,
+  "lint": {
+    "error": 0,
+    "warning": 0,
+    "info": 3
+  },
+  "components": [
+    {
+      "component": "freightrates-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "freightrates-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "freightrates-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "freightrates-api/k8s.yaml: Deployment/freightrates-api/freightrates-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261104.1641 is not pinned to a digest"
+        }
+      ],
+      "scans": [
+        {
+          "kind": "base",
+          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        },
+        {
+          "kind": "image",
+          "image": "containerizer/containerization-challenge-freight-rates-freightrates-api:gate",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 1,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        }
+      ],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "qlServerDatabaseCreator.<>c__DisplayClass20_0.<<ExistsAsync>b__0>d.MoveNext()\n--- End of stack trace from previous location ---\n   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()\n--- End of stack trace from previous location ---\n   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabaseCreator.EnsureCreatedAsync(CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabaseCreator.EnsureCreatedAsync(CancellationToken cancellationToken)\n   at FreightRates.Data.DbInitializer.InitializeAsync(FreightRatesContext db, Boolean seedSampleData, CancellationToken cancellationToken) in /src/src/FreightRates.Data/DbInitializer.cs:line 13\n   at Program.<Main>$(String[] args) in /src/src/FreightRates.Api/Program.cs:line 44\n   at Program.<Main>(String[] args)\nClientConnectionId:00000000-0000-0000-0000-000000000000\n"
+      }
+    }
+  ],
+  "notes": []
+}

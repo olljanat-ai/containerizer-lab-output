@@ -3,8 +3,8 @@
     "provider": "github",
     "org": "onek8s",
     "registry": "localhost:5000/sandbox",
-    "tag": "1.20261103.1302",
-    "started": "2026-11-03T13:02:35+00:00",
+    "tag": "1.20261104.1641",
+    "started": "2026-11-04T16:41:41+00:00",
     "stale_days": 183,
     "verify": false,
     "gate": true
@@ -223,8 +223,8 @@
       "org": "onek8s",
       "project": "_",
       "repo": "containerization-challenge",
-      "status": "no-a-components",
-      "reason": "33 applications (scenarios/*): 0 deployed, 33 not rated A, 0 skipped, 0 failed",
+      "status": "deployed",
+      "reason": "33 applications (scenarios/*): 11 deployed, 22 not rated A, 0 skipped, 0 failed",
       "web_url": "https://github.com/onek8s/containerization-challenge",
       "clone_url": "https://github.com/onek8s/containerization-challenge.git",
       "branch": "main",
@@ -233,7 +233,229 @@
       "app": "containerization-challenge",
       "path": "",
       "rating": "B",
-      "components": [],
+      "components": [
+        {
+          "component": "BatchRelease.Api",
+          "folder": "batchrelease-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/BatchRelease.Api/BatchRelease.Api.csproj",
+          "project_name": "BatchRelease.Api",
+          "verification": "not run",
+          "digest": "sha256:c0c2e21a85cb52f65f55b2a215aebf7221542af3cff472d825e51ccc6615585c",
+          "application": "scenarios/batch-release"
+        },
+        {
+          "component": "Humongous.BrokerPortal",
+          "folder": "humongous-brokerportal",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/Humongous.BrokerPortal/Humongous.BrokerPortal.csproj",
+          "project_name": "Humongous.BrokerPortal",
+          "verification": "not run",
+          "digest": "sha256:ce4092dce728740792a414532a60b1f98919274ebc2e7c10263a8b7dd0cf4a97",
+          "application": "scenarios/broker-quotes"
+        },
+        {
+          "component": "Humongous.Documents",
+          "folder": "humongous-documents",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/Humongous.Documents/Humongous.Documents.csproj",
+          "project_name": "Humongous.Documents",
+          "verification": "not run",
+          "digest": "sha256:201dd67f9395d72931b5a547d4bd5915987abe8953f823657e82925babbb5206",
+          "application": "scenarios/broker-quotes"
+        },
+        {
+          "component": "Humongous.Workbench",
+          "folder": "humongous-workbench",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/Humongous.Workbench/Humongous.Workbench.csproj",
+          "project_name": "Humongous.Workbench",
+          "verification": "not run",
+          "digest": "sha256:5de271be3bdd78230446d6cc4886a75a36c3e26921d5e3afa2786274dd147813",
+          "application": "scenarios/broker-quotes"
+        },
+        {
+          "component": "CityPermits.OpenData",
+          "folder": "citypermits-opendata",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/CityPermits.OpenData/CityPermits.OpenData.csproj",
+          "project_name": "CityPermits.OpenData",
+          "verification": "not run",
+          "digest": "sha256:eb45c826e8e735690dd41b978274e17d81e8a7faeb32bb6500d9f9f3461d873d",
+          "application": "scenarios/city-permits"
+        },
+        {
+          "component": "Lucerne.Lending.CustomerPortal",
+          "folder": "lucerne-lending-customerportal",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/Lucerne.Lending.CustomerPortal/Lucerne.Lending.CustomerPortal.csproj",
+          "project_name": "Lucerne.Lending.CustomerPortal",
+          "verification": "not run",
+          "digest": "sha256:1d9733452596616ad6672ef9a334bbc50848d4ade80461940a2f113062581e24",
+          "application": "scenarios/consumer-loans"
+        },
+        {
+          "component": "Lucerne.Lending.Documents",
+          "folder": "lucerne-lending-documents",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/Lucerne.Lending.Documents/Lucerne.Lending.Documents.csproj",
+          "project_name": "Lucerne.Lending.Documents",
+          "verification": "not run",
+          "digest": "sha256:54573ed221d5b63eed07fedc94566b253ae00e0b0ae32d3a25058ee4b4a3243a",
+          "application": "scenarios/consumer-loans"
+        },
+        {
+          "component": "FieldService.Worker",
+          "folder": "fieldservice-worker",
+          "image": "localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/FieldService.Worker/FieldService.Worker.csproj",
+          "project_name": "FieldService.Worker",
+          "verification": "not run",
+          "digest": "sha256:6c8133164c6f3c9211f315ea3e43cd81c1c1a76dcb34b7cdffd4f66a250ebd13",
+          "application": "scenarios/field-service"
+        },
+        {
+          "component": "FreightRates.Api",
+          "folder": "freightrates-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/FreightRates.Api/FreightRates.Api.csproj",
+          "project_name": "FreightRates.Api",
+          "verification": "not run",
+          "digest": "sha256:7e00e9c7712514ddbcaf002b3db0d09b6fd073217ea4b9beeefbf52897c90cc9",
+          "application": "scenarios/freight-rates"
+        },
+        {
+          "component": "FurnaceRecords.Api",
+          "folder": "furnacerecords-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/FurnaceRecords.Api/FurnaceRecords.Api.csproj",
+          "project_name": "FurnaceRecords.Api",
+          "verification": "not run",
+          "digest": "sha256:1a590d392ff25375c6f92fe645d37b0e42594febf682626d1a8a425ba1a8e65b",
+          "application": "scenarios/furnace-records"
+        },
+        {
+          "component": "FurnaceRecords.Portal",
+          "folder": "furnacerecords-portal",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-portal:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/FurnaceRecords.Portal/FurnaceRecords.Portal.csproj",
+          "project_name": "FurnaceRecords.Portal",
+          "verification": "not run",
+          "digest": "sha256:56c00e8c8adb08e29f5d086bbffc785465d7792368609f6332d7386fa359ddb3",
+          "application": "scenarios/furnace-records"
+        },
+        {
+          "component": "FurnaceRecords.Worker",
+          "folder": "furnacerecords-worker",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/FurnaceRecords.Worker/FurnaceRecords.Worker.csproj",
+          "project_name": "FurnaceRecords.Worker",
+          "verification": "not run",
+          "digest": "sha256:f9168b0655849a8ba89e65802d6bf086a8da60bf82d4333a24a3438baaaebfed",
+          "application": "scenarios/furnace-records"
+        },
+        {
+          "component": "PolicyChanges.Api",
+          "folder": "policychanges-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/PolicyChanges.Api/PolicyChanges.Api.csproj",
+          "project_name": "PolicyChanges.Api",
+          "verification": "not run",
+          "digest": "sha256:4eed4dea8060a96a5ccf07a1550ff062a290aab9974a801d1b2942d5461ed37c",
+          "application": "scenarios/policy-changes"
+        },
+        {
+          "component": "VanArsdel.StoreManager",
+          "folder": "vanarsdel-storemanager",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.StoreManager/VanArsdel.StoreManager.csproj",
+          "project_name": "VanArsdel.StoreManager",
+          "verification": "not run",
+          "digest": "sha256:3ec6d341f634076ac46fac252193f4acb05b7be6791d54c139fbad9414588e5b",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "StudyData.Sponsor.Api",
+          "folder": "studydata-sponsor-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/StudyData.Sponsor.Api/StudyData.Sponsor.Api.csproj",
+          "project_name": "StudyData.Sponsor.Api",
+          "verification": "not run",
+          "digest": "sha256:11df4b485561fceaf2760163032569eb75720ecfb03f3236a4ca445c3f750ae2",
+          "application": "scenarios/study-data"
+        },
+        {
+          "component": "TradeRebates.Api",
+          "folder": "traderebates-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/TradeRebates.Api/TradeRebates.Api.csproj",
+          "project_name": "TradeRebates.Api",
+          "verification": "not run",
+          "digest": "sha256:f190374f1e4641976cb9574c8c682cf035b9cdcbadd41b91b1fb8531c7dcddff",
+          "application": "scenarios/trade-rebates"
+        },
+        {
+          "component": "TradeRebates.StatementWorker",
+          "folder": "traderebates-statementworker",
+          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261104.1641",
+          "rating": "A",
+          "verdict": "config",
+          "role": "console",
+          "project": "src/TradeRebates.StatementWorker/TradeRebates.StatementWorker.csproj",
+          "project_name": "TradeRebates.StatementWorker",
+          "verification": "not run",
+          "digest": "sha256:e798e923c6d9bc69eeef68231f55ab7c60c6b782cc396806b42278e8b944dd0f",
+          "application": "scenarios/trade-rebates"
+        }
+      ],
       "excluded": [
         {
           "component": "scenarios/account-statements: AccountStatements.Api",
@@ -276,10 +498,6 @@
           "reason": "rated E (blocker)"
         },
         {
-          "component": "scenarios/batch-release: BatchRelease.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:03:21Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
           "component": "scenarios/broker-quotes: Humongous.Identity",
           "reason": "rated B (refactor)"
         },
@@ -290,18 +508,6 @@
         {
           "component": "scenarios/broker-quotes: Humongous.Quoting.Api",
           "reason": "rated E (blocker)"
-        },
-        {
-          "component": "scenarios/broker-quotes: Humongous.BrokerPortal",
-          "reason": "security gate: image build failed"
-        },
-        {
-          "component": "scenarios/broker-quotes: Humongous.Documents",
-          "reason": "security gate: base scan failed: 2026-11-03T13:05:35Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
-          "component": "scenarios/broker-quotes: Humongous.Workbench",
-          "reason": "security gate: base scan failed: 2026-11-03T13:04:08Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/city-permits: permits-admin",
@@ -329,11 +535,7 @@
         },
         {
           "component": "scenarios/city-permits: CityPermits.Inspections",
-          "reason": "security gate: image build failed"
-        },
-        {
-          "component": "scenarios/city-permits: CityPermits.OpenData",
-          "reason": "security gate: base scan failed: 2026-11-03T13:06:53Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/clinic-scheduling: SouthridgeBilling",
@@ -380,14 +582,6 @@
           "reason": "keeps local state"
         },
         {
-          "component": "scenarios/consumer-loans: Lucerne.Lending.CustomerPortal",
-          "reason": "security gate: image build failed"
-        },
-        {
-          "component": "scenarios/consumer-loans: Lucerne.Lending.Documents",
-          "reason": "security gate: base scan failed: 2026-11-03T13:11:02Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
           "component": "scenarios/control-tower: ControlTower.Booking.Web",
           "reason": "rated B (refactor)"
         },
@@ -409,19 +603,19 @@
         },
         {
           "component": "scenarios/control-tower: ControlTower.CarrierGateway",
-          "reason": "security gate: base scan failed: 2026-11-03T13:11:56Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Events",
-          "reason": "security gate: base scan failed: 2026-11-03T13:12:29Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Telematics",
-          "reason": "security gate: base scan failed: 2026-11-03T13:12:29Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/control-tower: ControlTower.Tower.Api",
-          "reason": "security gate: image build failed"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/credit-desk: CreditDesk.CreditService",
@@ -497,7 +691,7 @@
         },
         {
           "component": "scenarios/expense-claims: ExpenseClaims.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:15:38Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/expense-claims: expenses-web",
@@ -516,10 +710,6 @@
           "reason": "keeps local state"
         },
         {
-          "component": "scenarios/field-service: FieldService.Worker",
-          "reason": "security gate: base scan failed: 2026-11-03T13:17:45Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
           "component": "scenarios/freight-rates: FreightRates.Admin",
           "reason": "rated B (refactor)"
         },
@@ -528,24 +718,8 @@
           "reason": "rated E (blocker)"
         },
         {
-          "component": "scenarios/freight-rates: FreightRates.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:18:22Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
           "component": "scenarios/furnace-records: FurnaceRecords.Daq",
           "reason": "rated E (blocker)"
-        },
-        {
-          "component": "scenarios/furnace-records: FurnaceRecords.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:19:03Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
-          "component": "scenarios/furnace-records: FurnaceRecords.Portal",
-          "reason": "security gate: image build failed"
-        },
-        {
-          "component": "scenarios/furnace-records: FurnaceRecords.Worker",
-          "reason": "security gate: base scan failed: 2026-11-03T13:19:58Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/housing-management: Fabrikam.Housing.BackOffice",
@@ -610,10 +784,6 @@
         {
           "component": "scenarios/policy-changes: PolicyChanges.Portal",
           "reason": "rated B (refactor)"
-        },
-        {
-          "component": "scenarios/policy-changes: PolicyChanges.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:21:28Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         },
         {
           "component": "scenarios/product-returns: ProductReturns.Api",
@@ -685,55 +855,51 @@
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Allocation.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.BackOffice",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Catalog.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Customers.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Gateway",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Inventory.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Notifications",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Orders.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Pricing.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Returns.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Scheduler",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.StoreManager",
-          "reason": "security gate: image build failed"
+          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.StoreOps.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:23:06Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
+          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/shift-clock: ShiftClock.Service",
@@ -764,10 +930,6 @@
           "reason": "rated E (blocker)"
         },
         {
-          "component": "scenarios/study-data: StudyData.Sponsor.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:33:47Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
           "component": "scenarios/supplier-invoices: Invoices.Admin",
           "reason": "rated B (refactor)"
         },
@@ -786,19 +948,11 @@
         {
           "component": "scenarios/trade-rebates: TradeRebates.Portal",
           "reason": "rated B (refactor)"
-        },
-        {
-          "component": "scenarios/trade-rebates: TradeRebates.Api",
-          "reason": "security gate: base scan failed: 2026-11-03T13:34:36Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
-        },
-        {
-          "component": "scenarios/trade-rebates: TradeRebates.StatementWorker",
-          "reason": "security gate: base scan failed: 2026-11-03T13:35:05Z\tFATAL\tFatal error\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"h"
         }
       ],
-      "processed_at": "2026-11-03T13:02:38+00:00",
+      "processed_at": "2026-11-04T16:41:44+00:00",
       "overridden": [],
-      "seconds": 1972.4,
+      "seconds": 2946.5,
       "source_key": "",
       "dev_database": {},
       "lab_services": {},
@@ -809,7 +963,7 @@
           "folder": "scenarios/account-statements",
           "app": "containerization-challenge-account-statements",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: AccountStatements.Api: rated C (rewrite); AccountStatements.Distribution: rated C (rewrite); AccountStatements.Web: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/account-statements",
@@ -819,7 +973,7 @@
           "folder": "scenarios/b2b-integration",
           "app": "containerization-challenge-b2b-integration",
           "status": "no-a-components",
-          "reason": "none of 5 server components qualifies",
+          "reason": "none of 5 server components qualifies: b2bdeploy: rated C (rewrite); VanArsdel.Integration.Gateway: rated C (rewrite); VanArsdel.Integration.OpsPortal: rated C (rewrite); VanArsdel.Integration.SlaMonitor: rated C (rewrite); VanArsdel.Integration.Tracking: rated C (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/b2b-integration",
@@ -828,38 +982,46 @@
         {
           "folder": "scenarios/batch-release",
           "app": "containerization-challenge-batch-release",
-          "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@batch-release",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/batch-release",
-          "components": []
+          "components": [
+            "BatchRelease.Api"
+          ]
         },
         {
           "folder": "scenarios/broker-quotes",
           "app": "containerization-challenge-broker-quotes",
-          "status": "no-a-components",
-          "reason": "none of 6 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@broker-quotes",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
-          "components": []
+          "components": [
+            "Humongous.BrokerPortal",
+            "Humongous.Documents",
+            "Humongous.Workbench"
+          ]
         },
         {
           "folder": "scenarios/city-permits",
           "app": "containerization-challenge-city-permits",
-          "status": "no-a-components",
-          "reason": "none of 8 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@city-permits",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/city-permits",
-          "components": []
+          "components": [
+            "CityPermits.OpenData"
+          ]
         },
         {
           "folder": "scenarios/clinic-scheduling",
           "app": "containerization-challenge-clinic-scheduling",
           "status": "no-a-components",
-          "reason": "none of 7 server components qualifies",
+          "reason": "none of 7 server components qualifies: SouthridgeBilling: rated C (rewrite); SouthridgeInterfaceEngine: rated C (rewrite); Southridge.Clinic.PatientWeb: rated C (rewrite); SouthridgeReminders: rated C (rewrite); Southridge.Clinic.Services: rated C (rewrite); Southridge.Clinic.StaffWeb: rated C (rewrite); Southridge.Clinic.WebServices: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/clinic-scheduling",
@@ -868,18 +1030,21 @@
         {
           "folder": "scenarios/consumer-loans",
           "app": "containerization-challenge-consumer-loans",
-          "status": "no-a-components",
-          "reason": "none of 6 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@consumer-loans",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/consumer-loans",
-          "components": []
+          "components": [
+            "Lucerne.Lending.CustomerPortal",
+            "Lucerne.Lending.Documents"
+          ]
         },
         {
           "folder": "scenarios/control-tower",
           "app": "containerization-challenge-control-tower",
           "status": "no-a-components",
-          "reason": "none of 9 server components qualifies",
+          "reason": "none of 9 server components qualifies: ControlTower.Booking.Web: rated B (refactor); ControlTower.Identity: rated B (refactor); ControlTower.Jobs: rated B (refactor); ControlTower.Portal: rated B (refactor); ControlTower.Scanning.Api: rated B (refactor); ControlTower.CarrierGateway: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); ControlTower.Events: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); ControlTower.Telematics: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); ControlTower.Tower.Api: security gate: 1 fixable vulnerabilities at or above the gate threshold (image)",
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/control-tower",
@@ -889,7 +1054,7 @@
           "folder": "scenarios/credit-desk",
           "app": "containerization-challenge-credit-desk",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: CreditDesk.CreditService: rated C (rewrite); CreditDesk.LetterService: rated E (blocker); CreditDesk.Web: rated C (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/credit-desk",
@@ -899,7 +1064,7 @@
           "folder": "scenarios/customer-care",
           "app": "containerization-challenge-customer-care",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies",
+          "reason": "none of 4 server components qualifies: CustomerCare.Archive: rated C (rewrite); CustomerCare.Import: rated C (rewrite); CustomerCare.Integration: rated C (rewrite); CustomerCare.Web: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/customer-care",
@@ -909,7 +1074,7 @@
           "folder": "scenarios/dealer-orders",
           "app": "containerization-challenge-dealer-orders",
           "status": "no-a-components",
-          "reason": "none of 7 server components qualifies",
+          "reason": "none of 7 server components qualifies: Tailspin.DealerOrders.AxConnector: rated E (blocker); Tailspin.DealerOrders.DealerPortal: rated C (rewrite); Tailspin.DealerOrders.DocumentService: rated C (rewrite); Tailspin.DealerOrders.EdiGateway: rated C (rewrite); Tailspin.DealerOrders.Notifications: rated C (rewrite); Tailspin.DealerOrders.PriceSync: rated E (blocker); Tailspin.DealerOrders.SalesDesk: rated C (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/dealer-orders",
@@ -919,7 +1084,7 @@
           "folder": "scenarios/document-control",
           "app": "containerization-challenge-document-control",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: Litware.DocControl.Indexer: rated B (refactor); Litware.DocControl.Packager: rated B (refactor); Litware.DocControl.Web: rated B (refactor)",
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/document-control",
@@ -929,7 +1094,7 @@
           "folder": "scenarios/expense-claims",
           "app": "containerization-challenge-expense-claims",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: ExpenseClaims.Jobs: rated B (refactor); ExpenseClaims.Api: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); expenses-web: security gate: image build failed",
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/expense-claims",
@@ -939,7 +1104,7 @@
           "folder": "scenarios/field-sales",
           "app": "containerization-challenge-field-sales",
           "status": "no-a-components",
-          "reason": "none of 2 server components qualifies",
+          "reason": "none of 2 server components qualifies: FieldSales.Api: rated C (rewrite); FieldSales.Backoffice: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-sales",
@@ -948,38 +1113,46 @@
         {
           "folder": "scenarios/field-service",
           "app": "containerization-challenge-field-service",
-          "status": "no-a-components",
-          "reason": "none of 2 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "B",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@field-service",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-service",
-          "components": []
+          "components": [
+            "FieldService.Worker"
+          ]
         },
         {
           "folder": "scenarios/freight-rates",
           "app": "containerization-challenge-freight-rates",
-          "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@freight-rates",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/freight-rates",
-          "components": []
+          "components": [
+            "FreightRates.Api"
+          ]
         },
         {
           "folder": "scenarios/furnace-records",
           "app": "containerization-challenge-furnace-records",
-          "status": "no-a-components",
-          "reason": "none of 4 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@furnace-records",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/furnace-records",
-          "components": []
+          "components": [
+            "FurnaceRecords.Api",
+            "FurnaceRecords.Portal",
+            "FurnaceRecords.Worker"
+          ]
         },
         {
           "folder": "scenarios/housing-management",
           "app": "containerization-challenge-housing-management",
           "status": "no-a-components",
-          "reason": "none of 6 server components qualifies",
+          "reason": "none of 6 server components qualifies: Fabrikam.Housing.BackOffice: rated B (refactor); Fabrikam.Housing.ContractorApi: rated B (refactor); FabrikamDocumentService: rated B (refactor); Fabrikam.Housing.Identity: rated B (refactor); Fabrikam.Housing.Jobs: rated B (refactor); Fabrikam.Housing.TenantPortal: rated B (refactor)",
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/housing-management",
@@ -999,7 +1172,7 @@
           "folder": "scenarios/meter-billing",
           "app": "containerization-challenge-meter-billing",
           "status": "no-a-components",
-          "reason": "none of 2 server components qualifies",
+          "reason": "none of 2 server components qualifies: MeterBilling.Engine: rated C (rewrite); MeterBilling.Lookup: rated B (refactor)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/meter-billing",
@@ -1009,7 +1182,7 @@
           "folder": "scenarios/order-hub",
           "app": "containerization-challenge-order-hub",
           "status": "no-a-components",
-          "reason": "none of 5 server components qualifies",
+          "reason": "none of 5 server components qualifies: OrderHub.Fulfilment: rated C (rewrite); OrderHub.Intake: rated C (rewrite); OrderHub.Partners: rated C (rewrite); OrderHub.Portal: rated B (refactor); OrderHub.ShopSync: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/order-hub",
@@ -1019,7 +1192,7 @@
           "folder": "scenarios/parts-catalog",
           "app": "containerization-challenge-parts-catalog",
           "status": "no-a-components",
-          "reason": "none of 1 server components qualifies",
+          "reason": "none of 1 server components qualifies: PartsCatalog: keeps local state",
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/parts-catalog",
@@ -1028,18 +1201,20 @@
         {
           "folder": "scenarios/policy-changes",
           "app": "containerization-challenge-policy-changes",
-          "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "D",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@policy-changes",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/policy-changes",
-          "components": []
+          "components": [
+            "PolicyChanges.Api"
+          ]
         },
         {
           "folder": "scenarios/product-returns",
           "app": "containerization-challenge-product-returns",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies",
+          "reason": "none of 4 server components qualifies: ProductReturns.Api: rated B (refactor); ProductReturns.Jobs: rated B (refactor); ProductReturns.Labels: rated B (refactor); ProductReturns.Portal: rated B (refactor)",
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/product-returns",
@@ -1049,7 +1224,7 @@
           "folder": "scenarios/project-sites",
           "app": "containerization-challenge-project-sites",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: psadmin: rated C (rewrite); Lucerne.ProjectSites.Dashboards: rated C (rewrite); LucerneProjectSync: rated C (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/project-sites",
@@ -1059,7 +1234,7 @@
           "folder": "scenarios/property-inspections",
           "app": "containerization-challenge-property-inspections",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies",
+          "reason": "none of 4 server components qualifies: Inspections.Intake: rated C (rewrite); Inspections.Jobs: rated C (rewrite); Inspections.Service: rated C (rewrite); Inspections.Web: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/property-inspections",
@@ -1069,7 +1244,7 @@
           "folder": "scenarios/purchase-requests",
           "app": "containerization-challenge-purchase-requests",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: Purchasing.Api: rated C (rewrite); Purchasing.Jobs: rated C (rewrite); Purchasing.Web: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/purchase-requests",
@@ -1078,18 +1253,20 @@
         {
           "folder": "scenarios/retail-backoffice",
           "app": "containerization-challenge-retail-backoffice",
-          "status": "no-a-components",
-          "reason": "none of 16 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "B",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@retail-backoffice",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/retail-backoffice",
-          "components": []
+          "components": [
+            "VanArsdel.StoreManager"
+          ]
         },
         {
           "folder": "scenarios/shift-clock",
           "app": "containerization-challenge-shift-clock",
           "status": "no-a-components",
-          "reason": "none of 1 server components qualifies",
+          "reason": "none of 1 server components qualifies: ShiftClock.Service: rated E (blocker)",
           "rating": "E",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/shift-clock",
@@ -1099,7 +1276,7 @@
           "folder": "scenarios/staff-onboarding",
           "app": "containerization-challenge-staff-onboarding",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "reason": "none of 3 server components qualifies: StaffOnboarding.Portal: rated B (refactor); StaffOnboarding.Provisioning: rated B (refactor); StaffOnboarding.WorkflowHost: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/staff-onboarding",
@@ -1108,18 +1285,20 @@
         {
           "folder": "scenarios/study-data",
           "app": "containerization-challenge-study-data",
-          "status": "no-a-components",
-          "reason": "none of 4 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "E",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@study-data",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/study-data",
-          "components": []
+          "components": [
+            "StudyData.Sponsor.Api"
+          ]
         },
         {
           "folder": "scenarios/supplier-invoices",
           "app": "containerization-challenge-supplier-invoices",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies",
+          "reason": "none of 4 server components qualifies: Invoices.Admin: rated B (refactor); Invoices.ErpLink: rated C (rewrite); Invoices.Gateway: rated C (rewrite); Invoices.Processor: rated C (rewrite)",
           "rating": "C",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/supplier-invoices",
@@ -1128,12 +1307,15 @@
         {
           "folder": "scenarios/trade-rebates",
           "app": "containerization-challenge-trade-rebates",
-          "status": "no-a-components",
-          "reason": "none of 3 server components qualifies",
+          "status": "deployed",
+          "reason": "",
           "rating": "B",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@trade-rebates",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/trade-rebates",
-          "components": []
+          "components": [
+            "TradeRebates.Api",
+            "TradeRebates.StatementWorker"
+          ]
         }
       ],
       "split_hint": {}

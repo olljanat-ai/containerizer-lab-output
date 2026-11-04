@@ -1,0 +1,136 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: containerization-challenge-consumer-loans
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    app.kubernetes.io/managed-by: containerizer
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: containerization-challenge-consumer-loans-reconciler
+  namespace: containerization-challenge-consumer-loans
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerization-challenge-consumer-loans-reconciler
+  namespace: containerization-challenge-consumer-loans
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: containerization-challenge-consumer-loans-reconciler
+  namespace: containerization-challenge-consumer-loans
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-secrets-reader
+  namespace: containerization-challenge-consumer-loans
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-secrets-reader-containerization-challenge-consumer-loans
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  resourceNames:
+  - containerization-challenge-consumer-loans--cz-cosign-pub
+  - containerization-challenge-consumer-loans--cz-git
+  - containerization-challenge-consumer-loans--cz-lab-sqlserver
+  - containerization-challenge-consumer-loans--cz-registry
+  - containerization-challenge-consumer-loans--lucerne-lending-customerportal
+  - containerization-challenge-consumer-loans--lucerne-lending-documents
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-secrets-reader-containerization-challenge-consumer-loans
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: app-secrets-reader-containerization-challenge-consumer-loans
+subjects:
+- kind: ServiceAccount
+  name: app-secrets-reader
+  namespace: containerization-challenge-consumer-loans
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: containerization-challenge-consumer-loans
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+  namespace: containerization-challenge-consumer-loans
+spec:
+  limits:
+  - type: Container
+    default:
+      memory: 512Mi
+      ephemeral-storage: 1Gi
+    defaultRequest:
+      cpu: 100m
+      memory: 256Mi
+      ephemeral-storage: 64Mi
+    max:
+      memory: 4Gi
+      ephemeral-storage: 4Gi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: containerization-challenge-consumer-loans
+spec:
+  hard:
+    requests.cpu: 1000m
+    requests.memory: 1024Mi
+    limits.memory: 2048Mi
+    requests.ephemeral-storage: 192Mi
+    limits.ephemeral-storage: 3072Mi
+    pods: '10'
+    services: '10'
+    persistentvolumeclaims: '10'
+    secrets: '20'
+    configmaps: '20'

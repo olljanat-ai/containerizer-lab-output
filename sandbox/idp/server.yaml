@@ -1,0 +1,257 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cz-idp-data
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cz-idp
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cz-idp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: containerizer-sandbox
+        app.kubernetes.io/managed-by: containerizer
+        app.kubernetes.io/name: cz-idp
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 802
+        runAsGroup: 802
+        fsGroup: 802
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+      - name: init
+        image: docker.io/wso2/wso2is:7.3.0@sha256:d9ffe26f8a87d479b0987e9e22df8f8214407fd0138d78ba6f2dd8c0f75fbfc6
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - /config/init.sh
+        env:
+        - name: IDP_HOST
+          value: containerizer-idp.sandbox.lab
+        - name: IDP_KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cz-idp
+              key: keystore-password
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+          readOnlyRootFilesystem: true
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+      containers:
+      - name: wso2is
+        image: docker.io/wso2/wso2is:7.3.0@sha256:d9ffe26f8a87d479b0987e9e22df8f8214407fd0138d78ba6f2dd8c0f75fbfc6
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: IDP_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cz-idp
+              key: admin-password
+        - name: IDP_KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cz-idp
+              key: keystore-password
+        - name: JAVA_OPTS
+          value: -Djava.security.egd=file:/dev/urandom
+        ports:
+        - name: http
+          containerPort: 9763
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+          readOnlyRootFilesystem: false
+        resources:
+          requests:
+            cpu: 250m
+            memory: 1Gi
+          limits:
+            memory: 2Gi
+        startupProbe:
+          httpGet:
+            path: /api/health-check/v1.0/health
+            port: http
+          periodSeconds: 5
+          failureThreshold: 120
+        readinessProbe:
+          httpGet:
+            path: /api/health-check/v1.0/health
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/health-check/v1.0/health
+            port: http
+          periodSeconds: 30
+          failureThreshold: 5
+        volumeMounts:
+        - name: config
+          mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/deployment.toml
+          subPath: deployment.toml
+          readOnly: true
+        - name: data
+          mountPath: /home/wso2carbon/wso2is-7.3.0/repository/database
+          subPath: database
+        - name: data
+          mountPath: /home/wso2carbon/wso2is-7.3.0/repository/resources/security/idp.p12
+          subPath: security/idp.p12
+          readOnly: true
+        - name: data
+          mountPath: /home/wso2carbon/wso2is-7.3.0/repository/resources/security/client-truststore.p12
+          subPath: security/client-truststore.p12
+          readOnly: true
+        - name: data
+          mountPath: /home/wso2carbon/wso2is-7.3.0/repository/deployment/server/webapps/wsfed-metadata
+          subPath: wsfed
+          readOnly: true
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: cz-idp-data
+      - name: config
+        configMap:
+          name: cz-idp-config
+      - name: tmp
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cz-idp
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp
+spec:
+  selector:
+    app.kubernetes.io/name: cz-idp
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cz-idp
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp
+  annotations:
+    containerizer.io/url: https://containerizer-idp.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+spec:
+  tls:
+  - hosts:
+    - containerizer-idp.sandbox.lab
+  rules:
+  - host: containerizer-idp.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cz-idp
+            port:
+              name: http
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: cz-idp-wsfed-saml2
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp-wsfed-saml2
+spec:
+  redirectRegex:
+    regex: ^https://([^/]+)/wsfed\?(.*)$
+    replacement: https://${1}/passivests?${2}&wreq=%3Cwst%3ARequestSecurityToken%20xmlns%3Awst%3D%22http%3A%2F%2Fdocs.oasis-open.org%2Fws-sx%2Fws-trust%2F200512%22%3E%3Cwst%3ATokenType%3Ehttp%3A%2F%2Fdocs.oasis-open.org%2Fwss%2Foasis-wss-saml-token-profile-1.1%23SAMLV2.0%3C%2Fwst%3ATokenType%3E%3C%2Fwst%3ARequestSecurityToken%3E
+    permanent: false
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cz-idp-wsfed
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp-wsfed
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    traefik.ingress.kubernetes.io/router.middlewares: containerizer-idp-cz-idp-wsfed-saml2@kubernetescrd
+spec:
+  tls:
+  - hosts:
+    - containerizer-idp.sandbox.lab
+  rules:
+  - host: containerizer-idp.sandbox.lab
+    http:
+      paths:
+      - path: /wsfed
+        pathType: Exact
+        backend:
+          service:
+            name: cz-idp
+            port:
+              name: http

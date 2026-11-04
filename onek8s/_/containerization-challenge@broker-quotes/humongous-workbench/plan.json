@@ -1,0 +1,67 @@
+{
+  "component": "Humongous.Workbench",
+  "kind": "dotnet",
+  "role": "web",
+  "project": "src/Humongous.Workbench/Humongous.Workbench.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "ASPNETCORE_HTTP_PORTS": "8080",
+    "Serilog__WriteTo__0__Name": "Console",
+    "DOTNET_ENVIRONMENT": "Production",
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/home/app/.aspnet/DataProtection-Keys"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": 8080,
+  "health": "/health",
+  "entry": "Humongous.Workbench.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-dataprotection-keys"
+  ],
+  "reasons": [
+    {
+      "rule": "config-serilog-console",
+      "why": "Serilog file sinks are switched to the console with an environment variable, so the cluster collects the logs from stdout.",
+      "refs": [
+        "https://github.com/serilog/serilog-sinks-console",
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    },
+    {
+      "rule": "plan-dataprotection-keys",
+      "why": "ASP.NET Core Data Protection writes its key ring under the user's home folder; with a read-only root file system that folder must be writable (persist it, or share it via PersistKeysTo*, when running more than one replica).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "http-apis",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP"
+        },
+        {
+          "port": 80,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

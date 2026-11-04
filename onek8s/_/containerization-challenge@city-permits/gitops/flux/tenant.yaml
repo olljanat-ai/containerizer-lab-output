@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: containerization-challenge-city-permits
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: containerization-challenge-city-permits-reconciler
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerization-challenge-city-permits-reconciler
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: containerization-challenge-city-permits-reconciler
+  namespace: containerization-challenge-city-permits
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-secrets-reader
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-secrets-reader-containerization-challenge-city-permits
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  resourceNames:
+  - containerization-challenge-city-permits--citypermits-opendata
+  - containerization-challenge-city-permits--cz-cosign-pub
+  - containerization-challenge-city-permits--cz-git
+  - containerization-challenge-city-permits--cz-lab-sqlserver
+  - containerization-challenge-city-permits--cz-registry
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-secrets-reader-containerization-challenge-city-permits
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: app-secrets-reader-containerization-challenge-city-permits
+subjects:
+- kind: ServiceAccount
+  name: app-secrets-reader
+  namespace: containerization-challenge-city-permits
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: containerization-challenge-city-permits
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+  namespace: containerization-challenge-city-permits
+spec:
+  limits:
+  - type: Container
+    default:
+      memory: 512Mi
+      ephemeral-storage: 1Gi
+    defaultRequest:
+      cpu: 100m
+      memory: 256Mi
+      ephemeral-storage: 64Mi
+    max:
+      memory: 4Gi
+      ephemeral-storage: 4Gi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: containerization-challenge-city-permits
+spec:
+  hard:
+    requests.cpu: 1000m
+    requests.memory: 1024Mi
+    limits.memory: 2048Mi
+    requests.ephemeral-storage: 192Mi
+    limits.ephemeral-storage: 3072Mi
+    pods: '10'
+    services: '10'
+    persistentvolumeclaims: '10'
+    secrets: '20'
+    configmaps: '20'

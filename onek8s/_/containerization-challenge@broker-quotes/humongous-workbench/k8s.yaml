@@ -1,0 +1,260 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: humongous-workbench
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: humongous-workbench
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: humongous-workbench
+      app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: humongous-workbench
+        app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1654
+        runAsGroup: 1654
+      automountServiceAccountToken: false
+      containers:
+      - name: humongous-workbench
+        image: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261104.1641
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTP_PORTS
+          value: '8080'
+        - name: DOTNET_ENVIRONMENT
+          value: Production
+        - name: DOTNET_ROLL_FORWARD
+          value: Major
+        - name: Serilog__WriteTo__0__Name
+          value: Console
+        - name: Oidc__ClientSecret
+          valueFrom:
+            secretKeyRef:
+              name: humongous-workbench-secrets
+              key: Oidc__ClientSecret
+              optional: true
+        - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+          value: 'true'
+        - name: Oidc__Authority
+          value: https://containerizer-idp.sandbox.lab/oauth2/token
+        - name: Oidc__ClientId
+          value: containerization-challenge-broker-quotes--humongous-workbench
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
+          appArmorProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 64Mi
+          limits:
+            memory: 512Mi
+            ephemeral-storage: 1Gi
+        volumeMounts:
+        - name: w0-dataprotection-keys
+          mountPath: /home/app/.aspnet/DataProtection-Keys
+        - name: w1-tmp
+          mountPath: /tmp
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 20
+          initialDelaySeconds: 20
+        startupProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: w0-dataprotection-keys
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w1-tmp
+        emptyDir:
+          sizeLimit: 256Mi
+      enableServiceLinks: false
+      serviceAccountName: humongous-workbench
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: humongous-workbench
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+spec:
+  selector:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: humongous-workbench
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  annotations:
+    containerizer.io/egress: http-apis
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: humongous-workbench
+      app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+        - 169.254.170.2/32
+        - 100.100.100.200/32
+    - ipBlock:
+        cidr: ::/0
+        except:
+        - fd00:ec2::254/128
+    - namespaceSelector: {}
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: traefik
+    ports:
+    - port: 8443
+      protocol: TCP
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-broker-quotes--humongous-workbench); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: humongous-workbench-secrets
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: humongous-workbench-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: Oidc__ClientSecret
+    remoteRef:
+      key: containerization-challenge-broker-quotes--humongous-workbench
+      property: Oidc__ClientSecret
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: humongous-workbench
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+  annotations:
+    containerizer.io/url: https://humongous-workbench-containerization-challenge-broker-quotes.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - humongous-workbench-containerization-challenge-broker-quotes.sandbox.lab
+  rules:
+  - host: humongous-workbench-containerization-challenge-broker-quotes.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: humongous-workbench
+            port:
+              name: http

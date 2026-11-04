@@ -1,0 +1,107 @@
+{
+  "provider": "github",
+  "org": "onek8s",
+  "project": "_",
+  "repo": "containerization-challenge",
+  "status": "deployed",
+  "reason": "",
+  "web_url": "https://github.com/onek8s/containerization-challenge",
+  "clone_url": "https://github.com/onek8s/containerization-challenge.git",
+  "branch": "main",
+  "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
+  "last_commit": "2026-10-30T13:09:19+00:00",
+  "app": "containerization-challenge-retail-backoffice",
+  "path": "onek8s/_/containerization-challenge@retail-backoffice",
+  "rating": "B",
+  "components": [
+    {
+      "component": "VanArsdel.StoreManager",
+      "folder": "vanarsdel-storemanager",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/VanArsdel.StoreManager/VanArsdel.StoreManager.csproj",
+      "project_name": "VanArsdel.StoreManager",
+      "verification": "not run",
+      "digest": "sha256:3ec6d341f634076ac46fac252193f4acb05b7be6791d54c139fbad9414588e5b"
+    }
+  ],
+  "excluded": [
+    {
+      "component": "VanArsdel.ErpConnector",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "VanArsdel.PosFeed",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "VanArsdel.Reporting.Api",
+      "reason": "keeps local state"
+    },
+    {
+      "component": "VanArsdel.Allocation.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.BackOffice",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Catalog.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Customers.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Gateway",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Inventory.Api",
+      "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Notifications",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Orders.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Pricing.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Returns.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.Scheduler",
+      "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
+    },
+    {
+      "component": "VanArsdel.StoreOps.Api",
+      "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
+    }
+  ],
+  "processed_at": "2026-11-04T16:41:44+00:00",
+  "overridden": [],
+  "seconds": 0.0,
+  "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/retail-backoffice",
+  "dev_database": {},
+  "lab_services": {
+    "needed": {},
+    "provided": [],
+    "missing": [],
+    "overrides": {}
+  },
+  "migration": {},
+  "llm_usage": {},
+  "apps": [],
+  "split_hint": {}
+}

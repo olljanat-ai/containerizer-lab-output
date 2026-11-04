@@ -1,0 +1,84 @@
+{
+  "component": "Lucerne.Lending.CustomerPortal",
+  "kind": "dotnet",
+  "role": "web",
+  "project": "src/Lucerne.Lending.CustomerPortal/Lucerne.Lending.CustomerPortal.csproj",
+  "tfm": "net6.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "ASPNETCORE_HTTP_PORTS": "8080",
+    "DataProtection__KeysFolder": "/data/consumerloans/portal/keys",
+    "NLog__variables__logDir": "/data/logs/consumerloans/portal",
+    "DOTNET_ENVIRONMENT": "Production",
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/data/consumerloans/portal/keys",
+    "/data/logs/consumerloans/portal",
+    "logs"
+  ],
+  "publish_args": [],
+  "remove_files": [
+    "global.json"
+  ],
+  "single_replica": true,
+  "uid": 1654,
+  "port": 8080,
+  "health": null,
+  "entry": "Lucerne.Lending.CustomerPortal.dll",
+  "spa_root": "ClientApp",
+  "args": [],
+  "applied": [
+    "plan-global-json",
+    "plan-sqlite-data",
+    "plan-file-logs"
+  ],
+  "reasons": [
+    {
+      "rule": "config-windows-paths",
+      "why": "Windows paths in configuration (drive letters, UNC shares) are overridden with environment variables to folders under /data, which the manifests mount as volumes; the application code is not changed.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    },
+    {
+      "rule": "plan-global-json",
+      "why": "global.json pins an SDK version that the build image may not have; it is removed in the build stage only (never in the repository) so the image's SDK builds the project.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/tools/global-json"
+      ]
+    },
+    {
+      "rule": "plan-sqlite-data",
+      "why": "SQLite keeps data in a local file that only one process can safely write; the component runs as a single replica with the file on a volume.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/connection-strings",
+        "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+      ]
+    },
+    {
+      "rule": "plan-file-logs",
+      "why": "The app logs to files under its own folder; the folder is made writable so start-up does not fail on the read-only root file system (console logging is preferred).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/extensions/logging/providers"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-batch-release
+resources:
+- namespace.yaml
+- security.yaml
+- batchrelease-api/k8s.yaml
+- lab/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-batch-release:batchrelease-api:tag"}

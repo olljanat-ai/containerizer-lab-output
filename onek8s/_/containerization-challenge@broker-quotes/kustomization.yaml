@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-broker-quotes
+resources:
+- namespace.yaml
+- security.yaml
+- humongous-brokerportal/k8s.yaml
+- humongous-documents/k8s.yaml
+- humongous-workbench/k8s.yaml
+- lab/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-brokerportal:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-documents:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-workbench:tag"}

@@ -1,0 +1,61 @@
+{
+  "component": "FieldService.Worker",
+  "kind": "dotnet",
+  "role": "worker",
+  "project": "src/FieldService.Worker/FieldService.Worker.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "Worker__ArchiveFolder": "/data/inbox/processed",
+    "Worker__ErrorFolder": "/data/inbox/failed",
+    "Worker__InboxFolder": "/data/inbox",
+    "Worker__OutboxFolder": "/data/import/fieldservice",
+    "Worker__ReportFolder": "/data/reports",
+    "Worker__StateFolder": "/data/fieldservice/worker/state",
+    "DOTNET_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/data/inbox/processed",
+    "/data/inbox/failed",
+    "/data/inbox",
+    "/data/import/fieldservice",
+    "/data/reports",
+    "/data/fieldservice/worker/state"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": null,
+  "health": null,
+  "entry": "FieldService.Worker.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [],
+  "reasons": [
+    {
+      "rule": "config-windows-paths",
+      "why": "Windows paths in configuration (drive letters, UNC shares) are overridden with environment variables to folders under /data, which the manifests mount as volumes; the application code is not changed.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

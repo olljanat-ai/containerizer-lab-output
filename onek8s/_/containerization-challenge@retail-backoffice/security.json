@@ -1,0 +1,119 @@
+{
+  "app": "containerization-challenge-retail-backoffice",
+  "policy": {
+    "fail_on": "CRITICAL",
+    "ignore_unfixed": true
+  },
+  "passed": true,
+  "lint": {
+    "error": 0,
+    "warning": 0,
+    "info": 5
+  },
+  "components": [
+    {
+      "component": "vanarsdel-storemanager",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-storemanager/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-storemanager/Dockerfile",
+          "message": "node:22.23.4-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-storemanager/Dockerfile",
+          "message": "node:22.23.4-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-storemanager/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-storemanager/k8s.yaml: Deployment/vanarsdel-storemanager/vanarsdel-storemanager",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641 is not pinned to a digest"
+        }
+      ],
+      "scans": [
+        {
+          "kind": "base",
+          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        },
+        {
+          "kind": "image",
+          "image": "containerizer/containerization-challenge-retail-backoffice-vanarsdel-storemanager:gate",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 3,
+            "MEDIUM": 3,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 3,
+            "MEDIUM": 1,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": [
+            "Newtonsoft.Json 9.0.1 -> 13.0.1",
+            "System.Private.Uri 4.3.0 -> 4.3.2"
+          ]
+        }
+      ],
+      "run": {
+        "status": "ok",
+        "http": 200,
+        "errors": [],
+        "log": "[17:27:13 INF] Now listening on: http://[::]:8080\n[17:27:13 INF] Now listening on: http://[::]:8080\n[17:27:13 INF] Application started. Press Ctrl+C to shut down.\n[17:27:13 INF] Application started. Press Ctrl+C to shut down.\n[17:27:13 INF] Hosting environment: Production\n[17:27:13 INF] Hosting environment: Production\n[17:27:13 INF] Content root path: /app\n[17:27:13 INF] Content root path: /app\n"
+      }
+    }
+  ],
+  "notes": []
+}

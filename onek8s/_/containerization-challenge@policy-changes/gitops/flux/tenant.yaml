@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: containerization-challenge-policy-changes
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: containerization-challenge-policy-changes-reconciler
+  namespace: containerization-challenge-policy-changes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerization-challenge-policy-changes-reconciler
+  namespace: containerization-challenge-policy-changes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: containerization-challenge-policy-changes-reconciler
+  namespace: containerization-challenge-policy-changes
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-secrets-reader
+  namespace: containerization-challenge-policy-changes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-secrets-reader-containerization-challenge-policy-changes
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  resourceNames:
+  - containerization-challenge-policy-changes--cz-cosign-pub
+  - containerization-challenge-policy-changes--cz-git
+  - containerization-challenge-policy-changes--cz-lab-sqlserver
+  - containerization-challenge-policy-changes--cz-registry
+  - containerization-challenge-policy-changes--policychanges-api
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-secrets-reader-containerization-challenge-policy-changes
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: app-secrets-reader-containerization-challenge-policy-changes
+subjects:
+- kind: ServiceAccount
+  name: app-secrets-reader
+  namespace: containerization-challenge-policy-changes
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: containerization-challenge-policy-changes
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+  namespace: containerization-challenge-policy-changes
+spec:
+  limits:
+  - type: Container
+    default:
+      memory: 512Mi
+      ephemeral-storage: 1Gi
+    defaultRequest:
+      cpu: 100m
+      memory: 256Mi
+      ephemeral-storage: 64Mi
+    max:
+      memory: 4Gi
+      ephemeral-storage: 4Gi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: containerization-challenge-policy-changes
+spec:
+  hard:
+    requests.cpu: 1000m
+    requests.memory: 1024Mi
+    limits.memory: 2048Mi
+    requests.ephemeral-storage: 192Mi
+    limits.ephemeral-storage: 3072Mi
+    pods: '10'
+    services: '10'
+    persistentvolumeclaims: '10'
+    secrets: '20'
+    configmaps: '20'

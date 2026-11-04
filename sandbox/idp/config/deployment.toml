@@ -1,0 +1,83 @@
+# WSO2 Identity Server of the containerizer sandbox (generated; docs: https://containerizer.eu/sandbox-idp/)
+[server]
+hostname = "containerizer-idp.sandbox.lab"
+node_ip = "127.0.0.1"
+base_path = "https://$ref{server.hostname}"
+
+[super_admin]
+username = "admin"
+password = "$env{IDP_ADMIN_PASSWORD}"
+create_admin_account = true
+
+[user_store]
+type = "database_unique_id"
+
+# H2 on the pod's volume: one node, and everything in it is rebuilt from sandbox/idp/ by the sync job
+[database.identity_db]
+type = "h2"
+url = "jdbc:h2:./repository/database/WSO2IDENTITY_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+username = "wso2carbon"
+password = "wso2carbon"
+
+[database.shared_db]
+type = "h2"
+url = "jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+username = "wso2carbon"
+password = "wso2carbon"
+
+[datasource.AgentIdentity]
+id = "AgentIdentity"
+url = "jdbc:h2:./repository/database/WSO2AGENTIDENTITY_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+username = "wso2carbon"
+password = "wso2carbon"
+driver = "org.h2.Driver"
+
+# the IdP's own key (generated on first start, never leaves the volume): TLS of the pod port, token
+# signing; the image's default key is public and is not used
+[keystore.primary]
+file_name = "idp.p12"
+password = "$env{IDP_KEYSTORE_PASSWORD}"
+alias = "idp"
+key_password = "$env{IDP_KEYSTORE_PASSWORD}"
+type = "PKCS12"
+
+[truststore]
+file_name = "client-truststore.p12"
+password = "wso2carbon"
+type = "PKCS12"
+
+# TLS ends at Traefik (443); the pod serves HTTP on 9763 inside the cluster, to Traefik only
+# (network policy)
+[transport.http.properties]
+proxyPort = 443
+
+[transport.https.properties]
+proxyPort = 443
+
+# requests through Traefik count as HTTPS (X-Forwarded-Proto), so the APIs that require a confidential
+# transport (SCIM 2.0) answer instead of redirecting to the pod's port 9443. Only Traefik reaches the
+# pod (network policy); the IdP calls itself on https://localhost:9443.
+[catalinaValves.remoteIpValve]
+enable = true
+internalProxies = '10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}'
+remoteIpHeader = "X-Forwarded-For"
+protocolHeader = "X-Forwarded-Proto"
+proxiesHeader = "X-Forwarded-By"
+trustedProxies = ""
+
+# SAML entity id and WS-Federation token issuer
+[saml]
+entity_id = "https://containerizer-idp.sandbox.lab"
+
+# the WS-Federation metadata (FederationMetadata.xml) the init container writes is public, like the
+# SAML and OIDC metadata
+[[resource.access_control]]
+context = "(.*)/wsfed-metadata/(.*)"
+secure = false
+http_method = "GET"
+
+[account_recovery.endpoint.auth]
+hash = "66cd9688a2ae068244ea01e70f0e230f5623b7fa4cdecb65070a09ec06452262"
+
+[identity.auth_framework.endpoint]
+app_password = "dashboard"

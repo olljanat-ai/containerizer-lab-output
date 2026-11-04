@@ -1,0 +1,104 @@
+{
+  "app": "containerization-challenge-field-service",
+  "policy": {
+    "fail_on": "CRITICAL",
+    "ignore_unfixed": true
+  },
+  "passed": true,
+  "lint": {
+    "error": 0,
+    "warning": 0,
+    "info": 3
+  },
+  "components": [
+    {
+      "component": "fieldservice-worker",
+      "base": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "fieldservice-worker/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "fieldservice-worker/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "fieldservice-worker/k8s.yaml: Deployment/fieldservice-worker/fieldservice-worker",
+          "message": "image localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.1641 is not pinned to a digest"
+        }
+      ],
+      "scans": [
+        {
+          "kind": "base",
+          "image": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        },
+        {
+          "kind": "image",
+          "image": "containerizer/containerization-challenge-field-service-fieldservice-worker:gate",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 1,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        }
+      ],
+      "run": {
+        "status": "ok",
+        "http": null,
+        "errors": [],
+        "log": "trategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()\n         at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)\n         at FieldService.Data.Services.WorkOrderService.GetUninvoicedAsync(CancellationToken ct) in /src/src/FieldService.Data/Services/WorkOrderService.cs:line 131\n         at FieldService.Worker.Jobs.NightlyJobsService.ExportInvoicesAsync(CancellationToken ct) in /src/src/FieldService.Worker/Jobs/NightlyJobsService.cs:line 88\n         at FieldService.Worker.Jobs.NightlyJobsService.RunAsync(DateTime businessDate, CancellationToken ct) in /src/src/FieldService.Worker/Jobs/NightlyJobsService.cs:line 62\n         at FieldService.Worker.Jobs.NightlyJobsService.ExecuteAsync(CancellationToken stoppingToken) in /src/src/FieldService.Worker/Jobs/NightlyJobsService.cs:line 42\n      ClientConnectionId:00000000-0000-0000-0000-000000000000\n"
+      }
+    }
+  ],
+  "notes": []
+}

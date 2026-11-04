@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-trade-rebates
+resources:
+- namespace.yaml
+- security.yaml
+- lab/k8s.yaml
+- traderebates-api/k8s.yaml
+- traderebates-statementworker/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-statementworker:tag"}

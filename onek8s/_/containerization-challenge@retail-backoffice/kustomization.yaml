@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-retail-backoffice
+resources:
+- namespace.yaml
+- security.yaml
+- vanarsdel-storemanager/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-storemanager:tag"}

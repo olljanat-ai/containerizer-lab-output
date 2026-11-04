@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-policy-changes
+resources:
+- namespace.yaml
+- security.yaml
+- lab/k8s.yaml
+- policychanges-api/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-policy-changes:policychanges-api:tag"}

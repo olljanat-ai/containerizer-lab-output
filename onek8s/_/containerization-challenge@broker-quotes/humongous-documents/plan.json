@@ -1,0 +1,104 @@
+{
+  "component": "Humongous.Documents",
+  "kind": "dotnet",
+  "role": "worker",
+  "project": "src/Humongous.Documents/Humongous.Documents.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "Serilog__WriteTo__0__Name": "Console",
+    "DOTNET_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "logs"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": null,
+  "health": null,
+  "entry": "Humongous.Documents.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-file-logs"
+  ],
+  "reasons": [
+    {
+      "rule": "config-serilog-console",
+      "why": "Serilog file sinks are switched to the console with an environment variable, so the cluster collects the logs from stdout.",
+      "refs": [
+        "https://github.com/serilog/serilog-sinks-console",
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    },
+    {
+      "rule": "plan-file-logs",
+      "why": "The app logs to files under its own folder; the folder is made writable so start-up does not fail on the read-only root file system (console logging is preferred).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/extensions/logging/providers"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "rabbitmq",
+      "ports": [
+        {
+          "port": 5671,
+          "protocol": "TCP"
+        },
+        {
+          "port": 5672,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "smtp",
+      "ports": [
+        {
+          "port": 25,
+          "protocol": "TCP"
+        },
+        {
+          "port": 465,
+          "protocol": "TCP"
+        },
+        {
+          "port": 587,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "http-apis",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP"
+        },
+        {
+          "port": 80,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

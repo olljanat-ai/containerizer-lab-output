@@ -1,0 +1,141 @@
+# registry read credential (.dockerconfigjson): every key of remote secret containerization-challenge-broker-quotes--cz-registry in the secret store, never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: containerization-challenge-broker-quotes-registry
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: containerization-challenge-broker-quotes-registry
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      mergePolicy: Merge
+  dataFrom:
+  - extract:
+      key: containerization-challenge-broker-quotes--cz-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: humongous-brokerportal
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-broker-quotes-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: humongous-brokerportal
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: humongous-brokerportal
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: humongous-documents
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-broker-quotes-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: humongous-documents
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: humongous-documents
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: humongous-workbench
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-broker-quotes-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: humongous-workbench
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: humongous-workbench
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: containerization-challenge-broker-quotes
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 30m
+  sourceRef:
+    kind: GitRepository
+    name: containerization-challenge-broker-quotes
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: Update {{range .Changed.Changes}}{{.OldValue}} -> {{.NewValue}}
+        {{end}}
+    push:
+      branch: main
+  update:
+    strategy: Setters
+    path: ./onek8s/_/containerization-challenge@broker-quotes

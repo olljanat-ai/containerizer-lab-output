@@ -1,0 +1,64 @@
+{
+  "component": "PolicyChanges.Api",
+  "kind": "dotnet",
+  "role": "web",
+  "project": "src/PolicyChanges.Api/PolicyChanges.Api.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "ASPNETCORE_HTTP_PORTS": "8080",
+    "DOTNET_ENVIRONMENT": "Production",
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/home/app/.aspnet/DataProtection-Keys"
+  ],
+  "publish_args": [],
+  "remove_files": [
+    "global.json"
+  ],
+  "single_replica": false,
+  "uid": 1654,
+  "port": 8080,
+  "health": "/health",
+  "entry": "PolicyChanges.Api.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-global-json",
+    "plan-dataprotection-keys"
+  ],
+  "reasons": [
+    {
+      "rule": "plan-global-json",
+      "why": "global.json pins an SDK version that the build image may not have; it is removed in the build stage only (never in the repository) so the image's SDK builds the project.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/tools/global-json"
+      ]
+    },
+    {
+      "rule": "plan-dataprotection-keys",
+      "why": "ASP.NET Core Data Protection writes its key ring under the user's home folder; with a read-only root file system that folder must be writable (persist it, or share it via PersistKeysTo*, when running more than one replica).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- secrets.yaml
+- network.yaml
+- server.yaml
+- sync.yaml
+- dns.yaml
+configMapGenerator:
+- name: cz-idp-config
+  namespace: containerizer-idp
+  options:
+    labels:
+      app.kubernetes.io/part-of: containerizer-sandbox
+      app.kubernetes.io/managed-by: containerizer
+  files:
+  - config/deployment.toml
+  - config/init.sh
+  - config/FederationMetadata.xml.in
+- name: cz-idp-sync
+  namespace: containerizer-idp
+  options:
+    labels:
+      app.kubernetes.io/part-of: containerizer-sandbox
+      app.kubernetes.io/managed-by: containerizer
+      app.kubernetes.io/name: cz-idp-sync
+  files:
+  - sync/idp.json
+  - sync/idp_sync.py
+  - sync/apps__containerization-challenge-broker-quotes--humongous-brokerportal.json
+  - sync/apps__containerization-challenge-broker-quotes--humongous-workbench.json

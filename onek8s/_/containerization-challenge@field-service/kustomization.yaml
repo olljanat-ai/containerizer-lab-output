@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: containerization-challenge-field-service
+resources:
+- namespace.yaml
+- security.yaml
+- fieldservice-worker/k8s.yaml
+- lab/k8s.yaml
+images:
+  - name: localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker
+    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-field-service:fieldservice-worker:tag"}

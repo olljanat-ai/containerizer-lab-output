@@ -1,0 +1,46 @@
+{
+  "admin": "admin",
+  "groups": [
+    "sandbox-admins",
+    "sandbox-users"
+  ],
+  "users": [
+    {
+      "username": "alice",
+      "givenName": "Alice",
+      "familyName": "Admin",
+      "groups": [
+        "sandbox-admins"
+      ],
+      "email": "alice@sandbox.lab"
+    },
+    {
+      "username": "bob",
+      "givenName": "Bob",
+      "familyName": "User",
+      "groups": [
+        "sandbox-users"
+      ],
+      "email": "bob@sandbox.lab"
+    },
+    {
+      "username": "carol",
+      "givenName": "Carol",
+      "familyName": "User",
+      "groups": [
+        "sandbox-users"
+      ],
+      "email": "carol@sandbox.lab"
+    }
+  ],
+  "oidc": {
+    "claims": {
+      "name": "http://wso2.org/claims/formattedName"
+    },
+    "scope_claims": {
+      "profile": [
+        "groups"
+      ]
+    }
+  }
+}

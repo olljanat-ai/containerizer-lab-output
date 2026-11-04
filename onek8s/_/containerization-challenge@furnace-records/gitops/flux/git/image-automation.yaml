@@ -1,0 +1,141 @@
+# registry read credential (.dockerconfigjson): every key of remote secret containerization-challenge-furnace-records--cz-registry in the secret store, never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: containerization-challenge-furnace-records-registry
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: containerization-challenge-furnace-records-registry
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      mergePolicy: Merge
+  dataFrom:
+  - extract:
+      key: containerization-challenge-furnace-records--cz-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: furnacerecords-api
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-furnace-records-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: furnacerecords-api
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: furnacerecords-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: furnacerecords-portal
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-portal
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-furnace-records-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: furnacerecords-portal
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: furnacerecords-portal
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: furnacerecords-worker
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-furnace-records-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: furnacerecords-worker
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: furnacerecords-worker
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: containerization-challenge-furnace-records
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 30m
+  sourceRef:
+    kind: GitRepository
+    name: containerization-challenge-furnace-records
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: Update {{range .Changed.Changes}}{{.OldValue}} -> {{.NewValue}}
+        {{end}}
+    push:
+      branch: main
+  update:
+    strategy: Setters
+    path: ./onek8s/_/containerization-challenge@furnace-records

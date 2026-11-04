@@ -23,6 +23,461 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: containerizer-verifier
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-batch-release
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-broker-quotes
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-city-permits
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-consumer-loans
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-consumer-loans
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-consumer-loans
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-field-service
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-field-service
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-field-service
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-freight-rates
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-freight-rates
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-freight-rates
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-furnace-records
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
   namespace: containerization-challenge-parts-catalog-refactor-175
   labels:
     app.kubernetes.io/part-of: containerizer-sandbox
@@ -72,6 +527,266 @@ kind: RoleBinding
 metadata:
   name: containerizer-verifier
   namespace: containerization-challenge-parts-catalog-refactor-175
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-policy-changes
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-policy-changes
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-policy-changes
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-retail-backoffice
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-study-data
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-study-data
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-study-data
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: containerizer-verifier
+subjects:
+- kind: ServiceAccount
+  name: containerizer-verifier
+  namespace: containerizer-verify
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ''
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  resources:
+  - kustomizations
+  resourceNames:
+  - containerization-challenge-trade-rebates
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerizer-verifier
+  namespace: containerization-challenge-trade-rebates
   labels:
     app.kubernetes.io/part-of: containerizer-sandbox
     app.kubernetes.io/managed-by: containerizer

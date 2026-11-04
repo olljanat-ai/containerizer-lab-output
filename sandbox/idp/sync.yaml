@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cz-idp-sync
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp-sync
+automountServiceAccountToken: false
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cz-idp-sync
+  namespace: containerizer-idp
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+    app.kubernetes.io/name: cz-idp-sync
+spec:
+  schedule: '*/5 * * * *'
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 900
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/part-of: containerizer-sandbox
+            app.kubernetes.io/managed-by: containerizer
+            app.kubernetes.io/name: cz-idp-sync
+        spec:
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          restartPolicy: Never
+          serviceAccountName: cz-idp-sync
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+          - name: sync
+            image: docker.io/library/python:3.13-slim@sha256:2d44738ebf4ce5f63b9d9ea871e9c7cfdc0426f7b0c97cac915fd88ded1d86bb
+            imagePullPolicy: IfNotPresent
+            command:
+            - python
+            - -I
+            - -B
+            - /sync/idp_sync.py
+            - --url
+            - https://containerizer-idp.sandbox.lab
+            - --config
+            - /sync
+            - --secrets
+            - /secrets
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              seccompProfile:
+                type: RuntimeDefault
+              readOnlyRootFilesystem: true
+            resources:
+              requests:
+                cpu: 20m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+            volumeMounts:
+            - name: sync
+              mountPath: /sync
+              readOnly: true
+            - name: secrets
+              mountPath: /secrets
+              readOnly: true
+          volumes:
+          - name: sync
+            configMap:
+              name: cz-idp-sync
+          - name: secrets
+            secret:
+              secretName: cz-idp
+              defaultMode: 256

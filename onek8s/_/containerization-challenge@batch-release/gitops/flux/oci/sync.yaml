@@ -1,0 +1,113 @@
+# registry read credential (.dockerconfigjson): every key of remote secret containerization-challenge-batch-release--cz-registry in the secret store, never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: containerization-challenge-batch-release-registry
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: containerization-challenge-batch-release-registry
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      mergePolicy: Merge
+  dataFrom:
+  - extract:
+      key: containerization-challenge-batch-release--cz-registry
+---
+# cosign public key (cosign.pub): every key of remote secret containerization-challenge-batch-release--cz-cosign-pub in the secret store, never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: containerization-challenge-batch-release-cosign-pub
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: containerization-challenge-batch-release-cosign-pub
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  dataFrom:
+  - extract:
+      key: containerization-challenge-batch-release--cz-cosign-pub
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: containerization-challenge-batch-release
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 5m
+  url: oci://localhost:5000/sandbox/containerization-challenge-batch-release/manifests
+  ref:
+    semver: '>=1.0.0'
+  secretRef:
+    name: containerization-challenge-batch-release-registry
+  verify:
+    provider: cosign
+    secretRef:
+      name: containerization-challenge-batch-release-cosign-pub
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: containerization-challenge-batch-release
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 10m
+  retryInterval: 2m
+  timeout: 5m
+  sourceRef:
+    kind: OCIRepository
+    name: containerization-challenge-batch-release
+  path: ./
+  prune: true
+  wait: true
+  targetNamespace: containerization-challenge-batch-release
+  serviceAccountName: containerization-challenge-batch-release-reconciler
+  patches:
+  - patch: "$patch: delete\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: containerization-challenge-batch-release\n"
+    target:
+      kind: Namespace
+      name: containerization-challenge-batch-release
+  - patch: "$patch: delete\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\n\
+      metadata:\n  name: default-deny-all\n"
+    target:
+      kind: NetworkPolicy
+      name: default-deny-all
+  - patch: "$patch: delete\napiVersion: v1\nkind: LimitRange\nmetadata:\n  name: defaults\n"
+    target:
+      kind: LimitRange
+      name: defaults
+  - patch: "$patch: delete\napiVersion: v1\nkind: ResourceQuota\nmetadata:\n  name:\
+      \ quota\n"
+    target:
+      kind: ResourceQuota
+      name: quota
+  - patch: "$patch: delete\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name:\
+      \ app-secrets-reader\n"
+    target:
+      kind: ServiceAccount
+      name: app-secrets-reader
+  force: false

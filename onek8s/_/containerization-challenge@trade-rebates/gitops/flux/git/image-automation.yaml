@@ -1,0 +1,112 @@
+# registry read credential (.dockerconfigjson): every key of remote secret containerization-challenge-trade-rebates--cz-registry in the secret store, never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: containerization-challenge-trade-rebates-registry
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: containerization-challenge-trade-rebates-registry
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      mergePolicy: Merge
+  dataFrom:
+  - extract:
+      key: containerization-challenge-trade-rebates--cz-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: traderebates-api
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-trade-rebates-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: traderebates-api
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: traderebates-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: traderebates-statementworker
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-trade-rebates-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: traderebates-statementworker
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: traderebates-statementworker
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: containerization-challenge-trade-rebates
+  namespace: containerization-challenge-trade-rebates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 30m
+  sourceRef:
+    kind: GitRepository
+    name: containerization-challenge-trade-rebates
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: Update {{range .Changed.Changes}}{{.OldValue}} -> {{.NewValue}}
+        {{end}}
+    push:
+      branch: main
+  update:
+    strategy: Setters
+    path: ./onek8s/_/containerization-challenge@trade-rebates

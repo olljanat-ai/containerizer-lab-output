@@ -1,0 +1,69 @@
+{
+  "provider": "github",
+  "org": "onek8s",
+  "project": "_",
+  "repo": "containerization-challenge",
+  "status": "deployed",
+  "reason": "",
+  "web_url": "https://github.com/onek8s/containerization-challenge",
+  "clone_url": "https://github.com/onek8s/containerization-challenge.git",
+  "branch": "main",
+  "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
+  "last_commit": "2026-10-30T13:09:19+00:00",
+  "app": "containerization-challenge-study-data",
+  "path": "onek8s/_/containerization-challenge@study-data",
+  "rating": "E",
+  "components": [
+    {
+      "component": "StudyData.Sponsor.Api",
+      "folder": "studydata-sponsor-api",
+      "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261104.1641",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/StudyData.Sponsor.Api/StudyData.Sponsor.Api.csproj",
+      "project_name": "StudyData.Sponsor.Api",
+      "verification": "not run",
+      "digest": "sha256:11df4b485561fceaf2760163032569eb75720ecfb03f3236a4ca445c3f750ae2"
+    }
+  ],
+  "excluded": [
+    {
+      "component": "StudyData.Edc.Web",
+      "reason": "rated E (blocker)"
+    },
+    {
+      "component": "StudyData.Jobs",
+      "reason": "rated E (blocker)"
+    },
+    {
+      "component": "StudyData.Monitor.Api",
+      "reason": "rated E (blocker)"
+    }
+  ],
+  "processed_at": "2026-11-04T16:41:44+00:00",
+  "overridden": [],
+  "seconds": 0.0,
+  "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/study-data",
+  "dev_database": {},
+  "lab_services": {
+    "needed": {
+      "sqlserver": [
+        "StudyData.Sponsor.Api"
+      ]
+    },
+    "provided": [
+      "sqlserver"
+    ],
+    "missing": [],
+    "overrides": {
+      "StudyData.Sponsor.Api": [
+        "sqlserver:ConnectionStrings__StudyData"
+      ]
+    }
+  },
+  "migration": {},
+  "llm_usage": {},
+  "apps": [],
+  "split_hint": {}
+}

@@ -1,0 +1,98 @@
+{
+  "provider": "github",
+  "org": "onek8s",
+  "project": "_",
+  "repo": "containerization-challenge",
+  "status": "deployed",
+  "reason": "",
+  "web_url": "https://github.com/onek8s/containerization-challenge",
+  "clone_url": "https://github.com/onek8s/containerization-challenge.git",
+  "branch": "main",
+  "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
+  "last_commit": "2026-10-30T13:09:19+00:00",
+  "app": "containerization-challenge-broker-quotes",
+  "path": "onek8s/_/containerization-challenge@broker-quotes",
+  "rating": "D",
+  "components": [
+    {
+      "component": "Humongous.BrokerPortal",
+      "folder": "humongous-brokerportal",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261104.1641",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/Humongous.BrokerPortal/Humongous.BrokerPortal.csproj",
+      "project_name": "Humongous.BrokerPortal",
+      "verification": "not run",
+      "digest": "sha256:ce4092dce728740792a414532a60b1f98919274ebc2e7c10263a8b7dd0cf4a97"
+    },
+    {
+      "component": "Humongous.Documents",
+      "folder": "humongous-documents",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261104.1641",
+      "rating": "A",
+      "verdict": "config",
+      "role": "worker",
+      "project": "src/Humongous.Documents/Humongous.Documents.csproj",
+      "project_name": "Humongous.Documents",
+      "verification": "not run",
+      "digest": "sha256:201dd67f9395d72931b5a547d4bd5915987abe8953f823657e82925babbb5206"
+    },
+    {
+      "component": "Humongous.Workbench",
+      "folder": "humongous-workbench",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261104.1641",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/Humongous.Workbench/Humongous.Workbench.csproj",
+      "project_name": "Humongous.Workbench",
+      "verification": "not run",
+      "digest": "sha256:5de271be3bdd78230446d6cc4886a75a36c3e26921d5e3afa2786274dd147813"
+    }
+  ],
+  "excluded": [
+    {
+      "component": "Humongous.Identity",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "Humongous.PolicyService",
+      "reason": "rated E (blocker)"
+    },
+    {
+      "component": "Humongous.Quoting.Api",
+      "reason": "rated E (blocker)"
+    }
+  ],
+  "processed_at": "2026-11-04T16:41:44+00:00",
+  "overridden": [],
+  "seconds": 0.0,
+  "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
+  "dev_database": {},
+  "lab_services": {
+    "needed": {
+      "sqlserver": [
+        "Humongous.Documents"
+      ],
+      "rabbitmq": [
+        "Humongous.Documents"
+      ]
+    },
+    "provided": [
+      "sqlserver"
+    ],
+    "missing": [
+      "rabbitmq"
+    ],
+    "overrides": {
+      "Humongous.Documents": [
+        "sqlserver:ConnectionStrings__Quoting"
+      ]
+    }
+  },
+  "migration": {},
+  "llm_usage": {},
+  "apps": [],
+  "split_hint": {}
+}

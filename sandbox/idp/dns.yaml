@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/part-of: containerizer-sandbox
+    app.kubernetes.io/managed-by: containerizer
+data:
+  containerizer-idp.override: "rewrite stop {\n  name exact containerizer-idp.sandbox.lab.\
+    \ traefik.kube-system.svc.cluster.local.\n  answer auto\n}\n"

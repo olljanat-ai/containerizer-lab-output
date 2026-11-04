@@ -1,0 +1,63 @@
+{
+  "component": "StudyData.Sponsor.Api",
+  "kind": "dotnet",
+  "role": "web",
+  "project": "src/StudyData.Sponsor.Api/StudyData.Sponsor.Api.csproj",
+  "tfm": "net8.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "ASPNETCORE_HTTP_PORTS": "8080",
+    "Logging__LogFile": "/data/studydata/logs/sponsor-.log",
+    "DOTNET_ENVIRONMENT": "Production",
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "/data/studydata/logs",
+    "/home/app/.aspnet/DataProtection-Keys"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": 8080,
+  "health": "/health",
+  "entry": "StudyData.Sponsor.Api.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-dataprotection-keys"
+  ],
+  "reasons": [
+    {
+      "rule": "config-windows-paths",
+      "why": "Windows paths in configuration (drive letters, UNC shares) are overridden with environment variables to folders under /data, which the manifests mount as volumes; the application code is not changed.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    },
+    {
+      "rule": "plan-dataprotection-keys",
+      "why": "ASP.NET Core Data Protection writes its key ring under the user's home folder; with a read-only root file system that folder must be writable (persist it, or share it via PersistKeysTo*, when running more than one replica).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview"
+      ]
+    }
+  ],
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}
