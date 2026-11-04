@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../../onek8s/_/containerization-challenge-refactor-186/gitops/flux
+- ../../../onek8s/_/containerization-challenge-refactor-191/gitops/flux
 - ../../../onek8s/_/containerization-challenge@batch-release/gitops/flux
 - ../../../onek8s/_/containerization-challenge@broker-quotes/gitops/flux
 - ../../../onek8s/_/containerization-challenge@city-permits/gitops/flux
@@ -14,3 +15,156 @@ resources:
 - ../../../onek8s/_/containerization-challenge@study-data/gitops/flux
 - ../../../onek8s/_/containerization-challenge@trade-rebates/gitops/flux
 - ../../idp
+patches:
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-parts-catalog-refactor-186
+    namespace: containerization-challenge-parts-catalog-refactor-186
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "partscatalog", "namespace": "containerization-challenge-parts-catalog-refactor-186"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-parts-catalog-refactor-186"}, {"apiVersion":
+    "external-secrets.io/v1", "kind": "ExternalSecret", "name": "partscatalog-dataprotection",
+    "namespace": "containerization-challenge-parts-catalog-refactor-186"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-parts-catalog-refactor-191
+    namespace: containerization-challenge-parts-catalog-refactor-191
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "partscatalog", "namespace": "containerization-challenge-parts-catalog-refactor-191"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-parts-catalog-refactor-191"}, {"apiVersion":
+    "external-secrets.io/v1", "kind": "ExternalSecret", "name": "partscatalog-dataprotection",
+    "namespace": "containerization-challenge-parts-catalog-refactor-191"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-batch-release
+    namespace: containerization-challenge-batch-release
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "batchrelease-api", "namespace": "containerization-challenge-batch-release"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-batch-release"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-broker-quotes
+    namespace: containerization-challenge-broker-quotes
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "humongous-brokerportal", "namespace": "containerization-challenge-broker-quotes"},
+    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "humongous-documents",
+    "namespace": "containerization-challenge-broker-quotes"}, {"apiVersion": "apps/v1",
+    "kind": "Deployment", "name": "humongous-workbench", "namespace": "containerization-challenge-broker-quotes"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-broker-quotes"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-city-permits
+    namespace: containerization-challenge-city-permits
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "citypermits-opendata", "namespace": "containerization-challenge-city-permits"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-city-permits"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-consumer-loans
+    namespace: containerization-challenge-consumer-loans
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "lucerne-lending-customerportal", "namespace": "containerization-challenge-consumer-loans"},
+    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "lucerne-lending-documents",
+    "namespace": "containerization-challenge-consumer-loans"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-consumer-loans"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-field-service
+    namespace: containerization-challenge-field-service
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "fieldservice-worker", "namespace": "containerization-challenge-field-service"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-field-service"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-freight-rates
+    namespace: containerization-challenge-freight-rates
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "freightrates-api", "namespace": "containerization-challenge-freight-rates"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-freight-rates"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-furnace-records
+    namespace: containerization-challenge-furnace-records
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "furnacerecords-api", "namespace": "containerization-challenge-furnace-records"},
+    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "furnacerecords-portal",
+    "namespace": "containerization-challenge-furnace-records"}, {"apiVersion": "apps/v1",
+    "kind": "Deployment", "name": "furnacerecords-worker", "namespace": "containerization-challenge-furnace-records"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-furnace-records"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-policy-changes
+    namespace: containerization-challenge-policy-changes
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "policychanges-api", "namespace": "containerization-challenge-policy-changes"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-policy-changes"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-retail-backoffice
+    namespace: containerization-challenge-retail-backoffice
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "vanarsdel-storemanager", "namespace": "containerization-challenge-retail-backoffice"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-study-data
+    namespace: containerization-challenge-study-data
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "studydata-sponsor-api", "namespace": "containerization-challenge-study-data"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-study-data"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-trade-rebates
+    namespace: containerization-challenge-trade-rebates
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "traderebates-api", "namespace": "containerization-challenge-trade-rebates"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-trade-rebates"}]}]'
