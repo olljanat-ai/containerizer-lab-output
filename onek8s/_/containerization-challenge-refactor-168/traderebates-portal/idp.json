@@ -1,0 +1,9 @@
+{
+  "idp": "https://containerizer-idp.sandbox.lab",
+  "project": "src/TradeRebates.Portal/TradeRebates.Portal.csproj",
+  "clients": [],
+  "applications": [],
+  "notes": [
+    "uses OpenID Connect but its settings are not in appsettings.json (set in code?): not pointed at the sandbox IdP; move them to configuration"
+  ]
+}
