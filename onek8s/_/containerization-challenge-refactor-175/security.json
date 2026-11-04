@@ -1,0 +1,104 @@
+{
+  "app": "containerization-challenge-parts-catalog-refactor-175",
+  "policy": {
+    "fail_on": "CRITICAL",
+    "ignore_unfixed": true
+  },
+  "passed": true,
+  "lint": {
+    "error": 0,
+    "warning": 0,
+    "info": 3
+  },
+  "components": [
+    {
+      "component": "partscatalog",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "partscatalog/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "partscatalog/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "partscatalog/k8s.yaml: Deployment/partscatalog/partscatalog",
+          "message": "image localhost:5000/sandbox/containerization-challenge-parts-catalog-refactor-175/partscatalog:1.20261104.1515-refactor.175 is not pinned to a digest"
+        }
+      ],
+      "scans": [
+        {
+          "kind": "base",
+          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        },
+        {
+          "kind": "image",
+          "image": "containerizer/containerization-challenge-parts-catalog-refactor-175-partscatalog:gate",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 5,
+            "LOW": 2
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 3,
+            "LOW": 1
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        }
+      ],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "SqlServerConnection.OpenDbConnection(Boolean errorsExpected)\n   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)\n   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)\n   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.<>c__DisplayClass18_0.<Exists>b__0(DateTime giveUp)\n   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)\n   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)\n   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)\n   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.Exists(Boolean retryOnNotExists)\n   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.Exists()\n   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabaseCreator.EnsureCreated()\n   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated()\n   at PartsCatalog.Data.SeedData.Initialize(CatalogContext db) in /src/src/PartsCatalog/Data/SeedData.cs:line 9\n   at Program.<Main>$(String[] args) in /src/src/PartsCatalog/Program.cs:line 27\nClientConnectionId:00000000-0000-0000-0000-000000000000\n"
+      }
+    }
+  ],
+  "notes": []
+}
