@@ -1,0 +1,225 @@
+{
+  "app": "containerization-challenge-expense-claims",
+  "policy": {
+    "fail_on": "CRITICAL",
+    "ignore_unfixed": true
+  },
+  "passed": false,
+  "lint": {
+    "error": 0,
+    "warning": 0,
+    "info": 6
+  },
+  "components": [
+    {
+      "component": "expenseclaims-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "expenseclaims-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "expenseclaims-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "expenseclaims-api/k8s.yaml: Deployment/expenseclaims-api/expenseclaims-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1326-refactor.206 is not pinned to a digest"
+        }
+      ],
+      "scans": [
+        {
+          "kind": "base",
+          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        },
+        {
+          "kind": "image",
+          "image": "containerizer/containerization-challenge-expense-claims-expenseclaims-api:gate",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": false,
+          "counts": {
+            "CRITICAL": 1,
+            "HIGH": 3,
+            "MEDIUM": 4,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 1,
+            "HIGH": 2,
+            "MEDIUM": 2,
+            "LOW": 0
+          },
+          "blocking": [
+            {
+              "id": "CVE-2021-24112",
+              "package": "System.Drawing.Common",
+              "installed": "4.7.0",
+              "fixed": "4.7.2, 5.0.3",
+              "severity": "CRITICAL",
+              "type": "dotnet-core",
+              "title": "dotnet: Remote Code Execution Vulnerability",
+              "origin": "app",
+              "purl": "pkg:nuget/System.Drawing.Common@4.7.0"
+            }
+          ],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": [
+            "Microsoft.Data.SqlClient 2.1.4 -> 2.1.7, 3.1.5, 4.0.5, 5.1.3",
+            "Microsoft.Extensions.Caching.Memory 6.0.1 -> 8.0.1, 9.0.0-rc.2.24473.5, 6.0.2",
+            "System.Drawing.Common 4.7.0 -> 4.7.2, 5.0.3"
+          ]
+        }
+      ],
+      "run": {
+        "status": "inconclusive",
+        "http": 503,
+        "errors": [],
+        "log": "lth check database with status Unhealthy completed after 3001.5895ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPR83S57FGV:00000001\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPR83S57FGV\"}\n2026-11-05 13:31:04.187 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 3002.8158 ms {\"RequestId\": \"0HNPR83S57FGV:00000001\", \"ConnectionId\": \"0HNPR83S57FGV\"}\n2026-11-05 13:31:09.673 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check database with status Unhealthy completed after 2461.4962ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPR83S57FH0:00000001\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPR83S57FH0\"}\n2026-11-05 13:31:09.675 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 2463.6348 ms {\"RequestId\": \"0HNPR83S57FH0:00000001\", \"ConnectionId\": \"0HNPR83S57FH0\"}\n2026-11-05 13:31:12.721 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check database with status Unhealthy completed after 2.9598ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPR83S57FH1:00000001\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPR83S57FH1\"}\n2026-11-05 13:31:12.722 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 4.8299 ms {\"RequestId\": \"0HNPR83S57FH1:00000001\", \"ConnectionId\": \"0HNPR83S57FH1\"}\n"
+      }
+    },
+    {
+      "component": "expenseclaims-jobs",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "expenseclaims-jobs/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "expenseclaims-jobs/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "expenseclaims-jobs/k8s.yaml: Deployment/expenseclaims-jobs/expenseclaims-jobs",
+          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1326-refactor.206 is not pinned to a digest"
+        }
+      ],
+      "scans": [
+        {
+          "kind": "base",
+          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": true,
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 2,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0,
+            "LOW": 0
+          },
+          "blocking": [],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": []
+        },
+        {
+          "kind": "image",
+          "image": "containerizer/containerization-challenge-expense-claims-expenseclaims-jobs:gate",
+          "scanner": "trivy",
+          "os": "ubuntu 24.04",
+          "error": "",
+          "scanner_notes": [
+            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
+          ],
+          "passed": false,
+          "counts": {
+            "CRITICAL": 1,
+            "HIGH": 4,
+            "MEDIUM": 6,
+            "LOW": 1
+          },
+          "fixable": {
+            "CRITICAL": 1,
+            "HIGH": 3,
+            "MEDIUM": 4,
+            "LOW": 0
+          },
+          "blocking": [
+            {
+              "id": "CVE-2021-24112",
+              "package": "System.Drawing.Common",
+              "installed": "4.7.0",
+              "fixed": "4.7.2, 5.0.3",
+              "severity": "CRITICAL",
+              "type": "dotnet-core",
+              "title": "dotnet: Remote Code Execution Vulnerability",
+              "origin": "app",
+              "purl": "pkg:nuget/System.Drawing.Common@4.7.0"
+            }
+          ],
+          "accepted": [],
+          "expired_allowlist": [],
+          "patched": [],
+          "app_fixable": [
+            "Microsoft.Data.SqlClient 2.1.4 -> 2.1.7, 3.1.5, 4.0.5, 5.1.3",
+            "MimeKit 3.4.2 -> 4.7.1",
+            "Newtonsoft.Json 12.0.3 -> 13.0.1",
+            "System.Drawing.Common 4.7.0 -> 4.7.2, 5.0.3"
+          ]
+        }
+      ],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "nectionInternal oldConnection)\n   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)\n   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)\n   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)\n   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)\n   at Microsoft.Data.SqlClient.SqlConnection.Open()\n   at Quartz.Impl.AdoJobStore.JobStoreSupport.GetConnection()\nClientConnectionId:00000000-0000-0000-0000-000000000000]]\n"
+      }
+    }
+  ],
+  "notes": []
+}

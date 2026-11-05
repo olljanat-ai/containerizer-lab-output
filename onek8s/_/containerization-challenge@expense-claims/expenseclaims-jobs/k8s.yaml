@@ -1,0 +1,339 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: expenseclaims-jobs
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expenseclaims-jobs
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: expenseclaims-jobs
+      app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: expenseclaims-jobs
+        app.kubernetes.io/part-of: containerization-challenge-expense-claims
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1654
+        runAsGroup: 1654
+      automountServiceAccountToken: false
+      containers:
+      - name: expenseclaims-jobs
+        image: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1326-refactor.206
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__ExpenseClaims
+          valueFrom:
+            secretKeyRef:
+              name: lab-sqlserver
+              key: connection-string
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTP_PORTS
+          value: '8080'
+        - name: Bank__OutboundFolder
+          value: /data/interfaces/bank/outbound
+        - name: CardImport__InboundFolder
+          value: /data/interfaces/cards/inbound
+        - name: DOTNET_ENVIRONMENT
+          value: Production
+        - name: HrImport__InboundFolder
+          value: /data/interfaces/hr/inbound
+        - name: Serilog__WriteTo__0__Name
+          value: Console
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
+          appArmorProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 64Mi
+          limits:
+            memory: 512Mi
+            ephemeral-storage: 1Gi
+        volumeMounts:
+        - name: w0-logs
+          mountPath: /app/logs
+        - name: w1-outbound
+          mountPath: /data/interfaces/bank/outbound
+        - name: w2-inbound
+          mountPath: /data/interfaces/cards/inbound
+        - name: w3-inbound
+          mountPath: /data/interfaces/hr/inbound
+        - name: w4-dataprotection-keys
+          mountPath: /home/app/.aspnet/DataProtection-Keys
+          readOnly: true
+        - name: w5-tmp
+          mountPath: /tmp
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 20
+          initialDelaySeconds: 20
+        startupProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: w0-logs
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w1-outbound
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w2-inbound
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w3-inbound
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w4-dataprotection-keys
+        secret:
+          secretName: expenseclaims-jobs-dataprotection
+      - name: w5-tmp
+        emptyDir:
+          sizeLimit: 256Mi
+      enableServiceLinks: false
+      serviceAccountName: expenseclaims-jobs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expenseclaims-jobs
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  selector:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: expenseclaims-jobs
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  annotations:
+    containerizer.io/egress: sql-server,smtp,http-apis,configured-ports,lab-sqlserver
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: expenseclaims-jobs
+      app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+        - 169.254.170.2/32
+        - 100.100.100.200/32
+    - ipBlock:
+        cidr: ::/0
+        except:
+        - fd00:ec2::254/128
+    - namespaceSelector: {}
+    ports:
+    - port: 1433
+      protocol: TCP
+    - port: 25
+      protocol: TCP
+    - port: 465
+      protocol: TCP
+    - port: 587
+      protocol: TCP
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    - port: 7048
+      protocol: TCP
+    - port: 8080
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: sqlserver
+    ports:
+    - port: 1433
+      protocol: TCP
+---
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: expenseclaims-jobs-dataprotection
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  length: 64
+  digits: 10
+  symbols: 0
+  noUpper: false
+  allowRepeat: true
+---
+# ASP.NET Core Data Protection key, generated in the cluster once (no secret store); replace with your own key ring or PersistKeysTo* in code if you prefer
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: expenseclaims-jobs-dataprotection
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  refreshPolicy: CreatedOnce
+  refreshInterval: '0'
+  target:
+    name: expenseclaims-jobs-dataprotection
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      engineVersion: v2
+      data:
+        key-0c64e217-c5c4-598d-ac22-b5fe0ddd67cd.xml: "<?xml version=\"1.0\" encoding=\"\
+          utf-8\"?>\n<key id=\"0c64e217-c5c4-598d-ac22-b5fe0ddd67cd\" version=\"1\"\
+          >\n  <creationDate>2026-01-01T00:00:00Z</creationDate>\n  <activationDate>2026-01-01T00:00:00Z</activationDate>\n\
+          \  <expirationDate>2126-01-01T00:00:00Z</expirationDate>\n  <descriptor\
+          \ deserializerType=\"Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer,\
+          \ Microsoft.AspNetCore.DataProtection\">\n    <descriptor>\n      <encryption\
+          \ algorithm=\"AES_256_CBC\" />\n      <validation algorithm=\"HMACSHA256\"\
+          \ />\n      <masterKey p4:requiresEncryption=\"true\" xmlns:p4=\"http://schemas.asp.net/2015/03/dataProtection\"\
+          >\n        <value>{{ .password | b64enc }}</value>\n      </masterKey>\n\
+          \    </descriptor>\n  </descriptor>\n</key>\n"
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: Password
+        name: expenseclaims-jobs-dataprotection
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-expense-claims--expenseclaims-jobs); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: expenseclaims-jobs-secrets
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: expenseclaims-jobs-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: ConnectionStrings__ExpenseClaims
+    remoteRef:
+      key: containerization-challenge-expense-claims--expenseclaims-jobs
+      property: ConnectionStrings__ExpenseClaims
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: expenseclaims-jobs
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+  annotations:
+    containerizer.io/url: https://expenseclaims-jobs-containerization-challenge-expense-claims.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - expenseclaims-jobs-containerization-challenge-expense-claims.sandbox.lab
+  rules:
+  - host: expenseclaims-jobs-containerization-challenge-expense-claims.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: expenseclaims-jobs
+            port:
+              name: http
