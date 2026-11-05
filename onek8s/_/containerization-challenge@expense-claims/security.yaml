@@ -33,10 +33,10 @@ metadata:
 spec:
   hard:
     requests.cpu: 1000m
-    requests.memory: 1024Mi
-    limits.memory: 2048Mi
-    requests.ephemeral-storage: 192Mi
-    limits.ephemeral-storage: 4608Mi
+    requests.memory: 1152Mi
+    limits.memory: 2304Mi
+    requests.ephemeral-storage: 288Mi
+    limits.ephemeral-storage: 6144Mi
     pods: '10'
     services: '10'
     persistentvolumeclaims: '10'

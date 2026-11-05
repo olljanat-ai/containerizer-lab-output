@@ -83,6 +83,35 @@ spec:
       range: '>=1.0.0'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: expenses-web
+  namespace: containerization-challenge-expense-claims
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-expense-claims/expenses-web
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-expense-claims-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: expenses-web
+  namespace: containerization-challenge-expense-claims
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: expenses-web
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
 metadata:
   name: containerization-challenge-expense-claims

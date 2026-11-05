@@ -1,10 +1,10 @@
 # containerization-challenge-expense-claims: containerization assessment
 
 **Rating A** - Container-ready - modern, stateless stack; containers with configuration only, no code changes  
-Readiness score 88/100 · confidence 1.0  
+Readiness score 92/100 · confidence 1.0  
 Stateless: yes
 
-2/2 server components can run in Linux containers with configuration only.
+3/3 server components can run in Linux containers with configuration only.
 
 ## Components
 
@@ -12,6 +12,7 @@ Stateless: yes
 | --- | --- | --- | --- | --- | --- |
 | ExpenseClaims.Api | web | net6.0 | Ready with configuration (no code changes) | 89 | - |
 | ExpenseClaims.Jobs | web | net10.0 | Ready with configuration (no code changes) | 88 | - |
+| expenses-web | spa | node | Ready: containerize as is | 100 | - |
 
 ### ExpenseClaims.Api
 
@@ -20,8 +21,8 @@ Stateless: yes
 Facts: health=/health; port=5241; entry=ExpenseClaims.Api.dll; connection_strings=['ExpenseClaims']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/ExpenseClaims.Api/ExpenseClaims.Api.csproj: TargetFramework=net6.0`
 - ⚙ **Writes to the local file system** [config]
@@ -56,3 +57,10 @@ Facts: health=/health; port=5251; entry=ExpenseClaims.Jobs.dll; connection_strin
   - Fix: Use explicit credentials from a Secret (basic/OAuth/API key), or provide a Kerberos keytab plus krb5.conf and keep a ticket fresh (kinit sidecar) so Negotiate works.
   - Learn more: [learn.microsoft.com: windowsauth](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/windowsauth)
   - Evidence: `src/ExpenseClaims.Jobs/Program.cs:70: ? CredentialCache.DefaultNetworkCredentials`
+
+### expenses-web
+
+`src/expenses-web/package.json` · spa · Ready: containerize as is
+
+Facts: entry=expenses-web
+

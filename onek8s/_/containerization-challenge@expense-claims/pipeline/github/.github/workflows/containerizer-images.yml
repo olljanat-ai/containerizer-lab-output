@@ -10,11 +10,13 @@ name: containerizer images (containerization-challenge-expense-claims)
     - scenarios/expense-claims/Directory.Build.props
     - scenarios/expense-claims/containerizer/expenseclaims-api/**
     - scenarios/expense-claims/containerizer/expenseclaims-jobs/**
+    - scenarios/expense-claims/containerizer/expenses-web/**
     - scenarios/expense-claims/global.json
     - scenarios/expense-claims/src/ExpenseClaims.Api/**
     - scenarios/expense-claims/src/ExpenseClaims.Core/**
     - scenarios/expense-claims/src/ExpenseClaims.Data/**
     - scenarios/expense-claims/src/ExpenseClaims.Jobs/**
+    - scenarios/expense-claims/src/expenses-web/**
     - .github/workflows/containerizer-images.yml
   push:
     branches:
@@ -23,11 +25,13 @@ name: containerizer images (containerization-challenge-expense-claims)
     - scenarios/expense-claims/Directory.Build.props
     - scenarios/expense-claims/containerizer/expenseclaims-api/**
     - scenarios/expense-claims/containerizer/expenseclaims-jobs/**
+    - scenarios/expense-claims/containerizer/expenses-web/**
     - scenarios/expense-claims/global.json
     - scenarios/expense-claims/src/ExpenseClaims.Api/**
     - scenarios/expense-claims/src/ExpenseClaims.Core/**
     - scenarios/expense-claims/src/ExpenseClaims.Data/**
     - scenarios/expense-claims/src/ExpenseClaims.Jobs/**
+    - scenarios/expense-claims/src/expenses-web/**
     - .github/workflows/containerizer-images.yml
   workflow_dispatch: null
 permissions: {}
@@ -70,6 +74,7 @@ jobs:
         list=""
         if changed '^(scenarios/expense-claims/src/ExpenseClaims\.Api/|scenarios/expense-claims/src/ExpenseClaims\.Core/|scenarios/expense-claims/src/ExpenseClaims\.Data/|scenarios/expense-claims/Directory\.Build\.props$|scenarios/expense-claims/global\.json$|scenarios/expense-claims/containerizer/expenseclaims-api/)'; then list="$list${list:+,}{\"folder\":\"expenseclaims-api\",\"dockerfile\":\"scenarios/expense-claims/containerizer/expenseclaims-api/Dockerfile\",\"context\":\"scenarios/expense-claims\",\"image_name\":\"containerization-challenge-expense-claims/expenseclaims-api\"}"; fi
         if changed '^(scenarios/expense-claims/src/ExpenseClaims\.Core/|scenarios/expense-claims/src/ExpenseClaims\.Data/|scenarios/expense-claims/src/ExpenseClaims\.Jobs/|scenarios/expense-claims/Directory\.Build\.props$|scenarios/expense-claims/global\.json$|scenarios/expense-claims/containerizer/expenseclaims-jobs/)'; then list="$list${list:+,}{\"folder\":\"expenseclaims-jobs\",\"dockerfile\":\"scenarios/expense-claims/containerizer/expenseclaims-jobs/Dockerfile\",\"context\":\"scenarios/expense-claims\",\"image_name\":\"containerization-challenge-expense-claims/expenseclaims-jobs\"}"; fi
+        if changed '^(scenarios/expense-claims/src/expenses-web/|scenarios/expense-claims/Directory\.Build\.props$|scenarios/expense-claims/global\.json$|scenarios/expense-claims/containerizer/expenses-web/)'; then list="$list${list:+,}{\"folder\":\"expenses-web\",\"dockerfile\":\"scenarios/expense-claims/containerizer/expenses-web/Dockerfile\",\"context\":\"scenarios/expense-claims\",\"image_name\":\"containerization-challenge-expense-claims/expenses-web\"}"; fi
         echo "components=[$list]" >> "$GITHUB_OUTPUT"
         echo "version=1.$(date -u +%Y%m%d).$(date -u +%H%M | sed 's/^0*\(.\)/\1/')" >> "$GITHUB_OUTPUT"
         echo "components to build: [$list]"

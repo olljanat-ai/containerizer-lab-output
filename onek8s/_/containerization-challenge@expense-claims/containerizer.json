@@ -17,19 +17,19 @@
     {
       "component": "ExpenseClaims.Api",
       "folder": "expenseclaims-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1943-refactor.209",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.2123-refactor.210",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/ExpenseClaims.Api/ExpenseClaims.Api.csproj",
       "project_name": "ExpenseClaims.Api",
       "verification": "ok",
-      "digest": "sha256:b4ebfc64ad07bba07fbed4f806300ed34f7f75a932a2422e4ec080fa54f7854e"
+      "digest": "sha256:838c3e813eb69dc37d6be00231bfa309ff9ca4f59c162254b2a3bf8a25f3ec0b"
     },
     {
       "component": "ExpenseClaims.Jobs",
       "folder": "expenseclaims-jobs",
-      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1943-refactor.209",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.2123-refactor.210",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -37,15 +37,22 @@
       "project_name": "ExpenseClaims.Jobs",
       "verification": "ok",
       "digest": "sha256:a421fd4fdda12dcea14e4877fc8712ab9b3a8b44045e85f692e50eb33a86e918"
-    }
-  ],
-  "excluded": [
+    },
     {
       "component": "expenses-web",
-      "reason": "security gate: does not run with the hardened pod security context"
+      "folder": "expenses-web",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenses-web:1.20261105.2123-refactor.210",
+      "rating": "A",
+      "verdict": "info",
+      "role": "spa",
+      "project": "src/expenses-web/package.json",
+      "project_name": "expenses-web",
+      "verification": "ok",
+      "digest": "sha256:0052e1c45a1d8c5e8ef1106fc9aa02f8eeb472b2417347edb0f4e16412d4783e"
     }
   ],
-  "processed_at": "2026-11-05T19:43:47Z",
+  "excluded": [],
+  "processed_at": "2026-11-05T21:23:07Z",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/expense-claims",
@@ -80,13 +87,13 @@
   "apps": [],
   "split_hint": {},
   "patched": {
-    "job": 209,
+    "job": 210,
     "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
     "application_id": 14,
     "app": "containerization-challenge-expense-claims",
-    "tag": "1.20261105.1943-refactor.209",
-    "deployed_at": "2026-11-05T19:43:47",
+    "tag": "1.20261105.2123-refactor.210",
+    "deployed_at": "2026-11-05T21:23:07",
     "previous_revision": "41938c84f429d4b8f6fbba217735663c950d95a1",
-    "replaced_job": 206
+    "replaced_job": 209
   }
 }

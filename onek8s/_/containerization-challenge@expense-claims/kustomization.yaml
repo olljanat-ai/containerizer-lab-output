@@ -6,9 +6,12 @@ resources:
 - security.yaml
 - expenseclaims-api/k8s.yaml
 - expenseclaims-jobs/k8s.yaml
+- expenses-web/k8s.yaml
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api
-    newTag: 1.20261105.1943-refactor.209 # {"$imagepolicy": "containerization-challenge-expense-claims:expenseclaims-api:tag"}
+    newTag: 1.20261105.2123-refactor.210 # {"$imagepolicy": "containerization-challenge-expense-claims:expenseclaims-api:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs
-    newTag: 1.20261105.1943-refactor.209 # {"$imagepolicy": "containerization-challenge-expense-claims:expenseclaims-jobs:tag"}
+    newTag: 1.20261105.2123-refactor.210 # {"$imagepolicy": "containerization-challenge-expense-claims:expenseclaims-jobs:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-expense-claims/expenses-web
+    newTag: 1.20261105.2123-refactor.210 # {"$imagepolicy": "containerization-challenge-expense-claims:expenses-web:tag"}

@@ -101,9 +101,10 @@ patches:
     "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
     "name": "expenseclaims-api", "namespace": "containerization-challenge-expense-claims"},
     {"apiVersion": "apps/v1", "kind": "Deployment", "name": "expenseclaims-jobs",
+    "namespace": "containerization-challenge-expense-claims"}, {"apiVersion": "apps/v1",
+    "kind": "Deployment", "name": "expenses-web", "namespace": "containerization-challenge-expense-claims"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "expenseclaims-api-dataprotection",
     "namespace": "containerization-challenge-expense-claims"}, {"apiVersion": "external-secrets.io/v1",
-    "kind": "ExternalSecret", "name": "expenseclaims-api-dataprotection", "namespace":
-    "containerization-challenge-expense-claims"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "expenseclaims-jobs-dataprotection", "namespace":
     "containerization-challenge-expense-claims"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-expense-claims"}]}]'

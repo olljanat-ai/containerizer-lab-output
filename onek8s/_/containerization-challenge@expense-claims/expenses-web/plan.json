@@ -1,0 +1,58 @@
+{
+  "component": "expenses-web",
+  "kind": "node",
+  "role": "spa",
+  "project": "src/expenses-web/package.json",
+  "tfm": null,
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "distroless",
+  "add_packages": [],
+  "env": {},
+  "add_writable": [
+    "/tmp"
+  ],
+  "publish_args": [],
+  "remove_files": [
+    "global.json"
+  ],
+  "single_replica": false,
+  "uid": 65532,
+  "port": 8080,
+  "health": "/healthz",
+  "entry": "expenses-web",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-global-json"
+  ],
+  "node": 24,
+  "pm": "npm",
+  "yarn_berry": false,
+  "pm_pin": "",
+  "lockfile": true,
+  "build_root": "src/expenses-web",
+  "module": "",
+  "workspace": false,
+  "native_build": false,
+  "build_steps": [
+    ""
+  ],
+  "package_name": "expenses-web",
+  "reasons": [
+    {
+      "rule": "plan-global-json",
+      "why": "global.json pins an SDK version that the build image may not have; it is removed in the build stage only (never in the repository) so the image's SDK builds the project.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/tools/global-json"
+      ]
+    }
+  ],
+  "egress": [],
+  "hardening_exceptions": [
+    {
+      "id": "nginx-writable-dirs",
+      "why": "nginx keeps its pid file and request buffers in /tmp and its proxy cache in /var/cache/nginx."
+    }
+  ]
+}

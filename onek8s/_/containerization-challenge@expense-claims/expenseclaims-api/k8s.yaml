@@ -43,7 +43,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: expenseclaims-api
-        image: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1943-refactor.209
+        image: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.2123-refactor.210
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__ExpenseClaims
@@ -55,10 +55,10 @@ spec:
           value: Production
         - name: ASPNETCORE_HTTP_PORTS
           value: '8080'
+        - name: ASPNETCORE_URLS
+          value: http://+:8080
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: Receipts__RootPath
           value: /data/expensereceipts
         - name: Serilog__WriteTo__0__Name

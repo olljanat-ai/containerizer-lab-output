@@ -8,13 +8,13 @@
   "passed": true,
   "lint": {
     "error": 0,
-    "warning": 0,
-    "info": 6
+    "warning": 1,
+    "info": 9
   },
   "components": [
     {
       "component": "expenseclaims-api",
-      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/aspnet:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -26,13 +26,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "expenseclaims-api/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/aspnet:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "expenseclaims-api/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/aspnet:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "expenseclaims-api/k8s.yaml: Deployment/expenseclaims-api/expenseclaims-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1943-refactor.209 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.2123-refactor.210 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -40,7 +46,7 @@
         "status": "inconclusive",
         "http": 503,
         "errors": [],
-        "log": "lth check database with status Unhealthy completed after 3002.2794ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPREL9QPGKS:00000001\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPREL9QPGKS\"}\n2026-11-05 19:45:51.222 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 3003.4997 ms {\"RequestId\": \"0HNPREL9QPGKS:00000001\", \"ConnectionId\": \"0HNPREL9QPGKS\"}\n2026-11-05 19:45:56.720 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check database with status Unhealthy completed after 2466.2373ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPREL9QPGKT:00000001\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPREL9QPGKT\"}\n2026-11-05 19:45:56.721 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 2467.3997 ms {\"RequestId\": \"0HNPREL9QPGKT:00000001\", \"ConnectionId\": \"0HNPREL9QPGKT\"}\n2026-11-05 19:45:59.759 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check database with status Unhealthy completed after 1.2455ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPREL9QPGKU:00000001\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPREL9QPGKU\"}\n2026-11-05 19:45:59.759 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 2.3034 ms {\"RequestId\": \"0HNPREL9QPGKU:00000001\", \"ConnectionId\": \"0HNPREL9QPGKU\"}\n"
+        "log": "eck database with status Unhealthy completed after 3003.0908ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPRGC43G5ME:00000002\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPRGC43G5ME\"}\n2026-11-05 21:23:54.742 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 3004.0443 ms {\"RequestId\": \"0HNPRGC43G5ME:00000002\", \"ConnectionId\": \"0HNPRGC43G5ME\"}\n2026-11-05 21:24:00.778 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check database with status Unhealthy completed after 3000.9984ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPRGC43G5MF:00000002\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPRGC43G5MF\"}\n2026-11-05 21:24:00.778 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 3002.1363 ms {\"RequestId\": \"0HNPRGC43G5MF:00000002\", \"ConnectionId\": \"0HNPRGC43G5MF\"}\n2026-11-05 21:24:06.270 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check database with status Unhealthy completed after 2465.7479ms with message 'null' {\"EventId\": {\"Id\": 103, \"Name\": \"HealthCheckEnd\"}, \"RequestId\": \"0HNPRGC43G5MG:00000002\", \"RequestPath\": \"/health\", \"ConnectionId\": \"0HNPRGC43G5MG\"}\n2026-11-05 21:24:06.270 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 503 in 2467.0714 ms {\"RequestId\": \"0HNPRGC43G5MG:00000002\", \"ConnectionId\": \"0HNPRGC43G5MG\"}\n"
       }
     },
     {
@@ -63,7 +69,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "expenseclaims-jobs/k8s.yaml: Deployment/expenseclaims-jobs/expenseclaims-jobs",
-          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1943-refactor.209 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.2123-refactor.210 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -72,6 +78,37 @@
         "http": null,
         "errors": [],
         "log": "nectionInternal oldConnection)\n   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)\n   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)\n   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)\n   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)\n   at Microsoft.Data.SqlClient.SqlConnection.Open()\n   at Quartz.Impl.AdoJobStore.JobStoreSupport.GetConnection()\nClientConnectionId:00000000-0000-0000-0000-000000000000]]\n"
+      }
+    },
+    {
+      "component": "expenses-web",
+      "base": "nginxinc/nginx-unprivileged:1.30.6-alpine",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "expenses-web/Dockerfile",
+          "message": "node:24-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "expenses-web/Dockerfile",
+          "message": "nginxinc/nginx-unprivileged:1.30.6-alpine is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "expenses-web/k8s.yaml: Deployment/expenses-web/expenses-web",
+          "message": "image localhost:5000/sandbox/containerization-challenge-expense-claims/expenses-web:1.20261105.2123-refactor.210 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": 200,
+        "errors": [],
+        "log": "05 21:24:29 [notice] 1#1: start worker process 39\n2026/11/05 21:24:29 [notice] 1#1: start worker process 40\n2026/11/05 21:24:29 [notice] 1#1: start worker process 41\n2026/11/05 21:24:29 [notice] 1#1: start worker process 42\n2026/11/05 21:24:29 [notice] 1#1: start worker process 43\n2026/11/05 21:24:29 [notice] 1#1: start worker process 44\n2026/11/05 21:24:29 [notice] 1#1: start worker process 45\n2026/11/05 21:24:29 [notice] 1#1: start worker process 46\n2026/11/05 21:24:29 [notice] 1#1: start worker process 47\n2026/11/05 21:24:29 [notice] 1#1: start worker process 48\n2026/11/05 21:24:29 [notice] 1#1: start worker process 49\n2026/11/05 21:24:29 [notice] 1#1: start worker process 50\n2026/11/05 21:24:29 [notice] 1#1: start worker process 51\n2026/11/05 21:24:29 [notice] 1#1: start worker process 52\n2026/11/05 21:24:29 [notice] 1#1: start worker process 53\n2026/11/05 21:24:29 [notice] 1#1: start worker process 54\n2026/11/05 21:24:29 [notice] 1#1: start worker process 55\n2026/11/05 21:24:29 [notice] 1#1: start worker process 56\n2026/11/05 21:24:29 [notice] 1#1: start worker process 57\n2026/11/05 21:24:29 [notice] 1#1: start worker process 58\n2026/11/05 21:24:29 [notice] 1#1: start worker process 59\n2026/11/05 21:24:29 [notice] 1#1: start worker process 60\n2026/11/05 21:24:29 [notice] 1#1: start worker process 61\n2026/11/05 21:24:29 [notice] 1#1: start worker process 62\n2026/11/05 21:24:29 [notice] 1#1: start worker process 63\n2026/11/05 21:24:29 [notice] 1#1: start worker process 64\n"
       }
     }
   ],

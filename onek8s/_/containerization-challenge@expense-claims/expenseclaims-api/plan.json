@@ -14,7 +14,7 @@
     "Receipts__RootPath": "/data/expensereceipts",
     "DOTNET_ENVIRONMENT": "Production",
     "ASPNETCORE_ENVIRONMENT": "Production",
-    "DOTNET_ROLL_FORWARD": "Major"
+    "ASPNETCORE_URLS": "http://+:8080"
   },
   "add_writable": [
     "/tmp",
@@ -55,6 +55,10 @@
       ]
     },
     {
+      "rule": "own-runtime",
+      "why": "Targets net6.0, which is out of support: it runs on its own .NET 6.0 runtime image (no longer patched), as built and tested, not rolled forward onto a newer runtime."
+    },
+    {
       "rule": "plan-global-json",
       "why": "global.json pins an SDK version that the build image may not have; it is removed in the build stage only (never in the repository) so the image's SDK builds the project.",
       "refs": [
@@ -76,6 +80,7 @@
       ]
     }
   ],
+  "runtime_line": "6.0",
   "egress": [
     {
       "id": "sql-server",

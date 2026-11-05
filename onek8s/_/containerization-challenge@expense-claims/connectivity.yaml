@@ -5,7 +5,7 @@ apiVersion: containerizer.eu/v1
 kind: Connectivity
 application: containerization-challenge-expense-claims
 namespace: containerization-challenge-expense-claims
-generatedAt: '2026-11-05T19:46:24Z'
+generatedAt: '2026-11-05T21:24:45Z'
 observed: false
 note: 'Approved destinations are documented for the real environment: use them (FQDN, port, protocol) for its firewall rules.
   Approval opens nothing in the sandbox: it stays isolated, its NetworkPolicies allow only what was inferred and confirmed
@@ -19,6 +19,11 @@ components:
 - name: expenseclaims-jobs
   component: ExpenseClaims.Jobs
   role: web
+  port: 8080
+  service_port: 80
+- name: expenses-web
+  component: expenses-web
+  role: spa
   port: 8080
   service_port: 80
 inbound:
@@ -41,6 +46,18 @@ inbound:
   source: ingress
   target_port: 8080
 - component: expenseclaims-jobs
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: expenses-web
+  from: https://expenses-web-containerization-challenge-expense-claims.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: expenses-web
   from: any namespace (Service)
   port: 80
   protocol: TCP
