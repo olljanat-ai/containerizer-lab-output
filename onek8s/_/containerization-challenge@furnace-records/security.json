@@ -1,5 +1,6 @@
 {
   "app": "containerization-challenge-furnace-records",
+  "scanned": false,
   "policy": {
     "fail_on": "CRITICAL",
     "ignore_unfixed": true
@@ -8,7 +9,7 @@
   "lint": {
     "error": 0,
     "warning": 0,
-    "info": 9
+    "info": 6
   },
   "components": [
     {
@@ -31,160 +32,15 @@
           "check": "image-digest",
           "severity": "info",
           "target": "furnacerecords-api/k8s.yaml: Deployment/furnacerecords-api/furnacerecords-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-furnace-records-furnacerecords-api:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "inconclusive",
         "http": 503,
         "errors": [],
-        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {99c0069c-ecc4-465a-a98f-1b4d02f087fb} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\n"
-      }
-    },
-    {
-      "component": "furnacerecords-portal",
-      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble",
-      "lint": [
-        {
-          "check": "df-base-digest",
-          "severity": "info",
-          "target": "furnacerecords-portal/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
-        },
-        {
-          "check": "df-base-digest",
-          "severity": "info",
-          "target": "furnacerecords-portal/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble is not pinned to a digest (generate --pin-digests)"
-        },
-        {
-          "check": "image-digest",
-          "severity": "info",
-          "target": "furnacerecords-portal/k8s.yaml: Deployment/furnacerecords-portal/furnacerecords-portal",
-          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-portal:1.20261104.1641 is not pinned to a digest"
-        }
-      ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 20,
-            "LOW": 5
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 7,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-furnace-records-furnacerecords-portal:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 20,
-            "LOW": 5
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 7,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        }
-      ],
-      "run": {
-        "status": "ok",
-        "http": 401,
-        "errors": [],
-        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {4bfe0d92-d10d-4cce-b857-94f51a77d3e4} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\n"
+        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {9edb2da7-4c38-4b22-b102-39c98269515d} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\n"
       }
     },
     {
@@ -207,67 +63,10 @@
           "check": "image-digest",
           "severity": "info",
           "target": "furnacerecords-worker/k8s.yaml: Deployment/furnacerecords-worker/furnacerecords-worker",
-          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-furnace-records-furnacerecords-worker:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "ok",
         "http": null,

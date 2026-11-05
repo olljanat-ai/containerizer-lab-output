@@ -1,0 +1,153 @@
+{
+  "app": "containerization-challenge-control-tower",
+  "scanned": false,
+  "policy": {
+    "fail_on": "CRITICAL",
+    "ignore_unfixed": true
+  },
+  "passed": true,
+  "lint": {
+    "error": 0,
+    "warning": 0,
+    "info": 14
+  },
+  "components": [
+    {
+      "component": "controltower-carriergateway",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-carriergateway/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-carriergateway/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "controltower-carriergateway/k8s.yaml: Deployment/controltower-carriergateway/controltower-carriergateway",
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": 200,
+        "errors": [],
+        "log": ""
+      }
+    },
+    {
+      "component": "controltower-events",
+      "base": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-events/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-events/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "controltower-events/k8s.yaml: Deployment/controltower-events/controltower-events",
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": ""
+      }
+    },
+    {
+      "component": "controltower-telematics",
+      "base": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-telematics/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-telematics/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "controltower-telematics/k8s.yaml: Deployment/controltower-telematics/controltower-telematics",
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": null,
+        "errors": [],
+        "log": ""
+      }
+    },
+    {
+      "component": "controltower-tower-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-tower-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-tower-api/Dockerfile",
+          "message": "node:22.23.4-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-tower-api/Dockerfile",
+          "message": "node:22.23.4-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "controltower-tower-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "controltower-tower-api/k8s.yaml: Deployment/controltower-tower-api/controltower-tower-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": 200,
+        "errors": [],
+        "log": "15:29:54.4324|WARN|XmlKeyManager|No XML encryptor configured. Key {f44fe0fb-6b52-4a20-98ff-0fd892b5d03a} may be persisted to storage in unencrypted form. \n15:29:56.4321|WARN|HttpsRedirectionMiddleware|Failed to determine the https port for redirect. \n"
+      }
+    }
+  ],
+  "notes": []
+}

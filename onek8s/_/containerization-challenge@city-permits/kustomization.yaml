@@ -4,8 +4,11 @@ namespace: containerization-challenge-city-permits
 resources:
 - namespace.yaml
 - security.yaml
+- citypermits-inspections/k8s.yaml
 - citypermits-opendata/k8s.yaml
 - lab/k8s.yaml
 images:
+  - name: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-inspections:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata
-    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-opendata:tag"}
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-opendata:tag"}

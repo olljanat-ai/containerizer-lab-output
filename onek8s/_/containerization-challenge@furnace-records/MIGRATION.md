@@ -4,14 +4,13 @@
 Readiness score 88/100 · confidence 1.0  
 Stateless: yes
 
-3/3 server components can run in Linux containers with configuration only.
+2/2 server components can run in Linux containers with configuration only.
 
 ## Components
 
 | Component | Role | Target | Verdict | Score | Windows container stop-gap |
 | --- | --- | --- | --- | --- | --- |
 | FurnaceRecords.Api | web | net8.0 | Ready with configuration (no code changes) | 90 | - |
-| FurnaceRecords.Portal | web | net8.0 | Ready with configuration (no code changes) | 88 | - |
 | FurnaceRecords.Worker | worker | net8.0 | Ready with configuration (no code changes) | 87 | - |
 
 ### FurnaceRecords.Api
@@ -24,22 +23,6 @@ Facts: health=/health; port=5210; entry=FurnaceRecords.Api.dll; connection_strin
   - Why: Integrated Security uses the Windows service account. From Linux it needs Kerberos (keytab) or a switch to SQL/Entra authentication.
   - Fix: Switch to SQL authentication or Entra managed identity with the password from a Secret.
   - Evidence: `src/FurnaceRecords.Api/appsettings.json:10: "FurnaceRecords": "Server=sql01.corp.local;Database=FurnaceRecords;Integrated Security=true;TrustServerCertificate=true;Application Name=Furnace Records API"`
-
-### FurnaceRecords.Portal
-
-`src/FurnaceRecords.Portal/FurnaceRecords.Portal.csproj` · web · Ready with configuration (no code changes)
-
-Facts: port=5220; entry=FurnaceRecords.Portal.dll; connection_strings=['FurnaceRecords']
-
-- ⚙ **Negotiate (Kerberos) authentication on ASP.NET Core** [config]
-  - Why: Negotiate works on Linux only with Kerberos: a keytab for the service SPN mounted as a Secret, krb5.conf and the gss-ntlmssp/krb5 libraries in the image. Role (group) lookup on Linux needs LDAP settings.
-  - Fix: Add krb5 libs to the image, mount KRB5_KTNAME keytab, configure EnableLdap; or switch to OIDC.
-  - Learn more: [learn.microsoft.com: windowsauth](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/windowsauth)
-  - Evidence: `src/FurnaceRecords.Portal/FurnaceRecords.Portal.csproj: package Microsoft.AspNetCore.Authentication.Negotiate 8.0.33`
-- ⚙ **SQL Server Windows authentication** [config]
-  - Why: Integrated Security uses the Windows service account. From Linux it needs Kerberos (keytab) or a switch to SQL/Entra authentication.
-  - Fix: Switch to SQL authentication or Entra managed identity with the password from a Secret.
-  - Evidence: `src/FurnaceRecords.Portal/appsettings.json:10: "FurnaceRecords": "Server=sql01.corp.local;Database=FurnaceRecords;Integrated Security=true;TrustServerCertificate=true;Application Name=Furnace Records Portal"`
 
 ### FurnaceRecords.Worker
 

@@ -15,6 +15,7 @@ from the apps in this repository; do not edit, the next run rewrites this folder
 | --- | --- | --- | --- |
 | `containerization-challenge-broker-quotes--humongous-brokerportal` | OIDC | `containerization-challenge-broker-quotes--humongous-brokerportal` | https://humongous-brokerportal-containerization-challenge-broker-quotes.sandbox.lab/ |
 | `containerization-challenge-broker-quotes--humongous-workbench` | OIDC | `containerization-challenge-broker-quotes--humongous-workbench` | https://humongous-workbench-containerization-challenge-broker-quotes.sandbox.lab/ |
+| `containerization-challenge-retail-backoffice--vanarsdel-backoffice` | OIDC | `containerization-challenge-retail-backoffice--vanarsdel-backoffice` | https://vanarsdel-backoffice-containerization-challenge-retail-ff631ec3.sandbox.lab/ |
 
 ## Test users
 

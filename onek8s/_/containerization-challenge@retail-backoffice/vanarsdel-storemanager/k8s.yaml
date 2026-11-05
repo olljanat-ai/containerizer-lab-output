@@ -15,7 +15,7 @@ metadata:
     app.kubernetes.io/name: vanarsdel-storemanager
     app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
   selector:
@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: vanarsdel-storemanager
-        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641
+        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524
         imagePullPolicy: IfNotPresent
         env:
         - name: ASPNETCORE_ENVIRONMENT
@@ -85,6 +85,7 @@ spec:
           mountPath: /app/wwwroot
         - name: w2-dataprotection-keys
           mountPath: /home/app/.aspnet/DataProtection-Keys
+          readOnly: true
         - name: w3-tmp
           mountPath: /tmp
         ports:
@@ -115,8 +116,8 @@ spec:
         emptyDir:
           sizeLimit: 256Mi
       - name: w2-dataprotection-keys
-        emptyDir:
-          sizeLimit: 256Mi
+        secret:
+          secretName: vanarsdel-storemanager-dataprotection
       - name: w3-tmp
         emptyDir:
           sizeLimit: 256Mi
@@ -200,6 +201,55 @@ spec:
       protocol: TCP
     - port: 443
       protocol: TCP
+---
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: vanarsdel-storemanager-dataprotection
+  labels:
+    app.kubernetes.io/name: vanarsdel-storemanager
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  length: 64
+  digits: 10
+  symbols: 0
+  noUpper: false
+  allowRepeat: true
+---
+# ASP.NET Core Data Protection key, generated in the cluster once (no secret store); replace with your own key ring or PersistKeysTo* in code if you prefer
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: vanarsdel-storemanager-dataprotection
+  labels:
+    app.kubernetes.io/name: vanarsdel-storemanager
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  refreshPolicy: CreatedOnce
+  refreshInterval: '0'
+  target:
+    name: vanarsdel-storemanager-dataprotection
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      engineVersion: v2
+      data:
+        key-920cd74a-0961-54ca-b176-e92150e53186.xml: "<?xml version=\"1.0\" encoding=\"\
+          utf-8\"?>\n<key id=\"920cd74a-0961-54ca-b176-e92150e53186\" version=\"1\"\
+          >\n  <creationDate>2026-01-01T00:00:00Z</creationDate>\n  <activationDate>2026-01-01T00:00:00Z</activationDate>\n\
+          \  <expirationDate>2126-01-01T00:00:00Z</expirationDate>\n  <descriptor\
+          \ deserializerType=\"Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer,\
+          \ Microsoft.AspNetCore.DataProtection\">\n    <descriptor>\n      <encryption\
+          \ algorithm=\"AES_256_CBC\" />\n      <validation algorithm=\"HMACSHA256\"\
+          \ />\n      <masterKey p4:requiresEncryption=\"true\" xmlns:p4=\"http://schemas.asp.net/2015/03/dataProtection\"\
+          >\n        <value>{{ .password | b64enc }}</value>\n      </masterKey>\n\
+          \    </descriptor>\n  </descriptor>\n</key>\n"
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: Password
+        name: vanarsdel-storemanager-dataprotection
 ---
 # values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-retail-backoffice--vanarsdel-storemanager); never from Git
 apiVersion: external-secrets.io/v1

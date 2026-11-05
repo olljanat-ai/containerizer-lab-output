@@ -63,8 +63,21 @@ rules:
   resourceNames:
   - containerization-challenge-retail-backoffice--cz-cosign-pub
   - containerization-challenge-retail-backoffice--cz-git
+  - containerization-challenge-retail-backoffice--cz-lab-sqlserver
   - containerization-challenge-retail-backoffice--cz-registry
+  - containerization-challenge-retail-backoffice--vanarsdel-allocation-api
+  - containerization-challenge-retail-backoffice--vanarsdel-backoffice
+  - containerization-challenge-retail-backoffice--vanarsdel-catalog-api
+  - containerization-challenge-retail-backoffice--vanarsdel-customers-api
+  - containerization-challenge-retail-backoffice--vanarsdel-gateway
+  - containerization-challenge-retail-backoffice--vanarsdel-inventory-api
+  - containerization-challenge-retail-backoffice--vanarsdel-notifications
+  - containerization-challenge-retail-backoffice--vanarsdel-orders-api
+  - containerization-challenge-retail-backoffice--vanarsdel-pricing-api
+  - containerization-challenge-retail-backoffice--vanarsdel-returns-api
+  - containerization-challenge-retail-backoffice--vanarsdel-scheduler
   - containerization-challenge-retail-backoffice--vanarsdel-storemanager
+  - containerization-challenge-retail-backoffice--vanarsdel-storeops-api
   verbs:
   - get
 ---
@@ -122,12 +135,12 @@ metadata:
   namespace: containerization-challenge-retail-backoffice
 spec:
   hard:
-    requests.cpu: 1000m
-    requests.memory: 1024Mi
-    limits.memory: 2048Mi
-    requests.ephemeral-storage: 192Mi
-    limits.ephemeral-storage: 3072Mi
-    pods: '10'
+    requests.cpu: 1950m
+    requests.memory: 4992Mi
+    limits.memory: 9984Mi
+    requests.ephemeral-storage: 1248Mi
+    limits.ephemeral-storage: 19968Mi
+    pods: '20'
     services: '10'
     persistentvolumeclaims: '10'
     secrets: '20'

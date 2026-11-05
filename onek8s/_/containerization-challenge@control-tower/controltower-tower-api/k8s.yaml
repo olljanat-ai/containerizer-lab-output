@@ -1,0 +1,278 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: controltower-tower-api
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controltower-tower-api
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: controltower-tower-api
+      app.kubernetes.io/part-of: containerization-challenge-control-tower
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: controltower-tower-api
+        app.kubernetes.io/part-of: containerization-challenge-control-tower
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1654
+        runAsGroup: 1654
+      automountServiceAccountToken: false
+      containers:
+      - name: controltower-tower-api
+        image: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__ControlTower
+          valueFrom:
+            secretKeyRef:
+              name: lab-sqlserver
+              key: connection-string
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTP_PORTS
+          value: '8080'
+        - name: CONTROLTOWER_LOG_DIR
+          value: /app/logs
+        - name: DOTNET_ENVIRONMENT
+          value: Production
+        - name: DOTNET_ROLL_FORWARD
+          value: Major
+        - name: DataProtection__KeyFolder
+          value: /data/controltower/keys/tower
+        - name: ConnectionStrings__RabbitMq
+          valueFrom:
+            secretKeyRef:
+              name: controltower-tower-api-secrets
+              key: ConnectionStrings__RabbitMq
+              optional: true
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
+          appArmorProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 64Mi
+          limits:
+            memory: 512Mi
+            ephemeral-storage: 1Gi
+        volumeMounts:
+        - name: w0-logs
+          mountPath: /app/logs
+        - name: w1-tower
+          mountPath: /data/controltower/keys/tower
+        - name: w2-tmp
+          mountPath: /tmp
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 20
+          initialDelaySeconds: 20
+        startupProbe:
+          httpGet:
+            path: /health
+            port: http
+          periodSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: w0-logs
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w1-tower
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w2-tmp
+        emptyDir:
+          sizeLimit: 256Mi
+      enableServiceLinks: false
+      serviceAccountName: controltower-tower-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: controltower-tower-api
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+spec:
+  selector:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: controltower-tower-api
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+  annotations:
+    containerizer.io/egress: sql-server,rabbitmq,sftp,http-apis,lab-sqlserver
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: controltower-tower-api
+      app.kubernetes.io/part-of: containerization-challenge-control-tower
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-control-tower
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-control-tower
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+        - 169.254.170.2/32
+        - 100.100.100.200/32
+    - ipBlock:
+        cidr: ::/0
+        except:
+        - fd00:ec2::254/128
+    - namespaceSelector: {}
+    ports:
+    - port: 1433
+      protocol: TCP
+    - port: 5671
+      protocol: TCP
+    - port: 5672
+      protocol: TCP
+    - port: 22
+      protocol: TCP
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: sqlserver
+    ports:
+    - port: 1433
+      protocol: TCP
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-control-tower--controltower-tower-api); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: controltower-tower-api-secrets
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: controltower-tower-api-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: ConnectionStrings__ControlTower
+    remoteRef:
+      key: containerization-challenge-control-tower--controltower-tower-api
+      property: ConnectionStrings__ControlTower
+  - secretKey: ConnectionStrings__RabbitMq
+    remoteRef:
+      key: containerization-challenge-control-tower--controltower-tower-api
+      property: ConnectionStrings__RabbitMq
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: controltower-tower-api
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+  annotations:
+    containerizer.io/url: https://controltower-tower-api-containerization-challenge-control-tower.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - controltower-tower-api-containerization-challenge-control-tower.sandbox.lab
+  rules:
+  - host: controltower-tower-api-containerization-challenge-control-tower.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: controltower-tower-api
+            port:
+              name: http

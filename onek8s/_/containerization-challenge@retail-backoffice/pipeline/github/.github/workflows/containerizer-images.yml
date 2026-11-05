@@ -8,20 +8,74 @@ name: containerizer images (containerization-challenge-retail-backoffice)
   pull_request:
     paths:
     - scenarios/retail-backoffice/Directory.Build.props
+    - scenarios/retail-backoffice/containerizer/vanarsdel-allocation-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-backoffice/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-catalog-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-customers-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-gateway/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-inventory-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-notifications/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-orders-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-pricing-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-returns-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-scheduler/**
     - scenarios/retail-backoffice/containerizer/vanarsdel-storemanager/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-storeops-api/**
     - scenarios/retail-backoffice/global.json
     - scenarios/retail-backoffice/nuget.config
+    - scenarios/retail-backoffice/src/VanArsdel.Allocation.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.BackOffice/**
+    - scenarios/retail-backoffice/src/VanArsdel.BuildingBlocks/**
+    - scenarios/retail-backoffice/src/VanArsdel.Catalog.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Contracts/**
+    - scenarios/retail-backoffice/src/VanArsdel.Customers.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Gateway/**
+    - scenarios/retail-backoffice/src/VanArsdel.Integration/**
+    - scenarios/retail-backoffice/src/VanArsdel.Inventory.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Notifications/**
+    - scenarios/retail-backoffice/src/VanArsdel.Orders.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Pricing.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Returns.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Scheduler/**
     - scenarios/retail-backoffice/src/VanArsdel.StoreManager/**
+    - scenarios/retail-backoffice/src/VanArsdel.StoreOps.Api/**
     - .github/workflows/containerizer-images.yml
   push:
     branches:
     - main
     paths:
     - scenarios/retail-backoffice/Directory.Build.props
+    - scenarios/retail-backoffice/containerizer/vanarsdel-allocation-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-backoffice/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-catalog-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-customers-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-gateway/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-inventory-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-notifications/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-orders-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-pricing-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-returns-api/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-scheduler/**
     - scenarios/retail-backoffice/containerizer/vanarsdel-storemanager/**
+    - scenarios/retail-backoffice/containerizer/vanarsdel-storeops-api/**
     - scenarios/retail-backoffice/global.json
     - scenarios/retail-backoffice/nuget.config
+    - scenarios/retail-backoffice/src/VanArsdel.Allocation.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.BackOffice/**
+    - scenarios/retail-backoffice/src/VanArsdel.BuildingBlocks/**
+    - scenarios/retail-backoffice/src/VanArsdel.Catalog.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Contracts/**
+    - scenarios/retail-backoffice/src/VanArsdel.Customers.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Gateway/**
+    - scenarios/retail-backoffice/src/VanArsdel.Integration/**
+    - scenarios/retail-backoffice/src/VanArsdel.Inventory.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Notifications/**
+    - scenarios/retail-backoffice/src/VanArsdel.Orders.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Pricing.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Returns.Api/**
+    - scenarios/retail-backoffice/src/VanArsdel.Scheduler/**
     - scenarios/retail-backoffice/src/VanArsdel.StoreManager/**
+    - scenarios/retail-backoffice/src/VanArsdel.StoreOps.Api/**
     - .github/workflows/containerizer-images.yml
   workflow_dispatch: null
 permissions: {}
@@ -62,7 +116,19 @@ jobs:
         fi
         changed() { [ "$ALL" = 1 ] || printf '%s\n' "$CHANGED" | grep -qE "$1"; }
         list=""
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.Allocation\.Api/|scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-allocation-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-allocation-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-allocation-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-allocation-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BackOffice/|scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-backoffice/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-backoffice\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-backoffice/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-backoffice\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Catalog\.Api/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-catalog-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-catalog-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-catalog-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-catalog-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Customers\.Api/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-customers-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-customers-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-customers-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-customers-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Gateway/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-gateway/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-gateway\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-gateway/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-gateway\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Inventory\.Api/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-inventory-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-inventory-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-inventory-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-inventory-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Integration/|scenarios/retail-backoffice/src/VanArsdel\.Notifications/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-notifications/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-notifications\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-notifications/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-notifications\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Integration/|scenarios/retail-backoffice/src/VanArsdel\.Orders\.Api/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-orders-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-orders-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-orders-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-orders-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Pricing\.Api/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-pricing-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-pricing-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-pricing-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-pricing-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Integration/|scenarios/retail-backoffice/src/VanArsdel\.Returns\.Api/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-returns-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-returns-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-returns-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-returns-api\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.Scheduler/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-scheduler/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-scheduler\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-scheduler/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-scheduler\"}"; fi
         if changed '^(scenarios/retail-backoffice/src/VanArsdel\.StoreManager/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-storemanager/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-storemanager\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-storemanager/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-storemanager\"}"; fi
+        if changed '^(scenarios/retail-backoffice/src/VanArsdel\.BuildingBlocks/|scenarios/retail-backoffice/src/VanArsdel\.Contracts/|scenarios/retail-backoffice/src/VanArsdel\.StoreOps\.Api/|scenarios/retail-backoffice/Directory\.Build\.props$|scenarios/retail-backoffice/global\.json$|scenarios/retail-backoffice/nuget\.config$|scenarios/retail-backoffice/containerizer/vanarsdel-storeops-api/)'; then list="$list${list:+,}{\"folder\":\"vanarsdel-storeops-api\",\"dockerfile\":\"scenarios/retail-backoffice/containerizer/vanarsdel-storeops-api/Dockerfile\",\"context\":\"scenarios/retail-backoffice\",\"image_name\":\"containerization-challenge-retail-backoffice/vanarsdel-storeops-api\"}"; fi
         echo "components=[$list]" >> "$GITHUB_OUTPUT"
         echo "version=1.$(date -u +%Y%m%d).$(date -u +%H%M | sed 's/^0*\(.\)/\1/')" >> "$GITHUB_OUTPUT"
         echo "components to build: [$list]"

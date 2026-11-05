@@ -19,3 +19,93 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-policy-changes--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-policy-changes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-policy-changes
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: deploy/sql/create-database.sql, deploy/sql/create-logins.sql
+data:
+  001-create-database.sql: "CREATE TABLE [dbo].[DeskStations] (\n    [Name] nvarchar(50)\
+    \ NOT NULL,\n    [UserName] nvarchar(100) NOT NULL,\n    [ClientVersion] nvarchar(30)\
+    \ NULL,\n    [State] nvarchar(30) NOT NULL,\n    [Detail] nvarchar(300) NULL,\n\
+    \    [CurrentReference] nvarchar(20) NULL,\n    [LastSeenUtc] datetime2 NOT NULL,\n\
+    \    [AppliedCount] int NOT NULL,\n    [FailedCount] int NOT NULL,\n    CONSTRAINT\
+    \ [PK_DeskStations] PRIMARY KEY ([Name])\n);\nGO\nCREATE TABLE [dbo].[Partners]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [Code] nvarchar(20) NOT NULL,\n    [Name]\
+    \ nvarchar(100) NOT NULL,\n    [ApiKeyHash] nvarchar(64) NOT NULL,\n    [Active]\
+    \ bit NOT NULL,\n    [CreatedUtc] datetime2 NOT NULL,\n    CONSTRAINT [PK_Partners]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [dbo].[ChangeRequests] (\n    [Id]\
+    \ bigint NOT NULL IDENTITY,\n    [Reference] nvarchar(20) NOT NULL,\n    [PolicyNumber]\
+    \ nvarchar(12) NOT NULL,\n    [ChangeType] nvarchar(30) NOT NULL,\n    [EffectiveDate]\
+    \ date NOT NULL,\n    [FieldsJson] nvarchar(max) NOT NULL,\n    [Status] nvarchar(20)\
+    \ NOT NULL,\n    [Channel] nvarchar(10) NOT NULL,\n    [SubmittedBy] nvarchar(100)\
+    \ NOT NULL,\n    [PartnerId] int NULL,\n    [PartnerReference] nvarchar(50) NULL,\n\
+    \    [CreatedUtc] datetime2 NOT NULL,\n    [UpdatedUtc] datetime2 NOT NULL,\n\
+    \    [Attempts] int NOT NULL,\n    [NextAttemptUtc] datetime2 NOT NULL,\n    [LockedBy]\
+    \ nvarchar(50) NULL,\n    [LockedUntilUtc] datetime2 NULL,\n    [Endorsement]\
+    \ nvarchar(20) NULL,\n    [ResultMessage] nvarchar(500) NULL,\n    [CompletedUtc]\
+    \ datetime2 NULL,\n    CONSTRAINT [PK_ChangeRequests] PRIMARY KEY ([Id]),\n  \
+    \  CONSTRAINT [FK_ChangeRequests_Partners_PartnerId] FOREIGN KEY ([PartnerId])\
+    \ REFERENCES [dbo].[Partners] ([Id])\n);\nGO\nCREATE TABLE [dbo].[ChangeEvents]\
+    \ (\n    [Id] bigint NOT NULL IDENTITY,\n    [ChangeRequestId] bigint NOT NULL,\n\
+    \    [AtUtc] datetime2 NOT NULL,\n    [Status] nvarchar(20) NOT NULL,\n    [Message]\
+    \ nvarchar(500) NOT NULL,\n    [By] nvarchar(100) NOT NULL,\n    CONSTRAINT [PK_ChangeEvents]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_ChangeEvents_ChangeRequests_ChangeRequestId]\
+    \ FOREIGN KEY ([ChangeRequestId]) REFERENCES [dbo].[ChangeRequests] ([Id]) ON\
+    \ DELETE CASCADE\n);\nGO\nCREATE TABLE [dbo].[ChangeEvidence] (\n    [Id] bigint\
+    \ NOT NULL IDENTITY,\n    [ChangeRequestId] bigint NOT NULL,\n    [Attempt] int\
+    \ NOT NULL,\n    [Name] nvarchar(50) NOT NULL,\n    [RelativePath] nvarchar(260)\
+    \ NOT NULL,\n    [CapturedUtc] datetime2 NOT NULL,\n    [Station] nvarchar(50)\
+    \ NOT NULL,\n    CONSTRAINT [PK_ChangeEvidence] PRIMARY KEY ([Id]),\n    CONSTRAINT\
+    \ [FK_ChangeEvidence_ChangeRequests_ChangeRequestId] FOREIGN KEY ([ChangeRequestId])\
+    \ REFERENCES [dbo].[ChangeRequests] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE INDEX\
+    \ [IX_ChangeEvents_ChangeRequestId] ON [dbo].[ChangeEvents] ([ChangeRequestId]);\n\
+    GO\nCREATE INDEX [IX_ChangeEvidence_ChangeRequestId] ON [dbo].[ChangeEvidence]\
+    \ ([ChangeRequestId]);\nGO\nCREATE INDEX [IX_ChangeRequests_PartnerId_PartnerReference]\
+    \ ON [dbo].[ChangeRequests] ([PartnerId], [PartnerReference]);\nGO\nCREATE INDEX\
+    \ [IX_ChangeRequests_PolicyNumber] ON [dbo].[ChangeRequests] ([PolicyNumber]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_ChangeRequests_Reference] ON [dbo].[ChangeRequests]\
+    \ ([Reference]);\nGO\nCREATE INDEX [IX_ChangeRequests_Status_NextAttemptUtc] ON\
+    \ [dbo].[ChangeRequests] ([Status], [NextAttemptUtc]);\nGO\nCREATE UNIQUE INDEX\
+    \ [IX_Partners_ApiKeyHash] ON [dbo].[Partners] ([ApiKeyHash]);\nGO\nCREATE UNIQUE\
+    \ INDEX [IX_Partners_Code] ON [dbo].[Partners] ([Code]);\nGO\n"
+  002-create-logins.sql: 'IF USER_ID(N''$(WebAccount)'') IS NULL CREATE USER [$(WebAccount)]
+    FOR LOGIN [$(WebAccount)];
+
+    IF USER_ID(N''$(DeskGroup)'') IS NULL CREATE USER [$(DeskGroup)] FOR LOGIN [$(DeskGroup)];
+
+    GO
+
+    -- Portal and partner API
+
+    ALTER ROLE [db_datareader] ADD MEMBER [$(WebAccount)];
+
+    ALTER ROLE [db_datawriter] ADD MEMBER [$(WebAccount)];
+
+    GO
+
+    -- Desk stations: read requests, update queue columns, write events, evidence
+    and station status
+
+    GRANT SELECT ON [dbo].[ChangeRequests] TO [$(DeskGroup)];
+
+    GRANT UPDATE ON [dbo].[ChangeRequests] TO [$(DeskGroup)];
+
+    GRANT SELECT, INSERT ON [dbo].[ChangeEvents] TO [$(DeskGroup)];
+
+    GRANT SELECT, INSERT ON [dbo].[ChangeEvidence] TO [$(DeskGroup)];
+
+    GRANT SELECT, INSERT, UPDATE ON [dbo].[DeskStations] TO [$(DeskGroup)];
+
+    GRANT SELECT ON [dbo].[Partners] TO [$(DeskGroup)];
+
+    GO
+
+    '

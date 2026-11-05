@@ -61,6 +61,7 @@ rules:
   resources:
   - secrets
   resourceNames:
+  - containerization-challenge-city-permits--citypermits-inspections
   - containerization-challenge-city-permits--citypermits-opendata
   - containerization-challenge-city-permits--cz-cosign-pub
   - containerization-challenge-city-permits--cz-git

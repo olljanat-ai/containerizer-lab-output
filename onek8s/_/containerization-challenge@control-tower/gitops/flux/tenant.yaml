@@ -1,0 +1,138 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: containerization-challenge-control-tower
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: containerization-challenge-control-tower-reconciler
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: containerization-challenge-control-tower-reconciler
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: containerization-challenge-control-tower-reconciler
+  namespace: containerization-challenge-control-tower
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-secrets-reader
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-secrets-reader-containerization-challenge-control-tower
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  resourceNames:
+  - containerization-challenge-control-tower--controltower-carriergateway
+  - containerization-challenge-control-tower--controltower-events
+  - containerization-challenge-control-tower--controltower-telematics
+  - containerization-challenge-control-tower--controltower-tower-api
+  - containerization-challenge-control-tower--cz-cosign-pub
+  - containerization-challenge-control-tower--cz-git
+  - containerization-challenge-control-tower--cz-lab-sqlserver
+  - containerization-challenge-control-tower--cz-registry
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-secrets-reader-containerization-challenge-control-tower
+  namespace: containerizer-secrets
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: app-secrets-reader-containerization-challenge-control-tower
+subjects:
+- kind: ServiceAccount
+  name: app-secrets-reader
+  namespace: containerization-challenge-control-tower
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: containerization-challenge-control-tower
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+  namespace: containerization-challenge-control-tower
+spec:
+  limits:
+  - type: Container
+    default:
+      memory: 512Mi
+      ephemeral-storage: 1Gi
+    defaultRequest:
+      cpu: 100m
+      memory: 256Mi
+      ephemeral-storage: 64Mi
+    max:
+      memory: 4Gi
+      ephemeral-storage: 4Gi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: containerization-challenge-control-tower
+spec:
+  hard:
+    requests.cpu: 1000m
+    requests.memory: 1536Mi
+    limits.memory: 3072Mi
+    requests.ephemeral-storage: 384Mi
+    limits.ephemeral-storage: 6144Mi
+    pods: '10'
+    services: '10'
+    persistentvolumeclaims: '10'
+    secrets: '20'
+    configmaps: '20'

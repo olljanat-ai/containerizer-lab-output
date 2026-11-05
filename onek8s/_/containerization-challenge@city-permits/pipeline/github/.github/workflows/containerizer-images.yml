@@ -8,11 +8,13 @@ name: containerizer images (containerization-challenge-city-permits)
   pull_request:
     paths:
     - scenarios/city-permits/Directory.Build.props
+    - scenarios/city-permits/containerizer/citypermits-inspections/**
     - scenarios/city-permits/containerizer/citypermits-opendata/**
     - scenarios/city-permits/global.json
     - scenarios/city-permits/src/CityPermits.Contracts/**
     - scenarios/city-permits/src/CityPermits.Data/**
     - scenarios/city-permits/src/CityPermits.Domain/**
+    - scenarios/city-permits/src/CityPermits.Inspections/**
     - scenarios/city-permits/src/CityPermits.OpenData/**
     - .github/workflows/containerizer-images.yml
   push:
@@ -20,11 +22,13 @@ name: containerizer images (containerization-challenge-city-permits)
     - main
     paths:
     - scenarios/city-permits/Directory.Build.props
+    - scenarios/city-permits/containerizer/citypermits-inspections/**
     - scenarios/city-permits/containerizer/citypermits-opendata/**
     - scenarios/city-permits/global.json
     - scenarios/city-permits/src/CityPermits.Contracts/**
     - scenarios/city-permits/src/CityPermits.Data/**
     - scenarios/city-permits/src/CityPermits.Domain/**
+    - scenarios/city-permits/src/CityPermits.Inspections/**
     - scenarios/city-permits/src/CityPermits.OpenData/**
     - .github/workflows/containerizer-images.yml
   workflow_dispatch: null
@@ -66,6 +70,7 @@ jobs:
         fi
         changed() { [ "$ALL" = 1 ] || printf '%s\n' "$CHANGED" | grep -qE "$1"; }
         list=""
+        if changed '^(scenarios/city-permits/src/CityPermits\.Contracts/|scenarios/city-permits/src/CityPermits\.Inspections/|scenarios/city-permits/Directory\.Build\.props$|scenarios/city-permits/global\.json$|scenarios/city-permits/containerizer/citypermits-inspections/)'; then list="$list${list:+,}{\"folder\":\"citypermits-inspections\",\"dockerfile\":\"scenarios/city-permits/containerizer/citypermits-inspections/Dockerfile\",\"context\":\"scenarios/city-permits\",\"image_name\":\"containerization-challenge-city-permits/citypermits-inspections\"}"; fi
         if changed '^(scenarios/city-permits/src/CityPermits\.Contracts/|scenarios/city-permits/src/CityPermits\.Data/|scenarios/city-permits/src/CityPermits\.Domain/|scenarios/city-permits/src/CityPermits\.OpenData/|scenarios/city-permits/Directory\.Build\.props$|scenarios/city-permits/global\.json$|scenarios/city-permits/containerizer/citypermits-opendata/)'; then list="$list${list:+,}{\"folder\":\"citypermits-opendata\",\"dockerfile\":\"scenarios/city-permits/containerizer/citypermits-opendata/Dockerfile\",\"context\":\"scenarios/city-permits\",\"image_name\":\"containerization-challenge-city-permits/citypermits-opendata\"}"; fi
         echo "components=[$list]" >> "$GITHUB_OUTPUT"
         echo "version=1.$(date -u +%Y%m%d).$(date -u +%H%M | sed 's/^0*\(.\)/\1/')" >> "$GITHUB_OUTPUT"

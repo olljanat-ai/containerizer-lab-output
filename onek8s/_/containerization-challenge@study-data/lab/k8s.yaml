@@ -19,3 +19,288 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-study-data--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-study-data
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-study-data
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: deploy/sql/01-create-database.sql, deploy/sql/02-logins.sql,
+      deploy/sql/03-audit-protection.sql
+data:
+  001-01-create-database.sql: "IF SCHEMA_ID(N'edc') IS NULL EXEC(N'CREATE SCHEMA [edc];');\n\
+    GO\nCREATE TABLE [edc].[AspNetRoles] (\n    [Id] nvarchar(450) NOT NULL,\n   \
+    \ [Name] nvarchar(256) NULL,\n    [NormalizedName] nvarchar(256) NULL,\n    [ConcurrencyStamp]\
+    \ nvarchar(max) NULL,\n    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])\n);\n\
+    GO\nCREATE TABLE [edc].[AspNetUsers] (\n    [Id] nvarchar(450) NOT NULL,\n   \
+    \ [FullName] nvarchar(max) NOT NULL,\n    [SiteRole] nvarchar(max) NOT NULL,\n\
+    \    [Active] bit NOT NULL,\n    [TrainingCompletedAt] datetime2 NULL,\n    [UserName]\
+    \ nvarchar(256) NULL,\n    [NormalizedUserName] nvarchar(256) NULL,\n    [Email]\
+    \ nvarchar(256) NULL,\n    [NormalizedEmail] nvarchar(256) NULL,\n    [EmailConfirmed]\
+    \ bit NOT NULL,\n    [PasswordHash] nvarchar(max) NULL,\n    [SecurityStamp] nvarchar(max)\
+    \ NULL,\n    [ConcurrencyStamp] nvarchar(max) NULL,\n    [PhoneNumber] nvarchar(max)\
+    \ NULL,\n    [PhoneNumberConfirmed] bit NOT NULL,\n    [TwoFactorEnabled] bit\
+    \ NOT NULL,\n    [LockoutEnd] datetimeoffset NULL,\n    [LockoutEnabled] bit NOT\
+    \ NULL,\n    [AccessFailedCount] int NOT NULL,\n    CONSTRAINT [PK_AspNetUsers]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[Audit] (\n    [Id] bigint NOT\
+    \ NULL IDENTITY,\n    [At] datetime2 NOT NULL,\n    [User] nvarchar(max) NOT NULL,\n\
+    \    [EntityType] nvarchar(450) NOT NULL,\n    [EntityKey] nvarchar(450) NOT NULL,\n\
+    \    [SubjectId] int NULL,\n    [Action] nvarchar(max) NOT NULL,\n    [OldValue]\
+    \ nvarchar(max) NULL,\n    [NewValue] nvarchar(max) NULL,\n    [Reason] nvarchar(max)\
+    \ NULL,\n    CONSTRAINT [PK_Audit] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[Coding]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [SubjectId] int NOT NULL,\n    [FormInstanceId]\
+    \ int NOT NULL,\n    [FieldCode] nvarchar(450) NOT NULL,\n    [Dictionary] nvarchar(max)\
+    \ NOT NULL,\n    [Verbatim] nvarchar(max) NOT NULL,\n    [State] nvarchar(16)\
+    \ NOT NULL,\n    [Code] nvarchar(max) NULL,\n    [Term] nvarchar(max) NULL,\n\
+    \    [Hierarchy] nvarchar(max) NULL,\n    [DictionaryVersion] nvarchar(max) NULL,\n\
+    \    [Score] int NULL,\n    [CodedBy] nvarchar(max) NULL,\n    [CodedAt] datetime2\
+    \ NULL,\n    CONSTRAINT [PK_Coding] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[GeneratedDocuments]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [StudyId] int NOT NULL,\n    [SubjectId]\
+    \ int NULL,\n    [Kind] nvarchar(450) NOT NULL,\n    [State] nvarchar(16) NOT\
+    \ NULL,\n    [RequestedBy] nvarchar(max) NOT NULL,\n    [RequestedAt] datetime2\
+    \ NOT NULL,\n    [CompletedAt] datetime2 NULL,\n    [Path] nvarchar(max) NULL,\n\
+    \    [Sha256] nvarchar(max) NULL,\n    [Error] nvarchar(max) NULL,\n    [Parameters]\
+    \ nvarchar(max) NULL,\n    CONSTRAINT [PK_GeneratedDocuments] PRIMARY KEY ([Id])\n\
+    );\nGO\nCREATE TABLE [edc].[LabFiles] (\n    [Id] int NOT NULL IDENTITY,\n   \
+    \ [FileName] nvarchar(max) NOT NULL,\n    [Sha256] nvarchar(450) NOT NULL,\n \
+    \   [ImportedAt] datetime2 NOT NULL,\n    [Rows] int NOT NULL,\n    [Rejected]\
+    \ int NOT NULL,\n    [Errors] nvarchar(max) NULL,\n    CONSTRAINT [PK_LabFiles]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[LabResults] (\n    [Id] int\
+    \ NOT NULL IDENTITY,\n    [StudyId] int NOT NULL,\n    [SubjectId] int NOT NULL,\n\
+    \    [VisitCode] nvarchar(max) NOT NULL,\n    [Accession] nvarchar(450) NOT NULL,\n\
+    \    [CollectedAt] datetime2 NOT NULL,\n    [TestCode] nvarchar(450) NOT NULL,\n\
+    \    [TestName] nvarchar(max) NOT NULL,\n    [Value] nvarchar(max) NULL,\n   \
+    \ [Unit] nvarchar(max) NULL,\n    [LowerLimit] decimal(18,4) NULL,\n    [UpperLimit]\
+    \ decimal(18,4) NULL,\n    [Flag] nvarchar(16) NOT NULL,\n    [Grade] int NULL,\n\
+    \    [SourceFile] nvarchar(max) NOT NULL,\n    [ImportedAt] datetime2 NOT NULL,\n\
+    \    CONSTRAINT [PK_LabResults] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[Notifications]\
+    \ (\n    [Id] bigint NOT NULL IDENTITY,\n    [At] datetime2 NOT NULL,\n    [StudyId]\
+    \ int NOT NULL,\n    [SiteId] int NULL,\n    [Kind] nvarchar(max) NOT NULL,\n\
+    \    [Text] nvarchar(max) NOT NULL,\n    [SubjectId] int NULL,\n    [Delivered]\
+    \ bit NOT NULL,\n    CONSTRAINT [PK_Notifications] PRIMARY KEY ([Id])\n);\nGO\n\
+    CREATE TABLE [edc].[Queries] (\n    [Id] int NOT NULL IDENTITY,\n    [SubjectId]\
+    \ int NOT NULL,\n    [FormInstanceId] int NOT NULL,\n    [FieldCode] nvarchar(max)\
+    \ NOT NULL,\n    [Origin] nvarchar(16) NOT NULL,\n    [EditCheckCode] nvarchar(max)\
+    \ NULL,\n    [State] nvarchar(16) NOT NULL,\n    [Text] nvarchar(max) NOT NULL,\n\
+    \    [OpenedAt] datetime2 NOT NULL,\n    [OpenedBy] nvarchar(max) NOT NULL,\n\
+    \    [LastReminderAt] datetime2 NULL,\n    [ReminderCount] int NOT NULL,\n   \
+    \ CONSTRAINT [PK_Queries] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[RandomisationSlots]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [StudyId] int NOT NULL,\n    [SiteNumber]\
+    \ nvarchar(450) NOT NULL,\n    [Stratum] nvarchar(450) NOT NULL,\n    [Sequence]\
+    \ int NOT NULL,\n    [RandomisationNumber] nvarchar(max) NOT NULL,\n    [ArmCode]\
+    \ nvarchar(max) NOT NULL,\n    [SubjectId] int NULL,\n    [UsedAt] datetime2 NULL,\n\
+    \    CONSTRAINT [PK_RandomisationSlots] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE\
+    \ [edc].[SourceDocuments] (\n    [Id] int NOT NULL IDENTITY,\n    [SubjectId]\
+    \ int NOT NULL,\n    [VisitId] int NULL,\n    [Category] nvarchar(max) NOT NULL,\n\
+    \    [OriginalName] nvarchar(max) NOT NULL,\n    [StoredPath] nvarchar(max) NOT\
+    \ NULL,\n    [ContentType] nvarchar(max) NOT NULL,\n    [Length] bigint NOT NULL,\n\
+    \    [Sha256] nvarchar(max) NOT NULL,\n    [Redacted] bit NOT NULL,\n    [UploadedAt]\
+    \ datetime2 NOT NULL,\n    [UploadedBy] nvarchar(max) NOT NULL,\n    CONSTRAINT\
+    \ [PK_SourceDocuments] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[SponsorClients]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [ClientId] nvarchar(450) NOT NULL,\n\
+    \    [Name] nvarchar(max) NOT NULL,\n    [Studies] nvarchar(max) NOT NULL,\n \
+    \   [MayUnblind] bit NOT NULL,\n    [Active] bit NOT NULL,\n    CONSTRAINT [PK_SponsorClients]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[Studies] (\n    [Id] int NOT\
+    \ NULL IDENTITY,\n    [Code] nvarchar(32) NOT NULL,\n    [Title] nvarchar(max)\
+    \ NOT NULL,\n    [Sponsor] nvarchar(max) NOT NULL,\n    [SponsorClientId] nvarchar(max)\
+    \ NOT NULL,\n    [Phase] nvarchar(max) NOT NULL,\n    [Status] nvarchar(16) NOT\
+    \ NULL,\n    [DesignVersion] int NOT NULL,\n    [SubjectNumberFormat] nvarchar(max)\
+    \ NOT NULL,\n    [TargetEnrolment] int NOT NULL,\n    [QueryReminderDays] int\
+    \ NOT NULL,\n    [Blinded] bit NOT NULL,\n    CONSTRAINT [PK_Studies] PRIMARY\
+    \ KEY ([Id])\n);\nGO\nCREATE TABLE [edc].[AspNetRoleClaims] (\n    [Id] int NOT\
+    \ NULL IDENTITY,\n    [RoleId] nvarchar(450) NOT NULL,\n    [ClaimType] nvarchar(max)\
+    \ NULL,\n    [ClaimValue] nvarchar(max) NULL,\n    CONSTRAINT [PK_AspNetRoleClaims]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId]\
+    \ FOREIGN KEY ([RoleId]) REFERENCES [edc].[AspNetRoles] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [edc].[AspNetUserClaims] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [UserId] nvarchar(450) NOT NULL,\n    [ClaimType] nvarchar(max) NULL,\n \
+    \   [ClaimValue] nvarchar(max) NULL,\n    CONSTRAINT [PK_AspNetUserClaims] PRIMARY\
+    \ KEY ([Id]),\n    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN\
+    \ KEY ([UserId]) REFERENCES [edc].[AspNetUsers] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE TABLE [edc].[AspNetUserLogins] (\n    [LoginProvider] nvarchar(450)\
+    \ NOT NULL,\n    [ProviderKey] nvarchar(450) NOT NULL,\n    [ProviderDisplayName]\
+    \ nvarchar(max) NULL,\n    [UserId] nvarchar(450) NOT NULL,\n    CONSTRAINT [PK_AspNetUserLogins]\
+    \ PRIMARY KEY ([LoginProvider], [ProviderKey]),\n    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId]\
+    \ FOREIGN KEY ([UserId]) REFERENCES [edc].[AspNetUsers] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [edc].[AspNetUserRoles] (\n    [UserId] nvarchar(450) NOT\
+    \ NULL,\n    [RoleId] nvarchar(450) NOT NULL,\n    CONSTRAINT [PK_AspNetUserRoles]\
+    \ PRIMARY KEY ([UserId], [RoleId]),\n    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId]\
+    \ FOREIGN KEY ([RoleId]) REFERENCES [edc].[AspNetRoles] ([Id]) ON DELETE CASCADE,\n\
+    \    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId])\
+    \ REFERENCES [edc].[AspNetUsers] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE\
+    \ [edc].[AspNetUserTokens] (\n    [UserId] nvarchar(450) NOT NULL,\n    [LoginProvider]\
+    \ nvarchar(450) NOT NULL,\n    [Name] nvarchar(450) NOT NULL,\n    [Value] nvarchar(max)\
+    \ NULL,\n    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider],\
+    \ [Name]),\n    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY\
+    \ ([UserId]) REFERENCES [edc].[AspNetUsers] ([Id]) ON DELETE CASCADE\n);\nGO\n\
+    CREATE TABLE [edc].[SiteAssignments] (\n    [Id] int NOT NULL IDENTITY,\n    [UserId]\
+    \ nvarchar(450) NOT NULL,\n    [SiteId] int NOT NULL,\n    [CanSign] bit NOT NULL,\n\
+    \    CONSTRAINT [PK_SiteAssignments] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_SiteAssignments_AspNetUsers_UserId]\
+    \ FOREIGN KEY ([UserId]) REFERENCES [edc].[AspNetUsers] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [edc].[QueryMessages] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [QueryId] int NOT NULL,\n    [At] datetime2 NOT NULL,\n    [User] nvarchar(max)\
+    \ NOT NULL,\n    [Role] nvarchar(max) NOT NULL,\n    [Text] nvarchar(max) NOT\
+    \ NULL,\n    [NewState] nvarchar(16) NOT NULL,\n    CONSTRAINT [PK_QueryMessages]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_QueryMessages_Queries_QueryId] FOREIGN\
+    \ KEY ([QueryId]) REFERENCES [edc].[Queries] ([Id]) ON DELETE CASCADE\n);\nGO\n\
+    CREATE TABLE [edc].[Arms] (\n    [Id] int NOT NULL IDENTITY,\n    [StudyId] int\
+    \ NOT NULL,\n    [Code] nvarchar(450) NOT NULL,\n    [Name] nvarchar(max) NOT\
+    \ NULL,\n    [Ratio] int NOT NULL,\n    CONSTRAINT [PK_Arms] PRIMARY KEY ([Id]),\n\
+    \    CONSTRAINT [FK_Arms_Studies_StudyId] FOREIGN KEY ([StudyId]) REFERENCES [edc].[Studies]\
+    \ ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [edc].[FormDefinitions] (\n \
+    \   [Id] int NOT NULL IDENTITY,\n    [StudyId] int NOT NULL,\n    [Code] nvarchar(450)\
+    \ NOT NULL,\n    [Name] nvarchar(max) NOT NULL,\n    [Order] int NOT NULL,\n \
+    \   [Repeating] bit NOT NULL,\n    [WorkbookCode] nvarchar(max) NULL,\n    [PrintTemplate]\
+    \ nvarchar(max) NULL,\n    CONSTRAINT [PK_FormDefinitions] PRIMARY KEY ([Id]),\n\
+    \    CONSTRAINT [FK_FormDefinitions_Studies_StudyId] FOREIGN KEY ([StudyId]) REFERENCES\
+    \ [edc].[Studies] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [edc].[Sites]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [StudyId] int NOT NULL,\n    [Number]\
+    \ nvarchar(450) NOT NULL,\n    [Name] nvarchar(max) NOT NULL,\n    [Investigator]\
+    \ nvarchar(max) NOT NULL,\n    [Country] nvarchar(max) NOT NULL,\n    [TimeZone]\
+    \ nvarchar(max) NOT NULL,\n    [Active] bit NOT NULL,\n    [ContactEmail] nvarchar(max)\
+    \ NOT NULL,\n    CONSTRAINT [PK_Sites] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Sites_Studies_StudyId]\
+    \ FOREIGN KEY ([StudyId]) REFERENCES [edc].[Studies] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [edc].[VisitDefinitions] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [StudyId] int NOT NULL,\n    [Code] nvarchar(450) NOT NULL,\n    [Name] nvarchar(max)\
+    \ NOT NULL,\n    [Order] int NOT NULL,\n    [PlannedDay] int NOT NULL,\n    [WindowBefore]\
+    \ int NOT NULL,\n    [WindowAfter] int NOT NULL,\n    [IsAnchor] bit NOT NULL,\n\
+    \    [Unscheduled] bit NOT NULL,\n    [FormCodes] nvarchar(max) NOT NULL,\n  \
+    \  CONSTRAINT [PK_VisitDefinitions] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_VisitDefinitions_Studies_StudyId]\
+    \ FOREIGN KEY ([StudyId]) REFERENCES [edc].[Studies] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [edc].[Workbooks] (\n    [Id] int NOT NULL IDENTITY,\n  \
+    \  [StudyId] int NOT NULL,\n    [Code] nvarchar(450) NOT NULL,\n    [Version]\
+    \ int NOT NULL,\n    [FileName] nvarchar(max) NOT NULL,\n    [Sha256] nvarchar(max)\
+    \ NOT NULL,\n    [ValidatedBy] nvarchar(max) NOT NULL,\n    [ValidatedAt] datetime2\
+    \ NOT NULL,\n    [Active] bit NOT NULL,\n    CONSTRAINT [PK_Workbooks] PRIMARY\
+    \ KEY ([Id]),\n    CONSTRAINT [FK_Workbooks_Studies_StudyId] FOREIGN KEY ([StudyId])\
+    \ REFERENCES [edc].[Studies] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [edc].[EditChecks]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [FormDefinitionId] int NOT NULL,\n \
+    \   [Code] nvarchar(max) NOT NULL,\n    [Expression] nvarchar(max) NOT NULL,\n\
+    \    [When] nvarchar(max) NULL,\n    [Message] nvarchar(max) NOT NULL,\n    [FieldCode]\
+    \ nvarchar(max) NOT NULL,\n    [Severity] nvarchar(16) NOT NULL,\n    [Active]\
+    \ bit NOT NULL,\n    CONSTRAINT [PK_EditChecks] PRIMARY KEY ([Id]),\n    CONSTRAINT\
+    \ [FK_EditChecks_FormDefinitions_FormDefinitionId] FOREIGN KEY ([FormDefinitionId])\
+    \ REFERENCES [edc].[FormDefinitions] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE\
+    \ TABLE [edc].[FieldDefinitions] (\n    [Id] int NOT NULL IDENTITY,\n    [FormDefinitionId]\
+    \ int NOT NULL,\n    [Code] nvarchar(max) NOT NULL,\n    [Label] nvarchar(max)\
+    \ NOT NULL,\n    [Type] nvarchar(16) NOT NULL,\n    [Order] int NOT NULL,\n  \
+    \  [Unit] nvarchar(max) NULL,\n    [Required] bit NOT NULL,\n    [Min] decimal(18,4)\
+    \ NULL,\n    [Max] decimal(18,4) NULL,\n    [Decimals] int NULL,\n    [MaxLength]\
+    \ int NULL,\n    [Choices] nvarchar(max) NULL,\n    [WorkbookOutput] nvarchar(max)\
+    \ NULL,\n    [Sdv] bit NOT NULL,\n    [CodingDictionary] nvarchar(max) NULL,\n\
+    \    CONSTRAINT [PK_FieldDefinitions] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_FieldDefinitions_FormDefinitions_FormDefinitionId]\
+    \ FOREIGN KEY ([FormDefinitionId]) REFERENCES [edc].[FormDefinitions] ([Id]) ON\
+    \ DELETE CASCADE\n);\nGO\nCREATE TABLE [edc].[Subjects] (\n    [Id] int NOT NULL\
+    \ IDENTITY,\n    [StudyId] int NOT NULL,\n    [SiteId] int NOT NULL,\n    [Number]\
+    \ nvarchar(450) NOT NULL,\n    [Initials] nvarchar(max) NULL,\n    [BirthYear]\
+    \ int NOT NULL,\n    [Sex] nvarchar(max) NOT NULL,\n    [ConsentDate] date NULL,\n\
+    \    [Status] nvarchar(16) NOT NULL,\n    [ArmId] int NULL,\n    [RandomisedAt]\
+    \ datetime2 NULL,\n    [RandomisationNumber] nvarchar(max) NULL,\n    [WithdrawalReason]\
+    \ nvarchar(max) NULL,\n    CONSTRAINT [PK_Subjects] PRIMARY KEY ([Id]),\n    CONSTRAINT\
+    \ [FK_Subjects_Arms_ArmId] FOREIGN KEY ([ArmId]) REFERENCES [edc].[Arms] ([Id])\
+    \ ON DELETE NO ACTION,\n    CONSTRAINT [FK_Subjects_Sites_SiteId] FOREIGN KEY\
+    \ ([SiteId]) REFERENCES [edc].[Sites] ([Id]) ON DELETE NO ACTION,\n    CONSTRAINT\
+    \ [FK_Subjects_Studies_StudyId] FOREIGN KEY ([StudyId]) REFERENCES [edc].[Studies]\
+    \ ([Id]) ON DELETE NO ACTION\n);\nGO\nCREATE TABLE [edc].[WorkbookInputs] (\n\
+    \    [Id] int NOT NULL IDENTITY,\n    [CalculationWorkbookId] int NOT NULL,\n\
+    \    [Name] nvarchar(max) NOT NULL,\n    [Source] nvarchar(max) NOT NULL,\n  \
+    \  CONSTRAINT [PK_WorkbookInputs] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_WorkbookInputs_Workbooks_CalculationWorkbookId]\
+    \ FOREIGN KEY ([CalculationWorkbookId]) REFERENCES [edc].[Workbooks] ([Id]) ON\
+    \ DELETE CASCADE\n);\nGO\nCREATE TABLE [edc].[Visits] (\n    [Id] int NOT NULL\
+    \ IDENTITY,\n    [SubjectId] int NOT NULL,\n    [VisitDefinitionId] int NOT NULL,\n\
+    \    [Repeat] int NOT NULL,\n    [Date] date NULL,\n    [Status] nvarchar(16)\
+    \ NOT NULL,\n    [OutOfWindow] bit NOT NULL,\n    CONSTRAINT [PK_Visits] PRIMARY\
+    \ KEY ([Id]),\n    CONSTRAINT [FK_Visits_Subjects_SubjectId] FOREIGN KEY ([SubjectId])\
+    \ REFERENCES [edc].[Subjects] ([Id]) ON DELETE CASCADE,\n    CONSTRAINT [FK_Visits_VisitDefinitions_VisitDefinitionId]\
+    \ FOREIGN KEY ([VisitDefinitionId]) REFERENCES [edc].[VisitDefinitions] ([Id])\
+    \ ON DELETE NO ACTION\n);\nGO\nCREATE TABLE [edc].[Forms] (\n    [Id] int NOT\
+    \ NULL IDENTITY,\n    [VisitId] int NOT NULL,\n    [FormDefinitionId] int NOT\
+    \ NULL,\n    [Row] int NOT NULL,\n    [Status] nvarchar(16) NOT NULL,\n    [LastSavedAt]\
+    \ datetime2 NULL,\n    [LastSavedBy] nvarchar(max) NULL,\n    [SignedAt] datetime2\
+    \ NULL,\n    [SignedBy] nvarchar(max) NULL,\n    [DerivedWith] nvarchar(max) NULL,\n\
+    \    [RowVersion] rowversion NOT NULL,\n    CONSTRAINT [PK_Forms] PRIMARY KEY\
+    \ ([Id]),\n    CONSTRAINT [FK_Forms_FormDefinitions_FormDefinitionId] FOREIGN\
+    \ KEY ([FormDefinitionId]) REFERENCES [edc].[FormDefinitions] ([Id]) ON DELETE\
+    \ NO ACTION,\n    CONSTRAINT [FK_Forms_Visits_VisitId] FOREIGN KEY ([VisitId])\
+    \ REFERENCES [edc].[Visits] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [edc].[Values]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [FormInstanceId] int NOT NULL,\n   \
+    \ [FieldCode] nvarchar(450) NOT NULL,\n    [Value] nvarchar(2000) NULL,\n    [Verified]\
+    \ bit NOT NULL,\n    [VerifiedBy] nvarchar(max) NULL,\n    [VerifiedAt] datetime2\
+    \ NULL,\n    CONSTRAINT [PK_Values] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Values_Forms_FormInstanceId]\
+    \ FOREIGN KEY ([FormInstanceId]) REFERENCES [edc].[Forms] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE UNIQUE INDEX [IX_Arms_StudyId_Code] ON [edc].[Arms] ([StudyId],\
+    \ [Code]);\nGO\nCREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [edc].[AspNetRoleClaims]\
+    \ ([RoleId]);\nGO\nCREATE UNIQUE INDEX [RoleNameIndex] ON [edc].[AspNetRoles]\
+    \ ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;\nGO\nCREATE INDEX [IX_AspNetUserClaims_UserId]\
+    \ ON [edc].[AspNetUserClaims] ([UserId]);\nGO\nCREATE INDEX [IX_AspNetUserLogins_UserId]\
+    \ ON [edc].[AspNetUserLogins] ([UserId]);\nGO\nCREATE INDEX [IX_AspNetUserRoles_RoleId]\
+    \ ON [edc].[AspNetUserRoles] ([RoleId]);\nGO\nCREATE INDEX [EmailIndex] ON [edc].[AspNetUsers]\
+    \ ([NormalizedEmail]);\nGO\nCREATE UNIQUE INDEX [UserNameIndex] ON [edc].[AspNetUsers]\
+    \ ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;\nGO\nCREATE INDEX\
+    \ [IX_Audit_EntityType_EntityKey] ON [edc].[Audit] ([EntityType], [EntityKey]);\n\
+    GO\nCREATE INDEX [IX_Audit_SubjectId_At] ON [edc].[Audit] ([SubjectId], [At]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_Coding_FormInstanceId_FieldCode] ON [edc].[Coding]\
+    \ ([FormInstanceId], [FieldCode]);\nGO\nCREATE INDEX [IX_Coding_State] ON [edc].[Coding]\
+    \ ([State]);\nGO\nCREATE INDEX [IX_EditChecks_FormDefinitionId] ON [edc].[EditChecks]\
+    \ ([FormDefinitionId]);\nGO\nCREATE INDEX [IX_FieldDefinitions_FormDefinitionId]\
+    \ ON [edc].[FieldDefinitions] ([FormDefinitionId]);\nGO\nCREATE UNIQUE INDEX [IX_FormDefinitions_StudyId_Code]\
+    \ ON [edc].[FormDefinitions] ([StudyId], [Code]);\nGO\nCREATE INDEX [IX_Forms_FormDefinitionId]\
+    \ ON [edc].[Forms] ([FormDefinitionId]);\nGO\nCREATE UNIQUE INDEX [IX_Forms_VisitId_FormDefinitionId_Row]\
+    \ ON [edc].[Forms] ([VisitId], [FormDefinitionId], [Row]);\nGO\nCREATE INDEX [IX_GeneratedDocuments_Kind_State]\
+    \ ON [edc].[GeneratedDocuments] ([Kind], [State]);\nGO\nCREATE UNIQUE INDEX [IX_LabFiles_Sha256]\
+    \ ON [edc].[LabFiles] ([Sha256]);\nGO\nCREATE UNIQUE INDEX [IX_LabResults_Accession_TestCode]\
+    \ ON [edc].[LabResults] ([Accession], [TestCode]);\nGO\nCREATE INDEX [IX_Notifications_Delivered_Id]\
+    \ ON [edc].[Notifications] ([Delivered], [Id]);\nGO\nCREATE INDEX [IX_Queries_SubjectId_State]\
+    \ ON [edc].[Queries] ([SubjectId], [State]);\nGO\nCREATE INDEX [IX_QueryMessages_QueryId]\
+    \ ON [edc].[QueryMessages] ([QueryId]);\nGO\nCREATE UNIQUE INDEX [IX_RandomisationSlots_StudyId_SiteNumber_Stratum_Sequence]\
+    \ ON [edc].[RandomisationSlots] ([StudyId], [SiteNumber], [Stratum], [Sequence]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_SiteAssignments_UserId_SiteId] ON [edc].[SiteAssignments]\
+    \ ([UserId], [SiteId]);\nGO\nCREATE UNIQUE INDEX [IX_Sites_StudyId_Number] ON\
+    \ [edc].[Sites] ([StudyId], [Number]);\nGO\nCREATE UNIQUE INDEX [IX_SponsorClients_ClientId]\
+    \ ON [edc].[SponsorClients] ([ClientId]);\nGO\nCREATE UNIQUE INDEX [IX_Studies_Code]\
+    \ ON [edc].[Studies] ([Code]);\nGO\nCREATE INDEX [IX_Subjects_ArmId] ON [edc].[Subjects]\
+    \ ([ArmId]);\nGO\nCREATE INDEX [IX_Subjects_SiteId] ON [edc].[Subjects] ([SiteId]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_Subjects_StudyId_Number] ON [edc].[Subjects] ([StudyId],\
+    \ [Number]);\nGO\nCREATE UNIQUE INDEX [IX_Values_FormInstanceId_FieldCode] ON\
+    \ [edc].[Values] ([FormInstanceId], [FieldCode]);\nGO\nCREATE UNIQUE INDEX [IX_VisitDefinitions_StudyId_Code]\
+    \ ON [edc].[VisitDefinitions] ([StudyId], [Code]);\nGO\nCREATE UNIQUE INDEX [IX_Visits_SubjectId_VisitDefinitionId_Repeat]\
+    \ ON [edc].[Visits] ([SubjectId], [VisitDefinitionId], [Repeat]);\nGO\nCREATE\
+    \ INDEX [IX_Visits_VisitDefinitionId] ON [edc].[Visits] ([VisitDefinitionId]);\n\
+    GO\nCREATE INDEX [IX_WorkbookInputs_CalculationWorkbookId] ON [edc].[WorkbookInputs]\
+    \ ([CalculationWorkbookId]);\nGO\nCREATE UNIQUE INDEX [IX_Workbooks_StudyId_Code_Version]\
+    \ ON [edc].[Workbooks] ([StudyId], [Code], [Version]);\nGO\n"
+  002-02-logins.sql: 'IF DATABASE_PRINCIPAL_ID(N''studydata_app'') IS NULL CREATE
+    ROLE [studydata_app];
+
+    GRANT SELECT, INSERT, UPDATE, DELETE ON SCHEMA::[edc] TO [studydata_app];
+
+    -- The audit trail is append-only for the applications.
+
+    DENY UPDATE, DELETE ON [edc].[Audit] TO [studydata_app];
+
+    GO
+
+    IF DATABASE_PRINCIPAL_ID(N''$(Domain)\svc-studydata-web'') IS NULL CREATE USER
+    [$(Domain)\svc-studydata-web] FOR LOGIN [$(Domain)\svc-studydata-web] WITH DEFAULT_SCHEMA
+    = [edc];
+
+    IF DATABASE_PRINCIPAL_ID(N''$(Domain)\svc-studydata-job$'') IS NULL CREATE USER
+    [$(Domain)\svc-studydata-job$] FOR LOGIN [$(Domain)\svc-studydata-job$] WITH DEFAULT_SCHEMA
+    = [edc];
+
+    ALTER ROLE [studydata_app] ADD MEMBER [$(Domain)\svc-studydata-web];
+
+    ALTER ROLE [studydata_app] ADD MEMBER [$(Domain)\svc-studydata-job$];
+
+    GO
+
+    '
+  003-03-audit-protection.sql: "CREATE OR ALTER TRIGGER [edc].[TR_Audit_Immutable]\
+    \ ON [edc].[Audit]\nINSTEAD OF UPDATE, DELETE\nAS\nBEGIN\n    SET NOCOUNT ON;\n\
+    \    THROW 51000, N'Audit trail entries cannot be changed or deleted.', 1;\nEND\n\
+    GO\n"

@@ -19,3 +19,215 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-furnace-records--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-furnace-records
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-furnace-records
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: deploy/sql/01-create-database.sql, deploy/sql/02-logins.sql,
+      deploy/sql/03-reference-data.sql
+data:
+  001-01-create-database.sql: "-- Furnace Records database. Run on sql01 as a sysadmin:\n\
+    --   sqlcmd -S sql01.corp.local -E -i 01-create-database.sql\nSET QUOTED_IDENTIFIER\
+    \ ON;\nGO\nIF OBJECT_ID(N'fr.Loads') IS NOT NULL\nBEGIN\n    PRINT 'Schema fr\
+    \ already exists.';\n    SET NOEXEC ON;\nEND\nGO\nIF SCHEMA_ID(N'fr') IS NULL\
+    \ EXEC(N'CREATE SCHEMA [fr];');\nGO\nCREATE TABLE [fr].[ApiClients] (\n    [Id]\
+    \ int NOT NULL IDENTITY,\n    [Name] nvarchar(100) NOT NULL,\n    [KeyHash] nvarchar(64)\
+    \ NOT NULL,\n    [Active] bit NOT NULL,\n    [CreatedAtUtc] datetime2 NOT NULL,\n\
+    \    CONSTRAINT [PK_ApiClients] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [fr].[Events]\
+    \ (\n    [Id] bigint NOT NULL IDENTITY,\n    [LoadId] int NOT NULL,\n    [AtUtc]\
+    \ datetime2 NOT NULL,\n    [Kind] nvarchar(20) NOT NULL,\n    [Detail] nvarchar(200)\
+    \ NULL,\n    CONSTRAINT [PK_Events] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [fr].[Furnaces]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [Code] nvarchar(6) NOT NULL,\n    [Name]\
+    \ nvarchar(100) NOT NULL,\n    [FurnaceClass] int NOT NULL,\n    [Instrumentation]\
+    \ nvarchar(1) NOT NULL,\n    [Active] bit NOT NULL,\n    [UniformitySurveyDue]\
+    \ date NULL,\n    [AccuracyTestDue] date NULL,\n    CONSTRAINT [PK_Furnaces] PRIMARY\
+    \ KEY ([Id])\n);\nGO\nCREATE TABLE [fr].[JobRuns] (\n    [Job] nvarchar(40) NOT\
+    \ NULL,\n    [LastRunUtc] datetime2 NOT NULL,\n    [Result] nvarchar(400) NULL,\n\
+    \    CONSTRAINT [PK_JobRuns] PRIMARY KEY ([Job])\n);\nGO\nCREATE TABLE [fr].[Outbox]\
+    \ (\n    [Id] bigint NOT NULL IDENTITY,\n    [Topic] nvarchar(40) NOT NULL,\n\
+    \    [Key] nvarchar(40) NOT NULL,\n    [PayloadJson] nvarchar(max) NOT NULL,\n\
+    \    [CreatedAtUtc] datetime2 NOT NULL,\n    [NextAttemptUtc] datetime2 NOT NULL,\n\
+    \    [Attempts] int NOT NULL,\n    [SentAtUtc] datetime2 NULL,\n    [LastError]\
+    \ nvarchar(1000) NULL,\n    CONSTRAINT [PK_Outbox] PRIMARY KEY ([Id])\n);\nGO\n\
+    CREATE TABLE [fr].[Recipes] (\n    [Id] int NOT NULL IDENTITY,\n    [Code] nvarchar(20)\
+    \ NOT NULL,\n    [Name] nvarchar(100) NOT NULL,\n    [Specification] nvarchar(100)\
+    \ NULL,\n    [SetpointCelsius] float NOT NULL,\n    [ToleranceMinusCelsius] float\
+    \ NOT NULL,\n    [TolerancePlusCelsius] float NOT NULL,\n    [SoakMinutes] int\
+    \ NOT NULL,\n    [MaxSoakMinutes] int NULL,\n    [MaxRampCelsiusPerMinute] float\
+    \ NULL,\n    [MaxQuenchDelaySeconds] int NULL,\n    [Active] bit NOT NULL,\n \
+    \   CONSTRAINT [PK_Recipes] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [fr].[Samples]\
+    \ (\n    [Id] bigint NOT NULL IDENTITY,\n    [LoadId] int NOT NULL,\n    [AtUtc]\
+    \ datetime2 NOT NULL,\n    [Channel] int NOT NULL,\n    [Celsius] float NOT NULL,\n\
+    \    CONSTRAINT [PK_Samples] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [fr].[Channels]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [FurnaceId] int NOT NULL,\n    [Channel]\
+    \ int NOT NULL,\n    [Name] nvarchar(50) NOT NULL,\n    [Role] nvarchar(20) NOT\
+    \ NULL,\n    [Type] nvarchar(2) NOT NULL,\n    [SensorSerial] nvarchar(40) NULL,\n\
+    \    [CalibratedOn] date NULL,\n    [CalibrationDue] date NULL,\n    [Enabled]\
+    \ bit NOT NULL,\n    CONSTRAINT [PK_Channels] PRIMARY KEY ([Id]),\n    CONSTRAINT\
+    \ [FK_Channels_Furnaces_FurnaceId] FOREIGN KEY ([FurnaceId]) REFERENCES [fr].[Furnaces]\
+    \ ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [fr].[Loads] (\n    [Id] int\
+    \ NOT NULL IDENTITY,\n    [LoadNumber] nvarchar(20) NOT NULL,\n    [Kind] nvarchar(12)\
+    \ NOT NULL,\n    [FurnaceId] int NOT NULL,\n    [RecipeId] int NOT NULL,\n   \
+    \ [Status] nvarchar(12) NOT NULL,\n    [PlannedAtUtc] datetime2 NOT NULL,\n  \
+    \  [PlannedBy] nvarchar(100) NULL,\n    [StartedAtUtc] datetime2 NULL,\n    [EndedAtUtc]\
+    \ datetime2 NULL,\n    [Passed] bit NULL,\n    [SoakStartUtc] datetime2 NULL,\n\
+    \    [SoakEndUtc] datetime2 NULL,\n    [SoakMinutes] float NULL,\n    [MaxRampCelsiusPerMinute]\
+    \ float NULL,\n    [QuenchDelaySeconds] float NULL,\n    [FindingsJson] nvarchar(max)\
+    \ NULL,\n    [UniformityCelsius] float NULL,\n    [SurveyJson] nvarchar(max) NULL,\n\
+    \    [CertificatePath] nvarchar(260) NULL,\n    [DecidedBy] nvarchar(100) NULL,\n\
+    \    [DecidedAtUtc] datetime2 NULL,\n    [DecisionComment] nvarchar(1000) NULL,\n\
+    \    [RowVersion] rowversion NOT NULL,\n    CONSTRAINT [PK_Loads] PRIMARY KEY\
+    \ ([Id]),\n    CONSTRAINT [FK_Loads_Furnaces_FurnaceId] FOREIGN KEY ([FurnaceId])\
+    \ REFERENCES [fr].[Furnaces] ([Id]) ON DELETE CASCADE,\n    CONSTRAINT [FK_Loads_Recipes_RecipeId]\
+    \ FOREIGN KEY ([RecipeId]) REFERENCES [fr].[Recipes] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [fr].[Corrections] (\n    [Id] int NOT NULL IDENTITY,\n \
+    \   [FurnaceChannelId] int NOT NULL,\n    [AtCelsius] float NOT NULL,\n    [CorrectionCelsius]\
+    \ float NOT NULL,\n    CONSTRAINT [PK_Corrections] PRIMARY KEY ([Id]),\n    CONSTRAINT\
+    \ [FK_Corrections_Channels_FurnaceChannelId] FOREIGN KEY ([FurnaceChannelId])\
+    \ REFERENCES [fr].[Channels] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [fr].[LoadParts]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [LoadId] int NOT NULL,\n    [WorkOrder]\
+    \ nvarchar(20) NOT NULL,\n    [PartNumber] nvarchar(40) NOT NULL,\n    [Lot] nvarchar(40)\
+    \ NULL,\n    [Quantity] int NOT NULL,\n    CONSTRAINT [PK_LoadParts] PRIMARY KEY\
+    \ ([Id]),\n    CONSTRAINT [FK_LoadParts_Loads_LoadId] FOREIGN KEY ([LoadId]) REFERENCES\
+    \ [fr].[Loads] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE UNIQUE INDEX [IX_ApiClients_KeyHash]\
+    \ ON [fr].[ApiClients] ([KeyHash]);\nGO\nCREATE UNIQUE INDEX [IX_Channels_FurnaceId_Channel]\
+    \ ON [fr].[Channels] ([FurnaceId], [Channel]);\nGO\nCREATE INDEX [IX_Corrections_FurnaceChannelId]\
+    \ ON [fr].[Corrections] ([FurnaceChannelId]);\nGO\nCREATE INDEX [IX_Events_LoadId_AtUtc]\
+    \ ON [fr].[Events] ([LoadId], [AtUtc]);\nGO\nCREATE UNIQUE INDEX [IX_Furnaces_Code]\
+    \ ON [fr].[Furnaces] ([Code]);\nGO\nCREATE INDEX [IX_LoadParts_LoadId] ON [fr].[LoadParts]\
+    \ ([LoadId]);\nGO\nCREATE INDEX [IX_Loads_FurnaceId_Status] ON [fr].[Loads] ([FurnaceId],\
+    \ [Status]);\nGO\nCREATE UNIQUE INDEX [IX_Loads_LoadNumber] ON [fr].[Loads] ([LoadNumber]);\n\
+    GO\nCREATE INDEX [IX_Loads_RecipeId] ON [fr].[Loads] ([RecipeId]);\nGO\nCREATE\
+    \ INDEX [IX_Outbox_SentAtUtc_NextAttemptUtc] ON [fr].[Outbox] ([SentAtUtc], [NextAttemptUtc]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_Recipes_Code] ON [fr].[Recipes] ([Code]);\nGO\nCREATE\
+    \ INDEX [IX_Samples_LoadId_AtUtc_Channel] ON [fr].[Samples] ([LoadId], [AtUtc],\
+    \ [Channel]);\nGO\nSET NOEXEC OFF;\nGO\n"
+  002-02-logins.sql: 'IF DATABASE_PRINCIPAL_ID(N''furnace_web'') IS NULL CREATE ROLE
+    [furnace_web];
+
+    IF DATABASE_PRINCIPAL_ID(N''furnace_daq'') IS NULL CREATE ROLE [furnace_daq];
+
+    IF DATABASE_PRINCIPAL_ID(N''furnace_worker'') IS NULL CREATE ROLE [furnace_worker];
+
+    GO
+
+    -- Portal and MES API (same application pool account)
+
+    GRANT SELECT ON SCHEMA::[fr] TO [furnace_web];
+
+    GRANT INSERT, UPDATE ON [fr].[Loads] TO [furnace_web];
+
+    GRANT INSERT, DELETE ON [fr].[LoadParts] TO [furnace_web];
+
+    GRANT INSERT, UPDATE ON [fr].[Recipes] TO [furnace_web];
+
+    GRANT UPDATE ON [fr].[Furnaces] TO [furnace_web];
+
+    GRANT UPDATE ON [fr].[Channels] TO [furnace_web];
+
+    GRANT INSERT, DELETE ON [fr].[Corrections] TO [furnace_web];
+
+    GRANT INSERT ON [fr].[Outbox] TO [furnace_web];
+
+    GRANT INSERT ON [fr].[ApiClients] TO [furnace_web];
+
+
+    -- Acquisition service
+
+    GRANT SELECT ON SCHEMA::[fr] TO [furnace_daq];
+
+    GRANT UPDATE ON [fr].[Loads] TO [furnace_daq];
+
+    GRANT INSERT ON [fr].[Samples] TO [furnace_daq];
+
+    GRANT INSERT ON [fr].[Events] TO [furnace_daq];
+
+    GRANT INSERT ON [fr].[Outbox] TO [furnace_daq];
+
+
+    -- Worker
+
+    GRANT SELECT ON SCHEMA::[fr] TO [furnace_worker];
+
+    GRANT UPDATE ON [fr].[Loads] TO [furnace_worker];
+
+    GRANT UPDATE ON [fr].[Outbox] TO [furnace_worker];
+
+    GRANT INSERT, UPDATE ON [fr].[JobRuns] TO [furnace_worker];
+
+    GO
+
+    IF DATABASE_PRINCIPAL_ID(N''$(WebAccount)'') IS NULL CREATE USER [$(WebAccount)]
+    FOR LOGIN [$(WebAccount)];
+
+    IF DATABASE_PRINCIPAL_ID(N''$(DaqAccount)'') IS NULL CREATE USER [$(DaqAccount)]
+    FOR LOGIN [$(DaqAccount)];
+
+    IF DATABASE_PRINCIPAL_ID(N''$(WorkerAccount)'') IS NULL CREATE USER [$(WorkerAccount)]
+    FOR LOGIN [$(WorkerAccount)];
+
+    ALTER ROLE [furnace_web] ADD MEMBER [$(WebAccount)];
+
+    ALTER ROLE [furnace_daq] ADD MEMBER [$(DaqAccount)];
+
+    ALTER ROLE [furnace_worker] ADD MEMBER [$(WorkerAccount)];
+
+    GO
+
+    '
+  003-03-reference-data.sql: "-- Furnaces, sensors and recipes of the Adatum Thermal\
+    \ Processing plant. Run once after 01-create-database.sql;\n-- later changes are\
+    \ made on the portal (Furnaces, Recipes).\nSET QUOTED_IDENTIFIER ON;\nSET NOCOUNT\
+    \ ON;\nGO\nIF NOT EXISTS (SELECT 1 FROM [fr].[Furnaces] WHERE [Code] = N'F01')\n\
+    \    INSERT [fr].[Furnaces] ([Code], [Name], [FurnaceClass], [Instrumentation],\
+    \ [Active], [UniformitySurveyDue], [AccuracyTestDue])\n    VALUES (N'F01', N'Solution\
+    \ treatment furnace 1', 2, N'B', 1, DATEADD(MONTH, 3, CAST(GETDATE() AS date)),\
+    \ DATEADD(MONTH, 1, CAST(GETDATE() AS date)));\nIF NOT EXISTS (SELECT 1 FROM [fr].[Furnaces]\
+    \ WHERE [Code] = N'F02')\n    INSERT [fr].[Furnaces] ([Code], [Name], [FurnaceClass],\
+    \ [Instrumentation], [Active], [UniformitySurveyDue], [AccuracyTestDue])\n   \
+    \ VALUES (N'F02', N'Ageing oven 2', 3, N'C', 1, DATEADD(MONTH, 3, CAST(GETDATE()\
+    \ AS date)), DATEADD(MONTH, 1, CAST(GETDATE() AS date)));\nGO\nDECLARE @channels\
+    \ TABLE ([Furnace] nvarchar(6), [Channel] int, [Name] nvarchar(50), [Role] nvarchar(20),\
+    \ [Type] nvarchar(2));\nINSERT @channels VALUES\n    (N'F01', 0, N'Control', N'Control',\
+    \ N'N'),\n    (N'F01', 1, N'Over-temperature', N'OverTemperature', N'N'),\n  \
+    \  (N'F01', 2, N'Recorder hot', N'Recorder', N'N'),\n    (N'F01', 3, N'Recorder\
+    \ cold', N'Recorder', N'N'),\n    (N'F01', 4, N'Load 1', N'Load', N'N'),\n   \
+    \ (N'F01', 5, N'Load 2', N'Load', N'N'),\n    (N'F01', 6, N'Load 3', N'Load',\
+    \ N'N'),\n    (N'F01', 7, N'Load 4', N'Load', N'N'),\n    (N'F01', 8, N'Survey\
+    \ front left', N'Survey', N'N'),\n    (N'F01', 9, N'Survey front right', N'Survey',\
+    \ N'N'),\n    (N'F01', 10, N'Survey rear left', N'Survey', N'N'),\n    (N'F01',\
+    \ 11, N'Survey rear right', N'Survey', N'N'),\n    (N'F01', 12, N'Survey centre',\
+    \ N'Survey', N'N'),\n    (N'F01', 13, N'Survey top', N'Survey', N'N'),\n    (N'F01',\
+    \ 14, N'Survey bottom', N'Survey', N'N'),\n    (N'F01', 15, N'Survey door', N'Survey',\
+    \ N'N'),\n    (N'F01', 16, N'Survey back wall', N'Survey', N'N'),\n    (N'F02',\
+    \ 0, N'Control', N'Control', N'K'),\n    (N'F02', 1, N'Over-temperature', N'OverTemperature',\
+    \ N'K'),\n    (N'F02', 2, N'Recorder', N'Recorder', N'K'),\n    (N'F02', 3, N'Load\
+    \ 1', N'Load', N'K'),\n    (N'F02', 4, N'Load 2', N'Load', N'K');\n\nINSERT [fr].[Channels]\
+    \ ([FurnaceId], [Channel], [Name], [Role], [Type], [SensorSerial], [Enabled])\n\
+    SELECT f.[Id], c.[Channel], c.[Name], c.[Role], c.[Type], CONCAT(c.[Furnace],\
+    \ N'-TC', FORMAT(c.[Channel], N'00')), 1\nFROM @channels c\nJOIN [fr].[Furnaces]\
+    \ f ON f.[Code] = c.[Furnace]\nWHERE NOT EXISTS (SELECT 1 FROM [fr].[Channels]\
+    \ x WHERE x.[FurnaceId] = f.[Id] AND x.[Channel] = c.[Channel]);\nGO\nDECLARE\
+    \ @recipes TABLE ([Code] nvarchar(20), [Name] nvarchar(100), [Specification] nvarchar(100),\
+    \ [Setpoint] float, [Minus] float, [Plus] float,\n    [Soak] int, [MaxSoak] int\
+    \ NULL, [MaxRamp] float NULL, [MaxQuench] int NULL);\nINSERT @recipes VALUES\n\
+    \    (N'ST-7075', N'Solution treat 7075', N'AMS 2770', 480, 6, 6, 50, 120, 15,\
+    \ 15),\n    (N'ST-2024', N'Solution treat 2024', N'AMS 2770', 493, 6, 6, 40, 90,\
+    \ 15, 15),\n    (N'AG-T6', N'Age T6', N'AMS 2770', 121, 8, 8, 60, NULL, NULL,\
+    \ NULL),\n    (N'TUS-480', N'Uniformity survey 480 \xB0C', N'AMS 2750', 480, 6,\
+    \ 6, 35, NULL, NULL, NULL),\n    (N'TUS-177', N'Uniformity survey 177 \xB0C',\
+    \ N'AMS 2750', 177, 8, 8, 35, NULL, NULL, NULL),\n    (N'AG-T73', N'Age T73 second\
+    \ step', N'AMS 2770', 177, 8, 8, 45, NULL, 10, NULL);\n\nINSERT [fr].[Recipes]\
+    \ ([Code], [Name], [Specification], [SetpointCelsius], [ToleranceMinusCelsius],\
+    \ [TolerancePlusCelsius],\n    [SoakMinutes], [MaxSoakMinutes], [MaxRampCelsiusPerMinute],\
+    \ [MaxQuenchDelaySeconds], [Active])\nSELECT r.[Code], r.[Name], r.[Specification],\
+    \ r.[Setpoint], r.[Minus], r.[Plus], r.[Soak], r.[MaxSoak], r.[MaxRamp], r.[MaxQuench],\
+    \ 1\nFROM @recipes r\nWHERE NOT EXISTS (SELECT 1 FROM [fr].[Recipes] x WHERE x.[Code]\
+    \ = r.[Code]);\nGO\n"

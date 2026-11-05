@@ -1,5 +1,6 @@
 {
   "app": "containerization-challenge-consumer-loans",
+  "scanned": false,
   "policy": {
     "fail_on": "CRITICAL",
     "ignore_unfixed": true
@@ -43,67 +44,10 @@
           "check": "image-digest",
           "severity": "info",
           "target": "lucerne-lending-customerportal/k8s.yaml: Deployment/lucerne-lending-customerportal/lucerne-lending-customerportal",
-          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-consumer-loans-lucerne-lending-customerportal:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "ok",
         "http": 200,
@@ -131,69 +75,10 @@
           "check": "image-digest",
           "severity": "info",
           "target": "lucerne-lending-documents/k8s.yaml: Deployment/lucerne-lending-documents/lucerne-lending-documents",
-          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-consumer-loans-lucerne-lending-documents:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 2,
-            "MEDIUM": 5,
-            "LOW": 2
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 3,
-            "LOW": 1
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": [
-            "System.Security.Cryptography.Pkcs 6.0.1 -> 7.0.2, 6.0.3"
-          ]
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "ok",
         "http": null,

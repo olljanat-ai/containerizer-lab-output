@@ -17,7 +17,7 @@
     {
       "component": "StudyData.Sponsor.Api",
       "folder": "studydata-sponsor-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -41,7 +41,7 @@
       "reason": "rated E (blocker)"
     }
   ],
-  "processed_at": "2026-11-04T16:41:44+00:00",
+  "processed_at": "2026-11-05T15:24:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/study-data",
@@ -60,10 +60,16 @@
       "StudyData.Sponsor.Api": [
         "sqlserver:ConnectionStrings__StudyData"
       ]
-    }
+    },
+    "init_scripts": [
+      "deploy/sql/01-create-database.sql",
+      "deploy/sql/02-logins.sql",
+      "deploy/sql/03-audit-protection.sql"
+    ]
   },
   "migration": {},
   "llm_usage": {},
   "apps": [],
-  "split_hint": {}
+  "split_hint": {},
+  "patched": {}
 }

@@ -27,6 +27,35 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
+  name: citypermits-inspections
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-city-permits-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: citypermits-inspections
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: citypermits-inspections
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
   name: citypermits-opendata
   namespace: containerization-challenge-city-permits
   labels:

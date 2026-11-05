@@ -8,3 +8,14 @@ The appliance runs these services in namespace `containerizer-lab` (Admin -> Lab
 - Credentials: Secret `lab-sqlserver` (ExternalSecret, remote key `containerization-challenge-batch-release--cz-lab-sqlserver`).
 - Database and login `containerization_challenge_batch_release`, owner of that database only.
 - **BatchRelease.Api**: `ConnectionStrings__BatchRelease`
+
+## SQL Server: the repository's setup scripts
+
+The lab agent runs these once into the app's database (every .sql file of db/, by name), as the app's own login, and again when they change or the database is made again. A batch that fails is reported on Admin -> Lab services and the rest goes on.
+- `db/00-create-database.sql`
+- `db/01-schema.sql`
+- `db/02-reference-data.sql`
+- `db/03-logins.sql`
+
+- db/00-create-database.sql: left out (the lab makes the database and the login itself, or it needs server-wide rights): `IF DB_ID(N'$(DatabaseName)') IS NULL`
+- db/03-logins.sql: left out (the lab makes the database and the login itself, or it needs server-wide rights): `SET NOCOUNT ON;`

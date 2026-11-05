@@ -1,0 +1,311 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vanarsdel-backoffice
+  labels:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vanarsdel-backoffice
+  labels:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vanarsdel-backoffice
+      app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vanarsdel-backoffice
+        app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1654
+        runAsGroup: 1654
+      automountServiceAccountToken: false
+      containers:
+      - name: vanarsdel-backoffice
+        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: lab-sqlserver
+              key: connection-string
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTP_PORTS
+          value: '8080'
+        - name: DOTNET_ENVIRONMENT
+          value: Production
+        - name: DOTNET_ROLL_FORWARD
+          value: Major
+        - name: DataProtection__KeysFolder
+          value: /data/vanarsdel/keys/backoffice
+        - name: Serilog__WriteTo__0__Name
+          value: Console
+        - name: Oidc__Providers__0__ClientSecret
+          valueFrom:
+            secretKeyRef:
+              name: vanarsdel-backoffice-secrets
+              key: Oidc__Providers__0__ClientSecret
+              optional: true
+        - name: Oidc__Providers__1__ClientSecret
+          valueFrom:
+            secretKeyRef:
+              name: vanarsdel-backoffice-secrets
+              key: Oidc__Providers__1__ClientSecret
+              optional: true
+        - name: Serilog__WriteTo__1__Args__apiKey
+          valueFrom:
+            secretKeyRef:
+              name: vanarsdel-backoffice-secrets
+              key: Serilog__WriteTo__1__Args__apiKey
+              optional: true
+        - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+          value: 'true'
+        - name: Oidc__Providers__0__Authority
+          value: https://containerizer-idp.sandbox.lab/oauth2/token
+        - name: Oidc__Providers__0__ClientId
+          value: containerization-challenge-retail-backoffice--vanarsdel-backoffice
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
+          appArmorProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 64Mi
+          limits:
+            memory: 512Mi
+            ephemeral-storage: 1Gi
+        volumeMounts:
+        - name: w0-backoffice
+          mountPath: /data/vanarsdel/keys/backoffice
+        - name: w1-tmp
+          mountPath: /tmp
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health/live
+            port: http
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: http
+          periodSeconds: 20
+          initialDelaySeconds: 20
+        startupProbe:
+          httpGet:
+            path: /health/live
+            port: http
+          periodSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: w0-backoffice
+        emptyDir:
+          sizeLimit: 256Mi
+      - name: w1-tmp
+        emptyDir:
+          sizeLimit: 256Mi
+      enableServiceLinks: false
+      serviceAccountName: vanarsdel-backoffice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vanarsdel-backoffice
+  labels:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  selector:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: vanarsdel-backoffice
+  labels:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  annotations:
+    containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: vanarsdel-backoffice
+      app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+        - 169.254.170.2/32
+        - 100.100.100.200/32
+    - ipBlock:
+        cidr: ::/0
+        except:
+        - fd00:ec2::254/128
+    - namespaceSelector: {}
+    ports:
+    - port: 1433
+      protocol: TCP
+    - port: 6379
+      protocol: TCP
+    - port: 6380
+      protocol: TCP
+    - port: 5671
+      protocol: TCP
+    - port: 5672
+      protocol: TCP
+    - port: 443
+      protocol: TCP
+    - port: 5341
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    - port: 5001
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: traefik
+    ports:
+    - port: 8443
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: sqlserver
+    ports:
+    - port: 1433
+      protocol: TCP
+---
+# values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-retail-backoffice--vanarsdel-backoffice); never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: vanarsdel-backoffice-secrets
+  labels:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: vanarsdel-backoffice-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+  - secretKey: Oidc__Providers__0__ClientSecret
+    remoteRef:
+      key: containerization-challenge-retail-backoffice--vanarsdel-backoffice
+      property: Oidc__Providers__0__ClientSecret
+  - secretKey: Oidc__Providers__1__ClientSecret
+    remoteRef:
+      key: containerization-challenge-retail-backoffice--vanarsdel-backoffice
+      property: Oidc__Providers__1__ClientSecret
+  - secretKey: Serilog__WriteTo__1__Args__apiKey
+    remoteRef:
+      key: containerization-challenge-retail-backoffice--vanarsdel-backoffice
+      property: Serilog__WriteTo__1__Args__apiKey
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vanarsdel-backoffice
+  labels:
+    app.kubernetes.io/name: vanarsdel-backoffice
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+  annotations:
+    containerizer.io/url: https://vanarsdel-backoffice-containerization-challenge-retail-ff631ec3.sandbox.lab/
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - vanarsdel-backoffice-containerization-challenge-retail-ff631ec3.sandbox.lab
+  rules:
+  - host: vanarsdel-backoffice-containerization-challenge-retail-ff631ec3.sandbox.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vanarsdel-backoffice
+            port:
+              name: http

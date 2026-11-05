@@ -19,3 +19,20 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-freight-rates--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-freight-rates
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-freight-rates
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: deploy/sql/create-logins.sql
+data:
+  001-create-logins.sql: "IF USER_ID(N'svc-freightrates') IS NULL\n    CREATE USER\
+    \ [svc-freightrates] FOR LOGIN [CORP\\svc-freightrates];\nGO\nALTER ROLE db_datareader\
+    \ ADD MEMBER [svc-freightrates];\nALTER ROLE db_datawriter ADD MEMBER [svc-freightrates];\n\
+    ALTER ROLE db_ddladmin ADD MEMBER [svc-freightrates];\nGO\n"

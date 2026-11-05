@@ -1,0 +1,134 @@
+{
+  "component": "ControlTower.CarrierGateway",
+  "kind": "dotnet",
+  "role": "web",
+  "project": "src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj",
+  "tfm": "net6.0",
+  "multi_target": false,
+  "strategy": "rollforward",
+  "base": "chiseled",
+  "add_packages": [],
+  "env": {
+    "ASPNETCORE_HTTP_PORTS": "8080",
+    "Gateway__WebhookUrls": "http://+:8080",
+    "CONTROLTOWER_LOG_DIR": "/app/logs",
+    "Carriers__Sftp__NRDL__PrivateKeyFile": "/secrets/nrdl_rsa.pem",
+    "Carriers__Sftp__OCNX__PrivateKeyFile": "/secrets/ocnx_rsa.pem",
+    "Gateway__WorkFolder": "/data/controltower/edi",
+    "DOTNET_ENVIRONMENT": "Production",
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "DOTNET_ROLL_FORWARD": "Major"
+  },
+  "add_writable": [
+    "/tmp",
+    "logs",
+    "/data/controltower/edi",
+    "/home/app/.aspnet/DataProtection-Keys"
+  ],
+  "publish_args": [],
+  "remove_files": [],
+  "single_replica": false,
+  "uid": 1654,
+  "port": 8080,
+  "health": "/health",
+  "entry": "ControlTower.CarrierGateway.dll",
+  "spa_root": null,
+  "args": [],
+  "applied": [
+    "plan-dataprotection-keys",
+    "plan-file-logs",
+    "plan-rid-portable-netstandard1"
+  ],
+  "reasons": [
+    {
+      "rule": "config-listen-url",
+      "why": "Listen addresses from configuration are overridden to port 8080 with environment variables (they take precedence over appsettings.json).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints"
+      ]
+    },
+    {
+      "rule": "config-windows-paths",
+      "why": "Windows paths in configuration (drive letters, UNC shares) are overridden with environment variables to folders under /data, which the manifests mount as volumes; the application code is not changed.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
+      ]
+    },
+    {
+      "rule": "plan-dataprotection-keys",
+      "why": "ASP.NET Core Data Protection keeps its key ring under the user's home folder. The generated manifests mount one key there, read-only, from a Secret that External Secrets Operator generates once in the cluster, so every replica and restart shares it (PersistKeysTo* in code takes over when present).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview"
+      ]
+    },
+    {
+      "rule": "plan-file-logs",
+      "why": "The app logs to files under its own folder; the folder is made writable so start-up does not fail on the read-only root file system (console logging is preferred).",
+      "refs": [
+        "https://learn.microsoft.com/en-us/dotnet/core/extensions/logging/providers"
+      ]
+    },
+    {
+      "rule": "plan-rid-portable-netstandard1",
+      "why": "A dependency built for netstandard1.x pins System.* 4.0.x packages (SSH.NET 2016.x directly; Microsoft.Azure.Amqp 2.5.6 through System.Net.WebSockets.Client 4.0.2, pulled in by Azure.Messaging.ServiceBus 7.5.0 and MassTransit.Azure.ServiceBus.Core 7.3). Restoring for the linux-x64 runtime identifier adds runtime.unix.* packages that need 4.3.0, which NuGet reports as a package downgrade (NU1605, an error in SDK builds). A portable publish (no -r) restores the same graph as the Windows build and runs on the Linux runtime image. Upgrading the package (SSH.NET 2020.0.0+, a current Azure.Messaging.ServiceBus) removes the conflict.",
+      "refs": [
+        "https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1605",
+        "https://learn.microsoft.com/en-us/dotnet/core/rid-catalog",
+        "https://www.nuget.org/packages/SSH.NET/2016.1.0",
+        "https://www.nuget.org/packages/Microsoft.Azure.Amqp/2.5.6"
+      ]
+    }
+  ],
+  "secret_files": [
+    "nrdl_rsa.pem",
+    "ocnx_rsa.pem"
+  ],
+  "rid": "portable",
+  "egress": [
+    {
+      "id": "sql-server",
+      "ports": [
+        {
+          "port": 1433,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "rabbitmq",
+      "ports": [
+        {
+          "port": 5671,
+          "protocol": "TCP"
+        },
+        {
+          "port": 5672,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "sftp",
+      "ports": [
+        {
+          "port": 22,
+          "protocol": "TCP"
+        }
+      ]
+    },
+    {
+      "id": "http-apis",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP"
+        },
+        {
+          "port": 80,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "hardening_exceptions": []
+}

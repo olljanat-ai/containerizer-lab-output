@@ -19,3 +19,27 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-city-permits--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-city-permits
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: deploy/sql/03-filetable.sql
+data:
+  001-03-filetable.sql: "IF OBJECT_ID(N'permits.CaseDocuments') IS NULL\n    CREATE\
+    \ TABLE permits.CaseDocuments AS FILETABLE\n    WITH (FILETABLE_DIRECTORY = N'CaseDocuments',\
+    \ FILETABLE_COLLATE_FILENAME = database_default);\nGO\nIF NOT EXISTS (SELECT 1\
+    \ FROM sys.fulltext_catalogs WHERE name = N'PermitsDocuments')\n    CREATE FULLTEXT\
+    \ CATALOG PermitsDocuments;\nGO\nIF NOT EXISTS (SELECT 1 FROM sys.fulltext_indexes\
+    \ WHERE object_id = OBJECT_ID(N'permits.CaseDocuments'))\nBEGIN\n    DECLARE @pk\
+    \ sysname = (SELECT name FROM sys.indexes WHERE object_id = OBJECT_ID(N'permits.CaseDocuments')\
+    \ AND is_primary_key = 1);\n    EXEC (N'CREATE FULLTEXT INDEX ON permits.CaseDocuments\
+    \ (file_stream TYPE COLUMN file_type LANGUAGE 2057)\n          KEY INDEX ' + @pk\
+    \ + N' ON PermitsDocuments WITH CHANGE_TRACKING AUTO');\nEND\nGO\nEXEC sp_fulltext_service\
+    \ 'load_os_resources', 1;\nEXEC sp_fulltext_service 'verify_signature', 0;\nGO\n"

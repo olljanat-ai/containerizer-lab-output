@@ -3,8 +3,8 @@
     "provider": "github",
     "org": "onek8s",
     "registry": "localhost:5000/sandbox",
-    "tag": "1.20261104.1641",
-    "started": "2026-11-04T16:41:41+00:00",
+    "tag": "1.20261105.1524",
+    "started": "2026-11-05T15:24:05+00:00",
     "stale_days": 183,
     "verify": false,
     "gate": true
@@ -224,7 +224,7 @@
       "project": "_",
       "repo": "containerization-challenge",
       "status": "deployed",
-      "reason": "33 applications (scenarios/*): 11 deployed, 22 not rated A, 0 skipped, 0 failed",
+      "reason": "33 applications (scenarios/*): 14 deployed, 19 not rated A, 0 skipped, 0 failed",
       "web_url": "https://github.com/onek8s/containerization-challenge",
       "clone_url": "https://github.com/onek8s/containerization-challenge.git",
       "branch": "main",
@@ -237,7 +237,7 @@
         {
           "component": "BatchRelease.Api",
           "folder": "batchrelease-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -250,7 +250,7 @@
         {
           "component": "Humongous.BrokerPortal",
           "folder": "humongous-brokerportal",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -263,7 +263,7 @@
         {
           "component": "Humongous.Documents",
           "folder": "humongous-documents",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -276,7 +276,7 @@
         {
           "component": "Humongous.Workbench",
           "folder": "humongous-workbench",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -287,9 +287,22 @@
           "application": "scenarios/broker-quotes"
         },
         {
+          "component": "CityPermits.Inspections",
+          "folder": "citypermits-inspections",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/CityPermits.Inspections/CityPermits.Inspections.csproj",
+          "project_name": "CityPermits.Inspections",
+          "verification": "not run",
+          "digest": "sha256:4ad2e1fc8e50454730ef233651d165eb7a5e95438d52320b5515cff8ffcd1761",
+          "application": "scenarios/city-permits"
+        },
+        {
           "component": "CityPermits.OpenData",
           "folder": "citypermits-opendata",
-          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -302,7 +315,7 @@
         {
           "component": "Lucerne.Lending.CustomerPortal",
           "folder": "lucerne-lending-customerportal",
-          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -315,7 +328,7 @@
         {
           "component": "Lucerne.Lending.Documents",
           "folder": "lucerne-lending-documents",
-          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -326,22 +339,113 @@
           "application": "scenarios/consumer-loans"
         },
         {
+          "component": "ControlTower.CarrierGateway",
+          "folder": "controltower-carriergateway",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj",
+          "project_name": "ControlTower.CarrierGateway",
+          "verification": "not run",
+          "digest": "sha256:dea3cedf89219ec7b151aede3ebba820edba6e6e128eab8030976645bdf07924",
+          "application": "scenarios/control-tower"
+        },
+        {
+          "component": "ControlTower.Events",
+          "folder": "controltower-events",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/ControlTower.Events/ControlTower.Events.csproj",
+          "project_name": "ControlTower.Events",
+          "verification": "not run",
+          "digest": "sha256:13dde34d22b272154271036821f35baca08f4db55fc7bfb88fd6fb28c96b3611",
+          "application": "scenarios/control-tower"
+        },
+        {
+          "component": "ControlTower.Telematics",
+          "folder": "controltower-telematics",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/ControlTower.Telematics/ControlTower.Telematics.csproj",
+          "project_name": "ControlTower.Telematics",
+          "verification": "not run",
+          "digest": "sha256:0c07dcb7ce8f8118f3d3e3e68c6aa6f40d88340ea5bbb41eb63b078a042b791a",
+          "application": "scenarios/control-tower"
+        },
+        {
+          "component": "ControlTower.Tower.Api",
+          "folder": "controltower-tower-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj",
+          "project_name": "ControlTower.Tower.Api",
+          "verification": "not run",
+          "digest": "sha256:918a9dc623ec9040dac1efb9fcfa01f2d4aa8f002541c325b010f089d3fae334",
+          "application": "scenarios/control-tower"
+        },
+        {
+          "component": "ExpenseClaims.Api",
+          "folder": "expenseclaims-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1326-refactor.206",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/ExpenseClaims.Api/ExpenseClaims.Api.csproj",
+          "project_name": "ExpenseClaims.Api",
+          "verification": "ok",
+          "digest": "sha256:b4ebfc64ad07bba07fbed4f806300ed34f7f75a932a2422e4ec080fa54f7854e",
+          "application": "scenarios/expense-claims"
+        },
+        {
+          "component": "ExpenseClaims.Jobs",
+          "folder": "expenseclaims-jobs",
+          "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1326-refactor.206",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/ExpenseClaims.Jobs/ExpenseClaims.Jobs.csproj",
+          "project_name": "ExpenseClaims.Jobs",
+          "verification": "ok",
+          "digest": "sha256:a421fd4fdda12dcea14e4877fc8712ab9b3a8b44045e85f692e50eb33a86e918",
+          "application": "scenarios/expense-claims"
+        },
+        {
+          "component": "FieldService.Web",
+          "folder": "fieldservice-web",
+          "image": "localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-web:1.20261104.2110-refactor.192",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/FieldService.Web/FieldService.Web.csproj",
+          "project_name": "FieldService.Web",
+          "verification": "ok",
+          "digest": "sha256:d766bf1218cf472f7b03bfd95ce54c26ebc6479b5871c1a17202addc2944c996",
+          "application": "scenarios/field-service"
+        },
+        {
           "component": "FieldService.Worker",
           "folder": "fieldservice-worker",
-          "image": "localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker:1.20261104.2110-refactor.192",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
           "project": "src/FieldService.Worker/FieldService.Worker.csproj",
           "project_name": "FieldService.Worker",
-          "verification": "not run",
-          "digest": "sha256:6c8133164c6f3c9211f315ea3e43cd81c1c1a76dcb34b7cdffd4f66a250ebd13",
+          "verification": "ok",
+          "digest": "sha256:dfc3425081808198e6a02dd713d6a43a8b9431658af3c3ac04b4f7cc604a45e2",
           "application": "scenarios/field-service"
         },
         {
           "component": "FreightRates.Api",
           "folder": "freightrates-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -354,7 +458,7 @@
         {
           "component": "FurnaceRecords.Api",
           "folder": "furnacerecords-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -365,22 +469,9 @@
           "application": "scenarios/furnace-records"
         },
         {
-          "component": "FurnaceRecords.Portal",
-          "folder": "furnacerecords-portal",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-portal:1.20261104.1641",
-          "rating": "A",
-          "verdict": "config",
-          "role": "web",
-          "project": "src/FurnaceRecords.Portal/FurnaceRecords.Portal.csproj",
-          "project_name": "FurnaceRecords.Portal",
-          "verification": "not run",
-          "digest": "sha256:56c00e8c8adb08e29f5d086bbffc785465d7792368609f6332d7386fa359ddb3",
-          "application": "scenarios/furnace-records"
-        },
-        {
           "component": "FurnaceRecords.Worker",
           "folder": "furnacerecords-worker",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -391,9 +482,22 @@
           "application": "scenarios/furnace-records"
         },
         {
+          "component": "PartsCatalog",
+          "folder": "partscatalog",
+          "image": "localhost:5000/sandbox/containerization-challenge-parts-catalog-refactor-191/partscatalog:1.20261104.2052-refactor.191",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/PartsCatalog/PartsCatalog.csproj",
+          "project_name": "PartsCatalog",
+          "verification": "ok-external",
+          "digest": "sha256:50aaf9c00d8bf5a9d0a72fdf9e9289100dd8baf0680d5978b23ed08df7cdfe7b",
+          "application": "scenarios/parts-catalog"
+        },
+        {
           "component": "PolicyChanges.Api",
           "folder": "policychanges-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -404,9 +508,152 @@
           "application": "scenarios/policy-changes"
         },
         {
+          "component": "VanArsdel.Allocation.Api",
+          "folder": "vanarsdel-allocation-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Allocation.Api/VanArsdel.Allocation.Api.csproj",
+          "project_name": "VanArsdel.Allocation.Api",
+          "verification": "not run",
+          "digest": "sha256:6f70e6b33bf67f4a6e1e763e5e2fb24801b64ab276c1e94dbfcbfb1d041fc3dd",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.BackOffice",
+          "folder": "vanarsdel-backoffice",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.BackOffice/VanArsdel.BackOffice.csproj",
+          "project_name": "VanArsdel.BackOffice",
+          "verification": "not run",
+          "digest": "sha256:8c7bd51214acc4bd8f8776a528a0d56370e31183aacc37eff1fbda8dc2ae8e50",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Catalog.Api",
+          "folder": "vanarsdel-catalog-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Catalog.Api/VanArsdel.Catalog.Api.csproj",
+          "project_name": "VanArsdel.Catalog.Api",
+          "verification": "not run",
+          "digest": "sha256:502e6962d94c0edb7cf6730ff3e7e5d863296bc93718fd10c2b4cf4ee6f55714",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Customers.Api",
+          "folder": "vanarsdel-customers-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Customers.Api/VanArsdel.Customers.Api.csproj",
+          "project_name": "VanArsdel.Customers.Api",
+          "verification": "not run",
+          "digest": "sha256:2ff624c3f807a7b38de2ba3021ba47cb36e99214a81c4425ef6e33ce9c07e7bd",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Gateway",
+          "folder": "vanarsdel-gateway",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Gateway/VanArsdel.Gateway.csproj",
+          "project_name": "VanArsdel.Gateway",
+          "verification": "not run",
+          "digest": "sha256:8a92342b6830d11b88c948b4c1da8cc6b9a1e161494d5adf073fdf0e4aa5e34b",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Inventory.Api",
+          "folder": "vanarsdel-inventory-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Inventory.Api/VanArsdel.Inventory.Api.csproj",
+          "project_name": "VanArsdel.Inventory.Api",
+          "verification": "not run",
+          "digest": "sha256:9e1792efc7b02569a5bed4c19c200bb01cec0997b4bc18aae3437c58c23bb1a2",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Notifications",
+          "folder": "vanarsdel-notifications",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/VanArsdel.Notifications/VanArsdel.Notifications.csproj",
+          "project_name": "VanArsdel.Notifications",
+          "verification": "not run",
+          "digest": "sha256:8d6acea738d6f38546eca95c81f98541241d20fa7e083fd3a282a7044306488e",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Orders.Api",
+          "folder": "vanarsdel-orders-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Orders.Api/VanArsdel.Orders.Api.csproj",
+          "project_name": "VanArsdel.Orders.Api",
+          "verification": "not run",
+          "digest": "sha256:d7237727e5730f36e5ba50e0d3de2398bb606ddd70dd996694f7d2727e122243",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Pricing.Api",
+          "folder": "vanarsdel-pricing-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Pricing.Api/VanArsdel.Pricing.Api.csproj",
+          "project_name": "VanArsdel.Pricing.Api",
+          "verification": "not run",
+          "digest": "sha256:8ff50282bcc91aefe964f154c07f8a0f964642418ed4f74874ad5f31bc8f4700",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Returns.Api",
+          "folder": "vanarsdel-returns-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.Returns.Api/VanArsdel.Returns.Api.csproj",
+          "project_name": "VanArsdel.Returns.Api",
+          "verification": "not run",
+          "digest": "sha256:fc63b3af68a0f52ae98341463e6152f6a480d13b01f9b8e656efdf06fa9b8c97",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
+          "component": "VanArsdel.Scheduler",
+          "folder": "vanarsdel-scheduler",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "worker",
+          "project": "src/VanArsdel.Scheduler/VanArsdel.Scheduler.csproj",
+          "project_name": "VanArsdel.Scheduler",
+          "verification": "not run",
+          "digest": "sha256:28116fe0b87a9da06573d00ef0d05f37e758bed0043bc7c77d574541042cf6c4",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
           "component": "VanArsdel.StoreManager",
           "folder": "vanarsdel-storemanager",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -417,9 +664,22 @@
           "application": "scenarios/retail-backoffice"
         },
         {
+          "component": "VanArsdel.StoreOps.Api",
+          "folder": "vanarsdel-storeops-api",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.1524",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/VanArsdel.StoreOps.Api/VanArsdel.StoreOps.Api.csproj",
+          "project_name": "VanArsdel.StoreOps.Api",
+          "verification": "not run",
+          "digest": "sha256:836a66415c2b73eeead4cde007746d7be5245bbe5002cadcba680552f65f111e",
+          "application": "scenarios/retail-backoffice"
+        },
+        {
           "component": "StudyData.Sponsor.Api",
           "folder": "studydata-sponsor-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261105.1524",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -432,26 +692,39 @@
         {
           "component": "TradeRebates.Api",
           "folder": "traderebates-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261105.1046-refactor.198",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/TradeRebates.Api/TradeRebates.Api.csproj",
           "project_name": "TradeRebates.Api",
-          "verification": "not run",
+          "verification": "ok",
           "digest": "sha256:f190374f1e4641976cb9574c8c682cf035b9cdcbadd41b91b1fb8531c7dcddff",
+          "application": "scenarios/trade-rebates"
+        },
+        {
+          "component": "TradeRebates.Portal",
+          "folder": "traderebates-portal",
+          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.1046-refactor.198",
+          "rating": "A",
+          "verdict": "config",
+          "role": "web",
+          "project": "src/TradeRebates.Portal/TradeRebates.Portal.csproj",
+          "project_name": "TradeRebates.Portal",
+          "verification": "ok",
+          "digest": "sha256:75ef2dd1f7bb4394388c7c77e03f07e4edf373ee36a86e8a46b015f7cf7faf03",
           "application": "scenarios/trade-rebates"
         },
         {
           "component": "TradeRebates.StatementWorker",
           "folder": "traderebates-statementworker",
-          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261104.1641",
+          "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.1046-refactor.198",
           "rating": "A",
           "verdict": "config",
           "role": "console",
           "project": "src/TradeRebates.StatementWorker/TradeRebates.StatementWorker.csproj",
           "project_name": "TradeRebates.StatementWorker",
-          "verification": "not run",
+          "verification": "ok-external",
           "digest": "sha256:e798e923c6d9bc69eeef68231f55ab7c60c6b782cc396806b42278e8b944dd0f",
           "application": "scenarios/trade-rebates"
         }
@@ -459,35 +732,35 @@
       "excluded": [
         {
           "component": "scenarios/account-statements: AccountStatements.Api",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/account-statements: AccountStatements.Distribution",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/account-statements: AccountStatements.Web",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/b2b-integration: b2bdeploy",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/b2b-integration: VanArsdel.Integration.Gateway",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/b2b-integration: VanArsdel.Integration.OpsPortal",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/b2b-integration: VanArsdel.Integration.SlaMonitor",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/b2b-integration: VanArsdel.Integration.Tracking",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/batch-release: BatchRelease.Portal",
@@ -534,36 +807,32 @@
           "reason": "rated E (blocker)"
         },
         {
-          "component": "scenarios/city-permits: CityPermits.Inspections",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
           "component": "scenarios/clinic-scheduling: SouthridgeBilling",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/clinic-scheduling: SouthridgeInterfaceEngine",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/clinic-scheduling: Southridge.Clinic.PatientWeb",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/clinic-scheduling: SouthridgeReminders",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/clinic-scheduling: Southridge.Clinic.Services",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/clinic-scheduling: Southridge.Clinic.StaffWeb",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/clinic-scheduling: Southridge.Clinic.WebServices",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/consumer-loans: Lucerne.Lending.Api",
@@ -602,24 +871,8 @@
           "reason": "rated B (refactor)"
         },
         {
-          "component": "scenarios/control-tower: ControlTower.CarrierGateway",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/control-tower: ControlTower.Events",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/control-tower: ControlTower.Telematics",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/control-tower: ControlTower.Tower.Api",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
           "component": "scenarios/credit-desk: CreditDesk.CreditService",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/credit-desk: CreditDesk.LetterService",
@@ -627,23 +880,23 @@
         },
         {
           "component": "scenarios/credit-desk: CreditDesk.Web",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/customer-care: CustomerCare.Archive",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/customer-care: CustomerCare.Import",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/customer-care: CustomerCare.Integration",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/customer-care: CustomerCare.Web",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.AxConnector",
@@ -651,19 +904,19 @@
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.DealerPortal",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.DocumentService",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.EdiGateway",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.Notifications",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.PriceSync",
@@ -671,7 +924,7 @@
         },
         {
           "component": "scenarios/dealer-orders: Tailspin.DealerOrders.SalesDesk",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/document-control: Litware.DocControl.Indexer",
@@ -686,28 +939,16 @@
           "reason": "rated B (refactor)"
         },
         {
-          "component": "scenarios/expense-claims: ExpenseClaims.Jobs",
-          "reason": "rated B (refactor)"
-        },
-        {
-          "component": "scenarios/expense-claims: ExpenseClaims.Api",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
           "component": "scenarios/expense-claims: expenses-web",
           "reason": "security gate: image build failed"
         },
         {
           "component": "scenarios/field-sales: FieldSales.Api",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/field-sales: FieldSales.Backoffice",
-          "reason": "rated C (rewrite)"
-        },
-        {
-          "component": "scenarios/field-service: FieldService.Web",
-          "reason": "keeps local state"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/freight-rates: FreightRates.Admin",
@@ -720,6 +961,10 @@
         {
           "component": "scenarios/furnace-records: FurnaceRecords.Daq",
           "reason": "rated E (blocker)"
+        },
+        {
+          "component": "scenarios/furnace-records: FurnaceRecords.Portal",
+          "reason": "rated B (refactor)"
         },
         {
           "component": "scenarios/housing-management: Fabrikam.Housing.BackOffice",
@@ -747,7 +992,7 @@
         },
         {
           "component": "scenarios/meter-billing: MeterBilling.Engine",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/meter-billing: MeterBilling.Lookup",
@@ -755,15 +1000,15 @@
         },
         {
           "component": "scenarios/order-hub: OrderHub.Fulfilment",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/order-hub: OrderHub.Intake",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/order-hub: OrderHub.Partners",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/order-hub: OrderHub.Portal",
@@ -771,11 +1016,7 @@
         },
         {
           "component": "scenarios/order-hub: OrderHub.ShopSync",
-          "reason": "rated C (rewrite)"
-        },
-        {
-          "component": "scenarios/parts-catalog: PartsCatalog",
-          "reason": "keeps local state"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/policy-changes: PolicyChanges.DeskRunner",
@@ -803,43 +1044,43 @@
         },
         {
           "component": "scenarios/project-sites: psadmin",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/project-sites: Lucerne.ProjectSites.Dashboards",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/project-sites: LucerneProjectSync",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/property-inspections: Inspections.Intake",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/property-inspections: Inspections.Jobs",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/property-inspections: Inspections.Service",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/property-inspections: Inspections.Web",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/purchase-requests: Purchasing.Api",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/purchase-requests: Purchasing.Jobs",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/purchase-requests: Purchasing.Web",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/retail-backoffice: VanArsdel.ErpConnector",
@@ -852,54 +1093,6 @@
         {
           "component": "scenarios/retail-backoffice: VanArsdel.Reporting.Api",
           "reason": "keeps local state"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Allocation.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.BackOffice",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Catalog.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Customers.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Gateway",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Inventory.Api",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Notifications",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Orders.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Pricing.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Returns.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.Scheduler",
-          "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
-        },
-        {
-          "component": "scenarios/retail-backoffice: VanArsdel.StoreOps.Api",
-          "reason": "security gate: 2 fixable vulnerabilities at or above the gate threshold (image)"
         },
         {
           "component": "scenarios/shift-clock: ShiftClock.Service",
@@ -915,7 +1108,7 @@
         },
         {
           "component": "scenarios/staff-onboarding: StaffOnboarding.WorkflowHost",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/study-data: StudyData.Edc.Web",
@@ -935,24 +1128,20 @@
         },
         {
           "component": "scenarios/supplier-invoices: Invoices.ErpLink",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/supplier-invoices: Invoices.Gateway",
-          "reason": "rated C (rewrite)"
+          "reason": "rated D (rewrite)"
         },
         {
           "component": "scenarios/supplier-invoices: Invoices.Processor",
-          "reason": "rated C (rewrite)"
-        },
-        {
-          "component": "scenarios/trade-rebates: TradeRebates.Portal",
-          "reason": "rated B (refactor)"
+          "reason": "rated D (rewrite)"
         }
       ],
-      "processed_at": "2026-11-04T16:41:44+00:00",
+      "processed_at": "2026-11-05T15:24:08+00:00",
       "overridden": [],
-      "seconds": 2946.5,
+      "seconds": 1219.4,
       "source_key": "",
       "dev_database": {},
       "lab_services": {},
@@ -963,8 +1152,8 @@
           "folder": "scenarios/account-statements",
           "app": "containerization-challenge-account-statements",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies: AccountStatements.Api: rated C (rewrite); AccountStatements.Distribution: rated C (rewrite); AccountStatements.Web: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 3 server components qualifies: AccountStatements.Api: rated D (rewrite); AccountStatements.Distribution: rated D (rewrite); AccountStatements.Web: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/account-statements",
           "components": []
@@ -973,7 +1162,7 @@
           "folder": "scenarios/b2b-integration",
           "app": "containerization-challenge-b2b-integration",
           "status": "no-a-components",
-          "reason": "none of 5 server components qualifies: b2bdeploy: rated C (rewrite); VanArsdel.Integration.Gateway: rated C (rewrite); VanArsdel.Integration.OpsPortal: rated C (rewrite); VanArsdel.Integration.SlaMonitor: rated C (rewrite); VanArsdel.Integration.Tracking: rated C (rewrite)",
+          "reason": "none of 5 server components qualifies: b2bdeploy: rated D (rewrite); VanArsdel.Integration.Gateway: rated D (rewrite); VanArsdel.Integration.OpsPortal: rated D (rewrite); VanArsdel.Integration.SlaMonitor: rated D (rewrite); VanArsdel.Integration.Tracking: rated D (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/b2b-integration",
@@ -984,7 +1173,7 @@
           "app": "containerization-challenge-batch-release",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@batch-release",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/batch-release",
           "components": [
@@ -996,7 +1185,7 @@
           "app": "containerization-challenge-broker-quotes",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@broker-quotes",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
           "components": [
@@ -1010,10 +1199,11 @@
           "app": "containerization-challenge-city-permits",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@city-permits",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/city-permits",
           "components": [
+            "CityPermits.Inspections",
             "CityPermits.OpenData"
           ]
         },
@@ -1021,8 +1211,8 @@
           "folder": "scenarios/clinic-scheduling",
           "app": "containerization-challenge-clinic-scheduling",
           "status": "no-a-components",
-          "reason": "none of 7 server components qualifies: SouthridgeBilling: rated C (rewrite); SouthridgeInterfaceEngine: rated C (rewrite); Southridge.Clinic.PatientWeb: rated C (rewrite); SouthridgeReminders: rated C (rewrite); Southridge.Clinic.Services: rated C (rewrite); Southridge.Clinic.StaffWeb: rated C (rewrite); Southridge.Clinic.WebServices: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 7 server components qualifies: SouthridgeBilling: rated D (rewrite); SouthridgeInterfaceEngine: rated D (rewrite); Southridge.Clinic.PatientWeb: rated D (rewrite); SouthridgeReminders: rated D (rewrite); Southridge.Clinic.Services: rated D (rewrite); Southridge.Clinic.StaffWeb: rated D (rewrite); Southridge.Clinic.WebServices: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/clinic-scheduling",
           "components": []
@@ -1032,7 +1222,7 @@
           "app": "containerization-challenge-consumer-loans",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@consumer-loans",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/consumer-loans",
           "components": [
@@ -1043,18 +1233,23 @@
         {
           "folder": "scenarios/control-tower",
           "app": "containerization-challenge-control-tower",
-          "status": "no-a-components",
-          "reason": "none of 9 server components qualifies: ControlTower.Booking.Web: rated B (refactor); ControlTower.Identity: rated B (refactor); ControlTower.Jobs: rated B (refactor); ControlTower.Portal: rated B (refactor); ControlTower.Scanning.Api: rated B (refactor); ControlTower.CarrierGateway: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); ControlTower.Events: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); ControlTower.Telematics: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); ControlTower.Tower.Api: security gate: 1 fixable vulnerabilities at or above the gate threshold (image)",
+          "status": "deployed",
+          "reason": "",
           "rating": "B",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@control-tower",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/control-tower",
-          "components": []
+          "components": [
+            "ControlTower.CarrierGateway",
+            "ControlTower.Events",
+            "ControlTower.Telematics",
+            "ControlTower.Tower.Api"
+          ]
         },
         {
           "folder": "scenarios/credit-desk",
           "app": "containerization-challenge-credit-desk",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies: CreditDesk.CreditService: rated C (rewrite); CreditDesk.LetterService: rated E (blocker); CreditDesk.Web: rated C (rewrite)",
+          "reason": "none of 3 server components qualifies: CreditDesk.CreditService: rated D (rewrite); CreditDesk.LetterService: rated E (blocker); CreditDesk.Web: rated D (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/credit-desk",
@@ -1064,8 +1259,8 @@
           "folder": "scenarios/customer-care",
           "app": "containerization-challenge-customer-care",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies: CustomerCare.Archive: rated C (rewrite); CustomerCare.Import: rated C (rewrite); CustomerCare.Integration: rated C (rewrite); CustomerCare.Web: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 4 server components qualifies: CustomerCare.Archive: rated D (rewrite); CustomerCare.Import: rated D (rewrite); CustomerCare.Integration: rated D (rewrite); CustomerCare.Web: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/customer-care",
           "components": []
@@ -1074,7 +1269,7 @@
           "folder": "scenarios/dealer-orders",
           "app": "containerization-challenge-dealer-orders",
           "status": "no-a-components",
-          "reason": "none of 7 server components qualifies: Tailspin.DealerOrders.AxConnector: rated E (blocker); Tailspin.DealerOrders.DealerPortal: rated C (rewrite); Tailspin.DealerOrders.DocumentService: rated C (rewrite); Tailspin.DealerOrders.EdiGateway: rated C (rewrite); Tailspin.DealerOrders.Notifications: rated C (rewrite); Tailspin.DealerOrders.PriceSync: rated E (blocker); Tailspin.DealerOrders.SalesDesk: rated C (rewrite)",
+          "reason": "none of 7 server components qualifies: Tailspin.DealerOrders.AxConnector: rated E (blocker); Tailspin.DealerOrders.DealerPortal: rated D (rewrite); Tailspin.DealerOrders.DocumentService: rated D (rewrite); Tailspin.DealerOrders.EdiGateway: rated D (rewrite); Tailspin.DealerOrders.Notifications: rated D (rewrite); Tailspin.DealerOrders.PriceSync: rated E (blocker); Tailspin.DealerOrders.SalesDesk: rated D (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/dealer-orders",
@@ -1093,19 +1288,22 @@
         {
           "folder": "scenarios/expense-claims",
           "app": "containerization-challenge-expense-claims",
-          "status": "no-a-components",
-          "reason": "none of 3 server components qualifies: ExpenseClaims.Jobs: rated B (refactor); ExpenseClaims.Api: security gate: 1 fixable vulnerabilities at or above the gate threshold (image); expenses-web: security gate: image build failed",
+          "status": "deployed",
+          "reason": "runs the Make it A patch of order #206 for this commit: the scan left its folder as it is",
           "rating": "B",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@expense-claims",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/expense-claims",
-          "components": []
+          "components": [
+            "ExpenseClaims.Api",
+            "ExpenseClaims.Jobs"
+          ]
         },
         {
           "folder": "scenarios/field-sales",
           "app": "containerization-challenge-field-sales",
           "status": "no-a-components",
-          "reason": "none of 2 server components qualifies: FieldSales.Api: rated C (rewrite); FieldSales.Backoffice: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 2 server components qualifies: FieldSales.Api: rated D (rewrite); FieldSales.Backoffice: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-sales",
           "components": []
@@ -1114,11 +1312,12 @@
           "folder": "scenarios/field-service",
           "app": "containerization-challenge-field-service",
           "status": "deployed",
-          "reason": "",
+          "reason": "runs the Make it A patch of order #192 for this commit: the scan left its folder as it is",
           "rating": "B",
           "path": "onek8s/_/containerization-challenge@field-service",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-service",
           "components": [
+            "FieldService.Web",
             "FieldService.Worker"
           ]
         },
@@ -1127,7 +1326,7 @@
           "app": "containerization-challenge-freight-rates",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@freight-rates",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/freight-rates",
           "components": [
@@ -1139,12 +1338,11 @@
           "app": "containerization-challenge-furnace-records",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@furnace-records",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/furnace-records",
           "components": [
             "FurnaceRecords.Api",
-            "FurnaceRecords.Portal",
             "FurnaceRecords.Worker"
           ]
         },
@@ -1172,8 +1370,8 @@
           "folder": "scenarios/meter-billing",
           "app": "containerization-challenge-meter-billing",
           "status": "no-a-components",
-          "reason": "none of 2 server components qualifies: MeterBilling.Engine: rated C (rewrite); MeterBilling.Lookup: rated B (refactor)",
-          "rating": "C",
+          "reason": "none of 2 server components qualifies: MeterBilling.Engine: rated D (rewrite); MeterBilling.Lookup: rated B (refactor)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/meter-billing",
           "components": []
@@ -1182,8 +1380,8 @@
           "folder": "scenarios/order-hub",
           "app": "containerization-challenge-order-hub",
           "status": "no-a-components",
-          "reason": "none of 5 server components qualifies: OrderHub.Fulfilment: rated C (rewrite); OrderHub.Intake: rated C (rewrite); OrderHub.Partners: rated C (rewrite); OrderHub.Portal: rated B (refactor); OrderHub.ShopSync: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 5 server components qualifies: OrderHub.Fulfilment: rated D (rewrite); OrderHub.Intake: rated D (rewrite); OrderHub.Partners: rated D (rewrite); OrderHub.Portal: rated B (refactor); OrderHub.ShopSync: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/order-hub",
           "components": []
@@ -1191,19 +1389,21 @@
         {
           "folder": "scenarios/parts-catalog",
           "app": "containerization-challenge-parts-catalog",
-          "status": "no-a-components",
-          "reason": "none of 1 server components qualifies: PartsCatalog: keeps local state",
+          "status": "deployed",
+          "reason": "runs the Make it A patch of order #191 for this commit: the scan left its folder as it is",
           "rating": "B",
-          "path": "",
+          "path": "onek8s/_/containerization-challenge@parts-catalog",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/parts-catalog",
-          "components": []
+          "components": [
+            "PartsCatalog"
+          ]
         },
         {
           "folder": "scenarios/policy-changes",
           "app": "containerization-challenge-policy-changes",
           "status": "deployed",
           "reason": "",
-          "rating": "D",
+          "rating": "C",
           "path": "onek8s/_/containerization-challenge@policy-changes",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/policy-changes",
           "components": [
@@ -1224,7 +1424,7 @@
           "folder": "scenarios/project-sites",
           "app": "containerization-challenge-project-sites",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies: psadmin: rated C (rewrite); Lucerne.ProjectSites.Dashboards: rated C (rewrite); LucerneProjectSync: rated C (rewrite)",
+          "reason": "none of 3 server components qualifies: psadmin: rated D (rewrite); Lucerne.ProjectSites.Dashboards: rated D (rewrite); LucerneProjectSync: rated D (rewrite)",
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/project-sites",
@@ -1234,8 +1434,8 @@
           "folder": "scenarios/property-inspections",
           "app": "containerization-challenge-property-inspections",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies: Inspections.Intake: rated C (rewrite); Inspections.Jobs: rated C (rewrite); Inspections.Service: rated C (rewrite); Inspections.Web: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 4 server components qualifies: Inspections.Intake: rated D (rewrite); Inspections.Jobs: rated D (rewrite); Inspections.Service: rated D (rewrite); Inspections.Web: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/property-inspections",
           "components": []
@@ -1244,8 +1444,8 @@
           "folder": "scenarios/purchase-requests",
           "app": "containerization-challenge-purchase-requests",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies: Purchasing.Api: rated C (rewrite); Purchasing.Jobs: rated C (rewrite); Purchasing.Web: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 3 server components qualifies: Purchasing.Api: rated D (rewrite); Purchasing.Jobs: rated D (rewrite); Purchasing.Web: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/purchase-requests",
           "components": []
@@ -1259,7 +1459,19 @@
           "path": "onek8s/_/containerization-challenge@retail-backoffice",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/retail-backoffice",
           "components": [
-            "VanArsdel.StoreManager"
+            "VanArsdel.Allocation.Api",
+            "VanArsdel.BackOffice",
+            "VanArsdel.Catalog.Api",
+            "VanArsdel.Customers.Api",
+            "VanArsdel.Gateway",
+            "VanArsdel.Inventory.Api",
+            "VanArsdel.Notifications",
+            "VanArsdel.Orders.Api",
+            "VanArsdel.Pricing.Api",
+            "VanArsdel.Returns.Api",
+            "VanArsdel.Scheduler",
+            "VanArsdel.StoreManager",
+            "VanArsdel.StoreOps.Api"
           ]
         },
         {
@@ -1276,8 +1488,8 @@
           "folder": "scenarios/staff-onboarding",
           "app": "containerization-challenge-staff-onboarding",
           "status": "no-a-components",
-          "reason": "none of 3 server components qualifies: StaffOnboarding.Portal: rated B (refactor); StaffOnboarding.Provisioning: rated B (refactor); StaffOnboarding.WorkflowHost: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 3 server components qualifies: StaffOnboarding.Portal: rated B (refactor); StaffOnboarding.Provisioning: rated B (refactor); StaffOnboarding.WorkflowHost: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/staff-onboarding",
           "components": []
@@ -1298,8 +1510,8 @@
           "folder": "scenarios/supplier-invoices",
           "app": "containerization-challenge-supplier-invoices",
           "status": "no-a-components",
-          "reason": "none of 4 server components qualifies: Invoices.Admin: rated B (refactor); Invoices.ErpLink: rated C (rewrite); Invoices.Gateway: rated C (rewrite); Invoices.Processor: rated C (rewrite)",
-          "rating": "C",
+          "reason": "none of 4 server components qualifies: Invoices.Admin: rated B (refactor); Invoices.ErpLink: rated D (rewrite); Invoices.Gateway: rated D (rewrite); Invoices.Processor: rated D (rewrite)",
+          "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/supplier-invoices",
           "components": []
@@ -1308,17 +1520,19 @@
           "folder": "scenarios/trade-rebates",
           "app": "containerization-challenge-trade-rebates",
           "status": "deployed",
-          "reason": "",
+          "reason": "runs the Make it A patch of order #198 for this commit: the scan left its folder as it is",
           "rating": "B",
           "path": "onek8s/_/containerization-challenge@trade-rebates",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/trade-rebates",
           "components": [
             "TradeRebates.Api",
+            "TradeRebates.Portal",
             "TradeRebates.StatementWorker"
           ]
         }
       ],
-      "split_hint": {}
+      "split_hint": {},
+      "patched": {}
     }
   ]
 }

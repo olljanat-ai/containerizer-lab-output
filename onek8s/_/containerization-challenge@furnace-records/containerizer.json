@@ -12,12 +12,12 @@
   "last_commit": "2026-10-30T13:09:19+00:00",
   "app": "containerization-challenge-furnace-records",
   "path": "onek8s/_/containerization-challenge@furnace-records",
-  "rating": "D",
+  "rating": "C",
   "components": [
     {
       "component": "FurnaceRecords.Api",
       "folder": "furnacerecords-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -27,21 +27,9 @@
       "digest": "sha256:1a590d392ff25375c6f92fe645d37b0e42594febf682626d1a8a425ba1a8e65b"
     },
     {
-      "component": "FurnaceRecords.Portal",
-      "folder": "furnacerecords-portal",
-      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-portal:1.20261104.1641",
-      "rating": "A",
-      "verdict": "config",
-      "role": "web",
-      "project": "src/FurnaceRecords.Portal/FurnaceRecords.Portal.csproj",
-      "project_name": "FurnaceRecords.Portal",
-      "verification": "not run",
-      "digest": "sha256:56c00e8c8adb08e29f5d086bbffc785465d7792368609f6332d7386fa359ddb3"
-    },
-    {
       "component": "FurnaceRecords.Worker",
       "folder": "furnacerecords-worker",
-      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
@@ -55,9 +43,13 @@
     {
       "component": "FurnaceRecords.Daq",
       "reason": "rated E (blocker)"
+    },
+    {
+      "component": "FurnaceRecords.Portal",
+      "reason": "rated B (refactor)"
     }
   ],
-  "processed_at": "2026-11-04T16:41:44+00:00",
+  "processed_at": "2026-11-05T15:24:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/furnace-records",
@@ -66,7 +58,6 @@
     "needed": {
       "sqlserver": [
         "FurnaceRecords.Api",
-        "FurnaceRecords.Portal",
         "FurnaceRecords.Worker"
       ]
     },
@@ -78,16 +69,19 @@
       "FurnaceRecords.Api": [
         "sqlserver:ConnectionStrings__FurnaceRecords"
       ],
-      "FurnaceRecords.Portal": [
-        "sqlserver:ConnectionStrings__FurnaceRecords"
-      ],
       "FurnaceRecords.Worker": [
         "sqlserver:ConnectionStrings__FurnaceRecords"
       ]
-    }
+    },
+    "init_scripts": [
+      "deploy/sql/01-create-database.sql",
+      "deploy/sql/02-logins.sql",
+      "deploy/sql/03-reference-data.sql"
+    ]
   },
   "migration": {},
   "llm_usage": {},
   "apps": [],
-  "split_hint": {}
+  "split_hint": {},
+  "patched": {}
 }

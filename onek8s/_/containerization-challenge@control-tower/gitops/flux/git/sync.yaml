@@ -1,0 +1,83 @@
+# read-only deploy key or token (identity + known_hosts, or username + password): every key of remote secret containerization-challenge-control-tower--cz-git in the secret store, never from Git
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: containerization-challenge-control-tower-git
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: containerization-challenge-control-tower-git
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  dataFrom:
+  - extract:
+      key: containerization-challenge-control-tower--cz-git
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: containerization-challenge-control-tower
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 5m
+  url: https://github.com/olljanat-ai/containerizer-lab-output.git
+  ref:
+    branch: main
+  secretRef:
+    name: containerization-challenge-control-tower-git
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: containerization-challenge-control-tower
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  interval: 10m
+  retryInterval: 2m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: containerization-challenge-control-tower
+  path: ./onek8s/_/containerization-challenge@control-tower
+  prune: true
+  wait: true
+  targetNamespace: containerization-challenge-control-tower
+  serviceAccountName: containerization-challenge-control-tower-reconciler
+  patches:
+  - patch: "$patch: delete\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: containerization-challenge-control-tower\n"
+    target:
+      kind: Namespace
+      name: containerization-challenge-control-tower
+  - patch: "$patch: delete\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\n\
+      metadata:\n  name: default-deny-all\n"
+    target:
+      kind: NetworkPolicy
+      name: default-deny-all
+  - patch: "$patch: delete\napiVersion: v1\nkind: LimitRange\nmetadata:\n  name: defaults\n"
+    target:
+      kind: LimitRange
+      name: defaults
+  - patch: "$patch: delete\napiVersion: v1\nkind: ResourceQuota\nmetadata:\n  name:\
+      \ quota\n"
+    target:
+      kind: ResourceQuota
+      name: quota
+  - patch: "$patch: delete\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name:\
+      \ app-secrets-reader\n"
+    target:
+      kind: ServiceAccount
+      name: app-secrets-reader
+  force: false

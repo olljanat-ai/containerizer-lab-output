@@ -19,3 +19,212 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-batch-release--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-batch-release
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: db/00-create-database.sql, db/01-schema.sql, db/02-reference-data.sql,
+      db/03-logins.sql
+data:
+  002-01-schema.sql: "-- Batch Release schema. Run once against an empty database.\n\
+    -- sqlcmd -S release-sql.corp.local -E -d BatchRelease -i 01-schema.sql\nSET NOCOUNT\
+    \ ON;\nIF OBJECT_ID(N'br.Batch', N'U') IS NOT NULL\nBEGIN\n    PRINT 'Schema br\
+    \ already installed.';\n    SET NOEXEC ON;\nEND\nGO\nIF SCHEMA_ID(N'br') IS NULL\
+    \ EXEC(N'CREATE SCHEMA [br];');\nGO\nCREATE TABLE [br].[ApiClient] (\n    [Id]\
+    \ int NOT NULL IDENTITY,\n    [Name] nvarchar(100) NOT NULL,\n    [KeyHash] nchar(64)\
+    \ NOT NULL,\n    [KeyPrefix] nvarchar(8) NOT NULL,\n    [CanSubmit] bit NOT NULL,\n\
+    \    [CanRead] bit NOT NULL,\n    [SiteCode] nvarchar(6) NULL,\n    [Active] bit\
+    \ NOT NULL,\n    [LastUsedUtc] datetime2 NULL,\n    CONSTRAINT [PK_ApiClient]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [br].[ProductFamily] (\n    [Code]\
+    \ nvarchar(20) NOT NULL,\n    [Name] nvarchar(100) NOT NULL,\n    [PolicySddl]\
+    \ nvarchar(4000) NOT NULL,\n    [PolicyChangedUtc] datetime2 NOT NULL,\n    [PolicyChangedBy]\
+    \ nvarchar(128) NOT NULL,\n    CONSTRAINT [PK_ProductFamily] PRIMARY KEY ([Code])\n\
+    );\nGO\nCREATE TABLE [br].[ReleaseCertificate] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [CertificateNumber] nvarchar(20) NOT NULL,\n    [BatchId] int NOT NULL,\n\
+    \    [DecisionId] int NOT NULL,\n    [SignerThumbprint] nchar(40) NOT NULL,\n\
+    \    [VaultPath] nvarchar(400) NOT NULL,\n    [Sha256] nchar(64) NOT NULL,\n \
+    \   [IssuedUtc] datetime2 NOT NULL,\n    CONSTRAINT [PK_ReleaseCertificate] PRIMARY\
+    \ KEY ([Id])\n);\nGO\nCREATE TABLE [br].[Signer] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [AccountName] nvarchar(128) NOT NULL,\n    [Sid] nvarchar(184) NOT NULL,\n\
+    \    [DisplayName] nvarchar(128) NOT NULL,\n    [KeyName] nvarchar(128) NOT NULL,\n\
+    \    [KeyProvider] nvarchar(128) NOT NULL,\n    [HardwareKey] bit NOT NULL,\n\
+    \    [Thumbprint] nchar(40) NOT NULL,\n    [CertificateDer] varbinary(max) NOT\
+    \ NULL,\n    [ValidFromUtc] datetime2 NOT NULL,\n    [ValidToUtc] datetime2 NOT\
+    \ NULL,\n    [EnrolledUtc] datetime2 NOT NULL,\n    [EnrolledBy] nvarchar(128)\
+    \ NOT NULL,\n    [Active] bit NOT NULL,\n    CONSTRAINT [PK_Signer] PRIMARY KEY\
+    \ ([Id])\n);\nGO\nCREATE TABLE [br].[Product] (\n    [Code] nvarchar(20) NOT NULL,\n\
+    \    [Name] nvarchar(150) NOT NULL,\n    [FamilyCode] nvarchar(20) NOT NULL,\n\
+    \    [Strength] nvarchar(50) NOT NULL,\n    [DosageForm] nvarchar(50) NOT NULL,\n\
+    \    [ShelfLifeMonths] int NOT NULL,\n    [MinimumRemainingMonths] int NOT NULL,\n\
+    \    [Active] bit NOT NULL,\n    CONSTRAINT [PK_Product] PRIMARY KEY ([Code]),\n\
+    \    CONSTRAINT [FK_Product_ProductFamily_FamilyCode] FOREIGN KEY ([FamilyCode])\
+    \ REFERENCES [br].[ProductFamily] ([Code]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE\
+    \ [br].[Batch] (\n    [Id] int NOT NULL IDENTITY,\n    [BatchNumber] nvarchar(12)\
+    \ NOT NULL,\n    [ProductCode] nvarchar(20) NOT NULL,\n    [SiteCode] nvarchar(6)\
+    \ NOT NULL,\n    [MesReference] nvarchar(40) NOT NULL,\n    [ManufacturedOn] date\
+    \ NOT NULL,\n    [ExpiresOn] date NOT NULL,\n    [Quantity] decimal(18,3) NOT\
+    \ NULL,\n    [Unit] nvarchar(10) NOT NULL,\n    [Status] int NOT NULL,\n    [ReceivedUtc]\
+    \ datetime2 NOT NULL,\n    [DispositionUtc] datetime2 NULL,\n    [CertificateNumber]\
+    \ nvarchar(20) NULL,\n    [RowVersion] rowversion NOT NULL,\n    CONSTRAINT [PK_Batch]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Batch_Product_ProductCode] FOREIGN KEY\
+    \ ([ProductCode]) REFERENCES [br].[Product] ([Code]) ON DELETE CASCADE\n);\nGO\n\
+    CREATE TABLE [br].[BatchDocument] (\n    [Id] int NOT NULL IDENTITY,\n    [BatchId]\
+    \ int NOT NULL,\n    [Kind] nvarchar(40) NOT NULL,\n    [FileName] nvarchar(200)\
+    \ NOT NULL,\n    [ContentType] nvarchar(100) NOT NULL,\n    [Length] bigint NOT\
+    \ NULL,\n    [Sha256] nchar(64) NOT NULL,\n    [VaultPath] nvarchar(400) NOT NULL,\n\
+    \    [StoredUtc] datetime2 NOT NULL,\n    [StoredBy] nvarchar(128) NOT NULL,\n\
+    \    CONSTRAINT [PK_BatchDocument] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_BatchDocument_Batch_BatchId]\
+    \ FOREIGN KEY ([BatchId]) REFERENCES [br].[Batch] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE TABLE [br].[Decision] (\n    [Id] int NOT NULL IDENTITY,\n    [BatchId]\
+    \ int NOT NULL,\n    [Kind] int NOT NULL,\n    [SignerAccount] nvarchar(128) NOT\
+    \ NULL,\n    [SignerSid] nvarchar(184) NOT NULL,\n    [SignerName] nvarchar(128)\
+    \ NOT NULL,\n    [Meaning] nvarchar(400) NOT NULL,\n    [Comment] nvarchar(2000)\
+    \ NULL,\n    [SignedUtc] datetime2 NOT NULL,\n    [SignerId] int NULL,\n    [CertificateNumber]\
+    \ nvarchar(20) NULL,\n    [SignatureSha256] nchar(64) NULL,\n    CONSTRAINT [PK_Decision]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Decision_Batch_BatchId] FOREIGN KEY\
+    \ ([BatchId]) REFERENCES [br].[Batch] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE\
+    \ TABLE [br].[Deviation] (\n    [Id] int NOT NULL IDENTITY,\n    [BatchId] int\
+    \ NOT NULL,\n    [Number] nvarchar(20) NOT NULL,\n    [Title] nvarchar(300) NOT\
+    \ NULL,\n    [Classification] int NOT NULL,\n    [Status] int NOT NULL,\n    [Impact]\
+    \ int NOT NULL,\n    [CapaNumber] nvarchar(20) NULL,\n    CONSTRAINT [PK_Deviation]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Deviation_Batch_BatchId] FOREIGN KEY\
+    \ ([BatchId]) REFERENCES [br].[Batch] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE\
+    \ TABLE [br].[LabResult] (\n    [Id] int NOT NULL IDENTITY,\n    [BatchId] int\
+    \ NOT NULL,\n    [TestCode] nvarchar(20) NOT NULL,\n    [TestName] nvarchar(150)\
+    \ NOT NULL,\n    [Specification] nvarchar(200) NOT NULL,\n    [LowerLimit] decimal(18,6)\
+    \ NULL,\n    [UpperLimit] decimal(18,6) NULL,\n    [Value] decimal(18,6) NULL,\n\
+    \    [TextResult] nvarchar(200) NULL,\n    [Unit] nvarchar(20) NOT NULL,\n   \
+    \ [Outcome] int NOT NULL,\n    [InvestigationNumber] nvarchar(20) NULL,\n    [InvestigationClosed]\
+    \ bit NOT NULL,\n    [ApprovedBy] nvarchar(64) NULL,\n    CONSTRAINT [PK_LabResult]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_LabResult_Batch_BatchId] FOREIGN KEY\
+    \ ([BatchId]) REFERENCES [br].[Batch] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE\
+    \ TABLE [br].[RecordStep] (\n    [Id] int NOT NULL IDENTITY,\n    [BatchId] int\
+    \ NOT NULL,\n    [Sequence] int NOT NULL,\n    [Operation] nvarchar(200) NOT NULL,\n\
+    \    [Status] int NOT NULL,\n    [PerformedBy] nvarchar(64) NULL,\n    [VerifiedBy]\
+    \ nvarchar(64) NULL,\n    [CompletedUtc] datetime2 NULL,\n    [Comment] nvarchar(1000)\
+    \ NULL,\n    CONSTRAINT [PK_RecordStep] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_RecordStep_Batch_BatchId]\
+    \ FOREIGN KEY ([BatchId]) REFERENCES [br].[Batch] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE INDEX [IX_ApiClient_KeyPrefix] ON [br].[ApiClient] ([KeyPrefix]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_Batch_BatchNumber] ON [br].[Batch] ([BatchNumber]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_Batch_MesReference] ON [br].[Batch] ([MesReference]);\n\
+    GO\nCREATE INDEX [IX_Batch_ProductCode] ON [br].[Batch] ([ProductCode]);\nGO\n\
+    CREATE INDEX [IX_BatchDocument_BatchId] ON [br].[BatchDocument] ([BatchId]);\n\
+    GO\nCREATE INDEX [IX_Decision_BatchId] ON [br].[Decision] ([BatchId]);\nGO\nCREATE\
+    \ INDEX [IX_Deviation_BatchId] ON [br].[Deviation] ([BatchId]);\nGO\nCREATE INDEX\
+    \ [IX_LabResult_BatchId] ON [br].[LabResult] ([BatchId]);\nGO\nCREATE INDEX [IX_Product_FamilyCode]\
+    \ ON [br].[Product] ([FamilyCode]);\nGO\nCREATE INDEX [IX_RecordStep_BatchId]\
+    \ ON [br].[RecordStep] ([BatchId]);\nGO\nCREATE UNIQUE INDEX [IX_ReleaseCertificate_CertificateNumber]\
+    \ ON [br].[ReleaseCertificate] ([CertificateNumber]);\nGO\nCREATE INDEX [IX_Signer_Sid]\
+    \ ON [br].[Signer] ([Sid]);\nGO\nCREATE UNIQUE INDEX [IX_Signer_Thumbprint] ON\
+    \ [br].[Signer] ([Thumbprint]);\nGO\n-- Decisions and certificates are records\
+    \ under 21 CFR Part 11: no updates or deletes.\nCREATE TRIGGER [br].[Decision_NoChange]\
+    \ ON [br].[Decision] AFTER UPDATE, DELETE\nAS\nBEGIN\n    RAISERROR(N'Signed decisions\
+    \ cannot be changed or deleted.', 16, 1);\n    ROLLBACK TRANSACTION;\nEND\nGO\n\
+    CREATE TRIGGER [br].[ReleaseCertificate_NoChange] ON [br].[ReleaseCertificate]\
+    \ AFTER UPDATE, DELETE\nAS\nBEGIN\n    RAISERROR(N'Batch certificates cannot be\
+    \ changed or deleted.', 16, 1);\n    ROLLBACK TRANSACTION;\nEND\nGO\nSET NOEXEC\
+    \ OFF;\nGO\n"
+  003-02-reference-data.sql: "-- Product families and products released at the Turku\
+    \ site.\n-- Release policies are set afterwards with deploy\\set-release-policy.ps1;\
+    \ until then only\n-- local administrators can read records and nobody can sign.\n\
+    -- sqlcmd -S release-sql.corp.local -E -d BatchRelease -i 02-reference-data.sql\n\
+    SET NOCOUNT ON;\n\nMERGE br.ProductFamily AS t\nUSING (VALUES\n    (N'OSD', N'Oral\
+    \ solid dose'),\n    (N'STI', N'Sterile injectables'),\n    (N'TOP', N'Topicals')\n\
+    ) AS s (Code, Name)\nON t.Code = s.Code\nWHEN MATCHED THEN UPDATE SET Name = s.Name\n\
+    WHEN NOT MATCHED THEN INSERT (Code, Name, PolicySddl, PolicyChangedUtc, PolicyChangedBy)\n\
+    \    VALUES (s.Code, s.Name, N'O:BAG:SYD:P(A;;0x1;;;BA)', SYSUTCDATETIME(), SUSER_SNAME());\n\
+    \nMERGE br.Product AS t\nUSING (VALUES\n    (N'PRX-0450', N'Proxanol 450 mg film-coated\
+    \ tablets', N'OSD', N'450 mg', N'Film-coated tablet', 36, 18),\n    (N'PRX-0900',\
+    \ N'Proxanol 900 mg film-coated tablets', N'OSD', N'900 mg', N'Film-coated tablet',\
+    \ 36, 18),\n    (N'VLD-0010', N'Velidex 10 mg/ml solution for injection', N'STI',\
+    \ N'10 mg/ml', N'Solution for injection', 24, 12),\n    (N'VLD-0040', N'Velidex\
+    \ 40 mg/ml solution for injection', N'STI', N'40 mg/ml', N'Solution for injection',\
+    \ 24, 12),\n    (N'CMR-0005', N'Calmera 5 % cream', N'TOP', N'5 %', N'Cream',\
+    \ 30, 12)\n) AS s (Code, Name, FamilyCode, Strength, DosageForm, ShelfLifeMonths,\
+    \ MinimumRemainingMonths)\nON t.Code = s.Code\nWHEN MATCHED THEN UPDATE SET Name\
+    \ = s.Name, FamilyCode = s.FamilyCode, Strength = s.Strength, DosageForm = s.DosageForm,\n\
+    \    ShelfLifeMonths = s.ShelfLifeMonths, MinimumRemainingMonths = s.MinimumRemainingMonths\n\
+    WHEN NOT MATCHED THEN INSERT (Code, Name, FamilyCode, Strength, DosageForm, ShelfLifeMonths,\
+    \ MinimumRemainingMonths, Active)\n    VALUES (s.Code, s.Name, s.FamilyCode, s.Strength,\
+    \ s.DosageForm, s.ShelfLifeMonths, s.MinimumRemainingMonths, 1);\nGO\n"
+  004-03-logins.sql: 'IF DATABASE_PRINCIPAL_ID(N''br_portal'') IS NULL CREATE ROLE
+    br_portal;
+
+    IF DATABASE_PRINCIPAL_ID(N''br_api'') IS NULL CREATE ROLE br_api;
+
+    IF DATABASE_PRINCIPAL_ID(N''br_signing'') IS NULL CREATE ROLE br_signing;
+
+    IF DATABASE_PRINCIPAL_ID(N''br_admin'') IS NULL CREATE ROLE br_admin;
+
+    GO
+
+    IF USER_ID(N''$(WebAccount)'') IS NULL CREATE USER [$(WebAccount)] FOR LOGIN [$(WebAccount)];
+
+    IF USER_ID(N''$(ApiAccount)'') IS NULL CREATE USER [$(ApiAccount)] FOR LOGIN [$(ApiAccount)];
+
+    IF USER_ID(N''$(SigningAccount)'') IS NULL CREATE USER [$(SigningAccount)] FOR
+    LOGIN [$(SigningAccount)];
+
+    IF USER_ID(N''$(AdminAccount)'') IS NULL CREATE USER [$(AdminAccount)] FOR LOGIN
+    [$(AdminAccount)];
+
+    ALTER ROLE br_portal ADD MEMBER [$(WebAccount)];
+
+    ALTER ROLE br_api ADD MEMBER [$(ApiAccount)];
+
+    ALTER ROLE br_signing ADD MEMBER [$(SigningAccount)];
+
+    ALTER ROLE br_admin ADD MEMBER [$(AdminAccount)];
+
+    GO
+
+    -- Portal: reads everything, never writes (decisions go through the signing host).
+
+    GRANT SELECT ON SCHEMA::br TO br_portal;
+
+    DENY SELECT ON br.ApiClient TO br_portal;
+
+
+    -- API: MES intake and ERP reads.
+
+    GRANT SELECT ON SCHEMA::br TO br_api;
+
+    GRANT INSERT, UPDATE, DELETE ON br.Batch TO br_api;
+
+    GRANT INSERT, UPDATE, DELETE ON br.RecordStep TO br_api;
+
+    GRANT INSERT, UPDATE, DELETE ON br.LabResult TO br_api;
+
+    GRANT INSERT, UPDATE, DELETE ON br.Deviation TO br_api;
+
+    GRANT UPDATE ON br.ApiClient TO br_api;
+
+
+    -- Signing host: documents, decisions, certificates and batch status.
+
+    GRANT SELECT ON SCHEMA::br TO br_signing;
+
+    GRANT UPDATE ON br.Batch TO br_signing;
+
+    GRANT INSERT ON br.BatchDocument TO br_signing;
+
+    GRANT INSERT ON br.Decision TO br_signing;
+
+    GRANT INSERT ON br.ReleaseCertificate TO br_signing;
+
+
+    -- Administration (enrolment runs elevated on the signing host as a member of
+    this group).
+
+    GRANT SELECT, INSERT, UPDATE ON SCHEMA::br TO br_admin;
+
+    GO
+
+    '

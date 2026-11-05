@@ -8,7 +8,7 @@ Controls from the NSA/CISA Kubernetes Hardening Guide (v1.2) and the CIS Kuberne
 | Read-only root file system; writable paths are size-limited emptyDirs | applied | Pod security > Immutable container file systems | 5.7.3 |  |
 | Minimal, patched base images; images scanned for vulnerabilities (containerizer gate) | applied | Pod security > Building secure container images |  |  |
 | Only signed images run | cluster action | Pod security > Building secure container images | 5.5.1 | Sign each pushed image (cosign sign --yes <registry>/<image>@<digest>) and enforce it with cluster/verify-images.yaml (Kyverno) or your admission controller. |
-| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641 is not pinned to a digest (vanarsdel-storemanager: Deployment/vanarsdel-storemanager/vanarsdel-storemanager) |
+| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.1524 is not pinned to a digest (vanarsdel-allocation-api: Deployment/vanarsdel-allocation-api/vanarsdel-allocation-api); image-digest: image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524 is not pinned to a digest (vanarsdel-backoffice: Deployment/vanarsdel-backoffice/vanarsdel-backoffice); image-digest: image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.1524 is not pinned to a digest (vanarsdel-catalog-api: Deployment/vanarsdel-catalog-api/vanarsdel-catalog-api); image-digest: image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.1524 is not pinned to a digest (vanarsdel-customers-api: Deployment/vanarsdel-customers-api/vanarsdel-customers-api) |
 | Pod Security Admission "restricted" enforced on the namespace; workloads comply | applied | Pod security > Pod security enforcement | 5.2.1-5.2.13 |  |
 | Own ServiceAccount per component; no token mounted | applied | Pod security > Protecting Pod service account tokens | 5.1.5, 5.1.6 | no component calls the Kubernetes API |
 | Seccomp and AppArmor RuntimeDefault; all capabilities dropped | applied | Pod security > Hardening container environments | 5.7.2 |  |
@@ -36,7 +36,19 @@ Inferred from packages and configuration; everything else is denied. Review befo
 
 | Component | Allowed external dependencies |
 | --- | --- |
+| vanarsdel-allocation-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-backoffice | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-catalog-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-customers-api | sql-server,mongodb,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-gateway | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-inventory-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-notifications | sql-server,redis,rabbitmq,azure-service-bus,smtp,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-orders-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-pricing-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-returns-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
+| vanarsdel-scheduler | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
 | vanarsdel-storemanager | seq,configured-ports |
+| vanarsdel-storeops-api | sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver |
 
 ## Secret store keys
 
@@ -44,7 +56,59 @@ Put these in the secret store before the first sync (docs/external-secrets.md); 
 
 | Remote key | Property | Component | Secret |
 | --- | --- | --- | --- |
+| `containerization-challenge-retail-backoffice--cz-lab-sqlserver` | every key | lab | `lab-sqlserver` |
+| `containerization-challenge-retail-backoffice--vanarsdel-allocation-api` | `ConnectionStrings__Allocation` | vanarsdel-allocation-api | `vanarsdel-allocation-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-allocation-api` | `Messaging__Password` | vanarsdel-allocation-api | `vanarsdel-allocation-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-allocation-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-allocation-api | `vanarsdel-allocation-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-allocation-api` | `ServiceIdentity__ClientSecret` | vanarsdel-allocation-api | `vanarsdel-allocation-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-backoffice` | `Oidc__Providers__0__ClientSecret` | vanarsdel-backoffice | `vanarsdel-backoffice-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-backoffice` | `Oidc__Providers__1__ClientSecret` | vanarsdel-backoffice | `vanarsdel-backoffice-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-backoffice` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-backoffice | `vanarsdel-backoffice-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-catalog-api` | `ConnectionStrings__Catalog` | vanarsdel-catalog-api | `vanarsdel-catalog-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-catalog-api` | `Messaging__Password` | vanarsdel-catalog-api | `vanarsdel-catalog-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-catalog-api` | `Search__Elasticsearch__Password` | vanarsdel-catalog-api | `vanarsdel-catalog-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-catalog-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-catalog-api | `vanarsdel-catalog-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-catalog-api` | `ServiceIdentity__ClientSecret` | vanarsdel-catalog-api | `vanarsdel-catalog-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-customers-api` | `ConnectionStrings__CustomersMongo` | vanarsdel-customers-api | `vanarsdel-customers-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-customers-api` | `ConnectionStrings__Customers` | vanarsdel-customers-api | `vanarsdel-customers-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-customers-api` | `Messaging__Password` | vanarsdel-customers-api | `vanarsdel-customers-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-customers-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-customers-api | `vanarsdel-customers-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-customers-api` | `ServiceIdentity__ClientSecret` | vanarsdel-customers-api | `vanarsdel-customers-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-gateway` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-gateway | `vanarsdel-gateway-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-inventory-api` | `ConnectionStrings__Inventory` | vanarsdel-inventory-api | `vanarsdel-inventory-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-inventory-api` | `Kestrel__Endpoints__Https__Certificate__Password` | vanarsdel-inventory-api | `vanarsdel-inventory-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-inventory-api` | `Messaging__Password` | vanarsdel-inventory-api | `vanarsdel-inventory-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-inventory-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-inventory-api | `vanarsdel-inventory-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-inventory-api` | `ServiceIdentity__ClientSecret` | vanarsdel-inventory-api | `vanarsdel-inventory-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-inventory-api` | `inventory.corp.local.pfx` | vanarsdel-inventory-api | `vanarsdel-inventory-api-files` |
+| `containerization-challenge-retail-backoffice--vanarsdel-notifications` | `ConnectionStrings__Notifications` | vanarsdel-notifications | `vanarsdel-notifications-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-notifications` | `Messaging__Password` | vanarsdel-notifications | `vanarsdel-notifications-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-notifications` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-notifications | `vanarsdel-notifications-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-notifications` | `ServiceIdentity__ClientSecret` | vanarsdel-notifications | `vanarsdel-notifications-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-orders-api` | `ConnectionStrings__Orders` | vanarsdel-orders-api | `vanarsdel-orders-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-orders-api` | `Messaging__Password` | vanarsdel-orders-api | `vanarsdel-orders-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-orders-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-orders-api | `vanarsdel-orders-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-orders-api` | `ServiceIdentity__ClientSecret` | vanarsdel-orders-api | `vanarsdel-orders-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-orders-api` | `WebShopBus__ConnectionString` | vanarsdel-orders-api | `vanarsdel-orders-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-pricing-api` | `ConnectionStrings__Pricing` | vanarsdel-pricing-api | `vanarsdel-pricing-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-pricing-api` | `Messaging__Password` | vanarsdel-pricing-api | `vanarsdel-pricing-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-pricing-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-pricing-api | `vanarsdel-pricing-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-pricing-api` | `ServiceIdentity__ClientSecret` | vanarsdel-pricing-api | `vanarsdel-pricing-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `ConnectionStrings__Returns` | vanarsdel-returns-api | `vanarsdel-returns-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `Messaging__Password` | vanarsdel-returns-api | `vanarsdel-returns-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `Returns__CarrierApiKey` | vanarsdel-returns-api | `vanarsdel-returns-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `Returns__CarrierWebhookSecret` | vanarsdel-returns-api | `vanarsdel-returns-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-returns-api | `vanarsdel-returns-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `ServiceIdentity__ClientSecret` | vanarsdel-returns-api | `vanarsdel-returns-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-returns-api` | `psp-merchant.pfx` | vanarsdel-returns-api | `vanarsdel-returns-api-files` |
+| `containerization-challenge-retail-backoffice--vanarsdel-scheduler` | `ConnectionStrings__Quartz` | vanarsdel-scheduler | `vanarsdel-scheduler-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-scheduler` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-scheduler | `vanarsdel-scheduler-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-scheduler` | `ServiceIdentity__ClientSecret` | vanarsdel-scheduler | `vanarsdel-scheduler-secrets` |
 | `containerization-challenge-retail-backoffice--vanarsdel-storemanager` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-storemanager | `vanarsdel-storemanager-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-storeops-api` | `ConnectionStrings__StoreOps` | vanarsdel-storeops-api | `vanarsdel-storeops-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-storeops-api` | `Messaging__Password` | vanarsdel-storeops-api | `vanarsdel-storeops-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-storeops-api` | `Serilog__WriteTo__1__Args__apiKey` | vanarsdel-storeops-api | `vanarsdel-storeops-api-secrets` |
+| `containerization-challenge-retail-backoffice--vanarsdel-storeops-api` | `ServiceIdentity__ClientSecret` | vanarsdel-storeops-api | `vanarsdel-storeops-api-secrets` |
 
 ## Files
 

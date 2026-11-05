@@ -8,4 +8,4 @@ resources:
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api
-    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-freight-rates:freightrates-api:tag"}
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-freight-rates:freightrates-api:tag"}

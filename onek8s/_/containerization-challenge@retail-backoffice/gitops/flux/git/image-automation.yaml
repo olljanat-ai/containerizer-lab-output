@@ -27,6 +27,325 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
+  name: vanarsdel-allocation-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-allocation-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-allocation-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-backoffice
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-backoffice
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-backoffice
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-catalog-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-catalog-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-catalog-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-customers-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-customers-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-customers-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-gateway
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-gateway
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-gateway
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-inventory-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-inventory-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-inventory-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-notifications
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-notifications
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-notifications
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-orders-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-orders-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-orders-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-pricing-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-pricing-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-pricing-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-returns-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-returns-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-returns-api
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-scheduler
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-scheduler
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-scheduler
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
   name: vanarsdel-storemanager
   namespace: containerization-challenge-retail-backoffice
   labels:
@@ -49,6 +368,35 @@ metadata:
 spec:
   imageRepositoryRef:
     name: vanarsdel-storemanager
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: vanarsdel-storeops-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-retail-backoffice-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: vanarsdel-storeops-api
+  namespace: containerization-challenge-retail-backoffice
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: vanarsdel-storeops-api
   policy:
     semver:
       range: '>=1.0.0'

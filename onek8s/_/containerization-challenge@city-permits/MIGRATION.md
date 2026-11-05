@@ -4,13 +4,26 @@
 Readiness score 90/100 · confidence 1.0  
 Stateless: yes
 
-1/1 server components can run in Linux containers with configuration only.
+2/2 server components can run in Linux containers with configuration only.
 
 ## Components
 
 | Component | Role | Target | Verdict | Score | Windows container stop-gap |
 | --- | --- | --- | --- | --- | --- |
+| CityPermits.Inspections | web | net6.0 | Ready with configuration (no code changes) | 89 | - |
 | CityPermits.OpenData | web | net8.0 | Ready with configuration (no code changes) | 90 | - |
+
+### CityPermits.Inspections
+
+`src/CityPermits.Inspections/CityPermits.Inspections.csproj` · web · Ready with configuration (no code changes)
+
+Facts: entry=CityPermits.Inspections.dll; connection_strings=['Permits']
+
+- ⚙ **Out-of-support .NET runtime** [config]
+  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
+  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
+  - Evidence: `src/CityPermits.Inspections/CityPermits.Inspections.csproj: TargetFramework=net6.0`
 
 ### CityPermits.OpenData
 

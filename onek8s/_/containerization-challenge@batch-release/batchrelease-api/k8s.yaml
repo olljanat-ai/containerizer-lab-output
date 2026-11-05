@@ -15,7 +15,7 @@ metadata:
     app.kubernetes.io/name: batchrelease-api
     app.kubernetes.io/part-of: containerization-challenge-batch-release
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
   selector:
@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: batchrelease-api
-        image: localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261104.1641
+        image: localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261105.1524
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__BatchRelease
@@ -78,6 +78,7 @@ spec:
         volumeMounts:
         - name: w0-dataprotection-keys
           mountPath: /home/app/.aspnet/DataProtection-Keys
+          readOnly: true
         - name: w1-tmp
           mountPath: /tmp
         ports:
@@ -102,8 +103,8 @@ spec:
           failureThreshold: 30
       volumes:
       - name: w0-dataprotection-keys
-        emptyDir:
-          sizeLimit: 256Mi
+        secret:
+          secretName: batchrelease-api-dataprotection
       - name: w1-tmp
         emptyDir:
           sizeLimit: 256Mi
@@ -201,6 +202,55 @@ spec:
     ports:
     - port: 1433
       protocol: TCP
+---
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: batchrelease-api-dataprotection
+  labels:
+    app.kubernetes.io/name: batchrelease-api
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+spec:
+  length: 64
+  digits: 10
+  symbols: 0
+  noUpper: false
+  allowRepeat: true
+---
+# ASP.NET Core Data Protection key, generated in the cluster once (no secret store); replace with your own key ring or PersistKeysTo* in code if you prefer
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: batchrelease-api-dataprotection
+  labels:
+    app.kubernetes.io/name: batchrelease-api
+    app.kubernetes.io/part-of: containerization-challenge-batch-release
+spec:
+  refreshPolicy: CreatedOnce
+  refreshInterval: '0'
+  target:
+    name: batchrelease-api-dataprotection
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      engineVersion: v2
+      data:
+        key-580fd62e-da43-5c83-a91b-63c3b3a5d5c4.xml: "<?xml version=\"1.0\" encoding=\"\
+          utf-8\"?>\n<key id=\"580fd62e-da43-5c83-a91b-63c3b3a5d5c4\" version=\"1\"\
+          >\n  <creationDate>2026-01-01T00:00:00Z</creationDate>\n  <activationDate>2026-01-01T00:00:00Z</activationDate>\n\
+          \  <expirationDate>2126-01-01T00:00:00Z</expirationDate>\n  <descriptor\
+          \ deserializerType=\"Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer,\
+          \ Microsoft.AspNetCore.DataProtection\">\n    <descriptor>\n      <encryption\
+          \ algorithm=\"AES_256_CBC\" />\n      <validation algorithm=\"HMACSHA256\"\
+          \ />\n      <masterKey p4:requiresEncryption=\"true\" xmlns:p4=\"http://schemas.asp.net/2015/03/dataProtection\"\
+          >\n        <value>{{ .password | b64enc }}</value>\n      </masterKey>\n\
+          \    </descriptor>\n  </descriptor>\n</key>\n"
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: Password
+        name: batchrelease-api-dataprotection
 ---
 # values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-batch-release--batchrelease-api); never from Git
 apiVersion: external-secrets.io/v1

@@ -12,12 +12,24 @@
   "last_commit": "2026-10-30T13:09:19+00:00",
   "app": "containerization-challenge-city-permits",
   "path": "onek8s/_/containerization-challenge@city-permits",
-  "rating": "D",
+  "rating": "C",
   "components": [
+    {
+      "component": "CityPermits.Inspections",
+      "folder": "citypermits-inspections",
+      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/CityPermits.Inspections/CityPermits.Inspections.csproj",
+      "project_name": "CityPermits.Inspections",
+      "verification": "not run",
+      "digest": "sha256:4ad2e1fc8e50454730ef233651d165eb7a5e95438d52320b5515cff8ffcd1761"
+    },
     {
       "component": "CityPermits.OpenData",
       "folder": "citypermits-opendata",
-      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -51,13 +63,9 @@
     {
       "component": "CityPermits.MapService",
       "reason": "rated E (blocker)"
-    },
-    {
-      "component": "CityPermits.Inspections",
-      "reason": "security gate: 1 fixable vulnerabilities at or above the gate threshold (image)"
     }
   ],
-  "processed_at": "2026-11-04T16:41:44+00:00",
+  "processed_at": "2026-11-05T15:24:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/city-permits",
@@ -65,6 +73,7 @@
   "lab_services": {
     "needed": {
       "sqlserver": [
+        "CityPermits.Inspections",
         "CityPermits.OpenData"
       ]
     },
@@ -73,13 +82,20 @@
     ],
     "missing": [],
     "overrides": {
+      "CityPermits.Inspections": [
+        "sqlserver:ConnectionStrings__Permits"
+      ],
       "CityPermits.OpenData": [
         "sqlserver:ConnectionStrings__Permits"
       ]
-    }
+    },
+    "init_scripts": [
+      "deploy/sql/03-filetable.sql"
+    ]
   },
   "migration": {},
   "llm_usage": {},
   "apps": [],
-  "split_hint": {}
+  "split_hint": {},
+  "patched": {}
 }

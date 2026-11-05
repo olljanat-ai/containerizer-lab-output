@@ -19,3 +19,242 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-broker-quotes--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-broker-quotes
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: deploy/sql/001-databases-and-logins.sql, deploy/sql/010-quoting-schema.sql,
+      deploy/sql/020-identity-schema.sql, deploy/sql/030-reference-data.sql
+data:
+  001-001-databases-and-logins.sql: 'IF USER_ID(N''hq_quoting'') IS NULL CREATE USER
+    hq_quoting FOR LOGIN hq_quoting;
+
+    IF USER_ID(N''hq_policy'') IS NULL CREATE USER hq_policy FOR LOGIN hq_policy;
+
+    IF USER_ID(N''hq_documents'') IS NULL CREATE USER hq_documents FOR LOGIN hq_documents;
+
+    ALTER ROLE db_datareader ADD MEMBER hq_quoting;
+
+    ALTER ROLE db_datawriter ADD MEMBER hq_quoting;
+
+    ALTER ROLE db_datareader ADD MEMBER hq_policy;
+
+    ALTER ROLE db_datawriter ADD MEMBER hq_policy;
+
+    ALTER ROLE db_datareader ADD MEMBER hq_documents;
+
+    ALTER ROLE db_datawriter ADD MEMBER hq_documents;
+
+    GO
+
+    IF USER_ID(N''hq_identity'') IS NULL CREATE USER hq_identity FOR LOGIN hq_identity;
+
+    ALTER ROLE db_datareader ADD MEMBER hq_identity;
+
+    ALTER ROLE db_datawriter ADD MEMBER hq_identity;
+
+    GO
+
+    '
+  002-010-quoting-schema.sql: "-- Quoting database schema (HumongousQuoting). Run\
+    \ with sqlcmd -d HumongousQuoting.\n-- Generated from QuotingDbContext; keep in\
+    \ step with Humongous.Quoting.Data.\n\nCREATE TABLE [Agencies] (\n    [Code] nvarchar(10)\
+    \ NOT NULL,\n    [Name] nvarchar(200) NOT NULL,\n    [FcaNumber] nvarchar(10)\
+    \ NOT NULL,\n    [CommissionRate] decimal(5,4) NOT NULL,\n    [Active] bit NOT\
+    \ NULL,\n    [DocumentEmail] nvarchar(200) NOT NULL,\n    [CreatedUtc] datetime2\
+    \ NOT NULL,\n    CONSTRAINT [PK_Agencies] PRIMARY KEY ([Code])\n);\nGO\nCREATE\
+    \ TABLE [BordereauRuns] (\n    [Id] uniqueidentifier NOT NULL,\n    [Period] nvarchar(7)\
+    \ NOT NULL,\n    [CreatedUtc] datetime2 NOT NULL,\n    [Rows] int NOT NULL,\n\
+    \    [GrossPremium] decimal(18,2) NOT NULL,\n    [Ipt] decimal(18,2) NOT NULL,\n\
+    \    [Commission] decimal(18,2) NOT NULL,\n    [FileName] nvarchar(200) NOT NULL,\n\
+    \    [Content] varbinary(max) NULL,\n    [Status] nvarchar(20) NOT NULL,\n   \
+    \ [Error] nvarchar(2000) NULL,\n    [DeliveredUtc] datetime2 NULL,\n    CONSTRAINT\
+    \ [PK_BordereauRuns] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [Documents] (\n\
+    \    [Id] uniqueidentifier NOT NULL,\n    [DocumentType] nvarchar(30) NOT NULL,\n\
+    \    [QuoteId] uniqueidentifier NULL,\n    [PolicyId] uniqueidentifier NULL,\n\
+    \    [TransactionId] uniqueidentifier NULL,\n    [AgencyCode] nvarchar(10) NOT\
+    \ NULL,\n    [FileName] nvarchar(200) NOT NULL,\n    [ContentType] nvarchar(100)\
+    \ NOT NULL,\n    [Content] varbinary(max) NOT NULL,\n    [Sha256] nvarchar(64)\
+    \ NOT NULL,\n    [CreatedUtc] datetime2 NOT NULL,\n    [EmailedTo] nvarchar(200)\
+    \ NULL,\n    [EmailedUtc] datetime2 NULL,\n    CONSTRAINT [PK_Documents] PRIMARY\
+    \ KEY ([Id])\n);\nGO\nCREATE TABLE [NumberSequences] (\n    [Name] nvarchar(20)\
+    \ NOT NULL,\n    [NextValue] bigint NOT NULL,\n    CONSTRAINT [PK_NumberSequences]\
+    \ PRIMARY KEY ([Name])\n);\nGO\nCREATE TABLE [Policies] (\n    [Id] uniqueidentifier\
+    \ NOT NULL,\n    [PolicyNumber] nvarchar(20) NOT NULL,\n    [QuoteId] uniqueidentifier\
+    \ NOT NULL,\n    [AgencyCode] nvarchar(10) NOT NULL,\n    [Status] nvarchar(20)\
+    \ NOT NULL,\n    [InceptionDate] date NOT NULL,\n    [ExpiryDate] date NOT NULL,\n\
+    \    [ProductVersion] nvarchar(10) NOT NULL,\n    [RiskJson] nvarchar(max) NOT\
+    \ NULL,\n    [PremiumJson] nvarchar(max) NOT NULL,\n    [ClausesJson] nvarchar(1000)\
+    \ NOT NULL,\n    [InsuredName] nvarchar(200) NOT NULL,\n    [Postcode] nvarchar(10)\
+    \ NOT NULL,\n    [TradeCode] nvarchar(10) NOT NULL,\n    [AnnualGrossPremium]\
+    \ decimal(18,2) NOT NULL,\n    [CommissionRate] decimal(5,4) NOT NULL,\n    [PreviousPolicyId]\
+    \ uniqueidentifier NULL,\n    [RenewalQuoteId] uniqueidentifier NULL,\n    [RenewalInvitedUtc]\
+    \ datetime2 NULL,\n    [CreatedUtc] datetime2 NOT NULL,\n    [ConcurrencyStamp]\
+    \ uniqueidentifier NOT NULL,\n    CONSTRAINT [PK_Policies] PRIMARY KEY ([Id]),\n\
+    \    CONSTRAINT [FK_Policies_Agencies_AgencyCode] FOREIGN KEY ([AgencyCode]) REFERENCES\
+    \ [Agencies] ([Code]) ON DELETE NO ACTION\n);\nGO\nCREATE TABLE [Quotes] (\n \
+    \   [Id] uniqueidentifier NOT NULL,\n    [Reference] nvarchar(20) NOT NULL,\n\
+    \    [AgencyCode] nvarchar(10) NOT NULL,\n    [BrokerReference] nvarchar(200)\
+    \ NULL,\n    [CreatedBy] nvarchar(200) NOT NULL,\n    [Status] nvarchar(20) NOT\
+    \ NULL,\n    [ProductVersion] nvarchar(10) NOT NULL,\n    [InceptionDate] date\
+    \ NOT NULL,\n    [ValidUntil] date NULL,\n    [CommissionRate] decimal(5,4) NOT\
+    \ NULL,\n    [RiskJson] nvarchar(max) NOT NULL,\n    [PremiumJson] nvarchar(max)\
+    \ NULL,\n    [LoadingsJson] nvarchar(1000) NOT NULL,\n    [ClausesJson] nvarchar(1000)\
+    \ NOT NULL,\n    [InsuredName] nvarchar(200) NOT NULL,\n    [Postcode] nvarchar(10)\
+    \ NOT NULL,\n    [TradeCode] nvarchar(10) NOT NULL,\n    [TechnicalPremium] decimal(18,2)\
+    \ NULL,\n    [GrossPremium] decimal(18,2) NULL,\n    [Total] decimal(18,2) NULL,\n\
+    \    [RatingEngine] nvarchar(200) NULL,\n    [RatingTables] nvarchar(200) NULL,\n\
+    \    [RatingError] nvarchar(1000) NULL,\n    [RatingMilliseconds] int NOT NULL,\n\
+    \    [ReferredUtc] datetime2 NULL,\n    [AssignedUnderwriter] nvarchar(200) NULL,\n\
+    \    [DecidedBy] nvarchar(200) NULL,\n    [DecidedUtc] datetime2 NULL,\n    [UnderwriterNote]\
+    \ nvarchar(2000) NULL,\n    [PolicyId] uniqueidentifier NULL,\n    [RenewalOfPolicyId]\
+    \ uniqueidentifier NULL,\n    [CreatedUtc] datetime2 NOT NULL,\n    [UpdatedUtc]\
+    \ datetime2 NOT NULL,\n    [ConcurrencyStamp] uniqueidentifier NOT NULL,\n   \
+    \ CONSTRAINT [PK_Quotes] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Quotes_Agencies_AgencyCode]\
+    \ FOREIGN KEY ([AgencyCode]) REFERENCES [Agencies] ([Code]) ON DELETE NO ACTION\n\
+    );\nGO\nCREATE TABLE [PolicyTransactions] (\n    [Id] uniqueidentifier NOT NULL,\n\
+    \    [PolicyId] uniqueidentifier NOT NULL,\n    [Type] nvarchar(20) NOT NULL,\n\
+    \    [EffectiveDate] date NOT NULL,\n    [GrossPremium] decimal(18,2) NOT NULL,\n\
+    \    [Ipt] decimal(18,2) NOT NULL,\n    [Commission] decimal(18,2) NOT NULL,\n\
+    \    [Fee] decimal(18,2) NOT NULL,\n    [SectionGrossJson] nvarchar(1000) NOT\
+    \ NULL,\n    [Reason] nvarchar(400) NULL,\n    [CreatedBy] nvarchar(200) NOT NULL,\n\
+    \    [CreatedUtc] datetime2 NOT NULL,\n    [BordereauRunId] uniqueidentifier NULL,\n\
+    \    CONSTRAINT [PK_PolicyTransactions] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_PolicyTransactions_Policies_PolicyId]\
+    \ FOREIGN KEY ([PolicyId]) REFERENCES [Policies] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE TABLE [QuoteEvents] (\n    [Id] bigint NOT NULL IDENTITY,\n    [QuoteId]\
+    \ uniqueidentifier NOT NULL,\n    [AtUtc] datetime2 NOT NULL,\n    [Event] nvarchar(40)\
+    \ NOT NULL,\n    [By] nvarchar(200) NULL,\n    [Detail] nvarchar(2000) NULL,\n\
+    \    CONSTRAINT [PK_QuoteEvents] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_QuoteEvents_Quotes_QuoteId]\
+    \ FOREIGN KEY ([QuoteId]) REFERENCES [Quotes] ([Id]) ON DELETE CASCADE\n);\nGO\n\
+    CREATE TABLE [QuoteReferrals] (\n    [Id] int NOT NULL IDENTITY,\n    [QuoteId]\
+    \ uniqueidentifier NOT NULL,\n    [Code] nvarchar(10) NOT NULL,\n    [Text] nvarchar(400)\
+    \ NOT NULL,\n    [Source] nvarchar(20) NOT NULL,\n    CONSTRAINT [PK_QuoteReferrals]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_QuoteReferrals_Quotes_QuoteId] FOREIGN\
+    \ KEY ([QuoteId]) REFERENCES [Quotes] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE\
+    \ INDEX [IX_BordereauRuns_Period] ON [BordereauRuns] ([Period]);\nGO\nCREATE INDEX\
+    \ [IX_Documents_PolicyId] ON [Documents] ([PolicyId]);\nGO\nCREATE INDEX [IX_Documents_QuoteId]\
+    \ ON [Documents] ([QuoteId]);\nGO\nCREATE INDEX [IX_Policies_AgencyCode] ON [Policies]\
+    \ ([AgencyCode]);\nGO\nCREATE UNIQUE INDEX [IX_Policies_PolicyNumber] ON [Policies]\
+    \ ([PolicyNumber]);\nGO\nCREATE INDEX [IX_Policies_Status_ExpiryDate] ON [Policies]\
+    \ ([Status], [ExpiryDate]);\nGO\nCREATE INDEX [IX_PolicyTransactions_CreatedUtc_BordereauRunId]\
+    \ ON [PolicyTransactions] ([CreatedUtc], [BordereauRunId]);\nGO\nCREATE INDEX\
+    \ [IX_PolicyTransactions_PolicyId] ON [PolicyTransactions] ([PolicyId]);\nGO\n\
+    CREATE INDEX [IX_QuoteEvents_QuoteId] ON [QuoteEvents] ([QuoteId]);\nGO\nCREATE\
+    \ INDEX [IX_QuoteReferrals_QuoteId] ON [QuoteReferrals] ([QuoteId]);\nGO\nCREATE\
+    \ INDEX [IX_Quotes_AgencyCode_Status] ON [Quotes] ([AgencyCode], [Status]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_Quotes_Reference] ON [Quotes] ([Reference]);\nGO\n\
+    CREATE INDEX [IX_Quotes_Status_ReferredUtc] ON [Quotes] ([Status], [ReferredUtc]);\n\
+    GO\n"
+  003-020-identity-schema.sql: "-- Identity database schema (HumongousIdentity): ASP.NET\
+    \ Core Identity and OpenIddict tables.\n-- Run with sqlcmd -d HumongousIdentity.\
+    \ Generated from IdentityContext.\n\nCREATE TABLE [AspNetRoles] (\n    [Id] nvarchar(450)\
+    \ NOT NULL,\n    [Name] nvarchar(256) NULL,\n    [NormalizedName] nvarchar(256)\
+    \ NULL,\n    [ConcurrencyStamp] nvarchar(max) NULL,\n    CONSTRAINT [PK_AspNetRoles]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [AspNetUsers] (\n    [Id] nvarchar(450)\
+    \ NOT NULL,\n    [DisplayName] nvarchar(100) NOT NULL,\n    [AgencyCode] nvarchar(10)\
+    \ NULL,\n    [LastSignInUtc] datetime2 NULL,\n    [UserName] nvarchar(256) NULL,\n\
+    \    [NormalizedUserName] nvarchar(256) NULL,\n    [Email] nvarchar(256) NULL,\n\
+    \    [NormalizedEmail] nvarchar(256) NULL,\n    [EmailConfirmed] bit NOT NULL,\n\
+    \    [PasswordHash] nvarchar(max) NULL,\n    [SecurityStamp] nvarchar(max) NULL,\n\
+    \    [ConcurrencyStamp] nvarchar(max) NULL,\n    [PhoneNumber] nvarchar(max) NULL,\n\
+    \    [PhoneNumberConfirmed] bit NOT NULL,\n    [TwoFactorEnabled] bit NOT NULL,\n\
+    \    [LockoutEnd] datetimeoffset NULL,\n    [LockoutEnabled] bit NOT NULL,\n \
+    \   [AccessFailedCount] int NOT NULL,\n    CONSTRAINT [PK_AspNetUsers] PRIMARY\
+    \ KEY ([Id])\n);\nGO\nCREATE TABLE [OpenIddictApplications] (\n    [Id] nvarchar(450)\
+    \ NOT NULL,\n    [ApplicationType] nvarchar(50) NULL,\n    [ClientId] nvarchar(100)\
+    \ NULL,\n    [ClientSecret] nvarchar(max) NULL,\n    [ClientType] nvarchar(50)\
+    \ NULL,\n    [ConcurrencyToken] nvarchar(50) NULL,\n    [ConsentType] nvarchar(50)\
+    \ NULL,\n    [DisplayName] nvarchar(max) NULL,\n    [DisplayNames] nvarchar(max)\
+    \ NULL,\n    [JsonWebKeySet] nvarchar(max) NULL,\n    [Permissions] nvarchar(max)\
+    \ NULL,\n    [PostLogoutRedirectUris] nvarchar(max) NULL,\n    [Properties] nvarchar(max)\
+    \ NULL,\n    [RedirectUris] nvarchar(max) NULL,\n    [Requirements] nvarchar(max)\
+    \ NULL,\n    [Settings] nvarchar(max) NULL,\n    CONSTRAINT [PK_OpenIddictApplications]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [OpenIddictScopes] (\n    [Id] nvarchar(450)\
+    \ NOT NULL,\n    [ConcurrencyToken] nvarchar(50) NULL,\n    [Description] nvarchar(max)\
+    \ NULL,\n    [Descriptions] nvarchar(max) NULL,\n    [DisplayName] nvarchar(max)\
+    \ NULL,\n    [DisplayNames] nvarchar(max) NULL,\n    [Name] nvarchar(200) NULL,\n\
+    \    [Properties] nvarchar(max) NULL,\n    [Resources] nvarchar(max) NULL,\n \
+    \   CONSTRAINT [PK_OpenIddictScopes] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE\
+    \ [AspNetRoleClaims] (\n    [Id] int NOT NULL IDENTITY,\n    [RoleId] nvarchar(450)\
+    \ NOT NULL,\n    [ClaimType] nvarchar(max) NULL,\n    [ClaimValue] nvarchar(max)\
+    \ NULL,\n    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),\n    CONSTRAINT\
+    \ [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles]\
+    \ ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [AspNetUserClaims] (\n    [Id]\
+    \ int NOT NULL IDENTITY,\n    [UserId] nvarchar(450) NOT NULL,\n    [ClaimType]\
+    \ nvarchar(max) NULL,\n    [ClaimValue] nvarchar(max) NULL,\n    CONSTRAINT [PK_AspNetUserClaims]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId]\
+    \ FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE TABLE [AspNetUserLogins] (\n    [LoginProvider] nvarchar(450) NOT NULL,\n\
+    \    [ProviderKey] nvarchar(450) NOT NULL,\n    [ProviderDisplayName] nvarchar(max)\
+    \ NULL,\n    [UserId] nvarchar(450) NOT NULL,\n    CONSTRAINT [PK_AspNetUserLogins]\
+    \ PRIMARY KEY ([LoginProvider], [ProviderKey]),\n    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId]\
+    \ FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE TABLE [AspNetUserRoles] (\n    [UserId] nvarchar(450) NOT NULL,\n \
+    \   [RoleId] nvarchar(450) NOT NULL,\n    CONSTRAINT [PK_AspNetUserRoles] PRIMARY\
+    \ KEY ([UserId], [RoleId]),\n    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId]\
+    \ FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,\n\
+    \    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId])\
+    \ REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [AspNetUserTokens]\
+    \ (\n    [UserId] nvarchar(450) NOT NULL,\n    [LoginProvider] nvarchar(450) NOT\
+    \ NULL,\n    [Name] nvarchar(450) NOT NULL,\n    [Value] nvarchar(max) NULL,\n\
+    \    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider],\
+    \ [Name]),\n    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY\
+    \ ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE\
+    \ TABLE [OpenIddictAuthorizations] (\n    [Id] nvarchar(450) NOT NULL,\n    [ApplicationId]\
+    \ nvarchar(450) NULL,\n    [ConcurrencyToken] nvarchar(50) NULL,\n    [CreationDate]\
+    \ datetime2 NULL,\n    [Properties] nvarchar(max) NULL,\n    [Scopes] nvarchar(max)\
+    \ NULL,\n    [Status] nvarchar(50) NULL,\n    [Subject] nvarchar(400) NULL,\n\
+    \    [Type] nvarchar(50) NULL,\n    CONSTRAINT [PK_OpenIddictAuthorizations] PRIMARY\
+    \ KEY ([Id]),\n    CONSTRAINT [FK_OpenIddictAuthorizations_OpenIddictApplications_ApplicationId]\
+    \ FOREIGN KEY ([ApplicationId]) REFERENCES [OpenIddictApplications] ([Id])\n);\n\
+    GO\nCREATE TABLE [OpenIddictTokens] (\n    [Id] nvarchar(450) NOT NULL,\n    [ApplicationId]\
+    \ nvarchar(450) NULL,\n    [AuthorizationId] nvarchar(450) NULL,\n    [ConcurrencyToken]\
+    \ nvarchar(50) NULL,\n    [CreationDate] datetime2 NULL,\n    [ExpirationDate]\
+    \ datetime2 NULL,\n    [Payload] nvarchar(max) NULL,\n    [Properties] nvarchar(max)\
+    \ NULL,\n    [RedemptionDate] datetime2 NULL,\n    [ReferenceId] nvarchar(100)\
+    \ NULL,\n    [Status] nvarchar(50) NULL,\n    [Subject] nvarchar(400) NULL,\n\
+    \    [Type] nvarchar(50) NULL,\n    CONSTRAINT [PK_OpenIddictTokens] PRIMARY KEY\
+    \ ([Id]),\n    CONSTRAINT [FK_OpenIddictTokens_OpenIddictApplications_ApplicationId]\
+    \ FOREIGN KEY ([ApplicationId]) REFERENCES [OpenIddictApplications] ([Id]),\n\
+    \    CONSTRAINT [FK_OpenIddictTokens_OpenIddictAuthorizations_AuthorizationId]\
+    \ FOREIGN KEY ([AuthorizationId]) REFERENCES [OpenIddictAuthorizations] ([Id])\n\
+    );\nGO\nCREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);\n\
+    GO\nCREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE\
+    \ [NormalizedName] IS NOT NULL;\nGO\nCREATE INDEX [IX_AspNetUserClaims_UserId]\
+    \ ON [AspNetUserClaims] ([UserId]);\nGO\nCREATE INDEX [IX_AspNetUserLogins_UserId]\
+    \ ON [AspNetUserLogins] ([UserId]);\nGO\nCREATE INDEX [IX_AspNetUserRoles_RoleId]\
+    \ ON [AspNetUserRoles] ([RoleId]);\nGO\nCREATE INDEX [EmailIndex] ON [AspNetUsers]\
+    \ ([NormalizedEmail]);\nGO\nCREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers]\
+    \ ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;\nGO\nCREATE UNIQUE\
+    \ INDEX [IX_OpenIddictApplications_ClientId] ON [OpenIddictApplications] ([ClientId])\
+    \ WHERE [ClientId] IS NOT NULL;\nGO\nCREATE INDEX [IX_OpenIddictAuthorizations_ApplicationId_Status_Subject_Type]\
+    \ ON [OpenIddictAuthorizations] ([ApplicationId], [Status], [Subject], [Type]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_OpenIddictScopes_Name] ON [OpenIddictScopes] ([Name])\
+    \ WHERE [Name] IS NOT NULL;\nGO\nCREATE INDEX [IX_OpenIddictTokens_ApplicationId_Status_Subject_Type]\
+    \ ON [OpenIddictTokens] ([ApplicationId], [Status], [Subject], [Type]);\nGO\n\
+    CREATE INDEX [IX_OpenIddictTokens_AuthorizationId] ON [OpenIddictTokens] ([AuthorizationId]);\n\
+    GO\nCREATE UNIQUE INDEX [IX_OpenIddictTokens_ReferenceId] ON [OpenIddictTokens]\
+    \ ([ReferenceId]) WHERE [ReferenceId] IS NOT NULL;\nGO\n"
+  004-030-reference-data.sql: "-- Reference data for HumongousQuoting. Run once after\
+    \ 010-quoting-schema.sql.\n-- Agencies are maintained afterwards in the underwriting\
+    \ workbench (Agencies page).\nSET NOCOUNT ON;\n\nMERGE Agencies AS t\nUSING (VALUES\n\
+    \    (N'ALP01', N'Alpine Insurance Brokers Ltd', N'305112', 0.2000, 1, N'documents@alpine-brokers.example'),\n\
+    \    (N'NWB02', N'Northbridge Commercial Insurance', N'412877', 0.1750, 1, N'newbusiness@northbridge.example'),\n\
+    \    (N'HRP03', N'Harrogate Risk Partners LLP', N'598001', 0.2250, 1, N'admin@harrogaterisk.example')\n\
+    ) AS s (Code, Name, FcaNumber, CommissionRate, Active, DocumentEmail)\nON t.Code\
+    \ = s.Code\nWHEN NOT MATCHED THEN\n    INSERT (Code, Name, FcaNumber, CommissionRate,\
+    \ Active, DocumentEmail, CreatedUtc)\n    VALUES (s.Code, s.Name, s.FcaNumber,\
+    \ s.CommissionRate, s.Active, s.DocumentEmail, SYSUTCDATETIME());\n\n-- Number\
+    \ sequences continue from the previous broker extranet (last quote HQ 418,220,\
+    \ last policy 61,904).\nIF NOT EXISTS (SELECT 1 FROM NumberSequences WHERE Name\
+    \ = N'Quote')\n    INSERT INTO NumberSequences (Name, NextValue) VALUES (N'Quote',\
+    \ 418221);\nIF NOT EXISTS (SELECT 1 FROM NumberSequences WHERE Name = N'Policy')\n\
+    \    INSERT INTO NumberSequences (Name, NextValue) VALUES (N'Policy', 61905);\n\
+    GO\n"

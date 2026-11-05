@@ -1,0 +1,148 @@
+{
+  "provider": "github",
+  "org": "onek8s",
+  "project": "_",
+  "repo": "containerization-challenge",
+  "status": "deployed",
+  "reason": "",
+  "web_url": "https://github.com/onek8s/containerization-challenge",
+  "clone_url": "https://github.com/onek8s/containerization-challenge.git",
+  "branch": "main",
+  "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
+  "last_commit": "2026-10-30T13:09:19+00:00",
+  "app": "containerization-challenge-control-tower",
+  "path": "onek8s/_/containerization-challenge@control-tower",
+  "rating": "B",
+  "components": [
+    {
+      "component": "ControlTower.CarrierGateway",
+      "folder": "controltower-carriergateway",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj",
+      "project_name": "ControlTower.CarrierGateway",
+      "verification": "not run",
+      "digest": "sha256:dea3cedf89219ec7b151aede3ebba820edba6e6e128eab8030976645bdf07924"
+    },
+    {
+      "component": "ControlTower.Events",
+      "folder": "controltower-events",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524",
+      "rating": "A",
+      "verdict": "config",
+      "role": "worker",
+      "project": "src/ControlTower.Events/ControlTower.Events.csproj",
+      "project_name": "ControlTower.Events",
+      "verification": "not run",
+      "digest": "sha256:13dde34d22b272154271036821f35baca08f4db55fc7bfb88fd6fb28c96b3611"
+    },
+    {
+      "component": "ControlTower.Telematics",
+      "folder": "controltower-telematics",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524",
+      "rating": "A",
+      "verdict": "config",
+      "role": "worker",
+      "project": "src/ControlTower.Telematics/ControlTower.Telematics.csproj",
+      "project_name": "ControlTower.Telematics",
+      "verification": "not run",
+      "digest": "sha256:0c07dcb7ce8f8118f3d3e3e68c6aa6f40d88340ea5bbb41eb63b078a042b791a"
+    },
+    {
+      "component": "ControlTower.Tower.Api",
+      "folder": "controltower-tower-api",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj",
+      "project_name": "ControlTower.Tower.Api",
+      "verification": "not run",
+      "digest": "sha256:918a9dc623ec9040dac1efb9fcfa01f2d4aa8f002541c325b010f089d3fae334"
+    }
+  ],
+  "excluded": [
+    {
+      "component": "ControlTower.Booking.Web",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "ControlTower.Identity",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "ControlTower.Jobs",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "ControlTower.Portal",
+      "reason": "rated B (refactor)"
+    },
+    {
+      "component": "ControlTower.Scanning.Api",
+      "reason": "rated B (refactor)"
+    }
+  ],
+  "processed_at": "2026-11-05T15:24:08+00:00",
+  "overridden": [],
+  "seconds": 0.0,
+  "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/control-tower",
+  "dev_database": {},
+  "lab_services": {
+    "needed": {
+      "sqlserver": [
+        "ControlTower.CarrierGateway",
+        "ControlTower.Events",
+        "ControlTower.Telematics",
+        "ControlTower.Tower.Api"
+      ],
+      "rabbitmq": [
+        "ControlTower.CarrierGateway",
+        "ControlTower.Events",
+        "ControlTower.Telematics",
+        "ControlTower.Tower.Api"
+      ],
+      "sftp": [
+        "ControlTower.CarrierGateway",
+        "ControlTower.Events",
+        "ControlTower.Telematics",
+        "ControlTower.Tower.Api"
+      ]
+    },
+    "provided": [
+      "sqlserver"
+    ],
+    "missing": [
+      "rabbitmq",
+      "sftp"
+    ],
+    "overrides": {
+      "ControlTower.CarrierGateway": [
+        "sqlserver:ConnectionStrings__ControlTower"
+      ],
+      "ControlTower.Events": [
+        "sqlserver:ConnectionStrings__ControlTower"
+      ],
+      "ControlTower.Telematics": [
+        "sqlserver:ConnectionStrings__ControlTower"
+      ],
+      "ControlTower.Tower.Api": [
+        "sqlserver:ConnectionStrings__ControlTower"
+      ]
+    },
+    "init_scripts": [
+      "db/00-Database.sql",
+      "db/01-Schema.sql",
+      "db/02-Logins.sql",
+      "db/03-Hangfire.sql",
+      "db/10-ReferenceData.sql"
+    ]
+  },
+  "migration": {},
+  "llm_usage": {},
+  "apps": [],
+  "split_hint": {},
+  "patched": {}
+}

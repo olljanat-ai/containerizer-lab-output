@@ -6,9 +6,10 @@
 #   with environment variables to folders under /data, which the manifests mount as volumes; the
 #   application code is not changed.
 #   see https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/
-# - plan-dataprotection-keys: ASP.NET Core Data Protection writes its key ring under the user's home
-#   folder; with a read-only root file system that folder must be writable (persist it, or share it
-#   via PersistKeysTo*, when running more than one replica).
+# - plan-dataprotection-keys: ASP.NET Core Data Protection keeps its key ring under the user's home
+#   folder. The generated manifests mount one key there, read-only, from a Secret that External
+#   Secrets Operator generates once in the cluster, so every replica and restart shares it
+#   (PersistKeysTo* in code takes over when present).
 #   see https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview
 FROM mcr.microsoft.com/dotnet/sdk:10.0.403-noble AS build
 WORKDIR /src

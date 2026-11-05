@@ -30,3 +30,4 @@ configMapGenerator:
   - sync/idp_sync.py
   - sync/apps__containerization-challenge-broker-quotes--humongous-brokerportal.json
   - sync/apps__containerization-challenge-broker-quotes--humongous-workbench.json
+  - sync/apps__containerization-challenge-retail-backoffice--vanarsdel-backoffice.json

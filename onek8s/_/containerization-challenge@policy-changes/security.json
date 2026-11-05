@@ -1,5 +1,6 @@
 {
   "app": "containerization-challenge-policy-changes",
+  "scanned": false,
   "policy": {
     "fail_on": "CRITICAL",
     "ignore_unfixed": true
@@ -31,72 +32,15 @@
           "check": "image-digest",
           "severity": "info",
           "target": "policychanges-api/k8s.yaml: Deployment/policychanges-api/policychanges-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-policy-changes-policychanges-api:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "inconclusive",
         "http": 503,
         "errors": [],
-        "log": "Lifetime[0]\n      Content root path: /app\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2745.2718ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2992.9249ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 3001.8545ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 5.0266ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 3003.2653ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 3003.0196ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2944.6482ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2.0394ms with message '(null)'\n"
+        "log": "Lifetime[0]\n      Content root path: /app\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2723.1644ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2991.7455ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 3002.0482ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2.7908ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 3000.1152ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 3001.3972ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 2953.4816ms with message '(null)'\nfail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]\n      Health check database with status Unhealthy completed after 0.9093ms with message '(null)'\n"
       }
     }
   ],

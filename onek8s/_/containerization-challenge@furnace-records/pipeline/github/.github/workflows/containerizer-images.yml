@@ -9,13 +9,11 @@ name: containerizer images (containerization-challenge-furnace-records)
     paths:
     - scenarios/furnace-records/Directory.Build.props
     - scenarios/furnace-records/containerizer/furnacerecords-api/**
-    - scenarios/furnace-records/containerizer/furnacerecords-portal/**
     - scenarios/furnace-records/containerizer/furnacerecords-worker/**
     - scenarios/furnace-records/global.json
     - scenarios/furnace-records/src/FurnaceRecords.Api/**
     - scenarios/furnace-records/src/FurnaceRecords.Core/**
     - scenarios/furnace-records/src/FurnaceRecords.Data/**
-    - scenarios/furnace-records/src/FurnaceRecords.Portal/**
     - scenarios/furnace-records/src/FurnaceRecords.Worker/**
     - .github/workflows/containerizer-images.yml
   push:
@@ -24,13 +22,11 @@ name: containerizer images (containerization-challenge-furnace-records)
     paths:
     - scenarios/furnace-records/Directory.Build.props
     - scenarios/furnace-records/containerizer/furnacerecords-api/**
-    - scenarios/furnace-records/containerizer/furnacerecords-portal/**
     - scenarios/furnace-records/containerizer/furnacerecords-worker/**
     - scenarios/furnace-records/global.json
     - scenarios/furnace-records/src/FurnaceRecords.Api/**
     - scenarios/furnace-records/src/FurnaceRecords.Core/**
     - scenarios/furnace-records/src/FurnaceRecords.Data/**
-    - scenarios/furnace-records/src/FurnaceRecords.Portal/**
     - scenarios/furnace-records/src/FurnaceRecords.Worker/**
     - .github/workflows/containerizer-images.yml
   workflow_dispatch: null
@@ -73,7 +69,6 @@ jobs:
         changed() { [ "$ALL" = 1 ] || printf '%s\n' "$CHANGED" | grep -qE "$1"; }
         list=""
         if changed '^(scenarios/furnace-records/src/FurnaceRecords\.Api/|scenarios/furnace-records/src/FurnaceRecords\.Core/|scenarios/furnace-records/src/FurnaceRecords\.Data/|scenarios/furnace-records/Directory\.Build\.props$|scenarios/furnace-records/global\.json$|scenarios/furnace-records/containerizer/furnacerecords-api/)'; then list="$list${list:+,}{\"folder\":\"furnacerecords-api\",\"dockerfile\":\"scenarios/furnace-records/containerizer/furnacerecords-api/Dockerfile\",\"context\":\"scenarios/furnace-records\",\"image_name\":\"containerization-challenge-furnace-records/furnacerecords-api\"}"; fi
-        if changed '^(scenarios/furnace-records/src/FurnaceRecords\.Core/|scenarios/furnace-records/src/FurnaceRecords\.Data/|scenarios/furnace-records/src/FurnaceRecords\.Portal/|scenarios/furnace-records/Directory\.Build\.props$|scenarios/furnace-records/global\.json$|scenarios/furnace-records/containerizer/furnacerecords-portal/)'; then list="$list${list:+,}{\"folder\":\"furnacerecords-portal\",\"dockerfile\":\"scenarios/furnace-records/containerizer/furnacerecords-portal/Dockerfile\",\"context\":\"scenarios/furnace-records\",\"image_name\":\"containerization-challenge-furnace-records/furnacerecords-portal\"}"; fi
         if changed '^(scenarios/furnace-records/src/FurnaceRecords\.Core/|scenarios/furnace-records/src/FurnaceRecords\.Data/|scenarios/furnace-records/src/FurnaceRecords\.Worker/|scenarios/furnace-records/Directory\.Build\.props$|scenarios/furnace-records/global\.json$|scenarios/furnace-records/containerizer/furnacerecords-worker/)'; then list="$list${list:+,}{\"folder\":\"furnacerecords-worker\",\"dockerfile\":\"scenarios/furnace-records/containerizer/furnacerecords-worker/Dockerfile\",\"context\":\"scenarios/furnace-records\",\"image_name\":\"containerization-challenge-furnace-records/furnacerecords-worker\"}"; fi
         echo "components=[$list]" >> "$GITHUB_OUTPUT"
         echo "version=1.$(date -u +%Y%m%d).$(date -u +%H%M | sed 's/^0*\(.\)/\1/')" >> "$GITHUB_OUTPUT"

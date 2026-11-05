@@ -1,5 +1,6 @@
 {
   "app": "containerization-challenge-city-permits",
+  "scanned": false,
   "policy": {
     "fail_on": "CRITICAL",
     "ignore_unfixed": true
@@ -8,9 +9,52 @@
   "lint": {
     "error": 0,
     "warning": 0,
-    "info": 3
+    "info": 8
   },
   "components": [
+    {
+      "component": "citypermits-inspections",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "citypermits-inspections/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "citypermits-inspections/Dockerfile",
+          "message": "node:22.23.4-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "citypermits-inspections/Dockerfile",
+          "message": "node:22.23.4-bookworm-slim is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "citypermits-inspections/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "citypermits-inspections/k8s.yaml: Deployment/citypermits-inspections/citypermits-inspections",
+          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": 200,
+        "errors": [],
+        "log": "[15:26:52 WRN] No XML encryptor configured. Key {fcde41bd-a40b-4c71-906b-0c9a5d51782d} may be persisted to storage in unencrypted form.\n[15:26:52 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[15:26:52 INF] Now listening on: http://[::]:8080\n[15:26:52 INF] Application started. Press Ctrl+C to shut down.\n[15:26:52 INF] Hosting environment: Production\n[15:26:52 INF] Content root path: /app\n[15:26:55 INF] HTTP GET /index.html responded 200 in 48.8800 ms\n"
+      }
+    },
     {
       "component": "citypermits-opendata",
       "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
@@ -31,72 +75,15 @@
           "check": "image-digest",
           "severity": "info",
           "target": "citypermits-opendata/k8s.yaml: Deployment/citypermits-opendata/citypermits-opendata",
-          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-city-permits-citypermits-opendata:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 1,
-            "MEDIUM": 5,
-            "LOW": 2
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 3,
-            "LOW": 1
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[16:50:51 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[16:50:51 INF] Now listening on: http://[::]:8080\n[16:50:51 INF] Application started. Press Ctrl+C to shut down.\n[16:50:51 INF] Hosting environment: Production\n[16:50:51 INF] Content root path: /app\n[16:50:53 INF] HTTP GET /health responded 200 in 85.6056 ms\n"
+        "log": "[15:26:58 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[15:26:58 INF] Now listening on: http://[::]:8080\n[15:26:58 INF] Application started. Press Ctrl+C to shut down.\n[15:26:58 INF] Hosting environment: Production\n[15:26:58 INF] Content root path: /app\n[15:27:01 INF] HTTP GET /health responded 200 in 90.4947 ms\n"
       }
     }
   ],

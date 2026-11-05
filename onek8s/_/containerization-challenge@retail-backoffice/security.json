@@ -1,5 +1,6 @@
 {
   "app": "containerization-challenge-retail-backoffice",
+  "scanned": false,
   "policy": {
     "fail_on": "CRITICAL",
     "ignore_unfixed": true
@@ -8,9 +9,350 @@
   "lint": {
     "error": 0,
     "warning": 0,
-    "info": 5
+    "info": 41
   },
   "components": [
+    {
+      "component": "vanarsdel-allocation-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-allocation-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-allocation-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-allocation-api/k8s.yaml: Deployment/vanarsdel-allocation-api/vanarsdel-allocation-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-backoffice",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-backoffice/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-backoffice/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-backoffice/k8s.yaml: Deployment/vanarsdel-backoffice/vanarsdel-backoffice",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": 500,
+        "errors": [],
+        "log": "entication.AuthenticationBuilder.<>c__DisplayClass4_0`2.<AddSchemeHelper>b__1(TOptions o)\n   at Microsoft.Extensions.Options.ValidateOptions`1.Validate(String name, TOptions options)\n   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)\n   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)\n--- End of stack trace from previous location ---\n   at System.Lazy`1.CreateValue()\n   at Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.InitializeAsync(AuthenticationScheme scheme, HttpContext context)\n   at Microsoft.AspNetCore.Authentication.AuthenticationHandlerProvider.GetHandlerAsync(HttpContext context, String authenticationScheme)\n   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.HandleException(HttpContext context, ExceptionDispatchInfo edi)\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.HandleException(HttpContext context, ExceptionDispatchInfo edi)\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)\n   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-catalog-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-catalog-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-catalog-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-catalog-api/k8s.yaml: Deployment/vanarsdel-catalog-api/vanarsdel-catalog-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-customers-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-customers-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-customers-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-customers-api/k8s.yaml: Deployment/vanarsdel-customers-api/vanarsdel-customers-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "/VanArsdel.Customers.Api/Documents/MongoCustomerStore.cs:line 31\n   at VanArsdel.Customers.Api.Startup.ConfigureServices(IServiceCollection services) in /src/src/VanArsdel.Customers.Api/Startup.cs:line 44\n   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)\n   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)\n   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at Microsoft.AspNetCore.Hosting.ConfigureServicesBuilder.InvokeCore(Object instance, IServiceCollection services)\n   at Microsoft.AspNetCore.Hosting.GenericWebHostBuilder.UseStartup(Type startupType, HostBuilderContext context, IServiceCollection services, Object instance)\n   at Microsoft.AspNetCore.Hosting.GenericWebHostBuilder.<>c__DisplayClass7_0.<UseStartup>b__0(HostBuilderContext context, IServiceCollection services)\n   at Microsoft.Extensions.Hosting.HostBuilder.InitializeServiceProvider()\n   at Microsoft.Extensions.Hosting.HostBuilder.Build()\n   at VanArsdel.BuildingBlocks.Hosting.VanArsdelHost.Run(String appName, String[] args, Func`2 createHostBuilder, Func`3 beforeRun, Func`2 buildHost) in /src/src/VanArsdel.BuildingBlocks/Hosting/VanArsdelHost.cs:line 30\n"
+      }
+    },
+    {
+      "component": "vanarsdel-gateway",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-gateway/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-gateway/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-gateway/k8s.yaml: Deployment/vanarsdel-gateway/vanarsdel-gateway",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": 200,
+        "errors": [],
+        "log": "[15:39:08 INF] Starting gateway 4.12.0.0\n[15:39:08 WRN] No XML encryptor configured. Key {ce7088ec-7ba7-4ba2-a8df-1375c40b5627} may be persisted to storage in unencrypted form.\n[15:39:09 INF] Now listening on: http://[::]:8080\n[15:39:09 INF] Application started. Press Ctrl+C to shut down.\n[15:39:09 INF] Hosting environment: Production\n[15:39:09 INF] Content root path: /app\n[15:39:11 INF] HTTP GET /health responded 200 in 158.9720 ms\n"
+      }
+    },
+    {
+      "component": "vanarsdel-inventory-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-inventory-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-inventory-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-inventory-api/k8s.yaml: Deployment/vanarsdel-inventory-api/vanarsdel-inventory-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-notifications",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-notifications/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-notifications/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-notifications/k8s.yaml: Deployment/vanarsdel-notifications/vanarsdel-notifications",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "ok",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-orders-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-orders-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-orders-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-orders-api/k8s.yaml: Deployment/vanarsdel-orders-api/vanarsdel-orders-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "nary`2.GetOrAdd(TKey key, Func`2 valueFactory)\n   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)\n   at Microsoft.AspNetCore.Builder.HealthCheckEndpointRouteBuilderExtensions.MapHealthChecksCore(IEndpointRouteBuilder endpoints, String pattern, HealthCheckOptions options)\n   at VanArsdel.BuildingBlocks.Web.ApiExtensions.MapVanArsdelHealth(IEndpointRouteBuilder e) in /src/src/VanArsdel.BuildingBlocks/Web/ApiExtensions.cs:line 110\n   at VanArsdel.BuildingBlocks.Web.ApiExtensions.<>c__DisplayClass1_0.<UseVanArsdelApi>b__2(IEndpointRouteBuilder e) in /src/src/VanArsdel.BuildingBlocks/Web/ApiExtensions.cs:line 102\n   at Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseEndpoints(IApplicationBuilder builder, Action`1 configure)\n   at VanArsdel.BuildingBlocks.Web.ApiExtensions.UseVanArsdelApi(IApplicationBuilder app, IWebHostEnvironment env, Action`1 endpoints) in /src/src/VanArsdel.BuildingBlocks/Web/ApiExtensions.cs:line 99\n   at OrdersApp.Build(String[] args, Action`1 configure) in /src/src/VanArsdel.Orders.Api/Program.cs:line 56\n   at Program.<>c.<<Main>$>b__0_0(String[] a) in /src/src/VanArsdel.Orders.Api/Program.cs:line 18\n   at VanArsdel.BuildingBlocks.Hosting.VanArsdelHost.Run(String appName, String[] args, Func`2 createHostBuilder, Func`3 beforeRun, Func`2 buildHost) in /src/src/VanArsdel.BuildingBlocks/Hosting/VanArsdelHost.cs:line 30\n"
+      }
+    },
+    {
+      "component": "vanarsdel-pricing-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-pricing-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-pricing-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-pricing-api/k8s.yaml: Deployment/vanarsdel-pricing-api/vanarsdel-pricing-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-returns-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-returns-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-returns-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-returns-api/k8s.yaml: Deployment/vanarsdel-returns-api/vanarsdel-returns-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
+      }
+    },
+    {
+      "component": "vanarsdel-scheduler",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-scheduler/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-scheduler/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-scheduler/k8s.yaml: Deployment/vanarsdel-scheduler/vanarsdel-scheduler",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "nnectionInternal oldConnection)\n   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)\n   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)\n   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)\n   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)\n   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)\n   at Microsoft.Data.SqlClient.SqlConnection.Open()\n   at Quartz.Impl.AdoJobStore.JobStoreSupport.GetConnection()\nClientConnectionId:00000000-0000-0000-0000-000000000000]\n"
+      }
+    },
     {
       "component": "vanarsdel-storemanager",
       "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
@@ -43,75 +385,46 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-storemanager/k8s.yaml: Deployment/vanarsdel-storemanager/vanarsdel-storemanager",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261104.1641 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524 is not pinned to a digest"
         }
       ],
-      "scans": [
-        {
-          "kind": "base",
-          "image": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 2,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 0,
-            "MEDIUM": 0,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": []
-        },
-        {
-          "kind": "image",
-          "image": "containerizer/containerization-challenge-retail-backoffice-vanarsdel-storemanager:gate",
-          "scanner": "trivy",
-          "os": "ubuntu 24.04",
-          "error": "",
-          "scanner_notes": [
-            "grype: [0000] ERROR failed to fetch latest version: Get \"https://toolbox-data.anchore.io/grype/releases/latest/VERSION\": dial tcp: lookup toolbox-data.anchore.io on 169.254.53.53:53: server misbehaving\n[0000"
-          ],
-          "passed": true,
-          "counts": {
-            "CRITICAL": 0,
-            "HIGH": 3,
-            "MEDIUM": 3,
-            "LOW": 1
-          },
-          "fixable": {
-            "CRITICAL": 0,
-            "HIGH": 3,
-            "MEDIUM": 1,
-            "LOW": 0
-          },
-          "blocking": [],
-          "accepted": [],
-          "expired_allowlist": [],
-          "patched": [],
-          "app_fixable": [
-            "Newtonsoft.Json 9.0.1 -> 13.0.1",
-            "System.Private.Uri 4.3.0 -> 4.3.2"
-          ]
-        }
-      ],
+      "scans": [],
       "run": {
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[17:27:13 INF] Now listening on: http://[::]:8080\n[17:27:13 INF] Now listening on: http://[::]:8080\n[17:27:13 INF] Application started. Press Ctrl+C to shut down.\n[17:27:13 INF] Application started. Press Ctrl+C to shut down.\n[17:27:13 INF] Hosting environment: Production\n[17:27:13 INF] Hosting environment: Production\n[17:27:13 INF] Content root path: /app\n[17:27:13 INF] Content root path: /app\n"
+        "log": "[15:42:34 INF] Now listening on: http://[::]:8080\n[15:42:34 INF] Now listening on: http://[::]:8080\n[15:42:34 INF] Application started. Press Ctrl+C to shut down.\n[15:42:34 INF] Application started. Press Ctrl+C to shut down.\n[15:42:34 INF] Hosting environment: Production\n[15:42:34 INF] Hosting environment: Production\n[15:42:34 INF] Content root path: /app\n[15:42:34 INF] Content root path: /app\n"
+      }
+    },
+    {
+      "component": "vanarsdel-storeops-api",
+      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "lint": [
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-storeops-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/sdk:10.0.403-noble is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-digest",
+          "severity": "info",
+          "target": "vanarsdel-storeops-api/Dockerfile",
+          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "image-digest",
+          "severity": "info",
+          "target": "vanarsdel-storeops-api/k8s.yaml: Deployment/vanarsdel-storeops-api/vanarsdel-storeops-api",
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.1524 is not pinned to a digest"
+        }
+      ],
+      "scans": [],
+      "run": {
+        "status": "inconclusive",
+        "http": null,
+        "errors": [],
+        "log": "l.SocketFrameHandler.ConnectUsingAddressFamily(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout, AddressFamily family)\n   at RabbitMQ.Client.Impl.SocketFrameHandler.ConnectUsingIPv4(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan timeout)\n   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.Framing.Impl.IProtocolExtensions.CreateFrameHandler(IProtocol protocol, AmqpTcpEndpoint endpoint, Func`2 socketFactory, TimeSpan connectionTimeout, TimeSpan readTimeout, TimeSpan writeTimeout)\n   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler(AmqpTcpEndpoint endpoint)\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.EndpointResolverExtensions.SelectOne[T](IEndpointResolver resolver, Func`2 selector)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   --- End of inner exception stack trace ---\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IEndpointResolver endpointResolver, String clientProvidedName)\n   at RabbitMQ.Client.ConnectionFactory.CreateConnection(IList`1 hostnames, String clientProvidedName)\n   at MassTransit.RabbitMqTransport.Integration.ConnectionContextFactory.CreateConnection(ISupervisor supervisor)\n"
       }
     }
   ],

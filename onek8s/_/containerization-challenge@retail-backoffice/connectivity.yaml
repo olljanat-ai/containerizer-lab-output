@@ -5,18 +5,182 @@ apiVersion: containerizer.eu/v1
 kind: Connectivity
 application: containerization-challenge-retail-backoffice
 namespace: containerization-challenge-retail-backoffice
-generatedAt: '2026-11-04T17:27:18Z'
+generatedAt: '2026-11-05T15:43:29Z'
 observed: false
 note: 'Approved destinations are documented for the real environment: use them (FQDN, port, protocol) for its firewall rules.
   Approval opens nothing in the sandbox: it stays isolated, its NetworkPolicies allow only what was inferred and confirmed
   links between applications, and on the appliance only the administrators'' egress rules let anything out.'
 components:
+- name: vanarsdel-allocation-api
+  component: VanArsdel.Allocation.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-backoffice
+  component: VanArsdel.BackOffice
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-catalog-api
+  component: VanArsdel.Catalog.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-customers-api
+  component: VanArsdel.Customers.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-gateway
+  component: VanArsdel.Gateway
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-inventory-api
+  component: VanArsdel.Inventory.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-notifications
+  component: VanArsdel.Notifications
+  role: worker
+- name: vanarsdel-orders-api
+  component: VanArsdel.Orders.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-pricing-api
+  component: VanArsdel.Pricing.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-returns-api
+  component: VanArsdel.Returns.Api
+  role: web
+  port: 8080
+  service_port: 80
+- name: vanarsdel-scheduler
+  component: VanArsdel.Scheduler
+  role: worker
 - name: vanarsdel-storemanager
   component: VanArsdel.StoreManager
   role: web
   port: 8080
   service_port: 80
+- name: vanarsdel-storeops-api
+  component: VanArsdel.StoreOps.Api
+  role: web
+  port: 8080
+  service_port: 80
 inbound:
+- component: vanarsdel-allocation-api
+  from: https://vanarsdel-allocation-api-containerization-challenge-re-239db0ad.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-allocation-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-backoffice
+  from: https://vanarsdel-backoffice-containerization-challenge-retail-ff631ec3.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-backoffice
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-catalog-api
+  from: https://vanarsdel-catalog-api-containerization-challenge-retai-c853cc21.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-catalog-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-customers-api
+  from: https://vanarsdel-customers-api-containerization-challenge-ret-e9b57d70.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-customers-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-gateway
+  from: https://vanarsdel-gateway-containerization-challenge-retail-backoffice.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-gateway
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-inventory-api
+  from: https://vanarsdel-inventory-api-containerization-challenge-ret-d9dcf778.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-inventory-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-orders-api
+  from: https://vanarsdel-orders-api-containerization-challenge-retail-ceca3486.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-orders-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-pricing-api
+  from: https://vanarsdel-pricing-api-containerization-challenge-retai-58aa02d4.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-pricing-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+- component: vanarsdel-returns-api
+  from: https://vanarsdel-returns-api-containerization-challenge-retai-70d776d1.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-returns-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
 - component: vanarsdel-storemanager
   from: https://vanarsdel-storemanager-containerization-challenge-reta-184cba0d.sandbox.lab/
   port: 80
@@ -29,7 +193,2524 @@ inbound:
   protocol: TCP
   source: service
   target_port: 8080
+- component: vanarsdel-storeops-api
+  from: https://vanarsdel-storeops-api-containerization-challenge-reta-ff702f9f.sandbox.lab/
+  port: 80
+  protocol: TCP
+  source: ingress
+  target_port: 8080
+- component: vanarsdel-storeops-api
+  from: any namespace (Service)
+  port: 80
+  protocol: TCP
+  source: service
+  target_port: 8080
+internal:
+- from: vanarsdel-allocation-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Allocation
+- from: vanarsdel-allocation-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-allocation-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-backoffice
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-backoffice
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-backoffice
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-catalog-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Catalog
+- from: vanarsdel-catalog-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-catalog-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-customers-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Customers
+- from: vanarsdel-customers-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-customers-api
+  to: lab MongoDB
+  port: 27017
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package; setting ConnectionStrings:CustomersMongo
+- from: vanarsdel-customers-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-gateway
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-gateway
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-gateway
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-inventory-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Inventory
+- from: vanarsdel-inventory-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-inventory-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-notifications
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Notifications
+- from: vanarsdel-notifications
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-notifications
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-orders-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Orders
+- from: vanarsdel-orders-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-orders-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-pricing-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package; setting ConnectionStrings:Pricing
+- from: vanarsdel-pricing-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-pricing-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-returns-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:Returns
+- from: vanarsdel-returns-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting Redis:Configuration
+- from: vanarsdel-returns-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-scheduler
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package; setting ConnectionStrings:Quartz
+- from: vanarsdel-scheduler
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-scheduler
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
+- from: vanarsdel-storeops-api
+  to: lab SQL Server
+  port: 1433
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj; setting ConnectionStrings:StoreOps
+- from: vanarsdel-storeops-api
+  to: lab Redis
+  port: 6379
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package; setting Redis:Configuration
+- from: vanarsdel-storeops-api
+  to: lab RabbitMQ
+  port: 5672
+  protocol: TCP
+  source: lab-service
+  namespace: containerizer-lab
+  reason: package in src/VanArsdel.BuildingBlocks/VanArsdel.BuildingBlocks.csproj
 outbound:
+- component: vanarsdel-allocation-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Allocation.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-allocation-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Allocation.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-allocation-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-allocation-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-allocation-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-allocation-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-allocation-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-allocation-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Allocation.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-allocation-api
+  destination: inventory.corp.local
+  type: fqdn
+  port: 5001
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Allocation.Api/appsettings.Production.json
+    line: 73
+    quote: '"InventoryGrpc": "https://inventory.corp.local:5001"'
+  allowed_by: configured-ports
+  sandbox:
+    network_policy: allows port 5001
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-allocation-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Allocation.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-allocation-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Allocation.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 20
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: allocation.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 51
+    quote: '"Uri": "https://allocation.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-backoffice
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-backoffice
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-backoffice
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-backoffice
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-backoffice
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 3
+    quote: '"BaseUrl": "https://api.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: catalog.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 39
+    quote: '"Uri": "https://catalog.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: customers.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 59
+    quote: '"Uri": "https://customers.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: inventory.corp.local
+  type: fqdn
+  port: 5001
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 47
+    quote: '"Uri": "https://inventory.corp.local:5001/health"'
+  allowed_by: configured-ports
+  sandbox:
+    network_policy: allows port 5001
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 11
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 93
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: orders.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 55
+    quote: '"Uri": "https://orders.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: pricing.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 43
+    quote: '"Uri": "https://pricing.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: reporting.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 71
+    quote: '"Uri": "https://reporting.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: returns.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 63
+    quote: '"Uri": "https://returns.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-backoffice
+  destination: storeops.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.BackOffice/appsettings.Production.json
+    line: 67
+    quote: '"Uri": "https://storeops.corp.local/health"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-catalog-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Catalog.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-catalog-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Catalog.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-catalog-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-catalog-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-catalog-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-catalog-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-catalog-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-catalog-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Catalog.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-catalog-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Catalog.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-catalog-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Catalog.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-catalog-api
+  destination: search01.corp.local
+  type: fqdn
+  port: 9200
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Catalog.Api/appsettings.Production.json
+    line: 75
+    quote: '"Nodes": "https://search01.corp.local:9200",'
+  allowed_by: configured-ports
+  sandbox:
+    network_policy: allows port 9200
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-customers-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Customers.Api/appsettings.Production.json
+    line: 26
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-customers-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Customers.Api/appsettings.Production.json
+    line: 25
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-customers-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-customers-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-customers-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-customers-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-customers-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-customers-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Customers.Api/appsettings.Production.json
+    line: 13
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-customers-api
+  destination: docdb01.corp.local
+  type: fqdn
+  port: 27017
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Customers.Api/appsettings.Production.json
+    line: 4
+    quote: '"CustomersMongo": "mongodb://customers-api:@docdb01.corp.local:27017/vanarsdel_customers?replicaSet=rs0&tls=true&authSource=admin"'
+  allowed_by: mongodb
+  sandbox:
+    network_policy: allows port 27017
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-customers-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Customers.Api/appsettings.Production.json
+    line: 19
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-customers-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Customers.Api/appsettings.Production.json
+    line: 67
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 18
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 17
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-gateway
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-gateway
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-gateway
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-gateway
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-gateway
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 5
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: backoffice.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 48
+    quote: '"Origins": "https://stores.corp.local;https://backoffice.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 11
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 41
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-gateway
+  destination: stores.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Gateway/appsettings.Production.json
+    line: 48
+    quote: '"Origins": "https://stores.corp.local;https://backoffice.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-inventory-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Inventory.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-inventory-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Inventory.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-inventory-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-inventory-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-inventory-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-inventory-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-inventory-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-inventory-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Inventory.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-inventory-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Inventory.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-inventory-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Inventory.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-notifications
+  destination: erp01.corp.local
+  type: fqdn
+  port: 8443
+  protocol: TCP
+  status: not-allowed
+  sources:
+  - code
+  evidence:
+  - file: src/VanArsdel.Integration/Erp/ErpClientFactory.cs
+    line: 9
+    quote: public string Endpoint { get; set; } = "https://erp01.corp.local:8443/MerxIntegration/ErpIntegration.svc";
+  sandbox:
+    network_policy: blocks port 8443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: network-policy
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 25
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: smtp
+  reason: the NetworkPolicy opens port 25 for smtp (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 25
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 465
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: smtp
+  reason: the NetworkPolicy opens port 465 for smtp (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 465
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 587
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: smtp
+  reason: the NetworkPolicy opens port 587 for smtp (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 587
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-notifications
+  destination: api.postiq.example
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Notifications/appsettings.Production.json
+    line: 55
+    quote: '"BaseUrl": "https://api.postiq.example",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-notifications
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Notifications/appsettings.Production.json
+    line: 10
+    quote: '"TokenEndpoint": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/oauth2/v2.0/token",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-notifications
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Notifications/appsettings.Production.json
+    line: 42
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-notifications
+  destination: schemas.merx-erp.example
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - code
+  evidence:
+  - file: src/VanArsdel.Integration/Erp/ErpIntegrationService.cs
+    line: 14
+    quote: public const string Service = "http://schemas.merx-erp.example/integration/2016/09";
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-notifications
+  destination: storeops.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Notifications/appsettings.Production.json
+    line: 49
+    quote: '"StoreOps": "https://storeops.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-notifications
+  destination: www.vanarsdel.example
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Notifications/appsettings.Production.json
+    line: 53
+    quote: '"WebShopUrl": "https://www.vanarsdel.example",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: erp01.corp.local
+  type: fqdn
+  port: 8443
+  protocol: TCP
+  status: not-allowed
+  sources:
+  - code
+  evidence:
+  - file: src/VanArsdel.Integration/Erp/ErpClientFactory.cs
+    line: 9
+    quote: public string Endpoint { get; set; } = "https://erp01.corp.local:8443/MerxIntegration/ErpIntegration.svc";
+  sandbox:
+    network_policy: blocks port 8443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: network-policy
+- component: vanarsdel-orders-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-orders-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-orders-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-orders-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-orders-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-orders-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: api.klarnet.example
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 78
+    quote: '"BaseUrl": "https://api.klarnet.example",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: api.nordpost.example
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 86
+    quote: '"BaseUrl": "https://api.nordpost.example",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Orders.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-orders-api
+  destination: schemas.merx-erp.example
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - code
+  evidence:
+  - file: src/VanArsdel.Integration/Erp/ErpIntegrationService.cs
+    line: 14
+    quote: public const string Service = "http://schemas.merx-erp.example/integration/2016/09";
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-pricing-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Pricing.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-pricing-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Pricing.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-pricing-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-pricing-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-pricing-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-pricing-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-pricing-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-pricing-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Pricing.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-pricing-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Pricing.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-pricing-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Pricing.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: erp01.corp.local
+  type: fqdn
+  port: 8443
+  protocol: TCP
+  status: not-allowed
+  sources:
+  - code
+  evidence:
+  - file: src/VanArsdel.Integration/Erp/ErpClientFactory.cs
+    line: 9
+    quote: public string Endpoint { get; set; } = "https://erp01.corp.local:8443/MerxIntegration/ErpIntegration.svc";
+  sandbox:
+    network_policy: blocks port 8443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: network-policy
+- component: vanarsdel-returns-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-returns-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-returns-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-returns-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-returns-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-returns-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: api.klarnet.example
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 79
+    quote: '"BaseUrl": "https://api.klarnet.example",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: api.nordpost.example
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 76
+    quote: '"BaseUrl": "https://api.nordpost.example"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: orders.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Returns.Api/appsettings.Production.json
+    line: 73
+    quote: '"Orders": "https://orders.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-returns-api
+  destination: schemas.merx-erp.example
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - code
+  evidence:
+  - file: src/VanArsdel.Integration/Erp/ErpIntegrationService.cs
+    line: 14
+    quote: public const string Service = "http://schemas.merx-erp.example/integration/2016/09";
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-scheduler
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-scheduler
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-scheduler
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-scheduler
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-scheduler
+  destination: catalog.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 46
+    quote: '"Catalog": "https://catalog.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: customers.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 41
+    quote: '"Customers": "https://customers.corp.local",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: inventory.corp.local
+  type: fqdn
+  port: 5001
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 42
+    quote: '"Inventory": "https://inventory.corp.local:5001",'
+  allowed_by: configured-ports
+  sandbox:
+    network_policy: allows port 5001
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 6
+    quote: '"TokenEndpoint": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/oauth2/v2.0/token",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 29
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: orders.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 44
+    quote: '"Orders": "https://orders.corp.local",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: pricing.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 40
+    quote: '"Pricing": "https://pricing.corp.local",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: reporting.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 43
+    quote: '"Reporting": "https://reporting.corp.local",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-scheduler
+  destination: storeops.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.Scheduler/appsettings.Production.json
+    line: 45
+    quote: '"StoreOps": "https://storeops.corp.local",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
 - component: vanarsdel-storemanager
   destination: api.corp.local
   type: fqdn
@@ -84,3 +2765,337 @@ outbound:
     appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
     reachable: false
     blocked_by: dns-filter
+- component: vanarsdel-storeops-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 80
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.StoreOps.Api/appsettings.Production.json
+    line: 25
+    quote: '"Issuer": "http://adfs.corp.local/adfs/services/trust",'
+  allowed_by: http-apis
+  sandbox:
+    network_policy: allows port 80
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-storeops-api
+  destination: adfs.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.StoreOps.Api/appsettings.Production.json
+    line: 24
+    quote: '"Authority": "https://adfs.corp.local/adfs",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-storeops-api
+  destination: any address
+  type: any
+  port: 1433
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: sql-server
+  reason: the NetworkPolicy opens port 1433 for sql-server (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 1433
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-storeops-api
+  destination: any address
+  type: any
+  port: 5671
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5671 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5671
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-storeops-api
+  destination: any address
+  type: any
+  port: 5672
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: rabbitmq
+  reason: the NetworkPolicy opens port 5672 for rabbitmq (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 5672
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-storeops-api
+  destination: any address
+  type: any
+  port: 6379
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6379 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6379
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-storeops-api
+  destination: any address
+  type: any
+  port: 6380
+  protocol: TCP
+  status: allowed
+  sources:
+  - policy
+  allowed_by: redis
+  reason: the NetworkPolicy opens port 6380 for redis (inferred from packages or code)
+  sandbox:
+    network_policy: allows port 6380
+    appliance: only the destinations the appliance's egress rules allow
+- component: vanarsdel-storeops-api
+  destination: api.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.StoreOps.Api/appsettings.Production.json
+    line: 12
+    quote: '"https://api.corp.local/retail"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-storeops-api
+  destination: login.microsoftonline.com
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.StoreOps.Api/appsettings.Production.json
+    line: 18
+    quote: '"Authority": "https://login.microsoftonline.com/7c1b2f0e-5d3a-4c55-9e1f-2a8b6d0c4e91/v2.0",'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-storeops-api
+  destination: logs.corp.local
+  type: fqdn
+  port: 5341
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.StoreOps.Api/appsettings.Production.json
+    line: 66
+    quote: '"serverUrl": "http://logs.corp.local:5341",'
+  allowed_by: seq
+  sandbox:
+    network_policy: allows port 5341
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+- component: vanarsdel-storeops-api
+  destination: stores.corp.local
+  type: fqdn
+  port: 443
+  protocol: TCP
+  status: allowed
+  sources:
+  - config
+  evidence:
+  - file: src/VanArsdel.StoreOps.Api/appsettings.Production.json
+    line: 73
+    quote: '"Origins": "https://stores.corp.local"'
+  allowed_by: azure-service-bus
+  sandbox:
+    network_policy: allows port 443
+    appliance: 'refused by the appliance''s DNS filter: no egress rule allows it'
+    reachable: false
+    blocked_by: dns-filter
+findings:
+- kind: unexplained
+  component: vanarsdel-allocation-api
+  text: 'vanarsdel-allocation-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-allocation-api
+  text: 'vanarsdel-allocation-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-allocation-api
+  text: 'vanarsdel-allocation-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-backoffice
+  text: 'vanarsdel-backoffice: port 1433 is open to any address for sql-server, but no configuration names a destination on
+    it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-backoffice
+  text: 'vanarsdel-backoffice: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-backoffice
+  text: 'vanarsdel-backoffice: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-catalog-api
+  text: 'vanarsdel-catalog-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-catalog-api
+  text: 'vanarsdel-catalog-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-catalog-api
+  text: 'vanarsdel-catalog-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-customers-api
+  text: 'vanarsdel-customers-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-customers-api
+  text: 'vanarsdel-customers-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-customers-api
+  text: 'vanarsdel-customers-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-gateway
+  text: 'vanarsdel-gateway: port 1433 is open to any address for sql-server, but no configuration names a destination on it:
+    keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-gateway
+  text: 'vanarsdel-gateway: port 6379, 6380 is open to any address for redis, but no configuration names a destination on
+    it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-gateway
+  text: 'vanarsdel-gateway: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-inventory-api
+  text: 'vanarsdel-inventory-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-inventory-api
+  text: 'vanarsdel-inventory-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-inventory-api
+  text: 'vanarsdel-inventory-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-notifications
+  text: 'vanarsdel-notifications: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-notifications
+  text: 'vanarsdel-notifications: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-notifications
+  text: 'vanarsdel-notifications: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-notifications
+  text: 'vanarsdel-notifications: port 25, 465, 587 is open to any address for smtp, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-orders-api
+  text: 'vanarsdel-orders-api: port 1433 is open to any address for sql-server, but no configuration names a destination on
+    it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-orders-api
+  text: 'vanarsdel-orders-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-orders-api
+  text: 'vanarsdel-orders-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-pricing-api
+  text: 'vanarsdel-pricing-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-pricing-api
+  text: 'vanarsdel-pricing-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-pricing-api
+  text: 'vanarsdel-pricing-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-returns-api
+  text: 'vanarsdel-returns-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-returns-api
+  text: 'vanarsdel-returns-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-returns-api
+  text: 'vanarsdel-returns-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-scheduler
+  text: 'vanarsdel-scheduler: port 1433 is open to any address for sql-server, but no configuration names a destination on
+    it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-scheduler
+  text: 'vanarsdel-scheduler: port 6379, 6380 is open to any address for redis, but no configuration names a destination on
+    it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-scheduler
+  text: 'vanarsdel-scheduler: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-storeops-api
+  text: 'vanarsdel-storeops-api: port 1433 is open to any address for sql-server, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-storeops-api
+  text: 'vanarsdel-storeops-api: port 6379, 6380 is open to any address for redis, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: unexplained
+  component: vanarsdel-storeops-api
+  text: 'vanarsdel-storeops-api: port 5671, 5672 is open to any address for rabbitmq, but no configuration names a destination
+    on it: keep it only if the application needs it, and name the destination for the production firewall'
+- kind: missing
+  component: vanarsdel-notifications
+  text: 'vanarsdel-notifications: the code names erp01.corp.local:8443, but nothing allows it: the connection fails in the
+    sandbox and behind a default-deny firewall'
+- kind: missing
+  component: vanarsdel-orders-api
+  text: 'vanarsdel-orders-api: the code names erp01.corp.local:8443, but nothing allows it: the connection fails in the sandbox
+    and behind a default-deny firewall'
+- kind: missing
+  component: vanarsdel-returns-api
+  text: 'vanarsdel-returns-api: the code names erp01.corp.local:8443, but nothing allows it: the connection fails in the sandbox
+    and behind a default-deny firewall'

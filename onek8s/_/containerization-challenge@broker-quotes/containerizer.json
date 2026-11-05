@@ -12,12 +12,12 @@
   "last_commit": "2026-10-30T13:09:19+00:00",
   "app": "containerization-challenge-broker-quotes",
   "path": "onek8s/_/containerization-challenge@broker-quotes",
-  "rating": "D",
+  "rating": "C",
   "components": [
     {
       "component": "Humongous.BrokerPortal",
       "folder": "humongous-brokerportal",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -29,7 +29,7 @@
     {
       "component": "Humongous.Documents",
       "folder": "humongous-documents",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
@@ -41,7 +41,7 @@
     {
       "component": "Humongous.Workbench",
       "folder": "humongous-workbench",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -65,7 +65,7 @@
       "reason": "rated E (blocker)"
     }
   ],
-  "processed_at": "2026-11-04T16:41:44+00:00",
+  "processed_at": "2026-11-05T15:24:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
@@ -89,10 +89,17 @@
       "Humongous.Documents": [
         "sqlserver:ConnectionStrings__Quoting"
       ]
-    }
+    },
+    "init_scripts": [
+      "deploy/sql/001-databases-and-logins.sql",
+      "deploy/sql/010-quoting-schema.sql",
+      "deploy/sql/020-identity-schema.sql",
+      "deploy/sql/030-reference-data.sql"
+    ]
   },
   "migration": {},
   "llm_usage": {},
   "apps": [],
-  "split_hint": {}
+  "split_hint": {},
+  "patched": {}
 }

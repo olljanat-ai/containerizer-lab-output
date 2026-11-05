@@ -4,7 +4,44 @@ namespace: containerization-challenge-retail-backoffice
 resources:
 - namespace.yaml
 - security.yaml
+- lab/k8s.yaml
+- vanarsdel-allocation-api/k8s.yaml
+- vanarsdel-backoffice/k8s.yaml
+- vanarsdel-catalog-api/k8s.yaml
+- vanarsdel-customers-api/k8s.yaml
+- vanarsdel-gateway/k8s.yaml
+- vanarsdel-inventory-api/k8s.yaml
+- vanarsdel-notifications/k8s.yaml
+- vanarsdel-orders-api/k8s.yaml
+- vanarsdel-pricing-api/k8s.yaml
+- vanarsdel-returns-api/k8s.yaml
+- vanarsdel-scheduler/k8s.yaml
 - vanarsdel-storemanager/k8s.yaml
+- vanarsdel-storeops-api/k8s.yaml
 images:
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-allocation-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-backoffice:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-catalog-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-customers-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-gateway:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-inventory-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-notifications:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-orders-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-pricing-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-returns-api:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-scheduler:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager
-    newTag: 1.20261104.1641 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-storemanager:tag"}
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-storemanager:tag"}
+  - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api
+    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-storeops-api:tag"}

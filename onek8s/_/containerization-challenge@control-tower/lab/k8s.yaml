@@ -1,0 +1,378 @@
+# SQL Server in the lab: the appliance's lab agent puts the credentials in the secret store (remote key containerization-challenge-control-tower--cz-lab-sqlserver)
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: lab-sqlserver
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-service: sqlserver
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: lab-sqlserver
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  dataFrom:
+  - extract:
+      key: containerization-challenge-control-tower--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-control-tower
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: db/00-Database.sql, db/01-Schema.sql, db/02-Logins.sql,
+      db/03-Hangfire.sql, db/10-ReferenceData.sql
+data:
+  001-00-Database.sql: "-- Control Tower database with the FILESTREAM filegroup for\
+    \ documents.\n-- Run with sqlcmd as a sysadmin, e.g.\n--   sqlcmd -S sql01.corp.local\
+    \ -E -i 00-Database.sql -v DataPath=\"E:\\SQLData\" LogPath=\"F:\\SQLLogs\" FileStreamPath=\"\
+    E:\\SQLData\\ControlTowerDocuments\"\n-- FILESTREAM must be enabled for the instance\
+    \ (SQL Server Configuration Manager, \"Enable FILESTREAM for\n-- Transact-SQL\
+    \ access\" and \"for file I/O access\") before the script runs; the access level\
+    \ is set below.\n-- The FileStreamPath folder must not exist yet; its parent must.\n\
+    \n\nIF SERVERPROPERTY('FilestreamConfiguredLevel') < 2\nBEGIN\n    RAISERROR(N'FILESTREAM\
+    \ file I/O access is not enabled for this instance. Enable it in SQL Server Configuration\
+    \ Manager and restart the service.', 16, 1);\n    RETURN;\nEND\nGO\n"
+  002-01-Schema.sql: "IF SCHEMA_ID(N'ct') IS NULL EXEC(N'CREATE SCHEMA [ct];');\n\
+    GO\nCREATE TABLE [ct].[Alert] (\n    [Id] bigint NOT NULL IDENTITY,\n    [ShipmentId]\
+    \ int NOT NULL,\n    [RuleCode] varchar(20) NOT NULL,\n    [Severity] int NOT\
+    \ NULL,\n    [Message] nvarchar(400) NOT NULL,\n    [RaisedAt] datetimeoffset\
+    \ NOT NULL,\n    [LastSeenAt] datetimeoffset NOT NULL,\n    [Occurrences] int\
+    \ NOT NULL,\n    [AcknowledgedBy] nvarchar(100) NULL,\n    [AcknowledgedAt] datetimeoffset\
+    \ NULL,\n    [ResolvedAt] datetimeoffset NULL,\n    [Resolution] nvarchar(400)\
+    \ NULL,\n    CONSTRAINT [PK_Alert] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [ct].[Carrier]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [Code] varchar(10) NOT NULL,\n    [Name]\
+    \ nvarchar(70) NOT NULL,\n    [Mode] int NOT NULL,\n    [Integration] int NOT\
+    \ NULL,\n    [EdiPartnerId] varchar(35) NULL,\n    [EdiQualifier] varchar(4) NULL,\n\
+    \    [ApiBaseUrl] nvarchar(200) NULL,\n    [TrackingUrlTemplate] nvarchar(200)\
+    \ NULL,\n    [Active] bit NOT NULL,\n    [OnTimeTargetPercent] decimal(5,2) NOT\
+    \ NULL,\n    CONSTRAINT [PK_Carrier] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE\
+    \ [ct].[Customer] (\n    [Id] int NOT NULL IDENTITY,\n    [Code] varchar(10) NOT\
+    \ NULL,\n    [Name] nvarchar(70) NOT NULL,\n    [VatNumber] varchar(20) NULL,\n\
+    \    [Eori] varchar(17) NULL,\n    [CountryCode] varchar(2) NOT NULL,\n    [ContactEmail]\
+    \ nvarchar(254) NULL,\n    [ContactPhone] nvarchar(30) NULL,\n    [InvoiceCurrency]\
+    \ varchar(3) NOT NULL,\n    [PortalEnabled] bit NOT NULL,\n    [CustomsBrokerageAgreed]\
+    \ bit NOT NULL,\n    [DomesticSlaDays] int NOT NULL,\n    [DiscountPercent] decimal(5,2)\
+    \ NOT NULL,\n    [CreatedUtc] datetime2 NOT NULL,\n    CONSTRAINT [PK_Customer]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [ct].[DailyKpi] (\n    [Id] int NOT\
+    \ NULL IDENTITY,\n    [Day] date NOT NULL,\n    [CustomerId] int NULL,\n    [CarrierId]\
+    \ int NULL,\n    [Mode] int NOT NULL,\n    [ShipmentsBooked] int NOT NULL,\n \
+    \   [ShipmentsDelivered] int NOT NULL,\n    [DeliveredOnTime] int NOT NULL,\n\
+    \    [PickedUpOnTime] int NOT NULL,\n    [PickupsDue] int NOT NULL,\n    [AlertsRaised]\
+    \ int NOT NULL,\n    [CriticalAlerts] int NOT NULL,\n    [AverageTransitHours]\
+    \ float NOT NULL,\n    [Revenue] decimal(18,2) NOT NULL,\n    [ChargeableKg] decimal(14,1)\
+    \ NOT NULL,\n    [CalculatedAt] datetimeoffset NOT NULL,\n    CONSTRAINT [PK_DailyKpi]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [ct].[Document] (\n    [Id] uniqueidentifier\
+    \ NOT NULL,\n    [ShipmentId] int NULL,\n    [Kind] int NOT NULL,\n    [FileName]\
+    \ nvarchar(200) NOT NULL,\n    [ContentType] nvarchar(100) NOT NULL,\n    [Length]\
+    \ bigint NOT NULL,\n    [Sha256] varchar(64) NOT NULL,\n    [VisibleToCustomer]\
+    \ bit NOT NULL,\n    [CreatedBy] nvarchar(100) NOT NULL,\n    [CreatedAt] datetimeoffset\
+    \ NOT NULL,\n    [DeleteAfter] datetimeoffset NULL,\n    CONSTRAINT [PK_Document]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [ct].[EdiInterchange] (\n    [Id] bigint\
+    \ NOT NULL IDENTITY,\n    [CarrierId] int NOT NULL,\n    [Direction] int NOT NULL,\n\
+    \    [MessageType] varchar(6) NOT NULL,\n    [ControlReference] varchar(14) NOT\
+    \ NULL,\n    [FileName] nvarchar(200) NOT NULL,\n    [MessageCount] int NOT NULL,\n\
+    \    [Status] int NOT NULL,\n    [Error] nvarchar(2000) NULL,\n    [CreatedAt]\
+    \ datetimeoffset NOT NULL,\n    [ProcessedAt] datetimeoffset NULL,\n    [Payload]\
+    \ nvarchar(max) NULL,\n    CONSTRAINT [PK_EdiInterchange] PRIMARY KEY ([Id])\n\
+    );\nGO\nCREATE TABLE [ct].[Location] (\n    [Id] int NOT NULL IDENTITY,\n    [Code]\
+    \ varchar(10) NOT NULL,\n    [Name] nvarchar(70) NOT NULL,\n    [Kind] int NOT\
+    \ NULL,\n    [Street] nvarchar(70) NOT NULL,\n    [PostalCode] nvarchar(10) NOT\
+    \ NULL,\n    [City] nvarchar(35) NOT NULL,\n    [CountryCode] varchar(2) NOT NULL,\n\
+    \    [Position] geography NOT NULL,\n    [GeofenceRadiusMeters] int NOT NULL,\n\
+    \    [TimeZoneId] varchar(50) NOT NULL,\n    [CustomerId] int NULL,\n    [OpensAt]\
+    \ time NOT NULL,\n    [ClosesAt] time NOT NULL,\n    [IsEuCustomsTerritory] bit\
+    \ NOT NULL,\n    CONSTRAINT [PK_Location] PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE\
+    \ [ct].[RateCard] (\n    [Id] int NOT NULL IDENTITY,\n    [CarrierId] int NULL,\n\
+    \    [Mode] int NOT NULL,\n    [OriginCountry] varchar(2) NOT NULL,\n    [DestinationCountry]\
+    \ varchar(2) NOT NULL,\n    [OriginPostalPrefix] varchar(5) NULL,\n    [Currency]\
+    \ varchar(3) NOT NULL,\n    [MinimumCharge] decimal(18,2) NOT NULL,\n    [FuelSurchargePercent]\
+    \ decimal(5,2) NOT NULL,\n    [TransitDays] int NOT NULL,\n    [ValidFrom] date\
+    \ NOT NULL,\n    [ValidTo] date NOT NULL,\n    CONSTRAINT [PK_RateCard] PRIMARY\
+    \ KEY ([Id])\n);\nGO\nCREATE TABLE [ct].[Scan] (\n    [Id] bigint NOT NULL IDENTITY,\n\
+    \    [Sscc] varchar(18) NOT NULL,\n    [PackageId] int NULL,\n    [ShipmentId]\
+    \ int NULL,\n    [Kind] int NOT NULL,\n    [TerminalId] int NOT NULL,\n    [DoorOrBay]\
+    \ nvarchar(10) NULL,\n    [VehiclePlate] nvarchar(12) NULL,\n    [DeviceId] varchar(40)\
+    \ NOT NULL,\n    [UserName] nvarchar(100) NOT NULL,\n    [ScannedAt] datetimeoffset\
+    \ NOT NULL,\n    [ReceivedAt] datetimeoffset NOT NULL,\n    [Remarks] nvarchar(200)\
+    \ NULL,\n    [ClientScanId] uniqueidentifier NOT NULL,\n    CONSTRAINT [PK_Scan]\
+    \ PRIMARY KEY ([Id])\n);\nGO\nCREATE TABLE [ct].[Vehicle] (\n    [Id] int NOT\
+    \ NULL IDENTITY,\n    [Plate] nvarchar(12) NOT NULL,\n    [CarrierId] int NULL,\n\
+    \    [TelematicsUnitId] varchar(32) NULL,\n    [HasReefer] bit NOT NULL,\n   \
+    \ [AdrCertified] bit NOT NULL,\n    [MaxPayloadKg] decimal(10,0) NOT NULL,\n \
+    \   [LoadingMeters] decimal(4,1) NOT NULL,\n    [LastPositionAt] datetimeoffset\
+    \ NULL,\n    [LastPosition] geography NULL,\n    [LastTemperature] decimal(5,1)\
+    \ NULL,\n    [LastSpeedKmh] int NULL,\n    CONSTRAINT [PK_Vehicle] PRIMARY KEY\
+    \ ([Id])\n);\nGO\nCREATE TABLE [ct].[VehiclePosition] (\n    [Id] bigint NOT NULL\
+    \ IDENTITY,\n    [VehicleId] int NOT NULL,\n    [RecordedAt] datetimeoffset NOT\
+    \ NULL,\n    [Position] geography NOT NULL,\n    [SpeedKmh] int NOT NULL,\n  \
+    \  [HeadingDegrees] int NOT NULL,\n    [IgnitionOn] bit NOT NULL,\n    [ReeferTemperature]\
+    \ decimal(5,1) NULL,\n    [ReeferSetpoint] decimal(5,1) NULL,\n    [DoorOpen]\
+    \ bit NULL,\n    CONSTRAINT [PK_VehiclePosition] PRIMARY KEY ([Id])\n);\nGO\n\
+    CREATE TABLE [ct].[Shipment] (\n    [Id] int NOT NULL IDENTITY,\n    [Number]\
+    \ varchar(12) NOT NULL,\n    [CustomerId] int NOT NULL,\n    [CustomerReference]\
+    \ nvarchar(35) NULL,\n    [Mode] int NOT NULL,\n    [IncotermCode] varchar(3)\
+    \ NOT NULL,\n    [Status] int NOT NULL,\n    [OriginId] int NOT NULL,\n    [DestinationId]\
+    \ int NOT NULL,\n    [ShipperName] nvarchar(70) NOT NULL,\n    [ConsigneeName]\
+    \ nvarchar(70) NOT NULL,\n    [ConsigneeEmail] nvarchar(254) NULL,\n    [NotifyPhone]\
+    \ nvarchar(30) NULL,\n    [PlannedPickup] datetimeoffset NOT NULL,\n    [PlannedDelivery]\
+    \ datetimeoffset NOT NULL,\n    [ActualPickup] datetimeoffset NULL,\n    [ActualDelivery]\
+    \ datetimeoffset NULL,\n    [Eta] datetimeoffset NULL,\n    [EtaCalculatedAt]\
+    \ datetimeoffset NULL,\n    [GoodsDescription] nvarchar(350) NOT NULL,\n    [DeclaredValue]\
+    \ decimal(18,2) NULL,\n    [DeclaredValueCurrency] varchar(3) NOT NULL,\n    [TemperatureMin]\
+    \ decimal(5,1) NULL,\n    [TemperatureMax] decimal(5,1) NULL,\n    [PodSignedBy]\
+    \ nvarchar(70) NULL,\n    [CancelReason] nvarchar(200) NULL,\n    [CreatedBy]\
+    \ nvarchar(100) NOT NULL,\n    [CreatedAt] datetimeoffset NOT NULL,\n    [UpdatedAt]\
+    \ datetimeoffset NOT NULL,\n    [RowVersion] rowversion NULL,\n    CONSTRAINT\
+    \ [PK_Shipment] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Shipment_Customer_CustomerId]\
+    \ FOREIGN KEY ([CustomerId]) REFERENCES [ct].[Customer] ([Id]) ON DELETE NO ACTION,\n\
+    \    CONSTRAINT [FK_Shipment_Location_DestinationId] FOREIGN KEY ([DestinationId])\
+    \ REFERENCES [ct].[Location] ([Id]) ON DELETE NO ACTION,\n    CONSTRAINT [FK_Shipment_Location_OriginId]\
+    \ FOREIGN KEY ([OriginId]) REFERENCES [ct].[Location] ([Id]) ON DELETE NO ACTION\n\
+    );\nGO\nCREATE TABLE [ct].[RateBreak] (\n    [Id] int NOT NULL IDENTITY,\n   \
+    \ [RateCardId] int NOT NULL,\n    [FromKg] decimal(10,1) NOT NULL,\n    [PricePer100Kg]\
+    \ decimal(10,2) NOT NULL,\n    CONSTRAINT [PK_RateBreak] PRIMARY KEY ([Id]),\n\
+    \    CONSTRAINT [FK_RateBreak_RateCard_RateCardId] FOREIGN KEY ([RateCardId])\
+    \ REFERENCES [ct].[RateCard] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [ct].[Charge]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [ShipmentId] int NOT NULL,\n    [Code]\
+    \ varchar(3) NOT NULL,\n    [Description] nvarchar(100) NOT NULL,\n    [Amount]\
+    \ decimal(18,2) NOT NULL,\n    [Currency] varchar(3) NOT NULL,\n    [Invoiced]\
+    \ bit NOT NULL,\n    [InvoiceNumber] nvarchar(20) NULL,\n    CONSTRAINT [PK_Charge]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Charge_Shipment_ShipmentId] FOREIGN\
+    \ KEY ([ShipmentId]) REFERENCES [ct].[Shipment] ([Id]) ON DELETE CASCADE\n);\n\
+    GO\nCREATE TABLE [ct].[CustomsDeclaration] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [ShipmentId] int NOT NULL,\n    [Type] int NOT NULL,\n    [Status] int NOT\
+    \ NULL,\n    [Lrn] varchar(22) NOT NULL,\n    [Mrn] varchar(18) NULL,\n    [DeclarantEori]\
+    \ varchar(17) NOT NULL,\n    [ConsignorEori] varchar(17) NULL,\n    [ConsigneeEori]\
+    \ varchar(17) NULL,\n    [OfficeOfDeclaration] varchar(8) NOT NULL,\n    [OfficeOfExit]\
+    \ varchar(8) NULL,\n    [CurrencyCode] varchar(3) NOT NULL,\n    [RejectionReason]\
+    \ nvarchar(500) NULL,\n    [CreatedAt] datetimeoffset NOT NULL,\n    [SubmittedAt]\
+    \ datetimeoffset NULL,\n    [AcceptedAt] datetimeoffset NULL,\n    [ReleasedAt]\
+    \ datetimeoffset NULL,\n    [SubmitAttempts] int NOT NULL,\n    CONSTRAINT [PK_CustomsDeclaration]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_CustomsDeclaration_Shipment_ShipmentId]\
+    \ FOREIGN KEY ([ShipmentId]) REFERENCES [ct].[Shipment] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [ct].[Leg] (\n    [Id] int NOT NULL IDENTITY,\n    [ShipmentId]\
+    \ int NOT NULL,\n    [Sequence] int NOT NULL,\n    [Mode] int NOT NULL,\n    [CarrierId]\
+    \ int NULL,\n    [FromId] int NOT NULL,\n    [ToId] int NOT NULL,\n    [Status]\
+    \ int NOT NULL,\n    [PlannedDeparture] datetimeoffset NOT NULL,\n    [PlannedArrival]\
+    \ datetimeoffset NOT NULL,\n    [ActualDeparture] datetimeoffset NULL,\n    [ActualArrival]\
+    \ datetimeoffset NULL,\n    [Eta] datetimeoffset NULL,\n    [CarrierReference]\
+    \ nvarchar(35) NULL,\n    [VesselOrFlight] nvarchar(35) NULL,\n    [VehicleId]\
+    \ int NULL,\n    [DistanceKm] float NULL,\n    CONSTRAINT [PK_Leg] PRIMARY KEY\
+    \ ([Id]),\n    CONSTRAINT [FK_Leg_Carrier_CarrierId] FOREIGN KEY ([CarrierId])\
+    \ REFERENCES [ct].[Carrier] ([Id]) ON DELETE NO ACTION,\n    CONSTRAINT [FK_Leg_Location_FromId]\
+    \ FOREIGN KEY ([FromId]) REFERENCES [ct].[Location] ([Id]) ON DELETE NO ACTION,\n\
+    \    CONSTRAINT [FK_Leg_Location_ToId] FOREIGN KEY ([ToId]) REFERENCES [ct].[Location]\
+    \ ([Id]) ON DELETE NO ACTION,\n    CONSTRAINT [FK_Leg_Shipment_ShipmentId] FOREIGN\
+    \ KEY ([ShipmentId]) REFERENCES [ct].[Shipment] ([Id]) ON DELETE CASCADE,\n  \
+    \  CONSTRAINT [FK_Leg_Vehicle_VehicleId] FOREIGN KEY ([VehicleId]) REFERENCES\
+    \ [ct].[Vehicle] ([Id]) ON DELETE SET NULL\n);\nGO\nCREATE TABLE [ct].[Milestone]\
+    \ (\n    [Id] bigint NOT NULL IDENTITY,\n    [ShipmentId] int NOT NULL,\n    [Code]\
+    \ varchar(3) NOT NULL,\n    [OccurredAt] datetimeoffset NOT NULL,\n    [RecordedAt]\
+    \ datetimeoffset NOT NULL,\n    [LocationId] int NULL,\n    [LocationText] nvarchar(100)\
+    \ NULL,\n    [Source] nvarchar(60) NOT NULL,\n    [Remarks] nvarchar(350) NULL,\n\
+    \    [VisibleToCustomer] bit NOT NULL,\n    CONSTRAINT [PK_Milestone] PRIMARY\
+    \ KEY ([Id]),\n    CONSTRAINT [FK_Milestone_Shipment_ShipmentId] FOREIGN KEY ([ShipmentId])\
+    \ REFERENCES [ct].[Shipment] ([Id]) ON DELETE CASCADE\n);\nGO\nCREATE TABLE [ct].[Package]\
+    \ (\n    [Id] int NOT NULL IDENTITY,\n    [ShipmentId] int NOT NULL,\n    [Sscc]\
+    \ varchar(18) NOT NULL,\n    [Kind] int NOT NULL,\n    [Quantity] int NOT NULL,\n\
+    \    [WeightKg] decimal(10,2) NOT NULL,\n    [LengthCm] int NOT NULL,\n    [WidthCm]\
+    \ int NOT NULL,\n    [HeightCm] int NOT NULL,\n    [Stackable] bit NOT NULL,\n\
+    \    [Marks] nvarchar(140) NULL,\n    [DgUnNumber] varchar(4) NULL,\n    [DgShippingName]\
+    \ nvarchar(200) NULL,\n    [DgClass] varchar(5) NULL,\n    [DgPackingGroup] varchar(3)\
+    \ NULL,\n    [DgNetQuantity] decimal(10,3) NULL,\n    [DgNetQuantityUnit] nvarchar(3)\
+    \ NULL,\n    [DgLimitedQuantity] bit NULL,\n    [DgTunnelCode] nvarchar(5) NULL,\n\
+    \    [ContainerNumber] varchar(11) NULL,\n    [SealNumber] nvarchar(20) NULL,\n\
+    \    CONSTRAINT [PK_Package] PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_Package_Shipment_ShipmentId]\
+    \ FOREIGN KEY ([ShipmentId]) REFERENCES [ct].[Shipment] ([Id]) ON DELETE CASCADE\n\
+    );\nGO\nCREATE TABLE [ct].[DeclarationLine] (\n    [Id] int NOT NULL IDENTITY,\n\
+    \    [CustomsDeclarationId] int NOT NULL,\n    [LineNumber] int NOT NULL,\n  \
+    \  [CommodityCode] varchar(10) NOT NULL,\n    [Description] nvarchar(280) NOT\
+    \ NULL,\n    [OriginCountry] varchar(2) NOT NULL,\n    [NetMassKg] decimal(12,3)\
+    \ NOT NULL,\n    [GrossMassKg] decimal(12,3) NOT NULL,\n    [StatisticalValue]\
+    \ decimal(18,2) NOT NULL,\n    [ProcedureCode] varchar(4) NOT NULL,\n    [Packages]\
+    \ int NOT NULL,\n    [PackageKindCode] varchar(2) NOT NULL,\n    CONSTRAINT [PK_DeclarationLine]\
+    \ PRIMARY KEY ([Id]),\n    CONSTRAINT [FK_DeclarationLine_CustomsDeclaration_CustomsDeclarationId]\
+    \ FOREIGN KEY ([CustomsDeclarationId]) REFERENCES [ct].[CustomsDeclaration] ([Id])\
+    \ ON DELETE CASCADE\n);\nGO\nCREATE INDEX [IX_Alert_ShipmentId_RuleCode_ResolvedAt]\
+    \ ON [ct].[Alert] ([ShipmentId], [RuleCode], [ResolvedAt]);\nGO\nCREATE UNIQUE\
+    \ INDEX [IX_Carrier_Code] ON [ct].[Carrier] ([Code]);\nGO\nCREATE INDEX [IX_Charge_ShipmentId]\
+    \ ON [ct].[Charge] ([ShipmentId]);\nGO\nCREATE UNIQUE INDEX [IX_Customer_Code]\
+    \ ON [ct].[Customer] ([Code]);\nGO\nCREATE UNIQUE INDEX [IX_CustomsDeclaration_Lrn]\
+    \ ON [ct].[CustomsDeclaration] ([Lrn]);\nGO\nCREATE INDEX [IX_CustomsDeclaration_Mrn]\
+    \ ON [ct].[CustomsDeclaration] ([Mrn]);\nGO\nCREATE INDEX [IX_CustomsDeclaration_ShipmentId]\
+    \ ON [ct].[CustomsDeclaration] ([ShipmentId]);\nGO\nCREATE INDEX [IX_DailyKpi_Day_CustomerId_CarrierId_Mode]\
+    \ ON [ct].[DailyKpi] ([Day], [CustomerId], [CarrierId], [Mode]);\nGO\nCREATE INDEX\
+    \ [IX_DeclarationLine_CustomsDeclarationId] ON [ct].[DeclarationLine] ([CustomsDeclarationId]);\n\
+    GO\nCREATE INDEX [IX_Document_ShipmentId] ON [ct].[Document] ([ShipmentId]);\n\
+    GO\nCREATE INDEX [IX_EdiInterchange_CarrierId_Direction_ControlReference] ON [ct].[EdiInterchange]\
+    \ ([CarrierId], [Direction], [ControlReference]);\nGO\nCREATE INDEX [IX_Leg_CarrierId]\
+    \ ON [ct].[Leg] ([CarrierId]);\nGO\nCREATE INDEX [IX_Leg_CarrierReference] ON\
+    \ [ct].[Leg] ([CarrierReference]);\nGO\nCREATE INDEX [IX_Leg_FromId] ON [ct].[Leg]\
+    \ ([FromId]);\nGO\nCREATE UNIQUE INDEX [IX_Leg_ShipmentId_Sequence] ON [ct].[Leg]\
+    \ ([ShipmentId], [Sequence]);\nGO\nCREATE INDEX [IX_Leg_ToId] ON [ct].[Leg] ([ToId]);\n\
+    GO\nCREATE INDEX [IX_Leg_VehicleId] ON [ct].[Leg] ([VehicleId]);\nGO\nCREATE UNIQUE\
+    \ INDEX [IX_Location_Code] ON [ct].[Location] ([Code]);\nGO\nCREATE INDEX [IX_Milestone_ShipmentId_OccurredAt]\
+    \ ON [ct].[Milestone] ([ShipmentId], [OccurredAt]);\nGO\nCREATE INDEX [IX_Package_ShipmentId]\
+    \ ON [ct].[Package] ([ShipmentId]);\nGO\nCREATE UNIQUE INDEX [IX_Package_Sscc]\
+    \ ON [ct].[Package] ([Sscc]);\nGO\nCREATE INDEX [IX_RateBreak_RateCardId] ON [ct].[RateBreak]\
+    \ ([RateCardId]);\nGO\nCREATE UNIQUE INDEX [IX_Scan_ClientScanId] ON [ct].[Scan]\
+    \ ([ClientScanId]);\nGO\nCREATE INDEX [IX_Scan_Sscc_ScannedAt] ON [ct].[Scan]\
+    \ ([Sscc], [ScannedAt]);\nGO\nCREATE INDEX [IX_Shipment_CustomerId_Status] ON\
+    \ [ct].[Shipment] ([CustomerId], [Status]);\nGO\nCREATE INDEX [IX_Shipment_DestinationId]\
+    \ ON [ct].[Shipment] ([DestinationId]);\nGO\nCREATE UNIQUE INDEX [IX_Shipment_Number]\
+    \ ON [ct].[Shipment] ([Number]);\nGO\nCREATE INDEX [IX_Shipment_OriginId] ON [ct].[Shipment]\
+    \ ([OriginId]);\nGO\nCREATE INDEX [IX_Shipment_PlannedDelivery] ON [ct].[Shipment]\
+    \ ([PlannedDelivery]);\nGO\nCREATE UNIQUE INDEX [IX_Vehicle_Plate] ON [ct].[Vehicle]\
+    \ ([Plate]);\nGO\nCREATE UNIQUE INDEX [IX_Vehicle_TelematicsUnitId] ON [ct].[Vehicle]\
+    \ ([TelematicsUnitId]) WHERE [TelematicsUnitId] IS NOT NULL;\nGO\nCREATE INDEX\
+    \ [IX_VehiclePosition_VehicleId_RecordedAt] ON [ct].[VehiclePosition] ([VehicleId],\
+    \ [RecordedAt]);\nGO\n-- ---------------------------------------------------------------------------------------------\n\
+    -- Hand-written objects (not part of the EF model)\n-- ---------------------------------------------------------------------------------------------\n\
+    \n-- House shipment numbers (PFyy-nnnnnnc); ShipmentNumberAllocator takes the\
+    \ next value.\nIF OBJECT_ID(N'ct.ShipmentNumbers', N'SO') IS NULL\n    CREATE\
+    \ SEQUENCE [ct].[ShipmentNumbers] AS bigint START WITH 1 INCREMENT BY 1 MINVALUE\
+    \ 1 MAXVALUE 999999 CYCLE CACHE 50;\nGO\n-- Document content. Rows are written\
+    \ before the ct.Document metadata row in the same transaction,\n-- so there is\
+    \ no foreign key; the document store deletes both.\nCREATE TABLE [ct].[DocumentContent]\
+    \ (\n    [Id] uniqueidentifier ROWGUIDCOL NOT NULL,\n    [Content] varbinary(max)\
+    \ FILESTREAM NULL,\n    [CreatedAt] datetime2(3) NOT NULL CONSTRAINT [DF_DocumentContent_CreatedAt]\
+    \ DEFAULT (SYSUTCDATETIME()),\n    CONSTRAINT [PK_DocumentContent] PRIMARY KEY\
+    \ CLUSTERED ([Id]) ON [ControlTowerData],\n    CONSTRAINT [UQ_DocumentContent_Id]\
+    \ UNIQUE NONCLUSTERED ([Id]) ON [ControlTowerData]\n) ON [ControlTowerData] FILESTREAM_ON\
+    \ [ControlTowerDocuments];\nGO\n-- Orphaned content (writer crashed between the\
+    \ two inserts) is removed by the nightly maintenance job.\nCREATE OR ALTER PROCEDURE\
+    \ [ct].[PurgeOrphanDocumentContent]\nAS\nBEGIN\n    SET NOCOUNT ON;\n    DELETE\
+    \ c\n    FROM ct.DocumentContent c\n    WHERE c.CreatedAt < DATEADD(HOUR, -6,\
+    \ SYSUTCDATETIME())\n      AND NOT EXISTS (SELECT 1 FROM ct.Document d WHERE d.Id\
+    \ = c.Id);\n    SELECT @@ROWCOUNT AS Deleted;\nEND\nGO\n-- Map and ETA lookups:\
+    \ open legs by vehicle, latest positions.\nCREATE NONCLUSTERED INDEX [IX_Leg_Status_Vehicle]\
+    \ ON [ct].[Leg] ([Status], [VehicleId]) INCLUDE ([ShipmentId], [PlannedArrival],\
+    \ [Eta]);\nGO\nCREATE SPATIAL INDEX [SIX_Location_Position] ON [ct].[Location]\
+    \ ([Position]) USING GEOGRAPHY_AUTO_GRID;\nGO\n-- Reporting view used by the operations\
+    \ workbook and the finance reconciliation.\nCREATE OR ALTER VIEW [ct].[ShipmentOverview]\n\
+    AS\nSELECT s.Id, s.Number, c.Code AS CustomerCode, c.Name AS CustomerName, s.CustomerReference,\
+    \ s.Mode, s.Status,\n       o.Code AS OriginCode, o.City AS OriginCity, o.CountryCode\
+    \ AS OriginCountry,\n       d.Code AS DestinationCode, d.City AS DestinationCity,\
+    \ d.CountryCode AS DestinationCountry,\n       s.PlannedPickup, s.ActualPickup,\
+    \ s.PlannedDelivery, s.ActualDelivery, s.Eta,\n       (SELECT SUM(p.WeightKg *\
+    \ p.Quantity) FROM ct.Package p WHERE p.ShipmentId = s.Id) AS GrossWeightKg,\n\
+    \       (SELECT SUM(ch.Amount) FROM ct.Charge ch WHERE ch.ShipmentId = s.Id AND\
+    \ ch.Currency = 'EUR') AS ChargesEur,\n       (SELECT COUNT(*) FROM ct.Alert a\
+    \ WHERE a.ShipmentId = s.Id AND a.ResolvedAt IS NULL) AS OpenAlerts\nFROM ct.Shipment\
+    \ s\nJOIN ct.Customer c ON c.Id = s.CustomerId\nJOIN ct.Location o ON o.Id = s.OriginId\n\
+    JOIN ct.Location d ON d.Id = s.DestinationId;\nGO\n"
+  003-02-Logins.sql: "-- Users\nDECLARE @users TABLE (Name sysname);\nINSERT INTO\
+    \ @users VALUES (N'ct_booking'), (N'ct_portal'), (N'ct_tower'), (N'ct_scan'),\
+    \ (N'ct_gateway'), (N'ct_events'), (N'ct_telematics'), (N'ct_jobs');\nDECLARE\
+    \ @u sysname, @s nvarchar(max);\nDECLARE u CURSOR LOCAL FAST_FORWARD FOR SELECT\
+    \ Name FROM @users;\nOPEN u;\nFETCH NEXT FROM u INTO @u;\nWHILE @@FETCH_STATUS\
+    \ = 0\nBEGIN\n    IF USER_ID(@u) IS NULL\n    BEGIN\n        SET @s = N'CREATE\
+    \ USER ' + QUOTENAME(@u) + N' FOR LOGIN ' + QUOTENAME(@u) + N' WITH DEFAULT_SCHEMA\
+    \ = [ct];';\n        EXEC (@s);\n    END\n    IF DATABASE_PRINCIPAL_ID(N'role_'\
+    \ + @u) IS NULL\n    BEGIN\n        SET @s = N'CREATE ROLE ' + QUOTENAME(N'role_'\
+    \ + @u) + N';';\n        EXEC (@s);\n    END\n    SET @s = N'ALTER ROLE ' + QUOTENAME(N'role_'\
+    \ + @u) + N' ADD MEMBER ' + QUOTENAME(@u) + N';';\n    EXEC (@s);\n    FETCH NEXT\
+    \ FROM u INTO @u;\nEND\nCLOSE u;\nDEALLOCATE u;\nGO\n-- Everybody reads the operational\
+    \ schema.\nGRANT SELECT ON SCHEMA::[ct] TO [role_ct_booking], [role_ct_portal],\
+    \ [role_ct_tower], [role_ct_scan], [role_ct_gateway], [role_ct_events], [role_ct_telematics],\
+    \ [role_ct_jobs];\nGO\n-- Booking: shipments and everything that belongs to them,\
+    \ master data maintenance, documents.\nGRANT INSERT, UPDATE, DELETE ON [ct].[Shipment]\
+    \ TO [role_ct_booking];\nGRANT INSERT, UPDATE, DELETE ON [ct].[Package] TO [role_ct_booking];\n\
+    GRANT INSERT, UPDATE, DELETE ON [ct].[Leg] TO [role_ct_booking];\nGRANT INSERT,\
+    \ UPDATE ON [ct].[Milestone] TO [role_ct_booking];\nGRANT INSERT, UPDATE, DELETE\
+    \ ON [ct].[Charge] TO [role_ct_booking];\nGRANT INSERT, UPDATE, DELETE ON [ct].[CustomsDeclaration]\
+    \ TO [role_ct_booking];\nGRANT INSERT, UPDATE, DELETE ON [ct].[DeclarationLine]\
+    \ TO [role_ct_booking];\nGRANT INSERT, UPDATE ON [ct].[Customer] TO [role_ct_booking];\n\
+    GRANT INSERT, UPDATE ON [ct].[Carrier] TO [role_ct_booking];\nGRANT INSERT, UPDATE\
+    \ ON [ct].[Location] TO [role_ct_booking];\nGRANT INSERT, UPDATE, DELETE ON [ct].[RateCard]\
+    \ TO [role_ct_booking];\nGRANT INSERT, UPDATE, DELETE ON [ct].[RateBreak] TO [role_ct_booking];\n\
+    GRANT INSERT, UPDATE ON [ct].[Vehicle] TO [role_ct_booking];\nGRANT INSERT ON\
+    \ [ct].[Document] TO [role_ct_booking];\nGRANT INSERT, UPDATE ON [ct].[DocumentContent]\
+    \ TO [role_ct_booking];\nGRANT UPDATE ON [ct].[Alert] TO [role_ct_booking];\n\
+    GRANT UPDATE ON OBJECT::[ct].[ShipmentNumbers] TO [role_ct_booking];\nGO\n-- Portal:\
+    \ booking requests from customers.\nGRANT INSERT ON [ct].[Shipment] TO [role_ct_portal];\n\
+    GRANT INSERT ON [ct].[Package] TO [role_ct_portal];\nGRANT INSERT ON [ct].[Milestone]\
+    \ TO [role_ct_portal];\nGRANT UPDATE ON OBJECT::[ct].[ShipmentNumbers] TO [role_ct_portal];\n\
+    GO\n-- Tower: alert handling only.\nGRANT UPDATE ON [ct].[Alert] TO [role_ct_tower];\n\
+    GO\n-- Scanning: scans, label printing, proof of delivery documents.\nGRANT INSERT\
+    \ ON [ct].[Scan] TO [role_ct_scan];\nGRANT UPDATE ON [ct].[Package] TO [role_ct_scan];\n\
+    GRANT INSERT ON [ct].[Document] TO [role_ct_scan];\nGRANT INSERT, UPDATE ON [ct].[DocumentContent]\
+    \ TO [role_ct_scan];\nGO\n-- Carrier gateway: carrier references, status, customs\
+    \ and interchange log.\nGRANT UPDATE ON [ct].[Leg] TO [role_ct_gateway];\nGRANT\
+    \ INSERT, UPDATE ON [ct].[EdiInterchange] TO [role_ct_gateway];\nGRANT UPDATE\
+    \ ON [ct].[CustomsDeclaration] TO [role_ct_gateway];\nGRANT INSERT ON [ct].[Document]\
+    \ TO [role_ct_gateway];\nGRANT INSERT, UPDATE ON [ct].[DocumentContent] TO [role_ct_gateway];\n\
+    GO\n-- Events: applies milestones, ETAs and rules.\nGRANT UPDATE ON [ct].[Shipment]\
+    \ TO [role_ct_events];\nGRANT UPDATE ON [ct].[Leg] TO [role_ct_events];\nGRANT\
+    \ INSERT ON [ct].[Milestone] TO [role_ct_events];\nGRANT INSERT, UPDATE ON [ct].[Alert]\
+    \ TO [role_ct_events];\nGRANT UPDATE ON [ct].[Package] TO [role_ct_events];\n\
+    GO\n-- Telematics: positions and vehicle state.\nGRANT INSERT ON [ct].[VehiclePosition]\
+    \ TO [role_ct_telematics];\nGRANT UPDATE ON [ct].[Vehicle] TO [role_ct_telematics];\n\
+    GO\n-- Jobs: KPI rows, invoicing marks, retention, fuel surcharges, documents.\n\
+    GRANT INSERT, UPDATE, DELETE ON [ct].[DailyKpi] TO [role_ct_jobs];\nGRANT UPDATE\
+    \ ON [ct].[Charge] TO [role_ct_jobs];\nGRANT UPDATE ON [ct].[RateCard] TO [role_ct_jobs];\n\
+    GRANT DELETE ON [ct].[VehiclePosition] TO [role_ct_jobs];\nGRANT INSERT, DELETE\
+    \ ON [ct].[Document] TO [role_ct_jobs];\nGRANT INSERT, UPDATE, DELETE ON [ct].[DocumentContent]\
+    \ TO [role_ct_jobs];\nGRANT EXECUTE ON [ct].[PurgeOrphanDocumentContent] TO [role_ct_jobs];\n\
+    GO\n-- Hangfire job storage lives in the same database (schema hangfire, see 03-Hangfire.sql).\n\
+    IF SCHEMA_ID(N'hangfire') IS NULL EXEC(N'CREATE SCHEMA [hangfire] AUTHORIZATION\
+    \ [dbo];');\nGO\nGRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA::[hangfire]\
+    \ TO [role_ct_jobs];\nGO\nIF USER_ID(N'ct_identity') IS NULL CREATE USER [ct_identity]\
+    \ FOR LOGIN [ct_identity];\nALTER ROLE [db_datareader] ADD MEMBER [ct_identity];\n\
+    ALTER ROLE [db_datawriter] ADD MEMBER [ct_identity];\n-- The token service creates\
+    \ its tables on first deployment (ControlTower.Identity --initialize); afterwards\n\
+    -- db_ddladmin can be removed again.\nALTER ROLE [db_ddladmin] ADD MEMBER [ct_identity];\n\
+    GO\n"
+  004-03-Hangfire.sql: "SELECT t.name AS [Table], p.rows AS [Rows]\nFROM sys.tables\
+    \ t\nJOIN sys.partitions p ON p.object_id = t.object_id AND p.index_id IN (0,\
+    \ 1)\nWHERE SCHEMA_NAME(t.schema_id) = N'hangfire'\nORDER BY t.name;\n\nIF NOT\
+    \ EXISTS (SELECT 1 FROM sys.tables WHERE SCHEMA_NAME(schema_id) = N'hangfire'\
+    \ AND name = N'Schema')\n    PRINT N'Hangfire schema has not been created yet.';\n\
+    ELSE\n    SELECT [Version] AS HangfireSchemaVersion FROM [hangfire].[Schema];\n\
+    GO\n"
+  005-10-ReferenceData.sql: 'SELECT ''Customers'' AS [Table], COUNT(*) AS [Rows] FROM
+    ct.Customer
+
+    UNION ALL SELECT ''Carriers'', COUNT(*) FROM ct.Carrier
+
+    UNION ALL SELECT ''Locations'', COUNT(*) FROM ct.Location
+
+    UNION ALL SELECT ''Vehicles'', COUNT(*) FROM ct.Vehicle
+
+    UNION ALL SELECT ''Rate cards'', COUNT(*) FROM ct.RateCard
+
+    UNION ALL SELECT ''Shipments'', COUNT(*) FROM ct.Shipment;
+
+    GO
+
+    -- Locations whose time zone id the servers do not know produce wrong local times
+    in documents and reports.
+
+    SELECT DISTINCT TimeZoneId FROM ct.Location ORDER BY TimeZoneId;
+
+    GO
+
+    -- Restart the shipment number sequence above the highest loaded number.
+
+    DECLARE @max bigint = (SELECT ISNULL(MAX(CAST(SUBSTRING(Number, 6, 6) AS bigint)),
+    0) FROM ct.Shipment);
+
+    DECLARE @sql nvarchar(200) = N''ALTER SEQUENCE ct.ShipmentNumbers RESTART WITH
+    '' + CAST(@max + 1 AS nvarchar(20)) + N'';'';
+
+    EXEC (@sql);
+
+    GO
+
+    '

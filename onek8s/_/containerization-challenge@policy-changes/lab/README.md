@@ -8,3 +8,12 @@ The appliance runs these services in namespace `containerizer-lab` (Admin -> Lab
 - Credentials: Secret `lab-sqlserver` (ExternalSecret, remote key `containerization-challenge-policy-changes--cz-lab-sqlserver`).
 - Database and login `containerization_challenge_policy_changes`, owner of that database only.
 - **PolicyChanges.Api**: `ConnectionStrings__PolicyChanges`
+
+## SQL Server: the repository's setup scripts
+
+The lab agent runs these once into the app's database (every .sql file of deploy/sql/, by name), as the app's own login, and again when they change or the database is made again. A batch that fails is reported on Admin -> Lab services and the rest goes on.
+- `deploy/sql/create-database.sql`
+- `deploy/sql/create-logins.sql`
+
+- deploy/sql/create-database.sql: left out (the lab makes the database and the login itself, or it needs server-wide rights): `IF DB_ID(N'PolicyChanges') IS NULL`; `USE [PolicyChanges];`; `ALTER DATABASE [PolicyChanges] SET READ_COMMITTED_SNAPSHOT ON WITH ROLLBACK IMMEDIATE;`
+- deploy/sql/create-logins.sql: left out (the lab makes the database and the login itself, or it needs server-wide rights): `USE [master];`; `IF SUSER_ID(N'$(WebAccount)') IS NULL CREATE LOGIN [$(WebAccount)] FROM WINDOWS;`; `USE [PolicyChanges];`
