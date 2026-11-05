@@ -2,6 +2,7 @@ containerization-challenge-batch-release
 containerization-challenge-broker-quotes
 containerization-challenge-city-permits
 containerization-challenge-consumer-loans
+containerization-challenge-expense-claims
 containerization-challenge-field-service
 containerization-challenge-freight-rates
 containerization-challenge-furnace-records

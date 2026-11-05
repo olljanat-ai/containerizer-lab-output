@@ -5,6 +5,7 @@ resources:
 - ../../../onek8s/_/containerization-challenge@broker-quotes/gitops/flux
 - ../../../onek8s/_/containerization-challenge@city-permits/gitops/flux
 - ../../../onek8s/_/containerization-challenge@consumer-loans/gitops/flux
+- ../../../onek8s/_/containerization-challenge@expense-claims/gitops/flux
 - ../../../onek8s/_/containerization-challenge@field-service/gitops/flux
 - ../../../onek8s/_/containerization-challenge@freight-rates/gitops/flux
 - ../../../onek8s/_/containerization-challenge@furnace-records/gitops/flux
@@ -63,6 +64,22 @@ patches:
     {"apiVersion": "apps/v1", "kind": "Deployment", "name": "lucerne-lending-documents",
     "namespace": "containerization-challenge-consumer-loans"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-consumer-loans"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-expense-claims
+    namespace: containerization-challenge-expense-claims
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "expenseclaims-api", "namespace": "containerization-challenge-expense-claims"},
+    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "expenseclaims-jobs",
+    "namespace": "containerization-challenge-expense-claims"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "expenseclaims-api-dataprotection", "namespace":
+    "containerization-challenge-expense-claims"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "expenseclaims-jobs-dataprotection", "namespace":
+    "containerization-challenge-expense-claims"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-expense-claims"}]}]'
 - target:
     group: kustomize.toolkit.fluxcd.io
     version: v1
