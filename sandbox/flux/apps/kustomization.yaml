@@ -90,6 +90,9 @@ patches:
     "namespace": "containerization-challenge-control-tower"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "controltower-carriergateway-dataprotection",
     "namespace": "containerization-challenge-control-tower"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "lab-rabbitmq", "namespace": "containerization-challenge-control-tower"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sftp",
+    "namespace": "containerization-challenge-control-tower"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-control-tower"}]}]'
 - target:
     group: kustomize.toolkit.fluxcd.io
@@ -201,10 +204,11 @@ patches:
     {"apiVersion": "apps/v1", "kind": "Deployment", "name": "vanarsdel-storemanager",
     "namespace": "containerization-challenge-retail-backoffice"}, {"apiVersion": "apps/v1",
     "kind": "Deployment", "name": "vanarsdel-storeops-api", "namespace": "containerization-challenge-retail-backoffice"},
-    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-rabbitmq",
     "namespace": "containerization-challenge-retail-backoffice"}, {"apiVersion": "external-secrets.io/v1",
-    "kind": "ExternalSecret", "name": "vanarsdel-allocation-api-dataprotection", "namespace":
-    "containerization-challenge-retail-backoffice"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-retail-backoffice"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "vanarsdel-allocation-api-dataprotection",
+    "namespace": "containerization-challenge-retail-backoffice"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "vanarsdel-catalog-api-dataprotection", "namespace":
     "containerization-challenge-retail-backoffice"}, {"apiVersion": "external-secrets.io/v1",
     "kind": "ExternalSecret", "name": "vanarsdel-customers-api-dataprotection", "namespace":

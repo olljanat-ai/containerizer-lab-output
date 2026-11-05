@@ -44,7 +44,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "humongous-brokerportal/k8s.yaml: Deployment/humongous-brokerportal/humongous-brokerportal",
-          "message": "image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -52,7 +52,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[15:25:55 WRN] No XML encryptor configured. Key {5efbfdbe-257d-490e-ba38-867326e2a563} may be persisted to storage in unencrypted form.\n[15:25:55 INF] Now listening on: http://[::]:8080\n[15:25:55 INF] Application started. Press Ctrl+C to shut down.\n[15:25:55 INF] Hosting environment: Production\n[15:25:55 INF] Content root path: /app\n[15:25:57 INF] HTTP GET /health responded 200 in 117.6411 ms\n"
+        "log": "[21:20:52 WRN] No XML encryptor configured. Key {1375dd7a-e8cd-4756-8171-b89f719f743b} may be persisted to storage in unencrypted form.\n[21:20:52 INF] Now listening on: http://[::]:8080\n[21:20:52 INF] Application started. Press Ctrl+C to shut down.\n[21:20:52 INF] Hosting environment: Production\n[21:20:52 INF] Content root path: /app\n[21:20:55 INF] HTTP GET /health responded 200 in 115.1014 ms\n"
       }
     },
     {
@@ -75,7 +75,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "humongous-documents/k8s.yaml: Deployment/humongous-documents/humongous-documents",
-          "message": "image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -106,7 +106,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "humongous-workbench/k8s.yaml: Deployment/humongous-workbench/humongous-workbench",
-          "message": "image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -114,7 +114,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[15:26:29 WRN] No XML encryptor configured. Key {940ecf9f-f84e-444a-8975-82d483f41180} may be persisted to storage in unencrypted form.\n[15:26:29 INF] Now listening on: http://[::]:8080\n[15:26:29 INF] Application started. Press Ctrl+C to shut down.\n[15:26:29 INF] Hosting environment: Production\n[15:26:29 INF] Content root path: /app\n[15:26:31 INF] HTTP GET /health responded 200 in 139.2312 ms\n"
+        "log": "[21:21:25 WRN] No XML encryptor configured. Key {de7853d8-f651-4c42-becc-82b83ad400e9} may be persisted to storage in unencrypted form.\n[21:21:25 INF] Now listening on: http://[::]:8080\n[21:21:25 INF] Application started. Press Ctrl+C to shut down.\n[21:21:25 INF] Hosting environment: Production\n[21:21:25 INF] Content root path: /app\n[21:21:27 INF] HTTP GET /health responded 200 in 123.9940 ms\n"
       }
     }
   ],

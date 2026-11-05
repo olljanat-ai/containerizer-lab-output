@@ -39,22 +39,22 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: vanarsdel-backoffice
-        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524
+        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.2119
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__DefaultConnection
           valueFrom:
             secretKeyRef:
-              name: lab-sqlserver
+              name: lab-rabbitmq
               key: connection-string
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_HTTP_PORTS
           value: '8080'
+        - name: ASPNETCORE_URLS
+          value: http://+:8080
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: DataProtection__KeysFolder
           value: /data/vanarsdel/keys/backoffice
         - name: Serilog__WriteTo__0__Name
@@ -162,7 +162,7 @@ metadata:
     app.kubernetes.io/name: vanarsdel-backoffice
     app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
   annotations:
-    containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver
+    containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
 spec:
   podSelector:
     matchLabels:
@@ -248,6 +248,16 @@ spec:
           containerizer.io/lab-service: sqlserver
     ports:
     - port: 1433
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: rabbitmq
+    ports:
+    - port: 5672
       protocol: TCP
 ---
 # values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-retail-backoffice--vanarsdel-backoffice); never from Git

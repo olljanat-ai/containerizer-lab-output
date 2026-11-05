@@ -17,7 +17,7 @@
     {
       "component": "FurnaceRecords.Api",
       "folder": "furnacerecords-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -29,7 +29,7 @@
     {
       "component": "FurnaceRecords.Worker",
       "folder": "furnacerecords-worker",
-      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
@@ -49,7 +49,7 @@
       "reason": "rated B (refactor)"
     }
   ],
-  "processed_at": "2026-11-05T15:24:08+00:00",
+  "processed_at": "2026-11-05T21:19:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/furnace-records",

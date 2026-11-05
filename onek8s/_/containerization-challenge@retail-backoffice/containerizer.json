@@ -17,158 +17,158 @@
     {
       "component": "VanArsdel.Allocation.Api",
       "folder": "vanarsdel-allocation-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Allocation.Api/VanArsdel.Allocation.Api.csproj",
       "project_name": "VanArsdel.Allocation.Api",
       "verification": "not run",
-      "digest": "sha256:6f70e6b33bf67f4a6e1e763e5e2fb24801b64ab276c1e94dbfcbfb1d041fc3dd"
+      "digest": "sha256:5de96d159d18a0e7ca0872481947105af4e909cb0f4aa2af02ef8f1fb3b32f82"
     },
     {
       "component": "VanArsdel.BackOffice",
       "folder": "vanarsdel-backoffice",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.BackOffice/VanArsdel.BackOffice.csproj",
       "project_name": "VanArsdel.BackOffice",
       "verification": "not run",
-      "digest": "sha256:8c7bd51214acc4bd8f8776a528a0d56370e31183aacc37eff1fbda8dc2ae8e50"
+      "digest": "sha256:ce41b7294fdd6cc5853a20a275e9db794f22b0c664e5e5ac9bf36c436cbf0345"
     },
     {
       "component": "VanArsdel.Catalog.Api",
       "folder": "vanarsdel-catalog-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Catalog.Api/VanArsdel.Catalog.Api.csproj",
       "project_name": "VanArsdel.Catalog.Api",
       "verification": "not run",
-      "digest": "sha256:502e6962d94c0edb7cf6730ff3e7e5d863296bc93718fd10c2b4cf4ee6f55714"
+      "digest": "sha256:fc25174165ddf991cdcd081fb187213919f804eda1f9c154445157a396d40eb4"
     },
     {
       "component": "VanArsdel.Customers.Api",
       "folder": "vanarsdel-customers-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Customers.Api/VanArsdel.Customers.Api.csproj",
       "project_name": "VanArsdel.Customers.Api",
       "verification": "not run",
-      "digest": "sha256:2ff624c3f807a7b38de2ba3021ba47cb36e99214a81c4425ef6e33ce9c07e7bd"
+      "digest": "sha256:38e4a620f0c5e7b858647f4545b32e4bd5385d3da039b5fa0914ccd8802113d6"
     },
     {
       "component": "VanArsdel.Gateway",
       "folder": "vanarsdel-gateway",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Gateway/VanArsdel.Gateway.csproj",
       "project_name": "VanArsdel.Gateway",
       "verification": "not run",
-      "digest": "sha256:8a92342b6830d11b88c948b4c1da8cc6b9a1e161494d5adf073fdf0e4aa5e34b"
+      "digest": "sha256:c773d0d21e7e0ca9abccfd03e24a56e9ffe5aa82ae284183a70f005a30e6eb56"
     },
     {
       "component": "VanArsdel.Inventory.Api",
       "folder": "vanarsdel-inventory-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Inventory.Api/VanArsdel.Inventory.Api.csproj",
       "project_name": "VanArsdel.Inventory.Api",
       "verification": "not run",
-      "digest": "sha256:9e1792efc7b02569a5bed4c19c200bb01cec0997b4bc18aae3437c58c23bb1a2"
+      "digest": "sha256:cada9f3e1b73705d93238aacae1209e9d1d4d26e456e8c15a66043caaae0ac87"
     },
     {
       "component": "VanArsdel.Notifications",
       "folder": "vanarsdel-notifications",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
       "project": "src/VanArsdel.Notifications/VanArsdel.Notifications.csproj",
       "project_name": "VanArsdel.Notifications",
       "verification": "not run",
-      "digest": "sha256:8d6acea738d6f38546eca95c81f98541241d20fa7e083fd3a282a7044306488e"
+      "digest": "sha256:e9f1f01dc6ab572179c12121290ab2bc37c0dce6a17a56f0f2ac0ad677c295d6"
     },
     {
       "component": "VanArsdel.Orders.Api",
       "folder": "vanarsdel-orders-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Orders.Api/VanArsdel.Orders.Api.csproj",
       "project_name": "VanArsdel.Orders.Api",
       "verification": "not run",
-      "digest": "sha256:d7237727e5730f36e5ba50e0d3de2398bb606ddd70dd996694f7d2727e122243"
+      "digest": "sha256:3fb6c453cb55858a840b9c47bc479e6a85694866ee11806006a3490b9ac96ae4"
     },
     {
       "component": "VanArsdel.Pricing.Api",
       "folder": "vanarsdel-pricing-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Pricing.Api/VanArsdel.Pricing.Api.csproj",
       "project_name": "VanArsdel.Pricing.Api",
       "verification": "not run",
-      "digest": "sha256:8ff50282bcc91aefe964f154c07f8a0f964642418ed4f74874ad5f31bc8f4700"
+      "digest": "sha256:d85ce7f06b2267d1baa1e9a78e416a76b9b07f05155ccec5085016b7c5bc6634"
     },
     {
       "component": "VanArsdel.Returns.Api",
       "folder": "vanarsdel-returns-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.Returns.Api/VanArsdel.Returns.Api.csproj",
       "project_name": "VanArsdel.Returns.Api",
       "verification": "not run",
-      "digest": "sha256:fc63b3af68a0f52ae98341463e6152f6a480d13b01f9b8e656efdf06fa9b8c97"
+      "digest": "sha256:242ffe06a0bdfb22bb4c4bc8a275db6035ca1e833367a3790e6f42cdaaadf239"
     },
     {
       "component": "VanArsdel.Scheduler",
       "folder": "vanarsdel-scheduler",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
       "project": "src/VanArsdel.Scheduler/VanArsdel.Scheduler.csproj",
       "project_name": "VanArsdel.Scheduler",
       "verification": "not run",
-      "digest": "sha256:28116fe0b87a9da06573d00ef0d05f37e758bed0043bc7c77d574541042cf6c4"
+      "digest": "sha256:4325e2ea7aaa2928d90de8434b89afbbff97bf48c9f1afa2ecc255f177c58ac4"
     },
     {
       "component": "VanArsdel.StoreManager",
       "folder": "vanarsdel-storemanager",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.StoreManager/VanArsdel.StoreManager.csproj",
       "project_name": "VanArsdel.StoreManager",
       "verification": "not run",
-      "digest": "sha256:3ec6d341f634076ac46fac252193f4acb05b7be6791d54c139fbad9414588e5b"
+      "digest": "sha256:8977780b69280786da6dde50a218833775a99fbbae7ea40c41711005ae3fd60f"
     },
     {
       "component": "VanArsdel.StoreOps.Api",
       "folder": "vanarsdel-storeops-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/VanArsdel.StoreOps.Api/VanArsdel.StoreOps.Api.csproj",
       "project_name": "VanArsdel.StoreOps.Api",
       "verification": "not run",
-      "digest": "sha256:836a66415c2b73eeead4cde007746d7be5245bbe5002cadcba680552f65f111e"
+      "digest": "sha256:00b15ced2dfbb6f51819e33af2f4aca53f49c2d5fa3111f5693c71f34bfb20a0"
     }
   ],
   "excluded": [
@@ -185,7 +185,7 @@
       "reason": "keeps local state"
     }
   ],
-  "processed_at": "2026-11-05T15:24:08+00:00",
+  "processed_at": "2026-11-05T21:19:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/retail-backoffice",
@@ -239,11 +239,11 @@
       ]
     },
     "provided": [
-      "sqlserver"
+      "sqlserver",
+      "rabbitmq"
     ],
     "missing": [
       "redis",
-      "rabbitmq",
       "mongodb"
     ],
     "overrides": {
@@ -251,7 +251,8 @@
         "sqlserver:ConnectionStrings__Allocation"
       ],
       "VanArsdel.BackOffice": [
-        "sqlserver:ConnectionStrings__DefaultConnection"
+        "sqlserver:ConnectionStrings__DefaultConnection",
+        "rabbitmq:ConnectionStrings__DefaultConnection"
       ],
       "VanArsdel.Catalog.Api": [
         "sqlserver:ConnectionStrings__Catalog"
@@ -260,7 +261,8 @@
         "sqlserver:ConnectionStrings__Customers"
       ],
       "VanArsdel.Gateway": [
-        "sqlserver:ConnectionStrings__DefaultConnection"
+        "sqlserver:ConnectionStrings__DefaultConnection",
+        "rabbitmq:ConnectionStrings__DefaultConnection"
       ],
       "VanArsdel.Inventory.Api": [
         "sqlserver:ConnectionStrings__Inventory"

@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: lucerne-lending-documents
-        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.1524
+        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.2119
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__Lending
@@ -49,8 +49,6 @@ spec:
               key: connection-string
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: NLog__variables__logDir
           value: /data/logs/consumerloans/documents
         securityContext:

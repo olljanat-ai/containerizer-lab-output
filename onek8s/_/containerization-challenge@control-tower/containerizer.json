@@ -17,50 +17,50 @@
     {
       "component": "ControlTower.CarrierGateway",
       "folder": "controltower-carriergateway",
-      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj",
       "project_name": "ControlTower.CarrierGateway",
       "verification": "not run",
-      "digest": "sha256:dea3cedf89219ec7b151aede3ebba820edba6e6e128eab8030976645bdf07924"
+      "digest": "sha256:3e48e7dfc31c1222e206fb3a0403f3b01bb1b06032bfa4c69ffd71ce11f5ee1e"
     },
     {
       "component": "ControlTower.Events",
       "folder": "controltower-events",
-      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
       "project": "src/ControlTower.Events/ControlTower.Events.csproj",
       "project_name": "ControlTower.Events",
       "verification": "not run",
-      "digest": "sha256:13dde34d22b272154271036821f35baca08f4db55fc7bfb88fd6fb28c96b3611"
+      "digest": "sha256:1c353082bb2f058c97da443ebb636f0eabbd7b6fb28f15e992cdcb90fd715e66"
     },
     {
       "component": "ControlTower.Telematics",
       "folder": "controltower-telematics",
-      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
       "project": "src/ControlTower.Telematics/ControlTower.Telematics.csproj",
       "project_name": "ControlTower.Telematics",
       "verification": "not run",
-      "digest": "sha256:0c07dcb7ce8f8118f3d3e3e68c6aa6f40d88340ea5bbb41eb63b078a042b791a"
+      "digest": "sha256:e15e6c0c2d80caf2989ac4000821c83254d389d20b9bfedf025fc1390e2e5848"
     },
     {
       "component": "ControlTower.Tower.Api",
       "folder": "controltower-tower-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj",
       "project_name": "ControlTower.Tower.Api",
       "verification": "not run",
-      "digest": "sha256:918a9dc623ec9040dac1efb9fcfa01f2d4aa8f002541c325b010f089d3fae334"
+      "digest": "sha256:025900468557dbe4154de0e92346f04b486c087e8e8a10e3cd2ad0cc69f48a7e"
     }
   ],
   "excluded": [
@@ -85,7 +85,7 @@
       "reason": "rated B (refactor)"
     }
   ],
-  "processed_at": "2026-11-05T15:24:08+00:00",
+  "processed_at": "2026-11-05T21:19:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/control-tower",
@@ -112,24 +112,39 @@
       ]
     },
     "provided": [
-      "sqlserver"
-    ],
-    "missing": [
+      "sqlserver",
       "rabbitmq",
       "sftp"
     ],
+    "missing": [],
     "overrides": {
       "ControlTower.CarrierGateway": [
-        "sqlserver:ConnectionStrings__ControlTower"
+        "sqlserver:ConnectionStrings__ControlTower",
+        "rabbitmq:ConnectionStrings__RabbitMq",
+        "sftp:Carriers__Sftp__NRDL__Host",
+        "sftp:Carriers__Sftp__NRDL__Port",
+        "sftp:Carriers__Sftp__NRDL__UserName",
+        "sftp:Carriers__Sftp__NSFL__Host",
+        "sftp:Carriers__Sftp__NSFL__Password",
+        "sftp:Carriers__Sftp__NSFL__UserName",
+        "sftp:Carriers__Sftp__OCNX__Host",
+        "sftp:Carriers__Sftp__OCNX__UserName",
+        "sftp:Carriers__Sftp__VNRL__Host",
+        "sftp:Carriers__Sftp__VNRL__Password",
+        "sftp:Carriers__Sftp__VNRL__Port",
+        "sftp:Carriers__Sftp__VNRL__UserName"
       ],
       "ControlTower.Events": [
-        "sqlserver:ConnectionStrings__ControlTower"
+        "sqlserver:ConnectionStrings__ControlTower",
+        "rabbitmq:ConnectionStrings__RabbitMq"
       ],
       "ControlTower.Telematics": [
-        "sqlserver:ConnectionStrings__ControlTower"
+        "sqlserver:ConnectionStrings__ControlTower",
+        "rabbitmq:ConnectionStrings__RabbitMq"
       ],
       "ControlTower.Tower.Api": [
-        "sqlserver:ConnectionStrings__ControlTower"
+        "sqlserver:ConnectionStrings__ControlTower",
+        "rabbitmq:ConnectionStrings__RabbitMq"
       ]
     },
     "init_scripts": [

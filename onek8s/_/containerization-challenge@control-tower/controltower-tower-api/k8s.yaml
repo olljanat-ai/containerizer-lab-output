@@ -39,9 +39,14 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: controltower-tower-api
-        image: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524
+        image: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.2119
         imagePullPolicy: IfNotPresent
         env:
+        - name: ConnectionStrings__RabbitMq
+          valueFrom:
+            secretKeyRef:
+              name: lab-rabbitmq
+              key: connection-string
         - name: ConnectionStrings__ControlTower
           valueFrom:
             secretKeyRef:
@@ -51,20 +56,14 @@ spec:
           value: Production
         - name: ASPNETCORE_HTTP_PORTS
           value: '8080'
+        - name: ASPNETCORE_URLS
+          value: http://+:8080
         - name: CONTROLTOWER_LOG_DIR
           value: /app/logs
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: DataProtection__KeyFolder
           value: /data/controltower/keys/tower
-        - name: ConnectionStrings__RabbitMq
-          valueFrom:
-            secretKeyRef:
-              name: controltower-tower-api-secrets
-              key: ConnectionStrings__RabbitMq
-              optional: true
         securityContext:
           runAsNonRoot: true
           allowPrivilegeEscalation: false
@@ -149,7 +148,7 @@ metadata:
     app.kubernetes.io/name: controltower-tower-api
     app.kubernetes.io/part-of: containerization-challenge-control-tower
   annotations:
-    containerizer.io/egress: sql-server,rabbitmq,sftp,http-apis,lab-sqlserver
+    containerizer.io/egress: sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp
 spec:
   podSelector:
     matchLabels:
@@ -219,6 +218,27 @@ spec:
           containerizer.io/lab-service: sqlserver
     ports:
     - port: 1433
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: rabbitmq
+    ports:
+    - port: 5672
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: sftp
+          containerizer.io/lab-app: containerization-challenge-control-tower
+    ports:
+    - port: 2022
       protocol: TCP
 ---
 # values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-control-tower--controltower-tower-api); never from Git

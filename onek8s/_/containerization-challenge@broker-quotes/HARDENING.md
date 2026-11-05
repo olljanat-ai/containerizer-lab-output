@@ -8,7 +8,7 @@ Controls from the NSA/CISA Kubernetes Hardening Guide (v1.2) and the CIS Kuberne
 | Read-only root file system; writable paths are size-limited emptyDirs | applied | Pod security > Immutable container file systems | 5.7.3 |  |
 | Minimal, patched base images; images scanned for vulnerabilities (containerizer gate) | applied | Pod security > Building secure container images |  |  |
 | Only signed images run | cluster action | Pod security > Building secure container images | 5.5.1 | Sign each pushed image (cosign sign --yes <registry>/<image>@<digest>) and enforce it with cluster/verify-images.yaml (Kyverno) or your admission controller. |
-| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524 is not pinned to a digest (humongous-brokerportal: Deployment/humongous-brokerportal/humongous-brokerportal); image-digest: image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524 is not pinned to a digest (humongous-documents: Deployment/humongous-documents/humongous-documents); image-digest: image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524 is not pinned to a digest (humongous-workbench: Deployment/humongous-workbench/humongous-workbench) |
+| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.2119 is not pinned to a digest (humongous-brokerportal: Deployment/humongous-brokerportal/humongous-brokerportal); image-digest: image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.2119 is not pinned to a digest (humongous-documents: Deployment/humongous-documents/humongous-documents); image-digest: image localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.2119 is not pinned to a digest (humongous-workbench: Deployment/humongous-workbench/humongous-workbench) |
 | Pod Security Admission "restricted" enforced on the namespace; workloads comply | applied | Pod security > Pod security enforcement | 5.2.1-5.2.13 |  |
 | Own ServiceAccount per component; no token mounted | applied | Pod security > Protecting Pod service account tokens | 5.1.5, 5.1.6 | no component calls the Kubernetes API |
 | Seccomp and AppArmor RuntimeDefault; all capabilities dropped | applied | Pod security > Hardening container environments | 5.7.2 |  |
@@ -37,7 +37,7 @@ Inferred from packages and configuration; everything else is denied. Review befo
 | Component | Allowed external dependencies |
 | --- | --- |
 | humongous-brokerportal | http-apis |
-| humongous-documents | sql-server,rabbitmq,smtp,http-apis,lab-sqlserver |
+| humongous-documents | sql-server,rabbitmq,smtp,http-apis,lab-sqlserver,lab-rabbitmq |
 | humongous-workbench | http-apis |
 
 ## Secret store keys
@@ -46,6 +46,7 @@ Put these in the secret store before the first sync (docs/external-secrets.md); 
 
 | Remote key | Property | Component | Secret |
 | --- | --- | --- | --- |
+| `containerization-challenge-broker-quotes--cz-lab-rabbitmq` | every key | lab | `lab-rabbitmq` |
 | `containerization-challenge-broker-quotes--cz-lab-sqlserver` | every key | lab | `lab-sqlserver` |
 | `containerization-challenge-broker-quotes--humongous-brokerportal` | `Oidc__ClientSecret` | humongous-brokerportal | `humongous-brokerportal-secrets` |
 | `containerization-challenge-broker-quotes--humongous-documents` | `Bus__Password` | humongous-documents | `humongous-documents-secrets` |

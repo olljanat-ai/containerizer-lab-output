@@ -20,8 +20,8 @@ Stateless: yes
 Facts: entry=CityPermits.Inspections.dll; connection_strings=['Permits']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/CityPermits.Inspections/CityPermits.Inspections.csproj: TargetFramework=net6.0`
 

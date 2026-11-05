@@ -3,8 +3,8 @@
     "provider": "github",
     "org": "onek8s",
     "registry": "localhost:5000/sandbox",
-    "tag": "1.20261105.1524",
-    "started": "2026-11-05T15:24:05+00:00",
+    "tag": "1.20261105.2119",
+    "started": "2026-11-05T21:19:05+00:00",
     "stale_days": 183,
     "verify": false,
     "gate": true
@@ -237,7 +237,7 @@
         {
           "component": "BatchRelease.Api",
           "folder": "batchrelease-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -250,9 +250,9 @@
         {
           "component": "Humongous.BrokerPortal",
           "folder": "humongous-brokerportal",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.2119",
           "rating": "A",
-          "verdict": "config",
+          "verdict": "info",
           "role": "web",
           "project": "src/Humongous.BrokerPortal/Humongous.BrokerPortal.csproj",
           "project_name": "Humongous.BrokerPortal",
@@ -263,7 +263,7 @@
         {
           "component": "Humongous.Documents",
           "folder": "humongous-documents",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -276,7 +276,7 @@
         {
           "component": "Humongous.Workbench",
           "folder": "humongous-workbench",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -289,20 +289,20 @@
         {
           "component": "CityPermits.Inspections",
           "folder": "citypermits-inspections",
-          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/CityPermits.Inspections/CityPermits.Inspections.csproj",
           "project_name": "CityPermits.Inspections",
           "verification": "not run",
-          "digest": "sha256:4ad2e1fc8e50454730ef233651d165eb7a5e95438d52320b5515cff8ffcd1761",
+          "digest": "sha256:4d4e38a61c39177a61cc5e9b4baa11811428e49011bf31a7ed3cbaf84f8996cf",
           "application": "scenarios/city-permits"
         },
         {
           "component": "CityPermits.OpenData",
           "folder": "citypermits-opendata",
-          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -315,85 +315,85 @@
         {
           "component": "Lucerne.Lending.CustomerPortal",
           "folder": "lucerne-lending-customerportal",
-          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/Lucerne.Lending.CustomerPortal/Lucerne.Lending.CustomerPortal.csproj",
           "project_name": "Lucerne.Lending.CustomerPortal",
           "verification": "not run",
-          "digest": "sha256:1d9733452596616ad6672ef9a334bbc50848d4ade80461940a2f113062581e24",
+          "digest": "sha256:a78306e45a0b13f21a8a8dbfc8013b41e10da4cf0b8ae4c2b957dfd8a22739a0",
           "application": "scenarios/consumer-loans"
         },
         {
           "component": "Lucerne.Lending.Documents",
           "folder": "lucerne-lending-documents",
-          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
           "project": "src/Lucerne.Lending.Documents/Lucerne.Lending.Documents.csproj",
           "project_name": "Lucerne.Lending.Documents",
           "verification": "not run",
-          "digest": "sha256:54573ed221d5b63eed07fedc94566b253ae00e0b0ae32d3a25058ee4b4a3243a",
+          "digest": "sha256:4fa00cde1fb3da65565254ae91c3ba9ece0718867bc06a500be3dacbb58231ab",
           "application": "scenarios/consumer-loans"
         },
         {
           "component": "ControlTower.CarrierGateway",
           "folder": "controltower-carriergateway",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj",
           "project_name": "ControlTower.CarrierGateway",
           "verification": "not run",
-          "digest": "sha256:dea3cedf89219ec7b151aede3ebba820edba6e6e128eab8030976645bdf07924",
+          "digest": "sha256:3e48e7dfc31c1222e206fb3a0403f3b01bb1b06032bfa4c69ffd71ce11f5ee1e",
           "application": "scenarios/control-tower"
         },
         {
           "component": "ControlTower.Events",
           "folder": "controltower-events",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
           "project": "src/ControlTower.Events/ControlTower.Events.csproj",
           "project_name": "ControlTower.Events",
           "verification": "not run",
-          "digest": "sha256:13dde34d22b272154271036821f35baca08f4db55fc7bfb88fd6fb28c96b3611",
+          "digest": "sha256:1c353082bb2f058c97da443ebb636f0eabbd7b6fb28f15e992cdcb90fd715e66",
           "application": "scenarios/control-tower"
         },
         {
           "component": "ControlTower.Telematics",
           "folder": "controltower-telematics",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
           "project": "src/ControlTower.Telematics/ControlTower.Telematics.csproj",
           "project_name": "ControlTower.Telematics",
           "verification": "not run",
-          "digest": "sha256:0c07dcb7ce8f8118f3d3e3e68c6aa6f40d88340ea5bbb41eb63b078a042b791a",
+          "digest": "sha256:e15e6c0c2d80caf2989ac4000821c83254d389d20b9bfedf025fc1390e2e5848",
           "application": "scenarios/control-tower"
         },
         {
           "component": "ControlTower.Tower.Api",
           "folder": "controltower-tower-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj",
           "project_name": "ControlTower.Tower.Api",
           "verification": "not run",
-          "digest": "sha256:918a9dc623ec9040dac1efb9fcfa01f2d4aa8f002541c325b010f089d3fae334",
+          "digest": "sha256:025900468557dbe4154de0e92346f04b486c087e8e8a10e3cd2ad0cc69f48a7e",
           "application": "scenarios/control-tower"
         },
         {
           "component": "ExpenseClaims.Api",
           "folder": "expenseclaims-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1326-refactor.206",
+          "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1943-refactor.209",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -406,7 +406,7 @@
         {
           "component": "ExpenseClaims.Jobs",
           "folder": "expenseclaims-jobs",
-          "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1326-refactor.206",
+          "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1943-refactor.209",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -445,7 +445,7 @@
         {
           "component": "FreightRates.Api",
           "folder": "freightrates-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -458,7 +458,7 @@
         {
           "component": "FurnaceRecords.Api",
           "folder": "furnacerecords-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -471,7 +471,7 @@
         {
           "component": "FurnaceRecords.Worker",
           "folder": "furnacerecords-worker",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -497,7 +497,7 @@
         {
           "component": "PolicyChanges.Api",
           "folder": "policychanges-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -510,176 +510,176 @@
         {
           "component": "VanArsdel.Allocation.Api",
           "folder": "vanarsdel-allocation-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Allocation.Api/VanArsdel.Allocation.Api.csproj",
           "project_name": "VanArsdel.Allocation.Api",
           "verification": "not run",
-          "digest": "sha256:6f70e6b33bf67f4a6e1e763e5e2fb24801b64ab276c1e94dbfcbfb1d041fc3dd",
+          "digest": "sha256:5de96d159d18a0e7ca0872481947105af4e909cb0f4aa2af02ef8f1fb3b32f82",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.BackOffice",
           "folder": "vanarsdel-backoffice",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.BackOffice/VanArsdel.BackOffice.csproj",
           "project_name": "VanArsdel.BackOffice",
           "verification": "not run",
-          "digest": "sha256:8c7bd51214acc4bd8f8776a528a0d56370e31183aacc37eff1fbda8dc2ae8e50",
+          "digest": "sha256:ce41b7294fdd6cc5853a20a275e9db794f22b0c664e5e5ac9bf36c436cbf0345",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Catalog.Api",
           "folder": "vanarsdel-catalog-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Catalog.Api/VanArsdel.Catalog.Api.csproj",
           "project_name": "VanArsdel.Catalog.Api",
           "verification": "not run",
-          "digest": "sha256:502e6962d94c0edb7cf6730ff3e7e5d863296bc93718fd10c2b4cf4ee6f55714",
+          "digest": "sha256:fc25174165ddf991cdcd081fb187213919f804eda1f9c154445157a396d40eb4",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Customers.Api",
           "folder": "vanarsdel-customers-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Customers.Api/VanArsdel.Customers.Api.csproj",
           "project_name": "VanArsdel.Customers.Api",
           "verification": "not run",
-          "digest": "sha256:2ff624c3f807a7b38de2ba3021ba47cb36e99214a81c4425ef6e33ce9c07e7bd",
+          "digest": "sha256:38e4a620f0c5e7b858647f4545b32e4bd5385d3da039b5fa0914ccd8802113d6",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Gateway",
           "folder": "vanarsdel-gateway",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Gateway/VanArsdel.Gateway.csproj",
           "project_name": "VanArsdel.Gateway",
           "verification": "not run",
-          "digest": "sha256:8a92342b6830d11b88c948b4c1da8cc6b9a1e161494d5adf073fdf0e4aa5e34b",
+          "digest": "sha256:c773d0d21e7e0ca9abccfd03e24a56e9ffe5aa82ae284183a70f005a30e6eb56",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Inventory.Api",
           "folder": "vanarsdel-inventory-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Inventory.Api/VanArsdel.Inventory.Api.csproj",
           "project_name": "VanArsdel.Inventory.Api",
           "verification": "not run",
-          "digest": "sha256:9e1792efc7b02569a5bed4c19c200bb01cec0997b4bc18aae3437c58c23bb1a2",
+          "digest": "sha256:cada9f3e1b73705d93238aacae1209e9d1d4d26e456e8c15a66043caaae0ac87",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Notifications",
           "folder": "vanarsdel-notifications",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
           "project": "src/VanArsdel.Notifications/VanArsdel.Notifications.csproj",
           "project_name": "VanArsdel.Notifications",
           "verification": "not run",
-          "digest": "sha256:8d6acea738d6f38546eca95c81f98541241d20fa7e083fd3a282a7044306488e",
+          "digest": "sha256:e9f1f01dc6ab572179c12121290ab2bc37c0dce6a17a56f0f2ac0ad677c295d6",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Orders.Api",
           "folder": "vanarsdel-orders-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Orders.Api/VanArsdel.Orders.Api.csproj",
           "project_name": "VanArsdel.Orders.Api",
           "verification": "not run",
-          "digest": "sha256:d7237727e5730f36e5ba50e0d3de2398bb606ddd70dd996694f7d2727e122243",
+          "digest": "sha256:3fb6c453cb55858a840b9c47bc479e6a85694866ee11806006a3490b9ac96ae4",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Pricing.Api",
           "folder": "vanarsdel-pricing-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Pricing.Api/VanArsdel.Pricing.Api.csproj",
           "project_name": "VanArsdel.Pricing.Api",
           "verification": "not run",
-          "digest": "sha256:8ff50282bcc91aefe964f154c07f8a0f964642418ed4f74874ad5f31bc8f4700",
+          "digest": "sha256:d85ce7f06b2267d1baa1e9a78e416a76b9b07f05155ccec5085016b7c5bc6634",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Returns.Api",
           "folder": "vanarsdel-returns-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.Returns.Api/VanArsdel.Returns.Api.csproj",
           "project_name": "VanArsdel.Returns.Api",
           "verification": "not run",
-          "digest": "sha256:fc63b3af68a0f52ae98341463e6152f6a480d13b01f9b8e656efdf06fa9b8c97",
+          "digest": "sha256:242ffe06a0bdfb22bb4c4bc8a275db6035ca1e833367a3790e6f42cdaaadf239",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.Scheduler",
           "folder": "vanarsdel-scheduler",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
           "project": "src/VanArsdel.Scheduler/VanArsdel.Scheduler.csproj",
           "project_name": "VanArsdel.Scheduler",
           "verification": "not run",
-          "digest": "sha256:28116fe0b87a9da06573d00ef0d05f37e758bed0043bc7c77d574541042cf6c4",
+          "digest": "sha256:4325e2ea7aaa2928d90de8434b89afbbff97bf48c9f1afa2ecc255f177c58ac4",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.StoreManager",
           "folder": "vanarsdel-storemanager",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.StoreManager/VanArsdel.StoreManager.csproj",
           "project_name": "VanArsdel.StoreManager",
           "verification": "not run",
-          "digest": "sha256:3ec6d341f634076ac46fac252193f4acb05b7be6791d54c139fbad9414588e5b",
+          "digest": "sha256:8977780b69280786da6dde50a218833775a99fbbae7ea40c41711005ae3fd60f",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "VanArsdel.StoreOps.Api",
           "folder": "vanarsdel-storeops-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
           "project": "src/VanArsdel.StoreOps.Api/VanArsdel.StoreOps.Api.csproj",
           "project_name": "VanArsdel.StoreOps.Api",
           "verification": "not run",
-          "digest": "sha256:836a66415c2b73eeead4cde007746d7be5245bbe5002cadcba680552f65f111e",
+          "digest": "sha256:00b15ced2dfbb6f51819e33af2f4aca53f49c2d5fa3111f5693c71f34bfb20a0",
           "application": "scenarios/retail-backoffice"
         },
         {
           "component": "StudyData.Sponsor.Api",
           "folder": "studydata-sponsor-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261105.1524",
+          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261105.2119",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -940,7 +940,7 @@
         },
         {
           "component": "scenarios/expense-claims: expenses-web",
-          "reason": "security gate: image build failed"
+          "reason": "security gate: does not run with the hardened pod security context"
         },
         {
           "component": "scenarios/field-sales: FieldSales.Api",
@@ -1139,12 +1139,104 @@
           "reason": "rated D (rewrite)"
         }
       ],
-      "processed_at": "2026-11-05T15:24:08+00:00",
+      "processed_at": "2026-11-05T21:19:08+00:00",
       "overridden": [],
-      "seconds": 1219.4,
+      "seconds": 1567.6,
       "source_key": "",
       "dev_database": {},
-      "lab_services": {},
+      "lab_services": {
+        "needed": {
+          "mongodb": [
+            "VanArsdel.Customers.Api"
+          ],
+          "rabbitmq": [
+            "ControlTower.CarrierGateway",
+            "ControlTower.Events",
+            "ControlTower.Telematics",
+            "ControlTower.Tower.Api",
+            "Humongous.Documents",
+            "VanArsdel.Allocation.Api",
+            "VanArsdel.BackOffice",
+            "VanArsdel.Catalog.Api",
+            "VanArsdel.Customers.Api",
+            "VanArsdel.Gateway",
+            "VanArsdel.Inventory.Api",
+            "VanArsdel.Notifications",
+            "VanArsdel.Orders.Api",
+            "VanArsdel.Pricing.Api",
+            "VanArsdel.Returns.Api",
+            "VanArsdel.Scheduler",
+            "VanArsdel.StoreOps.Api"
+          ],
+          "redis": [
+            "FieldService.Web",
+            "VanArsdel.Allocation.Api",
+            "VanArsdel.BackOffice",
+            "VanArsdel.Catalog.Api",
+            "VanArsdel.Customers.Api",
+            "VanArsdel.Gateway",
+            "VanArsdel.Inventory.Api",
+            "VanArsdel.Notifications",
+            "VanArsdel.Orders.Api",
+            "VanArsdel.Pricing.Api",
+            "VanArsdel.Returns.Api",
+            "VanArsdel.Scheduler",
+            "VanArsdel.StoreOps.Api"
+          ],
+          "sftp": [
+            "ControlTower.CarrierGateway",
+            "ControlTower.Events",
+            "ControlTower.Telematics",
+            "ControlTower.Tower.Api"
+          ],
+          "sqlserver": [
+            "BatchRelease.Api",
+            "CityPermits.Inspections",
+            "CityPermits.OpenData",
+            "ControlTower.CarrierGateway",
+            "ControlTower.Events",
+            "ControlTower.Telematics",
+            "ControlTower.Tower.Api",
+            "ExpenseClaims.Api",
+            "ExpenseClaims.Jobs",
+            "FieldService.Web",
+            "FieldService.Worker",
+            "FreightRates.Api",
+            "FurnaceRecords.Api",
+            "FurnaceRecords.Worker",
+            "Humongous.Documents",
+            "Lucerne.Lending.CustomerPortal",
+            "Lucerne.Lending.Documents",
+            "PartsCatalog",
+            "PolicyChanges.Api",
+            "StudyData.Sponsor.Api",
+            "TradeRebates.Api",
+            "TradeRebates.Portal",
+            "TradeRebates.StatementWorker",
+            "VanArsdel.Allocation.Api",
+            "VanArsdel.BackOffice",
+            "VanArsdel.Catalog.Api",
+            "VanArsdel.Customers.Api",
+            "VanArsdel.Gateway",
+            "VanArsdel.Inventory.Api",
+            "VanArsdel.Notifications",
+            "VanArsdel.Orders.Api",
+            "VanArsdel.Pricing.Api",
+            "VanArsdel.Returns.Api",
+            "VanArsdel.Scheduler",
+            "VanArsdel.StoreOps.Api"
+          ]
+        },
+        "provided": [
+          "rabbitmq",
+          "sftp",
+          "sqlserver"
+        ],
+        "missing": [
+          "mongodb",
+          "redis"
+        ]
+      },
       "migration": {},
       "llm_usage": {},
       "apps": [
@@ -1156,7 +1248,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/account-statements",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/b2b-integration",
@@ -1166,7 +1259,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/b2b-integration",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/batch-release",
@@ -1178,7 +1272,29 @@
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/batch-release",
           "components": [
             "BatchRelease.Api"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "BatchRelease.Api"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "BatchRelease.Api": [
+                "sqlserver:ConnectionStrings__BatchRelease"
+              ]
+            },
+            "init_scripts": [
+              "db/00-create-database.sql",
+              "db/01-schema.sql",
+              "db/02-reference-data.sql",
+              "db/03-logins.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/broker-quotes",
@@ -1192,7 +1308,33 @@
             "Humongous.BrokerPortal",
             "Humongous.Documents",
             "Humongous.Workbench"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "Humongous.Documents"
+              ],
+              "rabbitmq": [
+                "Humongous.Documents"
+              ]
+            },
+            "provided": [
+              "sqlserver",
+              "rabbitmq"
+            ],
+            "missing": [],
+            "overrides": {
+              "Humongous.Documents": [
+                "sqlserver:ConnectionStrings__Quoting"
+              ]
+            },
+            "init_scripts": [
+              "deploy/sql/001-databases-and-logins.sql",
+              "deploy/sql/010-quoting-schema.sql",
+              "deploy/sql/020-identity-schema.sql",
+              "deploy/sql/030-reference-data.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/city-permits",
@@ -1205,7 +1347,30 @@
           "components": [
             "CityPermits.Inspections",
             "CityPermits.OpenData"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "CityPermits.Inspections",
+                "CityPermits.OpenData"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "CityPermits.Inspections": [
+                "sqlserver:ConnectionStrings__Permits"
+              ],
+              "CityPermits.OpenData": [
+                "sqlserver:ConnectionStrings__Permits"
+              ]
+            },
+            "init_scripts": [
+              "deploy/sql/03-filetable.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/clinic-scheduling",
@@ -1215,7 +1380,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/clinic-scheduling",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/consumer-loans",
@@ -1228,7 +1394,27 @@
           "components": [
             "Lucerne.Lending.CustomerPortal",
             "Lucerne.Lending.Documents"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "Lucerne.Lending.CustomerPortal",
+                "Lucerne.Lending.Documents"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "Lucerne.Lending.CustomerPortal": [
+                "sqlserver:ConnectionStrings__PortalIdentity"
+              ],
+              "Lucerne.Lending.Documents": [
+                "sqlserver:ConnectionStrings__Lending"
+              ]
+            }
+          }
         },
         {
           "folder": "scenarios/control-tower",
@@ -1243,7 +1429,72 @@
             "ControlTower.Events",
             "ControlTower.Telematics",
             "ControlTower.Tower.Api"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "ControlTower.CarrierGateway",
+                "ControlTower.Events",
+                "ControlTower.Telematics",
+                "ControlTower.Tower.Api"
+              ],
+              "rabbitmq": [
+                "ControlTower.CarrierGateway",
+                "ControlTower.Events",
+                "ControlTower.Telematics",
+                "ControlTower.Tower.Api"
+              ],
+              "sftp": [
+                "ControlTower.CarrierGateway",
+                "ControlTower.Events",
+                "ControlTower.Telematics",
+                "ControlTower.Tower.Api"
+              ]
+            },
+            "provided": [
+              "sqlserver",
+              "rabbitmq",
+              "sftp"
+            ],
+            "missing": [],
+            "overrides": {
+              "ControlTower.CarrierGateway": [
+                "sqlserver:ConnectionStrings__ControlTower",
+                "rabbitmq:ConnectionStrings__RabbitMq",
+                "sftp:Carriers__Sftp__NRDL__Host",
+                "sftp:Carriers__Sftp__NRDL__Port",
+                "sftp:Carriers__Sftp__NRDL__UserName",
+                "sftp:Carriers__Sftp__NSFL__Host",
+                "sftp:Carriers__Sftp__NSFL__Password",
+                "sftp:Carriers__Sftp__NSFL__UserName",
+                "sftp:Carriers__Sftp__OCNX__Host",
+                "sftp:Carriers__Sftp__OCNX__UserName",
+                "sftp:Carriers__Sftp__VNRL__Host",
+                "sftp:Carriers__Sftp__VNRL__Password",
+                "sftp:Carriers__Sftp__VNRL__Port",
+                "sftp:Carriers__Sftp__VNRL__UserName"
+              ],
+              "ControlTower.Events": [
+                "sqlserver:ConnectionStrings__ControlTower",
+                "rabbitmq:ConnectionStrings__RabbitMq"
+              ],
+              "ControlTower.Telematics": [
+                "sqlserver:ConnectionStrings__ControlTower",
+                "rabbitmq:ConnectionStrings__RabbitMq"
+              ],
+              "ControlTower.Tower.Api": [
+                "sqlserver:ConnectionStrings__ControlTower",
+                "rabbitmq:ConnectionStrings__RabbitMq"
+              ]
+            },
+            "init_scripts": [
+              "db/00-Database.sql",
+              "db/01-Schema.sql",
+              "db/02-Logins.sql",
+              "db/03-Hangfire.sql",
+              "db/10-ReferenceData.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/credit-desk",
@@ -1253,7 +1504,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/credit-desk",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/customer-care",
@@ -1263,7 +1515,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/customer-care",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/dealer-orders",
@@ -1273,7 +1526,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/dealer-orders",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/document-control",
@@ -1283,20 +1537,46 @@
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/document-control",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/expense-claims",
           "app": "containerization-challenge-expense-claims",
           "status": "deployed",
-          "reason": "runs the Make it A patch of order #206 for this commit: the scan left its folder as it is",
+          "reason": "runs the Make it A patch of order #209 for this commit: the scan left its folder as it is",
           "rating": "B",
           "path": "onek8s/_/containerization-challenge@expense-claims",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/expense-claims",
           "components": [
             "ExpenseClaims.Api",
             "ExpenseClaims.Jobs"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "ExpenseClaims.Api",
+                "ExpenseClaims.Jobs"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "ExpenseClaims.Api": [
+                "sqlserver:ConnectionStrings__ExpenseClaims"
+              ],
+              "ExpenseClaims.Jobs": [
+                "sqlserver:ConnectionStrings__ExpenseClaims"
+              ]
+            },
+            "init_scripts": [
+              "db/01-create-database.sql",
+              "db/02-quartz-tables.sql",
+              "db/03-expenseclaims-schema.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/field-sales",
@@ -1306,7 +1586,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-sales",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/field-service",
@@ -1319,7 +1600,32 @@
           "components": [
             "FieldService.Web",
             "FieldService.Worker"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "FieldService.Web",
+                "FieldService.Worker"
+              ],
+              "redis": [
+                "FieldService.Web"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [
+              "redis"
+            ],
+            "overrides": {
+              "FieldService.Web": [
+                "sqlserver:ConnectionStrings__FieldService"
+              ],
+              "FieldService.Worker": [
+                "sqlserver:ConnectionStrings__FieldService"
+              ]
+            }
+          }
         },
         {
           "folder": "scenarios/freight-rates",
@@ -1331,7 +1637,26 @@
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/freight-rates",
           "components": [
             "FreightRates.Api"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "FreightRates.Api"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "FreightRates.Api": [
+                "sqlserver:ConnectionStrings__FreightRates"
+              ]
+            },
+            "init_scripts": [
+              "deploy/sql/create-logins.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/furnace-records",
@@ -1344,7 +1669,32 @@
           "components": [
             "FurnaceRecords.Api",
             "FurnaceRecords.Worker"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "FurnaceRecords.Api",
+                "FurnaceRecords.Worker"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "FurnaceRecords.Api": [
+                "sqlserver:ConnectionStrings__FurnaceRecords"
+              ],
+              "FurnaceRecords.Worker": [
+                "sqlserver:ConnectionStrings__FurnaceRecords"
+              ]
+            },
+            "init_scripts": [
+              "deploy/sql/01-create-database.sql",
+              "deploy/sql/02-logins.sql",
+              "deploy/sql/03-reference-data.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/housing-management",
@@ -1354,7 +1704,8 @@
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/housing-management",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/label-station",
@@ -1364,7 +1715,8 @@
           "rating": "E",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/label-station",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/meter-billing",
@@ -1374,7 +1726,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/meter-billing",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/order-hub",
@@ -1384,7 +1737,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/order-hub",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/parts-catalog",
@@ -1396,7 +1750,23 @@
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/parts-catalog",
           "components": [
             "PartsCatalog"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "PartsCatalog"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "PartsCatalog": [
+                "sqlserver:ConnectionStrings__Catalog"
+              ]
+            }
+          }
         },
         {
           "folder": "scenarios/policy-changes",
@@ -1408,7 +1778,27 @@
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/policy-changes",
           "components": [
             "PolicyChanges.Api"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "PolicyChanges.Api"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "PolicyChanges.Api": [
+                "sqlserver:ConnectionStrings__PolicyChanges"
+              ]
+            },
+            "init_scripts": [
+              "deploy/sql/create-database.sql",
+              "deploy/sql/create-logins.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/product-returns",
@@ -1418,7 +1808,8 @@
           "rating": "B",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/product-returns",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/project-sites",
@@ -1428,7 +1819,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/project-sites",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/property-inspections",
@@ -1438,7 +1830,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/property-inspections",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/purchase-requests",
@@ -1448,7 +1841,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/purchase-requests",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/retail-backoffice",
@@ -1472,7 +1866,104 @@
             "VanArsdel.Scheduler",
             "VanArsdel.StoreManager",
             "VanArsdel.StoreOps.Api"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "VanArsdel.Allocation.Api",
+                "VanArsdel.BackOffice",
+                "VanArsdel.Catalog.Api",
+                "VanArsdel.Customers.Api",
+                "VanArsdel.Gateway",
+                "VanArsdel.Inventory.Api",
+                "VanArsdel.Notifications",
+                "VanArsdel.Orders.Api",
+                "VanArsdel.Pricing.Api",
+                "VanArsdel.Returns.Api",
+                "VanArsdel.Scheduler",
+                "VanArsdel.StoreOps.Api"
+              ],
+              "redis": [
+                "VanArsdel.Allocation.Api",
+                "VanArsdel.BackOffice",
+                "VanArsdel.Catalog.Api",
+                "VanArsdel.Customers.Api",
+                "VanArsdel.Gateway",
+                "VanArsdel.Inventory.Api",
+                "VanArsdel.Notifications",
+                "VanArsdel.Orders.Api",
+                "VanArsdel.Pricing.Api",
+                "VanArsdel.Returns.Api",
+                "VanArsdel.Scheduler",
+                "VanArsdel.StoreOps.Api"
+              ],
+              "rabbitmq": [
+                "VanArsdel.Allocation.Api",
+                "VanArsdel.BackOffice",
+                "VanArsdel.Catalog.Api",
+                "VanArsdel.Customers.Api",
+                "VanArsdel.Gateway",
+                "VanArsdel.Inventory.Api",
+                "VanArsdel.Notifications",
+                "VanArsdel.Orders.Api",
+                "VanArsdel.Pricing.Api",
+                "VanArsdel.Returns.Api",
+                "VanArsdel.Scheduler",
+                "VanArsdel.StoreOps.Api"
+              ],
+              "mongodb": [
+                "VanArsdel.Customers.Api"
+              ]
+            },
+            "provided": [
+              "sqlserver",
+              "rabbitmq"
+            ],
+            "missing": [
+              "redis",
+              "mongodb"
+            ],
+            "overrides": {
+              "VanArsdel.Allocation.Api": [
+                "sqlserver:ConnectionStrings__Allocation"
+              ],
+              "VanArsdel.BackOffice": [
+                "sqlserver:ConnectionStrings__DefaultConnection",
+                "rabbitmq:ConnectionStrings__DefaultConnection"
+              ],
+              "VanArsdel.Catalog.Api": [
+                "sqlserver:ConnectionStrings__Catalog"
+              ],
+              "VanArsdel.Customers.Api": [
+                "sqlserver:ConnectionStrings__Customers"
+              ],
+              "VanArsdel.Gateway": [
+                "sqlserver:ConnectionStrings__DefaultConnection",
+                "rabbitmq:ConnectionStrings__DefaultConnection"
+              ],
+              "VanArsdel.Inventory.Api": [
+                "sqlserver:ConnectionStrings__Inventory"
+              ],
+              "VanArsdel.Notifications": [
+                "sqlserver:ConnectionStrings__Notifications"
+              ],
+              "VanArsdel.Orders.Api": [
+                "sqlserver:ConnectionStrings__Orders"
+              ],
+              "VanArsdel.Pricing.Api": [
+                "sqlserver:ConnectionStrings__Pricing"
+              ],
+              "VanArsdel.Returns.Api": [
+                "sqlserver:ConnectionStrings__Returns"
+              ],
+              "VanArsdel.Scheduler": [
+                "sqlserver:ConnectionStrings__Quartz"
+              ],
+              "VanArsdel.StoreOps.Api": [
+                "sqlserver:ConnectionStrings__StoreOps"
+              ]
+            }
+          }
         },
         {
           "folder": "scenarios/shift-clock",
@@ -1482,7 +1973,8 @@
           "rating": "E",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/shift-clock",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/staff-onboarding",
@@ -1492,7 +1984,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/staff-onboarding",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/study-data",
@@ -1504,7 +1997,28 @@
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/study-data",
           "components": [
             "StudyData.Sponsor.Api"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "StudyData.Sponsor.Api"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "StudyData.Sponsor.Api": [
+                "sqlserver:ConnectionStrings__StudyData"
+              ]
+            },
+            "init_scripts": [
+              "deploy/sql/01-create-database.sql",
+              "deploy/sql/02-logins.sql",
+              "deploy/sql/03-audit-protection.sql"
+            ]
+          }
         },
         {
           "folder": "scenarios/supplier-invoices",
@@ -1514,7 +2028,8 @@
           "rating": "D",
           "path": "",
           "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/supplier-invoices",
-          "components": []
+          "components": [],
+          "lab_services": {}
         },
         {
           "folder": "scenarios/trade-rebates",
@@ -1528,7 +2043,31 @@
             "TradeRebates.Api",
             "TradeRebates.Portal",
             "TradeRebates.StatementWorker"
-          ]
+          ],
+          "lab_services": {
+            "needed": {
+              "sqlserver": [
+                "TradeRebates.Api",
+                "TradeRebates.Portal",
+                "TradeRebates.StatementWorker"
+              ]
+            },
+            "provided": [
+              "sqlserver"
+            ],
+            "missing": [],
+            "overrides": {
+              "TradeRebates.Api": [
+                "sqlserver:ConnectionStrings__TradeRebates"
+              ],
+              "TradeRebates.Portal": [
+                "sqlserver:ConnectionStrings__TradeRebates"
+              ],
+              "TradeRebates.StatementWorker": [
+                "sqlserver:ConnectionStrings__TradeRebates"
+              ]
+            }
+          }
         }
       ],
       "split_hint": {},

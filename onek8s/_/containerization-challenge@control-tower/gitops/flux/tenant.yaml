@@ -67,6 +67,8 @@ rules:
   - containerization-challenge-control-tower--controltower-tower-api
   - containerization-challenge-control-tower--cz-cosign-pub
   - containerization-challenge-control-tower--cz-git
+  - containerization-challenge-control-tower--cz-lab-rabbitmq
+  - containerization-challenge-control-tower--cz-lab-sftp
   - containerization-challenge-control-tower--cz-lab-sqlserver
   - containerization-challenge-control-tower--cz-registry
   verbs:

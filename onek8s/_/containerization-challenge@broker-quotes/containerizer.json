@@ -17,9 +17,9 @@
     {
       "component": "Humongous.BrokerPortal",
       "folder": "humongous-brokerportal",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.2119",
       "rating": "A",
-      "verdict": "config",
+      "verdict": "info",
       "role": "web",
       "project": "src/Humongous.BrokerPortal/Humongous.BrokerPortal.csproj",
       "project_name": "Humongous.BrokerPortal",
@@ -29,7 +29,7 @@
     {
       "component": "Humongous.Documents",
       "folder": "humongous-documents",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
@@ -41,7 +41,7 @@
     {
       "component": "Humongous.Workbench",
       "folder": "humongous-workbench",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -65,7 +65,7 @@
       "reason": "rated E (blocker)"
     }
   ],
-  "processed_at": "2026-11-05T15:24:08+00:00",
+  "processed_at": "2026-11-05T21:19:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
@@ -80,11 +80,10 @@
       ]
     },
     "provided": [
-      "sqlserver"
-    ],
-    "missing": [
+      "sqlserver",
       "rabbitmq"
     ],
+    "missing": [],
     "overrides": {
       "Humongous.Documents": [
         "sqlserver:ConnectionStrings__Quoting"

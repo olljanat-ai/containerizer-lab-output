@@ -9,9 +9,15 @@ The appliance runs these services in namespace `containerizer-lab` (Admin -> Lab
 - Database and login `containerization_challenge_broker_quotes`, owner of that database only.
 - **Humongous.Documents**: `ConnectionStrings__Quoting`
 
-## Needed but turned off
+## RabbitMQ
 
-- **RabbitMQ** (Humongous.Documents): turn it on under Admin -> Lab services and scan again; until then the app keeps its own settings.
+- Host `rabbitmq.containerizer-lab.svc.cluster.local`, port 5672 (RabbitMQ 4.4).
+- Credentials: Secret `lab-rabbitmq` (ExternalSecret, remote key `containerization-challenge-broker-quotes--cz-lab-rabbitmq`).
+- Database and login `containerization_challenge_broker_quotes`, owner of that database only.
+
+## Notes
+
+- Humongous.Documents: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
 
 ## SQL Server: the repository's setup scripts
 

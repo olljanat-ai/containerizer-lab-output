@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: vanarsdel-scheduler
-        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.1524
+        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.2119
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__Quartz
@@ -49,8 +49,6 @@ spec:
               key: connection-string
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: Serilog__WriteTo__0__Name
           value: Console
         - name: Serilog__WriteTo__1__Args__apiKey
@@ -103,7 +101,7 @@ metadata:
     app.kubernetes.io/name: vanarsdel-scheduler
     app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
   annotations:
-    containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver
+    containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
 spec:
   podSelector:
     matchLabels:
@@ -174,6 +172,16 @@ spec:
           containerizer.io/lab-service: sqlserver
     ports:
     - port: 1433
+      protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: containerizer-lab
+      podSelector:
+        matchLabels:
+          containerizer.io/lab-service: rabbitmq
+    ports:
+    - port: 5672
       protocol: TCP
 ---
 # values come from the secret store (ClusterSecretStore app-secrets, remote key containerization-challenge-retail-backoffice--vanarsdel-scheduler); never from Git

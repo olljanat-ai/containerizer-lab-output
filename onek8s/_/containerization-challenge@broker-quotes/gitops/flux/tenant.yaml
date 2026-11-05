@@ -63,6 +63,7 @@ rules:
   resourceNames:
   - containerization-challenge-broker-quotes--cz-cosign-pub
   - containerization-challenge-broker-quotes--cz-git
+  - containerization-challenge-broker-quotes--cz-lab-rabbitmq
   - containerization-challenge-broker-quotes--cz-lab-sqlserver
   - containerization-challenge-broker-quotes--cz-registry
   - containerization-challenge-broker-quotes--humongous-brokerportal

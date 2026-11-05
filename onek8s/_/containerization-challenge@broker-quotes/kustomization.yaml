@@ -10,8 +10,8 @@ resources:
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal
-    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-brokerportal:tag"}
+    newTag: 1.20261105.2119 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-brokerportal:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents
-    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-documents:tag"}
+    newTag: 1.20261105.2119 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-documents:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench
-    newTag: 1.20261105.1524 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-workbench:tag"}
+    newTag: 1.20261105.2119 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-workbench:tag"}

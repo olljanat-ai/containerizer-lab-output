@@ -17,19 +17,19 @@
     {
       "component": "CityPermits.Inspections",
       "folder": "citypermits-inspections",
-      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/CityPermits.Inspections/CityPermits.Inspections.csproj",
       "project_name": "CityPermits.Inspections",
       "verification": "not run",
-      "digest": "sha256:4ad2e1fc8e50454730ef233651d165eb7a5e95438d52320b5515cff8ffcd1761"
+      "digest": "sha256:4d4e38a61c39177a61cc5e9b4baa11811428e49011bf31a7ed3cbaf84f8996cf"
     },
     {
       "component": "CityPermits.OpenData",
       "folder": "citypermits-opendata",
-      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524",
+      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.2119",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -65,7 +65,7 @@
       "reason": "rated E (blocker)"
     }
   ],
-  "processed_at": "2026-11-05T15:24:08+00:00",
+  "processed_at": "2026-11-05T21:19:08+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/city-permits",

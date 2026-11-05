@@ -8,13 +8,13 @@
   "passed": true,
   "lint": {
     "error": 0,
-    "warning": 0,
+    "warning": 1,
     "info": 8
   },
   "components": [
     {
       "component": "citypermits-inspections",
-      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/aspnet:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -38,13 +38,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "citypermits-inspections/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/aspnet:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "citypermits-inspections/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/aspnet:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "citypermits-inspections/k8s.yaml: Deployment/citypermits-inspections/citypermits-inspections",
-          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -52,7 +58,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[15:26:52 WRN] No XML encryptor configured. Key {fcde41bd-a40b-4c71-906b-0c9a5d51782d} may be persisted to storage in unencrypted form.\n[15:26:52 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[15:26:52 INF] Now listening on: http://[::]:8080\n[15:26:52 INF] Application started. Press Ctrl+C to shut down.\n[15:26:52 INF] Hosting environment: Production\n[15:26:52 INF] Content root path: /app\n[15:26:55 INF] HTTP GET /index.html responded 200 in 48.8800 ms\n"
+        "log": "[21:22:07 WRN] No XML encryptor configured. Key {9d980942-0f83-46c8-bb72-9d7832a1614d} may be persisted to storage in unencrypted form.\n[21:22:07 WRN] Overriding address(es) 'http://+:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[21:22:08 INF] Now listening on: http://[::]:8080\n[21:22:08 INF] Application started. Press Ctrl+C to shut down.\n[21:22:08 INF] Hosting environment: Production\n[21:22:08 INF] Content root path: /app/\n[21:22:10 INF] HTTP GET /index.html responded 200 in 60.8751 ms\n"
       }
     },
     {
@@ -75,7 +81,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "citypermits-opendata/k8s.yaml: Deployment/citypermits-opendata/citypermits-opendata",
-          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -83,7 +89,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[15:26:58 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[15:26:58 INF] Now listening on: http://[::]:8080\n[15:26:58 INF] Application started. Press Ctrl+C to shut down.\n[15:26:58 INF] Hosting environment: Production\n[15:26:58 INF] Content root path: /app\n[15:27:01 INF] HTTP GET /health responded 200 in 90.4947 ms\n"
+        "log": "[21:22:14 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[21:22:14 INF] Now listening on: http://[::]:8080\n[21:22:14 INF] Application started. Press Ctrl+C to shut down.\n[21:22:14 INF] Hosting environment: Production\n[21:22:14 INF] Content root path: /app\n[21:22:16 INF] HTTP GET /health responded 200 in 113.7569 ms\n"
       }
     }
   ],

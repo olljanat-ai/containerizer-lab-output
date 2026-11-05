@@ -8,13 +8,13 @@
   "passed": true,
   "lint": {
     "error": 0,
-    "warning": 0,
+    "warning": 2,
     "info": 8
   },
   "components": [
     {
       "component": "lucerne-lending-customerportal",
-      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/aspnet:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -38,13 +38,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "lucerne-lending-customerportal/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/aspnet:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "lucerne-lending-customerportal/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/aspnet:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "lucerne-lending-customerportal/k8s.yaml: Deployment/lucerne-lending-customerportal/lucerne-lending-customerportal",
-          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -57,7 +63,7 @@
     },
     {
       "component": "lucerne-lending-documents",
-      "base": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/runtime:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -69,13 +75,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "lucerne-lending-documents/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/runtime:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "lucerne-lending-documents/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/runtime:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "lucerne-lending-documents/k8s.yaml: Deployment/lucerne-lending-documents/lucerne-lending-documents",
-          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],

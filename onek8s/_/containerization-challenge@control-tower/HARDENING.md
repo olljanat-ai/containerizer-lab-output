@@ -8,7 +8,7 @@ Controls from the NSA/CISA Kubernetes Hardening Guide (v1.2) and the CIS Kuberne
 | Read-only root file system; writable paths are size-limited emptyDirs | applied | Pod security > Immutable container file systems | 5.7.3 |  |
 | Minimal, patched base images; images scanned for vulnerabilities (containerizer gate) | applied | Pod security > Building secure container images |  |  |
 | Only signed images run | cluster action | Pod security > Building secure container images | 5.5.1 | Sign each pushed image (cosign sign --yes <registry>/<image>@<digest>) and enforce it with cluster/verify-images.yaml (Kyverno) or your admission controller. |
-| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524 is not pinned to a digest (controltower-carriergateway: Deployment/controltower-carriergateway/controltower-carriergateway); image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524 is not pinned to a digest (controltower-events: Deployment/controltower-events/controltower-events); image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524 is not pinned to a digest (controltower-telematics: Deployment/controltower-telematics/controltower-telematics); image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524 is not pinned to a digest (controltower-tower-api: Deployment/controltower-tower-api/controltower-tower-api) |
+| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.2119 is not pinned to a digest (controltower-carriergateway: Deployment/controltower-carriergateway/controltower-carriergateway); image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.2119 is not pinned to a digest (controltower-events: Deployment/controltower-events/controltower-events); image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.2119 is not pinned to a digest (controltower-telematics: Deployment/controltower-telematics/controltower-telematics); image-digest: image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.2119 is not pinned to a digest (controltower-tower-api: Deployment/controltower-tower-api/controltower-tower-api) |
 | Pod Security Admission "restricted" enforced on the namespace; workloads comply | applied | Pod security > Pod security enforcement | 5.2.1-5.2.13 |  |
 | Own ServiceAccount per component; no token mounted | applied | Pod security > Protecting Pod service account tokens | 5.1.5, 5.1.6 | no component calls the Kubernetes API |
 | Seccomp and AppArmor RuntimeDefault; all capabilities dropped | applied | Pod security > Hardening container environments | 5.7.2 |  |
@@ -36,10 +36,10 @@ Inferred from packages and configuration; everything else is denied. Review befo
 
 | Component | Allowed external dependencies |
 | --- | --- |
-| controltower-carriergateway | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver |
-| controltower-events | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver |
-| controltower-telematics | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver |
-| controltower-tower-api | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver |
+| controltower-carriergateway | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp |
+| controltower-events | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp |
+| controltower-telematics | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp |
+| controltower-tower-api | sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp |
 
 ## Secret store keys
 
@@ -64,6 +64,8 @@ Put these in the secret store before the first sync (docs/external-secrets.md); 
 | `containerization-challenge-control-tower--controltower-telematics` | `Telematics__Password` | controltower-telematics | `controltower-telematics-secrets` |
 | `containerization-challenge-control-tower--controltower-tower-api` | `ConnectionStrings__ControlTower` | controltower-tower-api | `controltower-tower-api-secrets` |
 | `containerization-challenge-control-tower--controltower-tower-api` | `ConnectionStrings__RabbitMq` | controltower-tower-api | `controltower-tower-api-secrets` |
+| `containerization-challenge-control-tower--cz-lab-rabbitmq` | every key | lab | `lab-rabbitmq` |
+| `containerization-challenge-control-tower--cz-lab-sftp` | every key | lab | `lab-sftp` |
 | `containerization-challenge-control-tower--cz-lab-sqlserver` | every key | lab | `lab-sqlserver` |
 
 ## Files

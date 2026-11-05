@@ -17,7 +17,7 @@
     "Gateway__WorkFolder": "/data/controltower/edi",
     "DOTNET_ENVIRONMENT": "Production",
     "ASPNETCORE_ENVIRONMENT": "Production",
-    "DOTNET_ROLL_FORWARD": "Major"
+    "ASPNETCORE_URLS": "http://+:8080"
   },
   "add_writable": [
     "/tmp",
@@ -55,6 +55,10 @@
       ]
     },
     {
+      "rule": "own-runtime",
+      "why": "Targets net6.0, which is out of support: it runs on its own .NET 6.0 runtime image (no longer patched), as built and tested, not rolled forward onto a newer runtime."
+    },
+    {
       "rule": "plan-dataprotection-keys",
       "why": "ASP.NET Core Data Protection keeps its key ring under the user's home folder. The generated manifests mount one key there, read-only, from a Secret that External Secrets Operator generates once in the cluster, so every replica and restart shares it (PersistKeysTo* in code takes over when present).",
       "refs": [
@@ -83,6 +87,7 @@
     "nrdl_rsa.pem",
     "ocnx_rsa.pem"
   ],
+  "runtime_line": "6.0",
   "rid": "portable",
   "egress": [
     {

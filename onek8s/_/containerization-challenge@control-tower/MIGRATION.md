@@ -22,15 +22,10 @@ Stateless: yes
 Facts: health=/health; entry=ControlTower.CarrierGateway.dll; connection_strings=['ControlTower', 'RabbitMq']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj: TargetFramework=net6.0`
-- ⚙ **Secrets in configuration files** [config]
-  - Why: Passwords or keys are committed in config files and would be baked into the image.
-  - Fix: Remove them from the image (.dockerignore) and inject via Kubernetes Secrets as environment variables.
-  - Learn more: [learn.microsoft.com: app secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets), [kubernetes.io: secret](https://kubernetes.io/docs/concepts/configuration/secret/)
-  - Evidence: `src/ControlTower.CarrierGateway/appsettings.Development.json:28: "PRCL": { "Mode": "Simulator", "WebhookSecret": "dev-webhook-secret" }`
 - ⚙ **Writes to the local file system** [config]
   - Why: Files written in the container are lost on restart and not shared between replicas, and the image's app folder is read-only for the non-root user.
   - Fix: Mount volumes (emptyDir for scratch/logs, PVC or object storage for data) at the paths the app writes to; log to stdout.
@@ -54,8 +49,8 @@ Facts: health=/health; entry=ControlTower.CarrierGateway.dll; connection_strings
 Facts: entry=ControlTower.Events.dll; connection_strings=['ControlTower', 'RabbitMq']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/ControlTower.Events/ControlTower.Events.csproj: TargetFramework=net6.0`
 - · **Windows certificate store** [info] (in library ControlTower.Integration, not referenced by this component)
@@ -71,8 +66,8 @@ Facts: entry=ControlTower.Events.dll; connection_strings=['ControlTower', 'Rabbi
 Facts: entry=ControlTower.Telematics.dll; connection_strings=['ControlTower', 'RabbitMq']; writable_dirs=['proseware/telematics']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/ControlTower.Telematics/ControlTower.Telematics.csproj: TargetFramework=net7.0`
 - · **Windows certificate store** [info] (in library ControlTower.Integration, not referenced by this component)
@@ -88,8 +83,8 @@ Facts: entry=ControlTower.Telematics.dll; connection_strings=['ControlTower', 'R
 Facts: health=/health; port=5180; entry=ControlTower.Tower.Api.dll; connection_strings=['ControlTower', 'RabbitMq']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj: TargetFramework=net6.0`
 - ⚙ **IIS modules configured in web.config** [config]

@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: lucerne-lending-customerportal
-        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.1524
+        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.2119
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__PortalIdentity
@@ -51,10 +51,10 @@ spec:
           value: Production
         - name: ASPNETCORE_HTTP_PORTS
           value: '8080'
+        - name: ASPNETCORE_URLS
+          value: http://+:8080
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: DataProtection__KeysFolder
           value: /data/consumerloans/portal/keys
         - name: NLog__variables__logDir

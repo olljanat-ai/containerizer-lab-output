@@ -39,17 +39,17 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: vanarsdel-storemanager
-        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524
+        image: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.2119
         imagePullPolicy: IfNotPresent
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_HTTP_PORTS
           value: '8080'
+        - name: ASPNETCORE_URLS
+          value: http://+:8080
         - name: DOTNET_ENVIRONMENT
           value: Production
-        - name: DOTNET_ROLL_FORWARD
-          value: Major
         - name: Serilog__WriteTo__0__Name
           value: Console
         - name: Serilog__WriteTo__1__Args__apiKey

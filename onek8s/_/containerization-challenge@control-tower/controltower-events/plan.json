@@ -11,8 +11,7 @@
   "env": {
     "CONTROLTOWER_LOG_DIR": "/app/logs",
     "Routing__RouterDbPath": "/data/controltower/routing/nordics-baltics.routerdb",
-    "DOTNET_ENVIRONMENT": "Production",
-    "DOTNET_ROLL_FORWARD": "Major"
+    "DOTNET_ENVIRONMENT": "Production"
   },
   "add_writable": [
     "/tmp",
@@ -41,6 +40,10 @@
       ]
     },
     {
+      "rule": "own-runtime",
+      "why": "Targets net6.0, which is out of support: it runs on its own .NET 6.0 runtime image (no longer patched), as built and tested, not rolled forward onto a newer runtime."
+    },
+    {
       "rule": "plan-file-logs",
       "why": "The app logs to files under its own folder; the folder is made writable so start-up does not fail on the read-only root file system (console logging is preferred).",
       "refs": [
@@ -58,6 +61,7 @@
       ]
     }
   ],
+  "runtime_line": "6.0",
   "rid": "portable",
   "egress": [
     {

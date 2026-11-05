@@ -20,6 +20,50 @@ spec:
   - extract:
       key: containerization-challenge-control-tower--cz-lab-sqlserver
 ---
+# RabbitMQ in the lab: the appliance's lab agent puts the credentials in the secret store (remote key containerization-challenge-control-tower--cz-lab-rabbitmq)
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: lab-rabbitmq
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-service: rabbitmq
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: lab-rabbitmq
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  dataFrom:
+  - extract:
+      key: containerization-challenge-control-tower--cz-lab-rabbitmq
+---
+# SFTP in the lab: the appliance's lab agent puts the credentials in the secret store (remote key containerization-challenge-control-tower--cz-lab-sftp)
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: lab-sftp
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-service: sftp
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: app-secrets
+  target:
+    name: lab-sftp
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  dataFrom:
+  - extract:
+      key: containerization-challenge-control-tower--cz-lab-sftp
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:

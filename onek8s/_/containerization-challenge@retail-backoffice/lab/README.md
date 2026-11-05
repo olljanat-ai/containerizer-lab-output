@@ -20,11 +20,31 @@ The appliance runs these services in namespace `containerizer-lab` (Admin -> Lab
 - **VanArsdel.Scheduler**: `ConnectionStrings__Quartz`
 - **VanArsdel.StoreOps.Api**: `ConnectionStrings__StoreOps`
 
+## RabbitMQ
+
+- Host `rabbitmq.containerizer-lab.svc.cluster.local`, port 5672 (RabbitMQ 4.4).
+- Credentials: Secret `lab-rabbitmq` (ExternalSecret, remote key `containerization-challenge-retail-backoffice--cz-lab-rabbitmq`).
+- Database and login `containerization_challenge_retail_backoffice`, owner of that database only.
+- **VanArsdel.BackOffice**: `ConnectionStrings__DefaultConnection`
+- **VanArsdel.Gateway**: `ConnectionStrings__DefaultConnection`
+
 ## Needed but turned off
 
 - **Redis** (VanArsdel.Allocation.Api, VanArsdel.BackOffice, VanArsdel.Catalog.Api, VanArsdel.Customers.Api, VanArsdel.Gateway, VanArsdel.Inventory.Api, VanArsdel.Notifications, VanArsdel.Orders.Api, VanArsdel.Pricing.Api, VanArsdel.Returns.Api, VanArsdel.Scheduler, VanArsdel.StoreOps.Api): turn it on under Admin -> Lab services and scan again; until then the app keeps its own settings.
-- **RabbitMQ** (VanArsdel.Allocation.Api, VanArsdel.BackOffice, VanArsdel.Catalog.Api, VanArsdel.Customers.Api, VanArsdel.Gateway, VanArsdel.Inventory.Api, VanArsdel.Notifications, VanArsdel.Orders.Api, VanArsdel.Pricing.Api, VanArsdel.Returns.Api, VanArsdel.Scheduler, VanArsdel.StoreOps.Api): turn it on under Admin -> Lab services and scan again; until then the app keeps its own settings.
 - **MongoDB** (VanArsdel.Customers.Api): turn it on under Admin -> Lab services and scan again; until then the app keeps its own settings.
+
+## Notes
+
+- VanArsdel.Allocation.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Catalog.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Customers.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Inventory.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Notifications: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Orders.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Pricing.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Returns.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.Scheduler: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
+- VanArsdel.StoreOps.Api: No RabbitMQ setting found in appsettings.json: point the app's settings at the Secret lab-rabbitmq (keys: connection-string, host, password, port, username, vhost).
 
 ## SQL Server: the repository's setup scripts
 

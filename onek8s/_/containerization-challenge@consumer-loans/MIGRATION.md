@@ -10,7 +10,7 @@ Stateless: yes
 
 | Component | Role | Target | Verdict | Score | Windows container stop-gap |
 | --- | --- | --- | --- | --- | --- |
-| Lucerne.Lending.CustomerPortal | web | net6.0 | Ready with configuration (no code changes) | 88 | - |
+| Lucerne.Lending.CustomerPortal | web | net6.0 | Ready with configuration (no code changes) | 89 | - |
 | Lucerne.Lending.Documents | worker | net6.0 | Ready with configuration (no code changes) | 87 | - |
 
 ### Lucerne.Lending.CustomerPortal
@@ -20,8 +20,8 @@ Stateless: yes
 Facts: port=5101; entry=Lucerne.Lending.CustomerPortal.dll; connection_strings=['PortalIdentity']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/Lucerne.Lending.CustomerPortal/Lucerne.Lending.CustomerPortal.csproj: TargetFramework=net6.0`
 - ⚙ **IIS modules configured in web.config** [config]
@@ -29,11 +29,6 @@ Facts: port=5101; entry=Lucerne.Lending.CustomerPortal.dll; connection_strings=[
   - Fix: Recreate as ingress-controller rules (NGINX/Gateway API) or ASP.NET Core middleware (UseRewriter can load IIS rewrite rules).
   - Learn more: [learn.microsoft.com: url rewriting](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/url-rewriting)
   - Evidence: `src/Lucerne.Lending.CustomerPortal/web.config:14: <requestFiltering>`
-- ⚙ **Secrets in configuration files** [config]
-  - Why: Passwords or keys are committed in config files and would be baked into the image.
-  - Fix: Remove them from the image (.dockerignore) and inject via Kubernetes Secrets as environment variables.
-  - Learn more: [learn.microsoft.com: app secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets), [kubernetes.io: secret](https://kubernetes.io/docs/concepts/configuration/secret/)
-  - Evidence: `src/Lucerne.Lending.CustomerPortal/appsettings.Development.json:8: "ApiKey": "dev-portal-key"`
 
 ### Lucerne.Lending.Documents
 
@@ -42,8 +37,8 @@ Facts: port=5101; entry=Lucerne.Lending.CustomerPortal.dll; connection_strings=[
 Facts: entry=Lucerne.Lending.Documents.dll; connection_strings=['Lending']
 
 - ⚙ **Out-of-support .NET runtime** [config]
-  - Why: Targets an out-of-support .NET version. It can still be containerized without code changes by rolling forward onto the supported .NET 10 runtime (DOTNET_ROLL_FORWARD=Major) or by publishing with -p:TargetFramework=net10.0.
-  - Fix: The generated Dockerfile builds with the .NET 10 SDK and runs on the .NET 10 runtime with roll-forward; retarget to net10.0 when convenient.
+  - Why: Targets an out-of-support .NET version. It is containerized without code changes: it runs on its own runtime image, which Microsoft no longer patches (or, where there is none, rolls forward onto the supported .NET 10 runtime).
+  - Fix: Nothing to change in code: the generated Dockerfile builds the project for the framework it targets and runs it on that framework's runtime image. Keep the target framework; upgrading .NET is a separate project, not part of containerizing the application.
   - Learn more: [dotnet.microsoft.com: dotnet core](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core), [learn.microsoft.com: selection](https://learn.microsoft.com/en-us/dotnet/core/versions/selection)
   - Evidence: `src/Lucerne.Lending.Documents/Lucerne.Lending.Documents.csproj: TargetFramework=net6.0`
 - ⚙ **Cultures / Windows time zone IDs** [config]
@@ -51,11 +46,6 @@ Facts: entry=Lucerne.Lending.Documents.dll; connection_strings=['Lending']
   - Fix: Use an image with ICU and tzdata (the generator picks *-chiseled-extra); keep DOTNET_SYSTEM_GLOBALIZATION_INVARIANT unset.
   - Learn more: [learn.microsoft.com: globalization icu](https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-icu), [devblogs.microsoft.com: date time and time zone enhancements in net 6](https://devblogs.microsoft.com/dotnet/date-time-and-time-zone-enhancements-in-net-6/), [github.com: image variants](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md)
   - Evidence: `src/Lucerne.Lending.Documents/Rendering/LoanDocuments.cs:12: private static readonly CultureInfo Fi = CultureInfo.GetCultureInfo("fi-FI");`
-- ⚙ **Secrets in configuration files** [config]
-  - Why: Passwords or keys are committed in config files and would be baked into the image.
-  - Fix: Remove them from the image (.dockerignore) and inject via Kubernetes Secrets as environment variables.
-  - Learn more: [learn.microsoft.com: app secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets), [kubernetes.io: secret](https://kubernetes.io/docs/concepts/configuration/secret/)
-  - Evidence: `src/Lucerne.Lending.Documents/appsettings.Development.json:6: "ApiKey": "dev-esign-key",`
 - ⚙ **Windows drive paths as defaults in code** [config] (in library Lucerne.Lending.Integration)
   - Why: Paths like @"D:\Data\Import" are not paths on Linux: the whole string becomes one oddly named relative file in the (read-only) working directory, so reads fail with FileNotFound and writes fail. As option defaults or fallbacks (?? @"D:\...") they apply whenever the setting is not configured.
   - Fix: Set the corresponding settings to Linux paths on mounted volumes with environment variables (Section__Key=/data/...); better, change the defaults to relative or Linux-friendly paths.

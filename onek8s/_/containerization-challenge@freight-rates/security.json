@@ -32,7 +32,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "freightrates-api/k8s.yaml: Deployment/freightrates-api/freightrates-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],

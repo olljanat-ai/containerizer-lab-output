@@ -6,6 +6,8 @@
 #   with environment variables to folders under /data, which the manifests mount as volumes; the
 #   application code is not changed.
 #   see https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/
+# - own-runtime: Targets net6.0, which is out of support: it runs on its own .NET 6.0 runtime image
+#   (no longer patched), as built and tested, not rolled forward onto a newer runtime.
 # - plan-global-json: global.json pins an SDK version that the build image may not have; it is
 #   removed in the build stage only (never in the repository) so the image's SDK builds the project.
 #   see https://learn.microsoft.com/en-us/dotnet/core/tools/global-json
@@ -23,7 +25,7 @@ RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=secret,id=ca,re
  && dotnet publish "src/Lucerne.Lending.Documents/Lucerne.Lending.Documents.csproj" --no-restore -c Release -o /out -p:UseAppHost=false -p:RuntimeIdentifier=linux-x64 --self-contained false
 RUN mkdir -p /writable/app/logs /writable/data/logs/consumerloans/documents /writable/tmp
 
-FROM mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra AS final
+FROM mcr.microsoft.com/dotnet/runtime:6.0 AS final
 WORKDIR /app
 # application files stay owned by root: read-only for the app user
 COPY --from=build /out .
@@ -31,7 +33,7 @@ COPY --from=build --chown=1654:1654 /writable/app/logs /app/logs
 COPY --from=build --chown=1654:1654 /writable/data/logs/consumerloans/documents /data/logs/consumerloans/documents
 COPY --from=build --chown=1654:1654 /writable/tmp /tmp
 ENV DOTNET_ENVIRONMENT="Production" \
-    DOTNET_ROLL_FORWARD="Major" \
+    HOME="/home/app" \
     NLog__variables__logDir="/data/logs/consumerloans/documents"
 USER 1654
 ENTRYPOINT ["dotnet", "Lucerne.Lending.Documents.dll"]

@@ -8,13 +8,13 @@
   "passed": true,
   "lint": {
     "error": 0,
-    "warning": 0,
+    "warning": 4,
     "info": 14
   },
   "components": [
     {
       "component": "controltower-carriergateway",
-      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/aspnet:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -26,13 +26,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "controltower-carriergateway/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/aspnet:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "controltower-carriergateway/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/aspnet:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-carriergateway/k8s.yaml: Deployment/controltower-carriergateway/controltower-carriergateway",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -45,7 +51,7 @@
     },
     {
       "component": "controltower-events",
-      "base": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/runtime:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -57,13 +63,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "controltower-events/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/runtime:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "controltower-events/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/runtime:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-events/k8s.yaml: Deployment/controltower-events/controltower-events",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -76,7 +88,7 @@
     },
     {
       "component": "controltower-telematics",
-      "base": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/runtime:7.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -88,13 +100,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "controltower-telematics/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/runtime:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/runtime:7.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "controltower-telematics/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/runtime:7.0 reached end of support on 2024-05-14; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-telematics/k8s.yaml: Deployment/controltower-telematics/controltower-telematics",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -107,7 +125,7 @@
     },
     {
       "component": "controltower-tower-api",
-      "base": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra",
+      "base": "mcr.microsoft.com/dotnet/aspnet:6.0",
       "lint": [
         {
           "check": "df-base-digest",
@@ -131,13 +149,19 @@
           "check": "df-base-digest",
           "severity": "info",
           "target": "controltower-tower-api/Dockerfile",
-          "message": "mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra is not pinned to a digest (generate --pin-digests)"
+          "message": "mcr.microsoft.com/dotnet/aspnet:6.0 is not pinned to a digest (generate --pin-digests)"
+        },
+        {
+          "check": "df-base-eol",
+          "severity": "warning",
+          "target": "controltower-tower-api/Dockerfile",
+          "message": "runtime image mcr.microsoft.com/dotnet/aspnet:6.0 reached end of support on 2024-11-12; move to 10.0"
         },
         {
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-tower-api/k8s.yaml: Deployment/controltower-tower-api/controltower-tower-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.2119 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -145,7 +169,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "15:29:54.4324|WARN|XmlKeyManager|No XML encryptor configured. Key {f44fe0fb-6b52-4a20-98ff-0fd892b5d03a} may be persisted to storage in unencrypted form. \n15:29:56.4321|WARN|HttpsRedirectionMiddleware|Failed to determine the https port for redirect. \n"
+        "log": "21:25:53.3401|WARN|XmlKeyManager|No XML encryptor configured. Key {ff0a962c-539b-4802-8444-acd08cc9494c} may be persisted to storage in unencrypted form. \n21:25:55.2650|WARN|HttpsRedirectionMiddleware|Failed to determine the https port for redirect. \n"
       }
     }
   ],

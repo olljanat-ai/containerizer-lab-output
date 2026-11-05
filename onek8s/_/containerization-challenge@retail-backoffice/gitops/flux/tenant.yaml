@@ -63,6 +63,7 @@ rules:
   resourceNames:
   - containerization-challenge-retail-backoffice--cz-cosign-pub
   - containerization-challenge-retail-backoffice--cz-git
+  - containerization-challenge-retail-backoffice--cz-lab-rabbitmq
   - containerization-challenge-retail-backoffice--cz-lab-sqlserver
   - containerization-challenge-retail-backoffice--cz-registry
   - containerization-challenge-retail-backoffice--vanarsdel-allocation-api

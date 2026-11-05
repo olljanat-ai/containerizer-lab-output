@@ -6,6 +6,8 @@
 #   with environment variables to folders under /data, which the manifests mount as volumes; the
 #   application code is not changed.
 #   see https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/
+# - own-runtime: Targets net6.0, which is out of support: it runs on its own .NET 6.0 runtime image
+#   (no longer patched), as built and tested, not rolled forward onto a newer runtime.
 # - plan-file-logs: The app logs to files under its own folder; the folder is made writable so
 #   start-up does not fail on the read-only root file system (console logging is preferred).
 #   see https://learn.microsoft.com/en-us/dotnet/core/extensions/logging/providers
@@ -42,7 +44,7 @@ RUN --mount=type=cache,target=/root/.nuget/packages --mount=type=secret,id=ca,re
  && dotnet publish "src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj" --no-restore -c Release -o /out -p:UseAppHost=false
 RUN mkdir -p /writable/app/logs /writable/data/controltower/keys/tower /writable/tmp
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.14-noble-chiseled-extra AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
 WORKDIR /app
 # application files stay owned by root: read-only for the app user
 COPY --from=build /out .
@@ -51,10 +53,11 @@ COPY --from=build --chown=1654:1654 /writable/data/controltower/keys/tower /data
 COPY --from=build --chown=1654:1654 /writable/tmp /tmp
 ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_HTTP_PORTS="8080" \
+    ASPNETCORE_URLS="http://+:8080" \
     CONTROLTOWER_LOG_DIR="/app/logs" \
     DOTNET_ENVIRONMENT="Production" \
-    DOTNET_ROLL_FORWARD="Major" \
-    DataProtection__KeyFolder="/data/controltower/keys/tower"
+    DataProtection__KeyFolder="/data/controltower/keys/tower" \
+    HOME="/home/app"
 USER 1654
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "ControlTower.Tower.Api.dll"]

@@ -13,7 +13,7 @@
     "Serilog__WriteTo__0__Name": "Console",
     "DOTNET_ENVIRONMENT": "Production",
     "ASPNETCORE_ENVIRONMENT": "Production",
-    "DOTNET_ROLL_FORWARD": "Major"
+    "ASPNETCORE_URLS": "http://+:8080"
   },
   "add_writable": [
     "/tmp",
@@ -44,6 +44,10 @@
         "https://github.com/serilog/serilog-sinks-console",
         "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
       ]
+    },
+    {
+      "rule": "own-runtime",
+      "why": "Targets netcoreapp3.1, which is out of support: it runs on its own .NET 3.1 runtime image (no longer patched), as built and tested, not rolled forward onto a newer runtime."
     },
     {
       "rule": "plan-global-json",
@@ -78,6 +82,7 @@
       ]
     }
   ],
+  "runtime_line": "3.1",
   "rid": "portable",
   "egress": [
     {
