@@ -12,6 +12,7 @@ resources:
 - ../../../onek8s/_/containerization-challenge@policy-changes/gitops/flux
 - ../../../onek8s/_/containerization-challenge@retail-backoffice/gitops/flux
 - ../../../onek8s/_/containerization-challenge@study-data/gitops/flux
+- ../../../onek8s/_/containerization-challenge@trade-rebates/gitops/flux
 - ../../idp
 patches:
 - target:
@@ -145,3 +146,14 @@ patches:
     "name": "studydata-sponsor-api", "namespace": "containerization-challenge-study-data"},
     {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
     "namespace": "containerization-challenge-study-data"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-trade-rebates
+    namespace: containerization-challenge-trade-rebates
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "traderebates-api", "namespace": "containerization-challenge-trade-rebates"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
+    "namespace": "containerization-challenge-trade-rebates"}]}]'
