@@ -1,0 +1,1059 @@
+{
+  "checked_at": "2026-11-05T15:44:32+00:00",
+  "revision": "94ac2d061c6e2daa089a7629f5cbf8749a073d64",
+  "gitops": "flux",
+  "cluster": "Kubernetes v1.37.1+k3s1",
+  "skipped": "",
+  "learned": [],
+  "components": [
+    {
+      "app": "containerization-challenge-batch-release",
+      "folder": "onek8s/_/containerization-challenge@batch-release",
+      "component": "BatchRelease.Api",
+      "project": "src/BatchRelease.Api/BatchRelease.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/batchrelease-api"
+      ],
+      "url": "https://batchrelease-api-containerization-challenge-batch-release.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:01+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-broker-quotes",
+      "folder": "onek8s/_/containerization-challenge@broker-quotes",
+      "component": "Humongous.BrokerPortal",
+      "project": "src/Humongous.BrokerPortal/Humongous.BrokerPortal.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.1524",
+      "workloads": [
+        "Deployment/humongous-brokerportal"
+      ],
+      "url": "https://humongous-brokerportal-containerization-challenge-broker-quotes.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-broker-quotes",
+      "folder": "onek8s/_/containerization-challenge@broker-quotes",
+      "component": "Humongous.Documents",
+      "project": "src/Humongous.Documents/Humongous.Documents.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.1524",
+      "workloads": [
+        "Deployment/humongous-documents"
+      ],
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-broker-quotes",
+      "folder": "onek8s/_/containerization-challenge@broker-quotes",
+      "component": "Humongous.Workbench",
+      "project": "src/Humongous.Workbench/Humongous.Workbench.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.1524",
+      "workloads": [
+        "Deployment/humongous-workbench"
+      ],
+      "url": "https://humongous-workbench-containerization-challenge-broker-quotes.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-city-permits",
+      "folder": "onek8s/_/containerization-challenge@city-permits",
+      "component": "CityPermits.Inspections",
+      "project": "src/CityPermits.Inspections/CityPermits.Inspections.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261105.1524",
+      "workloads": [
+        "Deployment/citypermits-inspections"
+      ],
+      "url": "https://citypermits-inspections-containerization-challenge-city-permits.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-city-permits",
+      "folder": "onek8s/_/containerization-challenge@city-permits",
+      "component": "CityPermits.OpenData",
+      "project": "src/CityPermits.OpenData/CityPermits.OpenData.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261105.1524",
+      "workloads": [
+        "Deployment/citypermits-opendata"
+      ],
+      "url": "https://citypermits-opendata-containerization-challenge-city-permits.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-consumer-loans",
+      "folder": "onek8s/_/containerization-challenge@consumer-loans",
+      "component": "Lucerne.Lending.CustomerPortal",
+      "project": "src/Lucerne.Lending.CustomerPortal/Lucerne.Lending.CustomerPortal.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261105.1524",
+      "workloads": [
+        "Deployment/lucerne-lending-customerportal"
+      ],
+      "url": "https://lucerne-lending-customerportal-containerization-challe-9dd739dd.sandbox.lab/",
+      "url_check": "HTTP 302",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-consumer-loans",
+      "folder": "onek8s/_/containerization-challenge@consumer-loans",
+      "component": "Lucerne.Lending.Documents",
+      "project": "src/Lucerne.Lending.Documents/Lucerne.Lending.Documents.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.1524",
+      "workloads": [
+        "Deployment/lucerne-lending-documents"
+      ],
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-control-tower",
+      "folder": "onek8s/_/containerization-challenge@control-tower",
+      "component": "ControlTower.CarrierGateway",
+      "project": "src/ControlTower.CarrierGateway/ControlTower.CarrierGateway.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.1524",
+      "workloads": [
+        "Deployment/controltower-carriergateway"
+      ],
+      "url": "https://controltower-carriergateway-containerization-challenge-512c0b90.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "CrashLoopBackOff: back-off 1m20s restarting failed container=controltower-carriergateway pod=controltower-carriergateway-5996794777-xjkph_containerization-challenge-control-tower(a0037d35-14d0-4a87-b454-cbbd7edad39f) - A Secret or ConfigMap the pod needs does not exist in the namespace yet; create it, or let External Secrets create it from the ClusterSecretStore app-secrets (see HARDENING.md).",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "0/1",
+      "restarts": 4,
+      "states": [
+        "CrashLoopBackOff: back-off 1m20s restarting failed container=controltower-carriergateway pod=controltower-carriergateway-5996794777-xjkph_containerization-challenge-control-tower(a0037d35-14d0-4a87-b454-cbbd7edad39f)",
+        "last exit Completed (exit 0)"
+      ],
+      "events": [
+        {
+          "reason": "BackOff",
+          "message": "Back-off restarting failed container controltower-carriergateway in pod controltower-carriergateway-5996794777-xjkph_containerization-challenge-control-tower(a0037d35-14d0-4a87-b454-cbbd7edad39f)",
+          "count": 11,
+          "object": "controltower-carriergateway-5996794777-xjkph",
+          "last": "2026-11-05T15:54:45Z"
+        },
+        {
+          "reason": "Unhealthy",
+          "message": "Liveness probe failed: Get \"http://10.42.0.87:8080/health\": dial tcp 10.42.0.87:8080: connect: connection refused",
+          "count": 1,
+          "object": "controltower-carriergateway-5996794777-xjkph",
+          "last": "2026-11-05T15:54:25Z"
+        },
+        {
+          "reason": "Unhealthy",
+          "message": "Readiness probe failed: Get \"http://10.42.0.87:8080/health\": dial tcp 10.42.0.87:8080: connect: connection refused",
+          "count": 1,
+          "object": "controltower-carriergateway-5996794777-xjkph",
+          "last": "2026-11-05T15:54:25Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 9,
+          "object": "controltower-carriergateway-files",
+          "last": "2026-11-05T15:54:16Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 9,
+          "object": "controltower-carriergateway-secrets",
+          "last": "2026-11-05T15:54:16Z"
+        },
+        {
+          "reason": "Unhealthy",
+          "message": "Startup probe failed: Get \"http://10.42.0.87:8080/health\": dial tcp 10.42.0.87:8080: connect: connection refused",
+          "count": 2,
+          "object": "controltower-carriergateway-5996794777-xjkph",
+          "last": "2026-11-05T15:51:40Z"
+        },
+        {
+          "reason": "Failed",
+          "message": "Error: secret \"lab-sqlserver\" not found",
+          "count": 2,
+          "object": "controltower-carriergateway-5996794777-xjkph",
+          "last": "2026-11-05T15:50:08Z"
+        },
+        {
+          "reason": "FailedMount",
+          "message": "MountVolume.SetUp failed for volume \"w2-dataprotection-keys\" : secret \"controltower-carriergateway-dataprotection\" not found",
+          "count": 2,
+          "object": "controltower-carriergateway-5996794777-xjkph",
+          "last": "2026-11-05T15:50:04Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 2,
+          "object": "controltower-carriergateway-dataprotection",
+          "last": "2026-11-05T15:50:03Z"
+        }
+      ],
+      "diagnosis": {
+        "rule": "cluster-config-missing",
+        "outcome": "environment",
+        "stage": "cluster",
+        "diagnosis": "A Secret or ConfigMap the pod needs does not exist in the namespace yet; create it, or let External Secrets create it from the ClusterSecretStore app-secrets (see HARDENING.md).",
+        "refs": [
+          "https://kubernetes.io/docs/concepts/configuration/secret/",
+          "https://external-secrets.io/latest/"
+        ]
+      }
+    },
+    {
+      "app": "containerization-challenge-control-tower",
+      "folder": "onek8s/_/containerization-challenge@control-tower",
+      "component": "ControlTower.Events",
+      "project": "src/ControlTower.Events/ControlTower.Events.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.1524",
+      "workloads": [
+        "Deployment/controltower-events"
+      ],
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "CrashLoopBackOff: back-off 2m40s restarting failed container=controltower-events pod=controltower-events-6fc55999fc-5qwnt_containerization-challenge-control-tower(f4d86bb3-c967-4101-90c8-40e92c3f66ca) - A Secret or ConfigMap the pod needs does not exist in the namespace yet; create it, or let External Secrets create it from the ClusterSecretStore app-secrets (see HARDENING.md).",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "0/1",
+      "restarts": 5,
+      "states": [
+        "CrashLoopBackOff: back-off 2m40s restarting failed container=controltower-events pod=controltower-events-6fc55999fc-5qwnt_containerization-challenge-control-tower(f4d86bb3-c967-4101-90c8-40e92c3f66ca)",
+        "last exit Completed (exit 0)"
+      ],
+      "events": [
+        {
+          "reason": "BackOff",
+          "message": "Back-off restarting failed container controltower-events in pod controltower-events-6fc55999fc-5qwnt_containerization-challenge-control-tower(f4d86bb3-c967-4101-90c8-40e92c3f66ca)",
+          "count": 6,
+          "object": "controltower-events-6fc55999fc-5qwnt",
+          "last": "2026-11-05T15:55:26Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 9,
+          "object": "controltower-events-secrets",
+          "last": "2026-11-05T15:54:16Z"
+        },
+        {
+          "reason": "Failed",
+          "message": "Error: secret \"lab-sqlserver\" not found",
+          "count": 2,
+          "object": "controltower-events-6fc55999fc-5qwnt",
+          "last": "2026-11-05T15:50:06Z"
+        }
+      ],
+      "diagnosis": {
+        "rule": "cluster-config-missing",
+        "outcome": "environment",
+        "stage": "cluster",
+        "diagnosis": "A Secret or ConfigMap the pod needs does not exist in the namespace yet; create it, or let External Secrets create it from the ClusterSecretStore app-secrets (see HARDENING.md).",
+        "refs": [
+          "https://kubernetes.io/docs/concepts/configuration/secret/",
+          "https://external-secrets.io/latest/"
+        ]
+      }
+    },
+    {
+      "app": "containerization-challenge-control-tower",
+      "folder": "onek8s/_/containerization-challenge@control-tower",
+      "component": "ControlTower.Telematics",
+      "project": "src/ControlTower.Telematics/ControlTower.Telematics.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.1524",
+      "workloads": [
+        "Deployment/controltower-telematics"
+      ],
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-control-tower",
+      "folder": "onek8s/_/containerization-challenge@control-tower",
+      "component": "ControlTower.Tower.Api",
+      "project": "src/ControlTower.Tower.Api/ControlTower.Tower.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/controltower-tower-api"
+      ],
+      "url": "https://controltower-tower-api-containerization-challenge-control-tower.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-expense-claims",
+      "folder": "onek8s/_/containerization-challenge@expense-claims",
+      "component": "ExpenseClaims.Api",
+      "project": "src/ExpenseClaims.Api/ExpenseClaims.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1326-refactor.206",
+      "workloads": [
+        "Deployment/expenseclaims-api"
+      ],
+      "url": "https://expenseclaims-api-containerization-challenge-expense-claims.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-expense-claims",
+      "folder": "onek8s/_/containerization-challenge@expense-claims",
+      "component": "ExpenseClaims.Jobs",
+      "project": "src/ExpenseClaims.Jobs/ExpenseClaims.Jobs.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1326-refactor.206",
+      "workloads": [
+        "Deployment/expenseclaims-jobs"
+      ],
+      "url": "https://expenseclaims-jobs-containerization-challenge-expense-claims.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready, 2 restart(s) before it became stable",
+      "checked_at": "2026-11-05T15:56:02+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 2,
+      "states": [
+        "last exit Error (exit 139)"
+      ]
+    },
+    {
+      "app": "containerization-challenge-field-service",
+      "folder": "onek8s/_/containerization-challenge@field-service",
+      "component": "FieldService.Web",
+      "project": "src/FieldService.Web/FieldService.Web.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-web:1.20261104.2110-refactor.192",
+      "workloads": [
+        "Deployment/fieldservice-web"
+      ],
+      "url": "https://fieldservice-web-containerization-challenge-field-service.sandbox.lab/",
+      "url_check": "HTTP 302",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready, 2 restart(s) before it became stable",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 2,
+      "states": [
+        "last exit Error (exit 139)"
+      ]
+    },
+    {
+      "app": "containerization-challenge-field-service",
+      "folder": "onek8s/_/containerization-challenge@field-service",
+      "component": "FieldService.Worker",
+      "project": "src/FieldService.Worker/FieldService.Worker.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker:1.20261104.2110-refactor.192",
+      "workloads": [
+        "Deployment/fieldservice-worker"
+      ],
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready, 1 restart(s) before it became stable",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 1,
+      "states": [
+        "last exit Completed (exit 0)"
+      ]
+    },
+    {
+      "app": "containerization-challenge-freight-rates",
+      "folder": "onek8s/_/containerization-challenge@freight-rates",
+      "component": "FreightRates.Api",
+      "project": "src/FreightRates.Api/FreightRates.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/freightrates-api"
+      ],
+      "url": "https://freightrates-api-containerization-challenge-freight-rates.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "CrashLoopBackOff: back-off 5m0s restarting failed container=freightrates-api pod=freightrates-api-ccbf5996d-kw6cb_containerization-challenge-freight-rates(2f067a20-45eb-4333-975f-8336780b4385) - The namespace's ResourceQuota or LimitRange does not admit the pods' resource requests and limits.",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "0/1",
+      "restarts": 276,
+      "states": [
+        "CrashLoopBackOff: back-off 5m0s restarting failed container=freightrates-api pod=freightrates-api-ccbf5996d-kw6cb_containerization-challenge-freight-rates(2f067a20-45eb-4333-975f-8336780b4385)",
+        "last exit Completed (exit 0)"
+      ],
+      "events": [
+        {
+          "reason": "BackOff",
+          "message": "Back-off restarting failed container freightrates-api in pod freightrates-api-ccbf5996d-kw6cb_containerization-challenge-freight-rates(2f067a20-45eb-4333-975f-8336780b4385)",
+          "count": 34,
+          "object": "freightrates-api-ccbf5996d-kw6cb",
+          "last": "2026-11-05T15:52:45Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "(combined from similar events): Error creating: pods \"freightrates-api-7b456f6d48-jdkkx\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 7,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:52:23Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 17,
+          "object": "freightrates-api-secrets",
+          "last": "2026-11-05T15:50:00Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-s8cnb\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:40Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-8xq2c\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:39Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-27lgg\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:39Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-86plz\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:39Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-hjnzj\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:39Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-h7spk\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:39Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"freightrates-api-7b456f6d48-nx8qs\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "freightrates-api-7b456f6d48",
+          "last": "2026-11-05T15:49:39Z"
+        }
+      ],
+      "diagnosis": {
+        "rule": "cluster-quota",
+        "outcome": "environment",
+        "stage": "cluster",
+        "diagnosis": "The namespace's ResourceQuota or LimitRange does not admit the pods' resource requests and limits.",
+        "refs": [
+          "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+        ]
+      }
+    },
+    {
+      "app": "containerization-challenge-furnace-records",
+      "folder": "onek8s/_/containerization-challenge@furnace-records",
+      "component": "FurnaceRecords.Api",
+      "project": "src/FurnaceRecords.Api/FurnaceRecords.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/furnacerecords-api"
+      ],
+      "url": "https://furnacerecords-api-containerization-challenge-furnace-records.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-furnace-records",
+      "folder": "onek8s/_/containerization-challenge@furnace-records",
+      "component": "FurnaceRecords.Worker",
+      "project": "src/FurnaceRecords.Worker/FurnaceRecords.Worker.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.1524",
+      "workloads": [
+        "Deployment/furnacerecords-worker"
+      ],
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 0
+    },
+    {
+      "app": "containerization-challenge-parts-catalog",
+      "folder": "onek8s/_/containerization-challenge@parts-catalog",
+      "component": "PartsCatalog",
+      "project": "src/PartsCatalog/PartsCatalog.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-parts-catalog-refactor-191/partscatalog:1.20261104.2052-refactor.191",
+      "workloads": [
+        "Deployment/partscatalog"
+      ],
+      "url": "https://partscatalog-containerization-challenge-parts-catalog.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready, 2 restart(s) before it became stable",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 2,
+      "states": [
+        "last exit Error (exit 139)"
+      ]
+    },
+    {
+      "app": "containerization-challenge-policy-changes",
+      "folder": "onek8s/_/containerization-challenge@policy-changes",
+      "component": "PolicyChanges.Api",
+      "project": "src/PolicyChanges.Api/PolicyChanges.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/policychanges-api"
+      ],
+      "url": "https://policychanges-api-containerization-challenge-policy-changes.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "pods cannot be created: pods \"policychanges-api-bd694f8d9-66n9k\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi - The namespace's ResourceQuota or LimitRange does not admit the pods' resource requests and limits.",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 4,
+      "states": [
+        "last exit Completed (exit 0)"
+      ],
+      "events": [
+        {
+          "reason": "FailedCreate",
+          "message": "(combined from similar events): Error creating: pods \"policychanges-api-bd694f8d9-x4266\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 8,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:50:30Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 17,
+          "object": "policychanges-api-secrets",
+          "last": "2026-11-05T15:50:00Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-dwk8k\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:03Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-5zj4z\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:03Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-66n9k\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:02Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-6hp4m\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:02Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-9p6lt\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:02Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-z24c4\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:02Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-z7wct\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:02Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"policychanges-api-bd694f8d9-tf6f9\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "policychanges-api-bd694f8d9",
+          "last": "2026-11-05T15:45:02Z"
+        }
+      ],
+      "diagnosis": {
+        "rule": "cluster-quota",
+        "outcome": "environment",
+        "stage": "cluster",
+        "diagnosis": "The namespace's ResourceQuota or LimitRange does not admit the pods' resource requests and limits.",
+        "refs": [
+          "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+        ]
+      }
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Allocation.Api",
+      "project": "src/VanArsdel.Allocation.Api/VanArsdel.Allocation.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-allocation-api"
+      ],
+      "url": "https://vanarsdel-allocation-api-containerization-challenge-re-239db0ad.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.BackOffice",
+      "project": "src/VanArsdel.BackOffice/VanArsdel.BackOffice.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-backoffice"
+      ],
+      "url": "https://vanarsdel-backoffice-containerization-challenge-retail-ff631ec3.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Catalog.Api",
+      "project": "src/VanArsdel.Catalog.Api/VanArsdel.Catalog.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-catalog-api"
+      ],
+      "url": "https://vanarsdel-catalog-api-containerization-challenge-retai-c853cc21.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Customers.Api",
+      "project": "src/VanArsdel.Customers.Api/VanArsdel.Customers.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-customers-api"
+      ],
+      "url": "https://vanarsdel-customers-api-containerization-challenge-ret-e9b57d70.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Gateway",
+      "project": "src/VanArsdel.Gateway/VanArsdel.Gateway.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-gateway"
+      ],
+      "url": "https://vanarsdel-gateway-containerization-challenge-retail-backoffice.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Inventory.Api",
+      "project": "src/VanArsdel.Inventory.Api/VanArsdel.Inventory.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-inventory-api"
+      ],
+      "url": "https://vanarsdel-inventory-api-containerization-challenge-ret-d9dcf778.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Notifications",
+      "project": "src/VanArsdel.Notifications/VanArsdel.Notifications.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-notifications"
+      ],
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Orders.Api",
+      "project": "src/VanArsdel.Orders.Api/VanArsdel.Orders.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-orders-api"
+      ],
+      "url": "https://vanarsdel-orders-api-containerization-challenge-retail-ceca3486.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Pricing.Api",
+      "project": "src/VanArsdel.Pricing.Api/VanArsdel.Pricing.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-pricing-api"
+      ],
+      "url": "https://vanarsdel-pricing-api-containerization-challenge-retai-58aa02d4.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Returns.Api",
+      "project": "src/VanArsdel.Returns.Api/VanArsdel.Returns.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-returns-api"
+      ],
+      "url": "https://vanarsdel-returns-api-containerization-challenge-retai-70d776d1.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.Scheduler",
+      "project": "src/VanArsdel.Scheduler/VanArsdel.Scheduler.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-scheduler"
+      ],
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.StoreManager",
+      "project": "src/VanArsdel.StoreManager/VanArsdel.StoreManager.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-storemanager"
+      ],
+      "url": "https://vanarsdel-storemanager-containerization-challenge-reta-184cba0d.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-retail-backoffice",
+      "folder": "onek8s/_/containerization-challenge@retail-backoffice",
+      "component": "VanArsdel.StoreOps.Api",
+      "project": "src/VanArsdel.StoreOps.Api/VanArsdel.StoreOps.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/vanarsdel-storeops-api"
+      ],
+      "url": "https://vanarsdel-storeops-api-containerization-challenge-reta-ff702f9f.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "Flux ReconciliationFailed: Service/containerization-challenge-retail-backoffice/vanarsdel-storeops-api apply failed: services \"vanarsdel-storeops-api\" is forbidden: exceeded quota: quota, requested: services=1, used: services=10, limited: services=10\n",
+      "checked_at": "2026-11-05T15:54:42+00:00",
+      "gitops": "flux"
+    },
+    {
+      "app": "containerization-challenge-study-data",
+      "folder": "onek8s/_/containerization-challenge@study-data",
+      "component": "StudyData.Sponsor.Api",
+      "project": "src/StudyData.Sponsor.Api/StudyData.Sponsor.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261105.1524",
+      "workloads": [
+        "Deployment/studydata-sponsor-api"
+      ],
+      "url": "https://studydata-sponsor-api-containerization-challenge-study-data.sandbox.lab/",
+      "status": "failing",
+      "status_text": "deployed but failing",
+      "reason": "pods cannot be created: pods \"studydata-sponsor-api-6d4d549d64-vrj44\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi - The namespace's ResourceQuota or LimitRange does not admit the pods' resource requests and limits.",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 4,
+      "states": [
+        "last exit Completed (exit 0)"
+      ],
+      "events": [
+        {
+          "reason": "FailedCreate",
+          "message": "(combined from similar events): Error creating: pods \"studydata-sponsor-api-6d4d549d64-vtt44\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 7,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:52:21Z"
+        },
+        {
+          "reason": "UpdateFailed",
+          "message": "could not get secret data from provider",
+          "count": 17,
+          "object": "studydata-sponsor-api-secrets",
+          "last": "2026-11-05T15:50:00Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-d4w7c\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:38Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-gn4w8\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:38Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-vrj44\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:37Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-xzt8g\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:37Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-mg85s\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:37Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-tds2k\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:37Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-www5w\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:37Z"
+        },
+        {
+          "reason": "FailedCreate",
+          "message": "Error creating: pods \"studydata-sponsor-api-6d4d549d64-wqrlw\" is forbidden: exceeded quota: quota, requested: limits.ephemeral-storage=1Gi,requests.ephemeral-storage=64Mi, used: limits.ephemeral-storage=2Gi,requests.ephemeral-storage=128Mi, limited: limits.ephemeral-storage=1536Mi,requests.ephemeral-storage=96Mi",
+          "count": 1,
+          "object": "studydata-sponsor-api-6d4d549d64",
+          "last": "2026-11-05T15:49:37Z"
+        }
+      ],
+      "diagnosis": {
+        "rule": "cluster-quota",
+        "outcome": "environment",
+        "stage": "cluster",
+        "diagnosis": "The namespace's ResourceQuota or LimitRange does not admit the pods' resource requests and limits.",
+        "refs": [
+          "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+        ]
+      }
+    },
+    {
+      "app": "containerization-challenge-trade-rebates",
+      "folder": "onek8s/_/containerization-challenge@trade-rebates",
+      "component": "TradeRebates.Api",
+      "project": "src/TradeRebates.Api/TradeRebates.Api.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261105.1046-refactor.198",
+      "workloads": [
+        "Deployment/traderebates-api"
+      ],
+      "url": "https://traderebates-api-containerization-challenge-trade-rebates.sandbox.lab/",
+      "url_check": "HTTP 200",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready, 1 restart(s) before it became stable",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 1,
+      "states": [
+        "last exit Completed (exit 0)"
+      ]
+    },
+    {
+      "app": "containerization-challenge-trade-rebates",
+      "folder": "onek8s/_/containerization-challenge@trade-rebates",
+      "component": "TradeRebates.Portal",
+      "project": "src/TradeRebates.Portal/TradeRebates.Portal.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.1046-refactor.198",
+      "workloads": [
+        "Deployment/traderebates-portal"
+      ],
+      "url": "https://traderebates-portal-containerization-challenge-trade-rebates.sandbox.lab/",
+      "url_check": "HTTP 401",
+      "status": "healthy",
+      "status_text": "deployed and healthy",
+      "reason": "1/1 ready, 1 restart(s) before it became stable",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "ready": "1/1",
+      "restarts": 1,
+      "states": [
+        "last exit Completed (exit 0)"
+      ]
+    },
+    {
+      "app": "containerization-challenge-trade-rebates",
+      "folder": "onek8s/_/containerization-challenge@trade-rebates",
+      "component": "TradeRebates.StatementWorker",
+      "project": "src/TradeRebates.StatementWorker/TradeRebates.StatementWorker.csproj",
+      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.1046-refactor.198",
+      "workloads": [
+        "CronJob/traderebates-statementworker"
+      ],
+      "status": "scheduled",
+      "status_text": "deployed, scheduled job has not run yet",
+      "reason": "no run yet (the schedule is a placeholder: see HARDENING.md)",
+      "checked_at": "2026-11-05T15:56:03+00:00",
+      "gitops": "flux",
+      "restarts": 0
+    }
+  ]
+}
