@@ -27,35 +27,6 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
-  name: traderebates-api
-  namespace: containerization-challenge-trade-rebates
-  labels:
-    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
-    app.kubernetes.io/managed-by: containerizer
-spec:
-  image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api
-  interval: 10m
-  secretRef:
-    name: containerization-challenge-trade-rebates-registry
----
-apiVersion: image.toolkit.fluxcd.io/v1
-kind: ImagePolicy
-metadata:
-  name: traderebates-api
-  namespace: containerization-challenge-trade-rebates
-  labels:
-    app.kubernetes.io/part-of: containerization-challenge-trade-rebates
-    app.kubernetes.io/managed-by: containerizer
-spec:
-  imageRepositoryRef:
-    name: traderebates-api
-  policy:
-    semver:
-      range: '>=1.0.0'
----
-apiVersion: image.toolkit.fluxcd.io/v1
-kind: ImageRepository
-metadata:
   name: traderebates-statementworker
   namespace: containerization-challenge-trade-rebates
   labels:

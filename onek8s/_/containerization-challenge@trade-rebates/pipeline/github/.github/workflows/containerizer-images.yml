@@ -8,10 +8,8 @@ name: containerizer images (containerization-challenge-trade-rebates)
   pull_request:
     paths:
     - scenarios/trade-rebates/Directory.Build.props
-    - scenarios/trade-rebates/containerizer/traderebates-api/**
     - scenarios/trade-rebates/containerizer/traderebates-statementworker/**
     - scenarios/trade-rebates/global.json
-    - scenarios/trade-rebates/src/TradeRebates.Api/**
     - scenarios/trade-rebates/src/TradeRebates.Core/**
     - scenarios/trade-rebates/src/TradeRebates.Data/**
     - scenarios/trade-rebates/src/TradeRebates.Rules/**
@@ -22,10 +20,8 @@ name: containerizer images (containerization-challenge-trade-rebates)
     - main
     paths:
     - scenarios/trade-rebates/Directory.Build.props
-    - scenarios/trade-rebates/containerizer/traderebates-api/**
     - scenarios/trade-rebates/containerizer/traderebates-statementworker/**
     - scenarios/trade-rebates/global.json
-    - scenarios/trade-rebates/src/TradeRebates.Api/**
     - scenarios/trade-rebates/src/TradeRebates.Core/**
     - scenarios/trade-rebates/src/TradeRebates.Data/**
     - scenarios/trade-rebates/src/TradeRebates.Rules/**
@@ -70,7 +66,6 @@ jobs:
         fi
         changed() { [ "$ALL" = 1 ] || printf '%s\n' "$CHANGED" | grep -qE "$1"; }
         list=""
-        if changed '^(scenarios/trade-rebates/src/TradeRebates\.Api/|scenarios/trade-rebates/src/TradeRebates\.Core/|scenarios/trade-rebates/src/TradeRebates\.Data/|scenarios/trade-rebates/src/TradeRebates\.Rules/|scenarios/trade-rebates/Directory\.Build\.props$|scenarios/trade-rebates/global\.json$|scenarios/trade-rebates/containerizer/traderebates-api/)'; then list="$list${list:+,}{\"folder\":\"traderebates-api\",\"dockerfile\":\"scenarios/trade-rebates/containerizer/traderebates-api/Dockerfile\",\"context\":\"scenarios/trade-rebates\",\"image_name\":\"containerization-challenge-trade-rebates/traderebates-api\"}"; fi
         if changed '^(scenarios/trade-rebates/src/TradeRebates\.Core/|scenarios/trade-rebates/src/TradeRebates\.Data/|scenarios/trade-rebates/src/TradeRebates\.Rules/|scenarios/trade-rebates/src/TradeRebates\.StatementWorker/|scenarios/trade-rebates/Directory\.Build\.props$|scenarios/trade-rebates/global\.json$|scenarios/trade-rebates/containerizer/traderebates-statementworker/)'; then list="$list${list:+,}{\"folder\":\"traderebates-statementworker\",\"dockerfile\":\"scenarios/trade-rebates/containerizer/traderebates-statementworker/Dockerfile\",\"context\":\"scenarios/trade-rebates\",\"image_name\":\"containerization-challenge-trade-rebates/traderebates-statementworker\"}"; fi
         echo "components=[$list]" >> "$GITHUB_OUTPUT"
         echo "version=1.$(date -u +%Y%m%d).$(date -u +%H%M | sed 's/^0*\(.\)/\1/')" >> "$GITHUB_OUTPUT"

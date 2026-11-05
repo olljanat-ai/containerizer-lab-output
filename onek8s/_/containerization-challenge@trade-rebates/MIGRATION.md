@@ -1,33 +1,16 @@
 # containerization-challenge-trade-rebates: containerization assessment
 
 **Rating A** - Container-ready - modern, stateless stack; containers with configuration only, no code changes  
-Readiness score 88/100 · confidence 1.0  
+Readiness score 87/100 · confidence 1.0  
 Stateless: yes
 
-2/2 server components can run in Linux containers with configuration only.
+1/1 server components can run in Linux containers with configuration only.
 
 ## Components
 
 | Component | Role | Target | Verdict | Score | Windows container stop-gap |
 | --- | --- | --- | --- | --- | --- |
-| TradeRebates.Api | web | net8.0 | Ready with configuration (no code changes) | 89 | - |
 | TradeRebates.StatementWorker | console | net8.0 | Ready with configuration (no code changes) | 87 | - |
-
-### TradeRebates.Api
-
-`src/TradeRebates.Api/TradeRebates.Api.csproj` · web · Ready with configuration (no code changes)
-
-Facts: health=/ping; entry=TradeRebates.Api.dll; connection_strings=['TradeRebates']
-
-- ⚙ **IIS modules configured in web.config** [config]
-  - Why: URL rewrite, redirects, IP restrictions and request filtering in web.config are executed by IIS modules; Kestrel in a Linux container ignores them, so those rules silently stop applying.
-  - Fix: Recreate as ingress-controller rules (NGINX/Gateway API) or ASP.NET Core middleware (UseRewriter can load IIS rewrite rules).
-  - Learn more: [learn.microsoft.com: url rewriting](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/url-rewriting)
-  - Evidence: `src/TradeRebates.Api/web.config:14: <requestFiltering>`
-- ⚙ **SQL Server Windows authentication** [config]
-  - Why: Integrated Security uses the Windows service account. From Linux it needs Kerberos (keytab) or a switch to SQL/Entra authentication.
-  - Fix: Switch to SQL authentication or Entra managed identity with the password from a Secret.
-  - Evidence: `src/TradeRebates.Api/appsettings.json:3: "TradeRebates": "Server=rebates-sql.corp.local;Database=TradeRebates;Integrated Security=true;Encrypt=true;TrustServerCertificate=true;Application Name=TradeReb`
 
 ### TradeRebates.StatementWorker
 
