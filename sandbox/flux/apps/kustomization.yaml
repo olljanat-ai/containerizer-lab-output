@@ -10,6 +10,7 @@ resources:
 - ../../../onek8s/_/containerization-challenge@furnace-records/gitops/flux
 - ../../../onek8s/_/containerization-challenge@parts-catalog/gitops/flux
 - ../../../onek8s/_/containerization-challenge@policy-changes/gitops/flux
+- ../../../onek8s/_/containerization-challenge@retail-backoffice/gitops/flux
 - ../../../onek8s/_/containerization-challenge@study-data/gitops/flux
 - ../../../onek8s/_/containerization-challenge@trade-rebates/gitops/flux
 - ../../idp
@@ -125,6 +126,15 @@ patches:
     "name": "policychanges-api", "namespace": "containerization-challenge-policy-changes"},
     {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
     "namespace": "containerization-challenge-policy-changes"}]}]'
+- target:
+    group: kustomize.toolkit.fluxcd.io
+    version: v1
+    kind: Kustomization
+    name: containerization-challenge-retail-backoffice
+    namespace: containerization-challenge-retail-backoffice
+  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "vanarsdel-storemanager", "namespace": "containerization-challenge-retail-backoffice"}]}]'
 - target:
     group: kustomize.toolkit.fluxcd.io
     version: v1

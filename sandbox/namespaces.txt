@@ -7,5 +7,6 @@ containerization-challenge-freight-rates
 containerization-challenge-furnace-records
 containerization-challenge-parts-catalog
 containerization-challenge-policy-changes
+containerization-challenge-retail-backoffice
 containerization-challenge-study-data
 containerization-challenge-trade-rebates
