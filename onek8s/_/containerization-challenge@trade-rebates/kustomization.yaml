@@ -10,8 +10,8 @@ resources:
 - traderebates-statementworker/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api
-    newTag: 1.20261105.946-refactor.195 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-api:tag"}
+    newTag: 1.20261105.1046-refactor.198 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-api:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal
-    newTag: 1.20261105.946-refactor.195 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-portal:tag"}
+    newTag: 1.20261105.1046-refactor.198 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-portal:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker
-    newTag: 1.20261105.946-refactor.195 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-statementworker:tag"}
+    newTag: 1.20261105.1046-refactor.198 # {"$imagepolicy": "containerization-challenge-trade-rebates:traderebates-statementworker:tag"}

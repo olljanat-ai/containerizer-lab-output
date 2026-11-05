@@ -31,7 +31,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "traderebates-api/k8s.yaml: Deployment/traderebates-api/traderebates-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261105.946-refactor.195 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261105.1046-refactor.198 is not pinned to a digest"
         }
       ],
       "scans": [
@@ -96,7 +96,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {46aa7589-9606-47ea-99eb-4149fd5982e8} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\nwarn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]\n      Failed to determine the https port for redirect.\n"
+        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {f5160e79-a75a-41bb-a7e3-9eddfc03660f} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\nwarn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]\n      Failed to determine the https port for redirect.\n"
       }
     },
     {
@@ -119,7 +119,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "traderebates-portal/k8s.yaml: Deployment/traderebates-portal/traderebates-portal",
-          "message": "image localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.946-refactor.195 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.1046-refactor.198 is not pinned to a digest"
         }
       ],
       "scans": [
@@ -184,7 +184,7 @@
         "status": "ok",
         "http": 401,
         "errors": [],
-        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {2a23da7f-9c69-440b-a439-1b144c7e62c9} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\nwarn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]\n      Failed to determine the https port for redirect.\n"
+        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {4dab9ec0-8bcc-4e08-a420-0dac57cba8d5} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\nwarn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]\n      Failed to determine the https port for redirect.\n"
       }
     },
     {
@@ -207,7 +207,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "traderebates-statementworker/k8s.yaml: CronJob/traderebates-statementworker/traderebates-statementworker",
-          "message": "image localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.946-refactor.195 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.1046-refactor.198 is not pinned to a digest"
         }
       ],
       "scans": [

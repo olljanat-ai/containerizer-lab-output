@@ -5,7 +5,7 @@ apiVersion: containerizer.eu/v1
 kind: Connectivity
 application: containerization-challenge-trade-rebates
 namespace: containerization-challenge-trade-rebates
-generatedAt: '2026-11-05T09:48:18Z'
+generatedAt: '2026-11-05T10:48:47Z'
 observed: false
 note: 'Approved destinations are documented for the real environment: use them (FQDN, port, protocol) for its firewall rules.
   Approval opens nothing in the sandbox: it stays isolated, its NetworkPolicies allow only what was inferred and confirmed

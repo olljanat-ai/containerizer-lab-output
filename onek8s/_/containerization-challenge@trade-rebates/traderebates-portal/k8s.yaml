@@ -46,7 +46,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: traderebates-portal
-        image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.946-refactor.195
+        image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.1046-refactor.198
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__TradeRebates
