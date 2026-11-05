@@ -3,7 +3,6 @@ containerization-challenge-broker-quotes
 containerization-challenge-city-permits
 containerization-challenge-consumer-loans
 containerization-challenge-field-service
-containerization-challenge-field-service-refactor-192
 containerization-challenge-freight-rates
 containerization-challenge-furnace-records
 containerization-challenge-parts-catalog

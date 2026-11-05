@@ -7,16 +7,20 @@ name: containerizer images (containerization-challenge-field-service)
 'on':
   pull_request:
     paths:
+    - scenarios/field-service/containerizer/fieldservice-web/**
     - scenarios/field-service/containerizer/fieldservice-worker/**
     - scenarios/field-service/src/FieldService.Data/**
+    - scenarios/field-service/src/FieldService.Web/**
     - scenarios/field-service/src/FieldService.Worker/**
     - .github/workflows/containerizer-images.yml
   push:
     branches:
     - main
     paths:
+    - scenarios/field-service/containerizer/fieldservice-web/**
     - scenarios/field-service/containerizer/fieldservice-worker/**
     - scenarios/field-service/src/FieldService.Data/**
+    - scenarios/field-service/src/FieldService.Web/**
     - scenarios/field-service/src/FieldService.Worker/**
     - .github/workflows/containerizer-images.yml
   workflow_dispatch: null
@@ -58,6 +62,7 @@ jobs:
         fi
         changed() { [ "$ALL" = 1 ] || printf '%s\n' "$CHANGED" | grep -qE "$1"; }
         list=""
+        if changed '^(scenarios/field-service/src/FieldService\.Data/|scenarios/field-service/src/FieldService\.Web/|scenarios/field-service/containerizer/fieldservice-web/)'; then list="$list${list:+,}{\"folder\":\"fieldservice-web\",\"dockerfile\":\"scenarios/field-service/containerizer/fieldservice-web/Dockerfile\",\"context\":\"scenarios/field-service\",\"image_name\":\"containerization-challenge-field-service/fieldservice-web\"}"; fi
         if changed '^(scenarios/field-service/src/FieldService\.Data/|scenarios/field-service/src/FieldService\.Worker/|scenarios/field-service/containerizer/fieldservice-worker/)'; then list="$list${list:+,}{\"folder\":\"fieldservice-worker\",\"dockerfile\":\"scenarios/field-service/containerizer/fieldservice-worker/Dockerfile\",\"context\":\"scenarios/field-service\",\"image_name\":\"containerization-challenge-field-service/fieldservice-worker\"}"; fi
         echo "components=[$list]" >> "$GITHUB_OUTPUT"
         echo "version=1.$(date -u +%Y%m%d).$(date -u +%H%M | sed 's/^0*\(.\)/\1/')" >> "$GITHUB_OUTPUT"

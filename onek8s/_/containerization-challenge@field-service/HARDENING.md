@@ -8,7 +8,7 @@ Controls from the NSA/CISA Kubernetes Hardening Guide (v1.2) and the CIS Kuberne
 | Read-only root file system; writable paths are size-limited emptyDirs | applied | Pod security > Immutable container file systems | 5.7.3 |  |
 | Minimal, patched base images; images scanned for vulnerabilities (containerizer gate) | applied | Pod security > Building secure container images |  |  |
 | Only signed images run | cluster action | Pod security > Building secure container images | 5.5.1 | Sign each pushed image (cosign sign --yes <registry>/<image>@<digest>) and enforce it with cluster/verify-images.yaml (Kyverno) or your admission controller. |
-| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.1641 is not pinned to a digest (fieldservice-worker: Deployment/fieldservice-worker/fieldservice-worker) |
+| Images are deployed by digest | not applied | Pod security > Building secure container images |  | In the deploy pipeline: kustomize edit set image <image>=<registry>/<image>@sha256:<digest>; base images: generate --pin-digests. Now: image-digest: image localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-web:1.20261104.2110-refactor.192 is not pinned to a digest (fieldservice-web: Deployment/fieldservice-web/fieldservice-web); image-digest: image localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.2110-refactor.192 is not pinned to a digest (fieldservice-worker: Deployment/fieldservice-worker/fieldservice-worker) |
 | Pod Security Admission "restricted" enforced on the namespace; workloads comply | applied | Pod security > Pod security enforcement | 5.2.1-5.2.13 |  |
 | Own ServiceAccount per component; no token mounted | applied | Pod security > Protecting Pod service account tokens | 5.1.5, 5.1.6 | no component calls the Kubernetes API |
 | Seccomp and AppArmor RuntimeDefault; all capabilities dropped | applied | Pod security > Hardening container environments | 5.7.2 |  |
@@ -36,7 +36,14 @@ Inferred from packages and configuration; everything else is denied. Review befo
 
 | Component | Allowed external dependencies |
 | --- | --- |
+| fieldservice-web | sql-server,redis,lab-sqlserver |
 | fieldservice-worker | sql-server,lab-sqlserver |
+
+## Hardening exceptions
+
+| Exception | Components |
+| --- | --- |
+| file-uploads | fieldservice-web |
 
 ## Secret store keys
 
@@ -45,6 +52,7 @@ Put these in the secret store before the first sync (docs/external-secrets.md); 
 | Remote key | Property | Component | Secret |
 | --- | --- | --- | --- |
 | `containerization-challenge-field-service--cz-lab-sqlserver` | every key | lab | `lab-sqlserver` |
+| `containerization-challenge-field-service--fieldservice-web` | `ConnectionStrings__FieldService` | fieldservice-web | `fieldservice-web-secrets` |
 | `containerization-challenge-field-service--fieldservice-worker` | `ConnectionStrings__FieldService` | fieldservice-worker | `fieldservice-worker-secrets` |
 
 ## Files

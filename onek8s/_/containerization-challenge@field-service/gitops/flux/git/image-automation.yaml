@@ -27,13 +27,42 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
+  name: fieldservice-web
+  namespace: containerization-challenge-field-service
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-field-service
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  image: localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-web
+  interval: 10m
+  secretRef:
+    name: containerization-challenge-field-service-registry
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: fieldservice-web
+  namespace: containerization-challenge-field-service
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-field-service
+    app.kubernetes.io/managed-by: containerizer
+spec:
+  imageRepositoryRef:
+    name: fieldservice-web
+  policy:
+    semver:
+      range: '>=1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
   name: fieldservice-worker
   namespace: containerization-challenge-field-service
   labels:
     app.kubernetes.io/part-of: containerization-challenge-field-service
     app.kubernetes.io/managed-by: containerizer
 spec:
-  image: localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker
+  image: localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker
   interval: 10m
   secretRef:
     name: containerization-challenge-field-service-registry

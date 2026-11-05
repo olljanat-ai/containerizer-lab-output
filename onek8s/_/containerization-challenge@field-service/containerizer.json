@@ -9,31 +9,38 @@
   "clone_url": "https://github.com/onek8s/containerization-challenge.git",
   "branch": "main",
   "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
-  "last_commit": "2026-10-30T13:09:19+00:00",
+  "last_commit": "",
   "app": "containerization-challenge-field-service",
   "path": "onek8s/_/containerization-challenge@field-service",
-  "rating": "B",
+  "rating": "A",
   "components": [
+    {
+      "component": "FieldService.Web",
+      "folder": "fieldservice-web",
+      "image": "localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-web:1.20261104.2110-refactor.192",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/FieldService.Web/FieldService.Web.csproj",
+      "project_name": "FieldService.Web",
+      "verification": "ok",
+      "digest": "sha256:d766bf1218cf472f7b03bfd95ce54c26ebc6479b5871c1a17202addc2944c996"
+    },
     {
       "component": "FieldService.Worker",
       "folder": "fieldservice-worker",
-      "image": "localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.1641",
+      "image": "localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker:1.20261104.2110-refactor.192",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
       "project": "src/FieldService.Worker/FieldService.Worker.csproj",
       "project_name": "FieldService.Worker",
-      "verification": "not run",
-      "digest": "sha256:6c8133164c6f3c9211f315ea3e43cd81c1c1a76dcb34b7cdffd4f66a250ebd13"
+      "verification": "ok",
+      "digest": "sha256:dfc3425081808198e6a02dd713d6a43a8b9431658af3c3ac04b4f7cc604a45e2"
     }
   ],
-  "excluded": [
-    {
-      "component": "FieldService.Web",
-      "reason": "keeps local state"
-    }
-  ],
-  "processed_at": "2026-11-04T16:41:44+00:00",
+  "excluded": [],
+  "processed_at": "2026-11-05T07:20:04Z",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/field-service",
@@ -41,14 +48,23 @@
   "lab_services": {
     "needed": {
       "sqlserver": [
+        "FieldService.Web",
         "FieldService.Worker"
+      ],
+      "redis": [
+        "FieldService.Web"
       ]
     },
     "provided": [
       "sqlserver"
     ],
-    "missing": [],
+    "missing": [
+      "redis"
+    ],
     "overrides": {
+      "FieldService.Web": [
+        "sqlserver:ConnectionStrings__FieldService"
+      ],
       "FieldService.Worker": [
         "sqlserver:ConnectionStrings__FieldService"
       ]
@@ -57,5 +73,14 @@
   "migration": {},
   "llm_usage": {},
   "apps": [],
-  "split_hint": {}
+  "split_hint": {},
+  "patched": {
+    "job": 192,
+    "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
+    "application_id": 16,
+    "app": "containerization-challenge-field-service",
+    "tag": "1.20261104.2110-refactor.192",
+    "deployed_at": "2026-11-05T07:20:04",
+    "previous_revision": "99cedff0d615e462987f266594d09239a8878fd5"
+  }
 }

@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../onek8s/_/containerization-challenge-refactor-192/gitops/flux
 - ../../../onek8s/_/containerization-challenge@batch-release/gitops/flux
 - ../../../onek8s/_/containerization-challenge@broker-quotes/gitops/flux
 - ../../../onek8s/_/containerization-challenge@city-permits/gitops/flux
@@ -16,21 +15,6 @@ resources:
 - ../../../onek8s/_/containerization-challenge@trade-rebates/gitops/flux
 - ../../idp
 patches:
-- target:
-    group: kustomize.toolkit.fluxcd.io
-    version: v1
-    kind: Kustomization
-    name: containerization-challenge-field-service-refactor-192
-    namespace: containerization-challenge-field-service-refactor-192
-  patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
-    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
-    "name": "fieldservice-web", "namespace": "containerization-challenge-field-service-refactor-192"},
-    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "fieldservice-worker",
-    "namespace": "containerization-challenge-field-service-refactor-192"}, {"apiVersion":
-    "external-secrets.io/v1", "kind": "ExternalSecret", "name": "fieldservice-web-dataprotection",
-    "namespace": "containerization-challenge-field-service-refactor-192"}, {"apiVersion":
-    "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace":
-    "containerization-challenge-field-service-refactor-192"}]}]'
 - target:
     group: kustomize.toolkit.fluxcd.io
     version: v1
@@ -87,9 +71,12 @@ patches:
     namespace: containerization-challenge-field-service
   patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
     "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
-    "name": "fieldservice-worker", "namespace": "containerization-challenge-field-service"},
-    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "lab-sqlserver",
-    "namespace": "containerization-challenge-field-service"}]}]'
+    "name": "fieldservice-web", "namespace": "containerization-challenge-field-service"},
+    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "fieldservice-worker",
+    "namespace": "containerization-challenge-field-service"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "fieldservice-web-dataprotection", "namespace":
+    "containerization-challenge-field-service"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-field-service"}]}]'
 - target:
     group: kustomize.toolkit.fluxcd.io
     version: v1

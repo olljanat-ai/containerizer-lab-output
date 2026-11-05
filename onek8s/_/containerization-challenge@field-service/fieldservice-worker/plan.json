@@ -9,23 +9,11 @@
   "base": "chiseled",
   "add_packages": [],
   "env": {
-    "Worker__ArchiveFolder": "/data/inbox/processed",
-    "Worker__ErrorFolder": "/data/inbox/failed",
-    "Worker__InboxFolder": "/data/inbox",
-    "Worker__OutboxFolder": "/data/import/fieldservice",
-    "Worker__ReportFolder": "/data/reports",
-    "Worker__StateFolder": "/data/fieldservice/worker/state",
     "DOTNET_ENVIRONMENT": "Production",
     "DOTNET_ROLL_FORWARD": "Major"
   },
   "add_writable": [
-    "/tmp",
-    "/data/inbox/processed",
-    "/data/inbox/failed",
-    "/data/inbox",
-    "/data/import/fieldservice",
-    "/data/reports",
-    "/data/fieldservice/worker/state"
+    "/tmp"
   ],
   "publish_args": [],
   "remove_files": [],
@@ -37,15 +25,6 @@
   "spa_root": null,
   "args": [],
   "applied": [],
-  "reasons": [
-    {
-      "rule": "config-windows-paths",
-      "why": "Windows paths in configuration (drive letters, UNC shares) are overridden with environment variables to folders under /data, which the manifests mount as volumes; the application code is not changed.",
-      "refs": [
-        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/"
-      ]
-    }
-  ],
   "egress": [
     {
       "id": "sql-server",

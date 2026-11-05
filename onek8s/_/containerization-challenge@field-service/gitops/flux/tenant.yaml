@@ -65,6 +65,7 @@ rules:
   - containerization-challenge-field-service--cz-git
   - containerization-challenge-field-service--cz-lab-sqlserver
   - containerization-challenge-field-service--cz-registry
+  - containerization-challenge-field-service--fieldservice-web
   - containerization-challenge-field-service--fieldservice-worker
   verbs:
   - get
@@ -126,8 +127,8 @@ spec:
     requests.cpu: 1000m
     requests.memory: 1024Mi
     limits.memory: 2048Mi
-    requests.ephemeral-storage: 96Mi
-    limits.ephemeral-storage: 1536Mi
+    requests.ephemeral-storage: 192Mi
+    limits.ephemeral-storage: 4608Mi
     pods: '10'
     services: '10'
     persistentvolumeclaims: '10'

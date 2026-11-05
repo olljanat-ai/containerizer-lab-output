@@ -7,4 +7,9 @@ The appliance runs these services in namespace `containerizer-lab` (Admin -> Lab
 - Host `sqlserver.containerizer-lab.svc.cluster.local`, port 1433 (SQL Server 2025 Developer edition).
 - Credentials: Secret `lab-sqlserver` (ExternalSecret, remote key `containerization-challenge-field-service--cz-lab-sqlserver`).
 - Database and login `containerization_challenge_field_service`, owner of that database only.
+- **FieldService.Web**: `ConnectionStrings__FieldService`
 - **FieldService.Worker**: `ConnectionStrings__FieldService`
+
+## Needed but turned off
+
+- **Redis** (FieldService.Web): turn it on under Admin -> Lab services and scan again; until then the app keeps its own settings.

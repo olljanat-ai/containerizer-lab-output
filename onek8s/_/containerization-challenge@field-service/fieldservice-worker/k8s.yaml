@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: fieldservice-worker
-        image: localhost:5000/sandbox/containerization-challenge-field-service/fieldservice-worker:1.20261104.1641
+        image: localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker:1.20261104.2110-refactor.192
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__FieldService
@@ -51,18 +51,6 @@ spec:
           value: Production
         - name: DOTNET_ROLL_FORWARD
           value: Major
-        - name: Worker__ArchiveFolder
-          value: /data/inbox/processed
-        - name: Worker__ErrorFolder
-          value: /data/inbox/failed
-        - name: Worker__InboxFolder
-          value: /data/inbox
-        - name: Worker__OutboxFolder
-          value: /data/import/fieldservice
-        - name: Worker__ReportFolder
-          value: /data/reports
-        - name: Worker__StateFolder
-          value: /data/fieldservice/worker/state
         securityContext:
           runAsNonRoot: true
           allowPrivilegeEscalation: false
@@ -84,40 +72,10 @@ spec:
             memory: 512Mi
             ephemeral-storage: 1Gi
         volumeMounts:
-        - name: w0-state
-          mountPath: /data/fieldservice/worker/state
-        - name: w1-fieldservice
-          mountPath: /data/import/fieldservice
-        - name: w2-inbox
-          mountPath: /data/inbox
-        - name: w3-failed
-          mountPath: /data/inbox/failed
-        - name: w4-processed
-          mountPath: /data/inbox/processed
-        - name: w5-reports
-          mountPath: /data/reports
-        - name: w6-tmp
+        - name: w0-tmp
           mountPath: /tmp
       volumes:
-      - name: w0-state
-        emptyDir:
-          sizeLimit: 256Mi
-      - name: w1-fieldservice
-        emptyDir:
-          sizeLimit: 256Mi
-      - name: w2-inbox
-        emptyDir:
-          sizeLimit: 256Mi
-      - name: w3-failed
-        emptyDir:
-          sizeLimit: 256Mi
-      - name: w4-processed
-        emptyDir:
-          sizeLimit: 256Mi
-      - name: w5-reports
-        emptyDir:
-          sizeLimit: 256Mi
-      - name: w6-tmp
+      - name: w0-tmp
         emptyDir:
           sizeLimit: 256Mi
       enableServiceLinks: false

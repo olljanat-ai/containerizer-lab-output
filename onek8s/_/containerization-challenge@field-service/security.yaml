@@ -35,8 +35,8 @@ spec:
     requests.cpu: 1000m
     requests.memory: 1024Mi
     limits.memory: 2048Mi
-    requests.ephemeral-storage: 96Mi
-    limits.ephemeral-storage: 1536Mi
+    requests.ephemeral-storage: 192Mi
+    limits.ephemeral-storage: 4608Mi
     pods: '10'
     services: '10'
     persistentvolumeclaims: '10'
