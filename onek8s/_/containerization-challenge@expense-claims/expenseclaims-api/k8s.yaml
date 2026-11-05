@@ -43,7 +43,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: expenseclaims-api
-        image: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1326-refactor.206
+        image: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1943-refactor.209
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__ExpenseClaims

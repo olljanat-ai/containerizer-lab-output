@@ -19,3 +19,284 @@ spec:
   dataFrom:
   - extract:
       key: containerization-challenge-expense-claims--cz-lab-sqlserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cz-lab-sqlserver-init
+  namespace: containerization-challenge-expense-claims
+  labels:
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+    app.kubernetes.io/managed-by: containerizer
+    containerizer.io/lab-init: sqlserver
+  annotations:
+    containerizer.io/scripts: db/01-create-database.sql, db/02-quartz-tables.sql,
+      db/03-expenseclaims-schema.sql
+data:
+  001-01-create-database.sql: "IF SCHEMA_ID(N'exp') IS NULL EXEC (N'CREATE SCHEMA\
+    \ [exp] AUTHORIZATION [dbo]');\nIF SCHEMA_ID(N'quartz') IS NULL EXEC (N'CREATE\
+    \ SCHEMA [quartz] AUTHORIZATION [dbo]');\nGO\nIF DATABASE_PRINCIPAL_ID(N'expenses_app')\
+    \ IS NULL\n    CREATE USER [expenses_app] FOR LOGIN [expenses_app] WITH DEFAULT_SCHEMA\
+    \ = [exp];\nIF DATABASE_PRINCIPAL_ID(N'expenses_jobs') IS NULL\n    CREATE USER\
+    \ [expenses_jobs] FOR LOGIN [expenses_jobs] WITH DEFAULT_SCHEMA = [exp];\nGO\n\
+    -- The API and the jobs host read and write application tables; schema changes\
+    \ are deployed with 03-expenseclaims-schema.sql.\nGRANT SELECT, INSERT, UPDATE,\
+    \ DELETE ON SCHEMA::[exp] TO [expenses_app];\nGRANT SELECT, INSERT, UPDATE, DELETE\
+    \ ON SCHEMA::[exp] TO [expenses_jobs];\n-- Quartz scheduler tables (clustered\
+    \ job store) are used only by the jobs host.\nGRANT SELECT, INSERT, UPDATE, DELETE\
+    \ ON SCHEMA::[quartz] TO [expenses_jobs];\nGO\n"
+  002-02-quartz-tables.sql: "/*\n  Quartz.NET 3.x job store tables for SQL Server,\
+    \ in schema [quartz].\n  Based on database/tables/tables_sqlServer.sql of Quartz.NET\
+    \ 3.5.\n*/\nSET NOCOUNT ON;\nGO\nIF OBJECT_ID(N'[quartz].[QRTZ_LOCKS]', N'U')\
+    \ IS NOT NULL\nBEGIN\n    PRINT 'Quartz tables already exist';\n    SET NOEXEC\
+    \ ON;\nEND\nGO\nCREATE TABLE [quartz].[QRTZ_CALENDARS] (\n  [SCHED_NAME] nvarchar(120)\
+    \ NOT NULL,\n  [CALENDAR_NAME] nvarchar(200) NOT NULL,\n  [CALENDAR] varbinary(max)\
+    \ NOT NULL,\n  CONSTRAINT [PK_QRTZ_CALENDARS] PRIMARY KEY CLUSTERED ([SCHED_NAME],\
+    \ [CALENDAR_NAME])\n);\n\nCREATE TABLE [quartz].[QRTZ_FIRED_TRIGGERS] (\n  [SCHED_NAME]\
+    \ nvarchar(120) NOT NULL,\n  [ENTRY_ID] nvarchar(140) NOT NULL,\n  [TRIGGER_NAME]\
+    \ nvarchar(150) NOT NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT NULL,\n  [INSTANCE_NAME]\
+    \ nvarchar(200) NOT NULL,\n  [FIRED_TIME] bigint NOT NULL,\n  [SCHED_TIME] bigint\
+    \ NOT NULL,\n  [PRIORITY] int NOT NULL,\n  [STATE] nvarchar(16) NOT NULL,\n  [JOB_NAME]\
+    \ nvarchar(150) NULL,\n  [JOB_GROUP] nvarchar(150) NULL,\n  [IS_NONCONCURRENT]\
+    \ bit NULL,\n  [REQUESTS_RECOVERY] bit NULL,\n  CONSTRAINT [PK_QRTZ_FIRED_TRIGGERS]\
+    \ PRIMARY KEY CLUSTERED ([SCHED_NAME], [ENTRY_ID])\n);\n\nCREATE TABLE [quartz].[QRTZ_PAUSED_TRIGGER_GRPS]\
+    \ (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT\
+    \ NULL,\n  CONSTRAINT [PK_QRTZ_PAUSED_TRIGGER_GRPS] PRIMARY KEY CLUSTERED ([SCHED_NAME],\
+    \ [TRIGGER_GROUP])\n);\n\nCREATE TABLE [quartz].[QRTZ_SCHEDULER_STATE] (\n  [SCHED_NAME]\
+    \ nvarchar(120) NOT NULL,\n  [INSTANCE_NAME] nvarchar(200) NOT NULL,\n  [LAST_CHECKIN_TIME]\
+    \ bigint NOT NULL,\n  [CHECKIN_INTERVAL] bigint NOT NULL,\n  CONSTRAINT [PK_QRTZ_SCHEDULER_STATE]\
+    \ PRIMARY KEY CLUSTERED ([SCHED_NAME], [INSTANCE_NAME])\n);\n\nCREATE TABLE [quartz].[QRTZ_LOCKS]\
+    \ (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n  [LOCK_NAME] nvarchar(40) NOT NULL,\n\
+    \  CONSTRAINT [PK_QRTZ_LOCKS] PRIMARY KEY CLUSTERED ([SCHED_NAME], [LOCK_NAME])\n\
+    );\n\nCREATE TABLE [quartz].[QRTZ_JOB_DETAILS] (\n  [SCHED_NAME] nvarchar(120)\
+    \ NOT NULL,\n  [JOB_NAME] nvarchar(150) NOT NULL,\n  [JOB_GROUP] nvarchar(150)\
+    \ NOT NULL,\n  [DESCRIPTION] nvarchar(250) NULL,\n  [JOB_CLASS_NAME] nvarchar(250)\
+    \ NOT NULL,\n  [IS_DURABLE] bit NOT NULL,\n  [IS_NONCONCURRENT] bit NOT NULL,\n\
+    \  [IS_UPDATE_DATA] bit NOT NULL,\n  [REQUESTS_RECOVERY] bit NOT NULL,\n  [JOB_DATA]\
+    \ varbinary(max) NULL,\n  CONSTRAINT [PK_QRTZ_JOB_DETAILS] PRIMARY KEY CLUSTERED\
+    \ ([SCHED_NAME], [JOB_NAME], [JOB_GROUP])\n);\n\nCREATE TABLE [quartz].[QRTZ_TRIGGERS]\
+    \ (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n  [TRIGGER_NAME] nvarchar(150) NOT\
+    \ NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT NULL,\n  [JOB_NAME] nvarchar(150)\
+    \ NOT NULL,\n  [JOB_GROUP] nvarchar(150) NOT NULL,\n  [DESCRIPTION] nvarchar(250)\
+    \ NULL,\n  [NEXT_FIRE_TIME] bigint NULL,\n  [PREV_FIRE_TIME] bigint NULL,\n  [PRIORITY]\
+    \ int NULL,\n  [TRIGGER_STATE] nvarchar(16) NOT NULL,\n  [TRIGGER_TYPE] nvarchar(8)\
+    \ NOT NULL,\n  [START_TIME] bigint NOT NULL,\n  [END_TIME] bigint NULL,\n  [CALENDAR_NAME]\
+    \ nvarchar(200) NULL,\n  [MISFIRE_INSTR] int NULL,\n  [JOB_DATA] varbinary(max)\
+    \ NULL,\n  CONSTRAINT [PK_QRTZ_TRIGGERS] PRIMARY KEY CLUSTERED ([SCHED_NAME],\
+    \ [TRIGGER_NAME], [TRIGGER_GROUP]),\n  CONSTRAINT [FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS]\
+    \ FOREIGN KEY ([SCHED_NAME], [JOB_NAME], [JOB_GROUP])\n    REFERENCES [quartz].[QRTZ_JOB_DETAILS]\
+    \ ([SCHED_NAME], [JOB_NAME], [JOB_GROUP])\n);\n\nCREATE TABLE [quartz].[QRTZ_SIMPLE_TRIGGERS]\
+    \ (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n  [TRIGGER_NAME] nvarchar(150) NOT\
+    \ NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT NULL,\n  [REPEAT_COUNT] int NOT NULL,\n\
+    \  [REPEAT_INTERVAL] bigint NOT NULL,\n  [TIMES_TRIGGERED] int NOT NULL,\n  CONSTRAINT\
+    \ [PK_QRTZ_SIMPLE_TRIGGERS] PRIMARY KEY CLUSTERED ([SCHED_NAME], [TRIGGER_NAME],\
+    \ [TRIGGER_GROUP]),\n  CONSTRAINT [FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS] FOREIGN\
+    \ KEY ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP])\n    REFERENCES [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP]) ON DELETE CASCADE\n);\n\nCREATE\
+    \ TABLE [quartz].[QRTZ_SIMPROP_TRIGGERS] (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n\
+    \  [TRIGGER_NAME] nvarchar(150) NOT NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT\
+    \ NULL,\n  [STR_PROP_1] nvarchar(512) NULL,\n  [STR_PROP_2] nvarchar(512) NULL,\n\
+    \  [STR_PROP_3] nvarchar(512) NULL,\n  [INT_PROP_1] int NULL,\n  [INT_PROP_2]\
+    \ int NULL,\n  [LONG_PROP_1] bigint NULL,\n  [LONG_PROP_2] bigint NULL,\n  [DEC_PROP_1]\
+    \ numeric(13, 4) NULL,\n  [DEC_PROP_2] numeric(13, 4) NULL,\n  [BOOL_PROP_1] bit\
+    \ NULL,\n  [BOOL_PROP_2] bit NULL,\n  [TIME_ZONE_ID] nvarchar(80) NULL,\n  CONSTRAINT\
+    \ [PK_QRTZ_SIMPROP_TRIGGERS] PRIMARY KEY CLUSTERED ([SCHED_NAME], [TRIGGER_NAME],\
+    \ [TRIGGER_GROUP]),\n  CONSTRAINT [FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS] FOREIGN\
+    \ KEY ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP])\n    REFERENCES [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP]) ON DELETE CASCADE\n);\n\nCREATE\
+    \ TABLE [quartz].[QRTZ_CRON_TRIGGERS] (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n\
+    \  [TRIGGER_NAME] nvarchar(150) NOT NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT\
+    \ NULL,\n  [CRON_EXPRESSION] nvarchar(120) NOT NULL,\n  [TIME_ZONE_ID] nvarchar(80),\n\
+    \  CONSTRAINT [PK_QRTZ_CRON_TRIGGERS] PRIMARY KEY CLUSTERED ([SCHED_NAME], [TRIGGER_NAME],\
+    \ [TRIGGER_GROUP]),\n  CONSTRAINT [FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS] FOREIGN\
+    \ KEY ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP])\n    REFERENCES [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP]) ON DELETE CASCADE\n);\n\nCREATE\
+    \ TABLE [quartz].[QRTZ_BLOB_TRIGGERS] (\n  [SCHED_NAME] nvarchar(120) NOT NULL,\n\
+    \  [TRIGGER_NAME] nvarchar(150) NOT NULL,\n  [TRIGGER_GROUP] nvarchar(150) NOT\
+    \ NULL,\n  [BLOB_DATA] varbinary(max) NULL,\n  CONSTRAINT [PK_QRTZ_BLOB_TRIGGERS]\
+    \ PRIMARY KEY CLUSTERED ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP]),\n  CONSTRAINT\
+    \ [FK_QRTZ_BLOB_TRIGGERS_QRTZ_TRIGGERS] FOREIGN KEY ([SCHED_NAME], [TRIGGER_NAME],\
+    \ [TRIGGER_GROUP])\n    REFERENCES [quartz].[QRTZ_TRIGGERS] ([SCHED_NAME], [TRIGGER_NAME],\
+    \ [TRIGGER_GROUP]) ON DELETE CASCADE\n);\n\nCREATE INDEX [IDX_QRTZ_T_G_J] ON [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [JOB_GROUP], [JOB_NAME]);\nCREATE INDEX [IDX_QRTZ_T_C] ON [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [CALENDAR_NAME]);\nCREATE INDEX [IDX_QRTZ_T_N_G_STATE] ON [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [TRIGGER_GROUP], [TRIGGER_STATE]);\nCREATE INDEX [IDX_QRTZ_T_STATE]\
+    \ ON [quartz].[QRTZ_TRIGGERS] ([SCHED_NAME], [TRIGGER_STATE]);\nCREATE INDEX [IDX_QRTZ_T_N_STATE]\
+    \ ON [quartz].[QRTZ_TRIGGERS] ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP],\
+    \ [TRIGGER_STATE]);\nCREATE INDEX [IDX_QRTZ_T_NEXT_FIRE_TIME] ON [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [NEXT_FIRE_TIME]);\nCREATE INDEX [IDX_QRTZ_T_NFT_ST] ON [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [TRIGGER_STATE], [NEXT_FIRE_TIME]);\nCREATE INDEX [IDX_QRTZ_T_NFT_ST_MISFIRE]\
+    \ ON [quartz].[QRTZ_TRIGGERS] ([SCHED_NAME], [MISFIRE_INSTR], [NEXT_FIRE_TIME],\
+    \ [TRIGGER_STATE]);\nCREATE INDEX [IDX_QRTZ_T_NFT_ST_MISFIRE_GRP] ON [quartz].[QRTZ_TRIGGERS]\
+    \ ([SCHED_NAME], [MISFIRE_INSTR], [NEXT_FIRE_TIME], [TRIGGER_GROUP], [TRIGGER_STATE]);\n\
+    \nCREATE INDEX [IDX_QRTZ_FT_TRIG_INST_NAME] ON [quartz].[QRTZ_FIRED_TRIGGERS]\
+    \ ([SCHED_NAME], [INSTANCE_NAME]);\nCREATE INDEX [IDX_QRTZ_FT_INST_JOB_REQ_RCVRY]\
+    \ ON [quartz].[QRTZ_FIRED_TRIGGERS] ([SCHED_NAME], [INSTANCE_NAME], [REQUESTS_RECOVERY]);\n\
+    CREATE INDEX [IDX_QRTZ_FT_J_G] ON [quartz].[QRTZ_FIRED_TRIGGERS] ([SCHED_NAME],\
+    \ [JOB_NAME], [JOB_GROUP]);\nCREATE INDEX [IDX_QRTZ_FT_JG] ON [quartz].[QRTZ_FIRED_TRIGGERS]\
+    \ ([SCHED_NAME], [JOB_GROUP]);\nCREATE INDEX [IDX_QRTZ_FT_T_G] ON [quartz].[QRTZ_FIRED_TRIGGERS]\
+    \ ([SCHED_NAME], [TRIGGER_NAME], [TRIGGER_GROUP]);\nCREATE INDEX [IDX_QRTZ_FT_TG]\
+    \ ON [quartz].[QRTZ_FIRED_TRIGGERS] ([SCHED_NAME], [TRIGGER_GROUP]);\nGO\nSET\
+    \ NOEXEC OFF;\nGO\n"
+  003-03-expenseclaims-schema.sql: "IF OBJECT_ID(N'[exp].[__EFMigrationsHistory]')\
+    \ IS NULL\nBEGIN\n    IF SCHEMA_ID(N'exp') IS NULL EXEC(N'CREATE SCHEMA [exp];');\n\
+    \    CREATE TABLE [exp].[__EFMigrationsHistory] (\n        [MigrationId] nvarchar(150)\
+    \ NOT NULL,\n        [ProductVersion] nvarchar(32) NOT NULL,\n        CONSTRAINT\
+    \ [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])\n    );\nEND;\nGO\nIF\
+    \ NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] =\
+    \ N'20220316091522_InitialCreate')\nBEGIN\n    IF SCHEMA_ID(N'exp') IS NULL EXEC(N'CREATE\
+    \ SCHEMA [exp];');\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE TABLE\
+    \ [exp].[ClaimSequences] (\n        [Year] int NOT NULL,\n        [LastNumber]\
+    \ int NOT NULL,\n        CONSTRAINT [PK_ClaimSequences] PRIMARY KEY ([Year])\n\
+    \    );\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE\
+    \ [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE TABLE [exp].[Employees]\
+    \ (\n        [Id] int NOT NULL IDENTITY,\n        [EmployeeNumber] nvarchar(20)\
+    \ NOT NULL,\n        [Upn] nvarchar(200) NOT NULL,\n        [DisplayName] nvarchar(200)\
+    \ NOT NULL,\n        [Email] nvarchar(200) NOT NULL,\n        [CostCenter] nvarchar(20)\
+    \ NOT NULL,\n        [ManagerEmployeeNumber] nvarchar(20) NULL,\n        [Iban]\
+    \ nvarchar(34) NULL,\n        [Bic] nvarchar(11) NULL,\n        [Active] bit NOT\
+    \ NULL,\n        [UpdatedAt] datetime2 NOT NULL,\n        CONSTRAINT [PK_Employees]\
+    \ PRIMARY KEY ([Id])\n    );\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE TABLE\
+    \ [exp].[ExchangeRates] (\n        [Date] date NOT NULL,\n        [Currency] nchar(3)\
+    \ NOT NULL,\n        [UnitsPerEuro] decimal(18,6) NOT NULL,\n        CONSTRAINT\
+    \ [PK_ExchangeRates] PRIMARY KEY ([Date], [Currency])\n    );\nEND;\nGO\nIF NOT\
+    \ EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE TABLE [exp].[PaymentRuns] (\n        [Id] int NOT NULL IDENTITY,\n\
+    \        [MessageId] nvarchar(35) NOT NULL,\n        [CreatedAt] datetime2 NOT\
+    \ NULL,\n        [ExecutionDate] date NOT NULL,\n        [PaymentCount] int NOT\
+    \ NULL,\n        [Total] decimal(18,2) NOT NULL,\n        [FileName] nvarchar(200)\
+    \ NOT NULL,\n        [Status] int NOT NULL,\n        [BankReference] nvarchar(100)\
+    \ NULL,\n        [Error] nvarchar(2000) NULL,\n        [SentAt] datetime2 NULL,\n\
+    \        CONSTRAINT [PK_PaymentRuns] PRIMARY KEY ([Id])\n    );\nEND;\nGO\nIF\
+    \ NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] =\
+    \ N'20220316091522_InitialCreate')\nBEGIN\n    CREATE TABLE [exp].[Receipts] (\n\
+    \        [Id] int NOT NULL IDENTITY,\n        [FileId] uniqueidentifier NOT NULL,\n\
+    \        [FileName] nvarchar(200) NOT NULL,\n        [ContentType] nvarchar(100)\
+    \ NOT NULL,\n        [Length] bigint NOT NULL,\n        [Sha256] nvarchar(64)\
+    \ NOT NULL,\n        [StoragePath] nvarchar(400) NOT NULL,\n        [UploadedById]\
+    \ int NOT NULL,\n        [UploadedAt] datetime2 NOT NULL,\n        CONSTRAINT\
+    \ [PK_Receipts] PRIMARY KEY ([Id])\n    );\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM\
+    \ [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE TABLE [exp].[CompanyCards] (\n        [Id] int NOT NULL IDENTITY,\n\
+    \        [MaskedNumber] nvarchar(19) NOT NULL,\n        [EmployeeId] int NOT NULL,\n\
+    \        [Active] bit NOT NULL,\n        CONSTRAINT [PK_CompanyCards] PRIMARY\
+    \ KEY ([Id]),\n        CONSTRAINT [FK_CompanyCards_Employees_EmployeeId] FOREIGN\
+    \ KEY ([EmployeeId]) REFERENCES [exp].[Employees] ([Id]) ON DELETE NO ACTION\n\
+    \    );\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE\
+    \ [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE TABLE [exp].[Claims]\
+    \ (\n        [Id] int NOT NULL IDENTITY,\n        [Number] nvarchar(20) NOT NULL,\n\
+    \        [EmployeeId] int NOT NULL,\n        [Purpose] nvarchar(500) NOT NULL,\n\
+    \        [CostCenter] nvarchar(20) NOT NULL,\n        [ProjectCode] nvarchar(20)\
+    \ NULL,\n        [Status] int NOT NULL,\n        [Total] decimal(18,2) NOT NULL,\n\
+    \        [Reimbursable] decimal(18,2) NOT NULL,\n        [CreatedAt] datetime2\
+    \ NOT NULL,\n        [SubmittedAt] datetime2 NULL,\n        [DecidedAt] datetime2\
+    \ NULL,\n        [CheckedAt] datetime2 NULL,\n        [CheckedBy] nvarchar(200)\
+    \ NULL,\n        [PaymentRunId] int NULL,\n        [PaidAt] datetime2 NULL,\n\
+    \        [JournalDocumentNo] nvarchar(20) NULL,\n        [ExportedAt] datetime2\
+    \ NULL,\n        [RowVersion] rowversion NOT NULL,\n        CONSTRAINT [PK_Claims]\
+    \ PRIMARY KEY ([Id]),\n        CONSTRAINT [FK_Claims_Employees_EmployeeId] FOREIGN\
+    \ KEY ([EmployeeId]) REFERENCES [exp].[Employees] ([Id]) ON DELETE NO ACTION,\n\
+    \        CONSTRAINT [FK_Claims_PaymentRuns_PaymentRunId] FOREIGN KEY ([PaymentRunId])\
+    \ REFERENCES [exp].[PaymentRuns] ([Id])\n    );\nEND;\nGO\nIF NOT EXISTS(SELECT\
+    \ * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE TABLE [exp].[CardTransactions] (\n        [Id] int NOT NULL\
+    \ IDENTITY,\n        [Reference] nvarchar(40) NOT NULL,\n        [CompanyCardId]\
+    \ int NOT NULL,\n        [TransactionDate] date NOT NULL,\n        [PostingDate]\
+    \ date NOT NULL,\n        [Merchant] nvarchar(200) NOT NULL,\n        [MerchantCity]\
+    \ nvarchar(60) NULL,\n        [MerchantCountry] nvarchar(3) NULL,\n        [MerchantCategoryCode]\
+    \ nchar(4) NOT NULL,\n        [OriginalAmount] decimal(18,2) NOT NULL,\n     \
+    \   [OriginalCurrency] nchar(3) NOT NULL,\n        [BilledAmountEur] decimal(18,2)\
+    \ NOT NULL,\n        [SourceFile] nvarchar(260) NOT NULL,\n        [ImportedAt]\
+    \ datetime2 NOT NULL,\n        CONSTRAINT [PK_CardTransactions] PRIMARY KEY ([Id]),\n\
+    \        CONSTRAINT [FK_CardTransactions_CompanyCards_CompanyCardId] FOREIGN KEY\
+    \ ([CompanyCardId]) REFERENCES [exp].[CompanyCards] ([Id]) ON DELETE CASCADE\n\
+    \    );\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE\
+    \ [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE TABLE [exp].[Approvals]\
+    \ (\n        [Id] int NOT NULL IDENTITY,\n        [ClaimId] int NOT NULL,\n  \
+    \      [Level] int NOT NULL,\n        [ApproverId] int NOT NULL,\n        [Decision]\
+    \ int NOT NULL,\n        [Comment] nvarchar(1000) NULL,\n        [DecidedAt] datetime2\
+    \ NULL,\n        [RemindedAt] datetime2 NULL,\n        CONSTRAINT [PK_Approvals]\
+    \ PRIMARY KEY ([Id]),\n        CONSTRAINT [FK_Approvals_Claims_ClaimId] FOREIGN\
+    \ KEY ([ClaimId]) REFERENCES [exp].[Claims] ([Id]) ON DELETE CASCADE,\n      \
+    \  CONSTRAINT [FK_Approvals_Employees_ApproverId] FOREIGN KEY ([ApproverId]) REFERENCES\
+    \ [exp].[Employees] ([Id]) ON DELETE NO ACTION\n    );\nEND;\nGO\nIF NOT EXISTS(SELECT\
+    \ * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE TABLE [exp].[ClaimEvents] (\n        [Id] bigint NOT NULL IDENTITY,\n\
+    \        [ClaimId] int NOT NULL,\n        [At] datetime2 NOT NULL,\n        [Actor]\
+    \ nvarchar(200) NOT NULL,\n        [Action] nvarchar(50) NOT NULL,\n        [Details]\
+    \ nvarchar(2000) NULL,\n        CONSTRAINT [PK_ClaimEvents] PRIMARY KEY ([Id]),\n\
+    \        CONSTRAINT [FK_ClaimEvents_Claims_ClaimId] FOREIGN KEY ([ClaimId]) REFERENCES\
+    \ [exp].[Claims] ([Id]) ON DELETE CASCADE\n    );\nEND;\nGO\nIF NOT EXISTS(SELECT\
+    \ * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE TABLE [exp].[ClaimLines] (\n        [Id] int NOT NULL IDENTITY,\n\
+    \        [ClaimId] int NOT NULL,\n        [LineNumber] int NOT NULL,\n       \
+    \ [ExpenseDate] date NOT NULL,\n        [Category] int NOT NULL,\n        [Description]\
+    \ nvarchar(500) NOT NULL,\n        [Amount] decimal(18,2) NOT NULL,\n        [Currency]\
+    \ nchar(3) NOT NULL,\n        [ExchangeRate] decimal(18,6) NOT NULL,\n       \
+    \ [AmountEur] decimal(18,2) NOT NULL,\n        [Kilometres] decimal(9,1) NULL,\n\
+    \        [Route] nvarchar(200) NULL,\n        [PerDiem] int NOT NULL,\n      \
+    \  [Country] nchar(2) NULL,\n        [Attendees] int NOT NULL,\n        [VatRate]\
+    \ decimal(5,2) NOT NULL,\n        [VatAmountEur] decimal(18,2) NOT NULL,\n   \
+    \     [PaidByCompany] bit NOT NULL,\n        [CardTransactionId] int NULL,\n \
+    \       [ReceiptId] int NULL,\n        CONSTRAINT [PK_ClaimLines] PRIMARY KEY\
+    \ ([Id]),\n        CONSTRAINT [FK_ClaimLines_CardTransactions_CardTransactionId]\
+    \ FOREIGN KEY ([CardTransactionId]) REFERENCES [exp].[CardTransactions] ([Id])\
+    \ ON DELETE NO ACTION,\n        CONSTRAINT [FK_ClaimLines_Claims_ClaimId] FOREIGN\
+    \ KEY ([ClaimId]) REFERENCES [exp].[Claims] ([Id]) ON DELETE CASCADE,\n      \
+    \  CONSTRAINT [FK_ClaimLines_Receipts_ReceiptId] FOREIGN KEY ([ReceiptId]) REFERENCES\
+    \ [exp].[Receipts] ([Id]) ON DELETE SET NULL\n    );\nEND;\nGO\nIF NOT EXISTS(SELECT\
+    \ * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE INDEX [IX_Approvals_ApproverId_Decision] ON [exp].[Approvals]\
+    \ ([ApproverId], [Decision]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE INDEX\
+    \ [IX_Approvals_ClaimId] ON [exp].[Approvals] ([ClaimId]);\nEND;\nGO\nIF NOT EXISTS(SELECT\
+    \ * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE INDEX [IX_CardTransactions_CompanyCardId_TransactionDate] ON\
+    \ [exp].[CardTransactions] ([CompanyCardId], [TransactionDate]);\nEND;\nGO\nIF\
+    \ NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] =\
+    \ N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE INDEX [IX_CardTransactions_Reference]\
+    \ ON [exp].[CardTransactions] ([Reference]);\nEND;\nGO\nIF NOT EXISTS(SELECT *\
+    \ FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE INDEX [IX_ClaimEvents_ClaimId] ON [exp].[ClaimEvents] ([ClaimId]);\n\
+    END;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId]\
+    \ = N'20220316091522_InitialCreate')\nBEGIN\n    EXEC(N'CREATE UNIQUE INDEX [IX_ClaimLines_CardTransactionId]\
+    \ ON [exp].[ClaimLines] ([CardTransactionId]) WHERE [CardTransactionId] IS NOT\
+    \ NULL');\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE\
+    \ INDEX [IX_ClaimLines_ClaimId_LineNumber] ON [exp].[ClaimLines] ([ClaimId], [LineNumber]);\n\
+    END;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId]\
+    \ = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE INDEX [IX_ClaimLines_ReceiptId]\
+    \ ON [exp].[ClaimLines] ([ReceiptId]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM\
+    \ [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE INDEX [IX_Claims_EmployeeId] ON [exp].[Claims] ([EmployeeId]);\n\
+    END;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId]\
+    \ = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE INDEX [IX_Claims_Number]\
+    \ ON [exp].[Claims] ([Number]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE INDEX\
+    \ [IX_Claims_PaymentRunId] ON [exp].[Claims] ([PaymentRunId]);\nEND;\nGO\nIF NOT\
+    \ EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE INDEX [IX_Claims_Status_ExportedAt] ON [exp].[Claims] ([Status],\
+    \ [ExportedAt]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE INDEX\
+    \ [IX_Claims_Status_SubmittedAt] ON [exp].[Claims] ([Status], [SubmittedAt]);\n\
+    END;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId]\
+    \ = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE INDEX [IX_CompanyCards_EmployeeId]\
+    \ ON [exp].[CompanyCards] ([EmployeeId]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM\
+    \ [exp].[__EFMigrationsHistory] WHERE [MigrationId] = N'20220316091522_InitialCreate')\n\
+    BEGIN\n    CREATE UNIQUE INDEX [IX_CompanyCards_MaskedNumber] ON [exp].[CompanyCards]\
+    \ ([MaskedNumber]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE\
+    \ INDEX [IX_Employees_EmployeeNumber] ON [exp].[Employees] ([EmployeeNumber]);\n\
+    END;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId]\
+    \ = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE INDEX [IX_Employees_Upn]\
+    \ ON [exp].[Employees] ([Upn]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE\
+    \ INDEX [IX_PaymentRuns_MessageId] ON [exp].[PaymentRuns] ([MessageId]);\nEND;\n\
+    GO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory] WHERE [MigrationId]\
+    \ = N'20220316091522_InitialCreate')\nBEGIN\n    CREATE UNIQUE INDEX [IX_Receipts_FileId]\
+    \ ON [exp].[Receipts] ([FileId]);\nEND;\nGO\nIF NOT EXISTS(SELECT * FROM [exp].[__EFMigrationsHistory]\
+    \ WHERE [MigrationId] = N'20220316091522_InitialCreate')\nBEGIN\n    INSERT INTO\
+    \ [exp].[__EFMigrationsHistory] ([MigrationId], [ProductVersion])\n    VALUES\
+    \ (N'20220316091522_InitialCreate', N'6.0.10');\nEND;\nGO\n"

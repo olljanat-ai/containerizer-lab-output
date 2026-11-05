@@ -17,7 +17,7 @@
     {
       "component": "ExpenseClaims.Api",
       "folder": "expenseclaims-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1326-refactor.206",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api:1.20261105.1943-refactor.209",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -29,7 +29,7 @@
     {
       "component": "ExpenseClaims.Jobs",
       "folder": "expenseclaims-jobs",
-      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1326-refactor.206",
+      "image": "localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs:1.20261105.1943-refactor.209",
       "rating": "A",
       "verdict": "config",
       "role": "web",
@@ -42,10 +42,10 @@
   "excluded": [
     {
       "component": "expenses-web",
-      "reason": "security gate: image build failed"
+      "reason": "security gate: does not run with the hardened pod security context"
     }
   ],
-  "processed_at": "2026-11-05T13:26:39Z",
+  "processed_at": "2026-11-05T19:43:47Z",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/expense-claims",
@@ -68,19 +68,25 @@
       "ExpenseClaims.Jobs": [
         "sqlserver:ConnectionStrings__ExpenseClaims"
       ]
-    }
+    },
+    "init_scripts": [
+      "db/01-create-database.sql",
+      "db/02-quartz-tables.sql",
+      "db/03-expenseclaims-schema.sql"
+    ]
   },
   "migration": {},
   "llm_usage": {},
   "apps": [],
   "split_hint": {},
   "patched": {
-    "job": 206,
+    "job": 209,
     "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
     "application_id": 14,
     "app": "containerization-challenge-expense-claims",
-    "tag": "1.20261105.1326-refactor.206",
-    "deployed_at": "2026-11-05T13:26:39",
-    "previous_revision": "41938c84f429d4b8f6fbba217735663c950d95a1"
+    "tag": "1.20261105.1943-refactor.209",
+    "deployed_at": "2026-11-05T19:43:47",
+    "previous_revision": "41938c84f429d4b8f6fbba217735663c950d95a1",
+    "replaced_job": 206
   }
 }
