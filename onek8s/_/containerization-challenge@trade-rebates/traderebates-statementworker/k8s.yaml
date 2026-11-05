@@ -36,7 +36,7 @@ spec:
           automountServiceAccountToken: false
           containers:
           - name: traderebates-statementworker
-            image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.916-refactor.194
+            image: localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.946-refactor.195
             imagePullPolicy: IfNotPresent
             env:
             - name: ConnectionStrings__TradeRebates

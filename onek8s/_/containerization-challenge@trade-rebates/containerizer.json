@@ -15,9 +15,33 @@
   "rating": "A",
   "components": [
     {
+      "component": "TradeRebates.Api",
+      "folder": "traderebates-api",
+      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-api:1.20261105.946-refactor.195",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/TradeRebates.Api/TradeRebates.Api.csproj",
+      "project_name": "TradeRebates.Api",
+      "verification": "ok",
+      "digest": "sha256:f190374f1e4641976cb9574c8c682cf035b9cdcbadd41b91b1fb8531c7dcddff"
+    },
+    {
+      "component": "TradeRebates.Portal",
+      "folder": "traderebates-portal",
+      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-portal:1.20261105.946-refactor.195",
+      "rating": "A",
+      "verdict": "config",
+      "role": "web",
+      "project": "src/TradeRebates.Portal/TradeRebates.Portal.csproj",
+      "project_name": "TradeRebates.Portal",
+      "verification": "ok",
+      "digest": "sha256:75ef2dd1f7bb4394388c7c77e03f07e4edf373ee36a86e8a46b015f7cf7faf03"
+    },
+    {
       "component": "TradeRebates.StatementWorker",
       "folder": "traderebates-statementworker",
-      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.916-refactor.194",
+      "image": "localhost:5000/sandbox/containerization-challenge-trade-rebates/traderebates-statementworker:1.20261105.946-refactor.195",
       "rating": "A",
       "verdict": "config",
       "role": "console",
@@ -27,17 +51,8 @@
       "digest": "sha256:e798e923c6d9bc69eeef68231f55ab7c60c6b782cc396806b42278e8b944dd0f"
     }
   ],
-  "excluded": [
-    {
-      "component": "TradeRebates.Api",
-      "reason": "security gate: does not run with the hardened pod security context"
-    },
-    {
-      "component": "TradeRebates.Portal",
-      "reason": "security gate: does not run with the hardened pod security context"
-    }
-  ],
-  "processed_at": "2026-11-05T09:16:37Z",
+  "excluded": [],
+  "processed_at": "2026-11-05T09:46:00Z",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/trade-rebates",
@@ -45,6 +60,8 @@
   "lab_services": {
     "needed": {
       "sqlserver": [
+        "TradeRebates.Api",
+        "TradeRebates.Portal",
         "TradeRebates.StatementWorker"
       ]
     },
@@ -53,6 +70,12 @@
     ],
     "missing": [],
     "overrides": {
+      "TradeRebates.Api": [
+        "sqlserver:ConnectionStrings__TradeRebates"
+      ],
+      "TradeRebates.Portal": [
+        "sqlserver:ConnectionStrings__TradeRebates"
+      ],
       "TradeRebates.StatementWorker": [
         "sqlserver:ConnectionStrings__TradeRebates"
       ]
@@ -63,12 +86,13 @@
   "apps": [],
   "split_hint": {},
   "patched": {
-    "job": 194,
+    "job": 195,
     "commit": "805d5fc80057441e85eaf9f2ce8c7a539bcde00f",
     "application_id": 34,
     "app": "containerization-challenge-trade-rebates",
-    "tag": "1.20261105.916-refactor.194",
-    "deployed_at": "2026-11-05T09:16:37",
-    "previous_revision": "13cbd212d9248735e6f605bc0c4d8efff66a78b5"
+    "tag": "1.20261105.946-refactor.195",
+    "deployed_at": "2026-11-05T09:46:00",
+    "previous_revision": "13cbd212d9248735e6f605bc0c4d8efff66a78b5",
+    "replaced_job": 194
   }
 }

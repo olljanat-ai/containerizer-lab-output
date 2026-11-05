@@ -153,5 +153,12 @@ patches:
     name: containerization-challenge-trade-rebates
     namespace: containerization-challenge-trade-rebates
   patch: '[{"op": "add", "path": "/spec/wait", "value": false}, {"op": "add", "path":
-    "/spec/healthChecks", "value": [{"apiVersion": "external-secrets.io/v1", "kind":
-    "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-trade-rebates"}]}]'
+    "/spec/healthChecks", "value": [{"apiVersion": "apps/v1", "kind": "Deployment",
+    "name": "traderebates-api", "namespace": "containerization-challenge-trade-rebates"},
+    {"apiVersion": "apps/v1", "kind": "Deployment", "name": "traderebates-portal",
+    "namespace": "containerization-challenge-trade-rebates"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "lab-sqlserver", "namespace": "containerization-challenge-trade-rebates"},
+    {"apiVersion": "external-secrets.io/v1", "kind": "ExternalSecret", "name": "traderebates-api-dataprotection",
+    "namespace": "containerization-challenge-trade-rebates"}, {"apiVersion": "external-secrets.io/v1",
+    "kind": "ExternalSecret", "name": "traderebates-portal-dataprotection", "namespace":
+    "containerization-challenge-trade-rebates"}]}]'
