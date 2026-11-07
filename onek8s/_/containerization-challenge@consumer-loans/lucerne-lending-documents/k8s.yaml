@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: lucerne-lending-documents
-        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261105.2119
+        image: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261107.200
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__Lending

@@ -38,7 +38,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-carriergateway/k8s.yaml: Deployment/controltower-carriergateway/controltower-carriergateway",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -75,7 +75,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-events/k8s.yaml: Deployment/controltower-events/controltower-events",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -112,7 +112,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-telematics/k8s.yaml: Deployment/controltower-telematics/controltower-telematics",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -161,7 +161,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "controltower-tower-api/k8s.yaml: Deployment/controltower-tower-api/controltower-tower-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -169,7 +169,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "21:25:53.3401|WARN|XmlKeyManager|No XML encryptor configured. Key {ff0a962c-539b-4802-8444-acd08cc9494c} may be persisted to storage in unencrypted form. \n21:25:55.2650|WARN|HttpsRedirectionMiddleware|Failed to determine the https port for redirect. \n"
+        "log": "02:20:02.3931|WARN|XmlKeyManager|No XML encryptor configured. Key {a11d4a30-a95a-4a50-ad9a-a22bfc55d38c} may be persisted to storage in unencrypted form. \n02:20:04.5171|WARN|HttpsRedirectionMiddleware|Failed to determine the https port for redirect. \n"
       }
     }
   ],

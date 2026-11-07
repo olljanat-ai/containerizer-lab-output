@@ -17,14 +17,14 @@
     {
       "component": "BatchRelease.Api",
       "folder": "batchrelease-api",
-      "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261105.2119",
+      "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261107.200",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/BatchRelease.Api/BatchRelease.Api.csproj",
       "project_name": "BatchRelease.Api",
       "verification": "not run",
-      "digest": "sha256:c0c2e21a85cb52f65f55b2a215aebf7221542af3cff472d825e51ccc6615585c"
+      "digest": "sha256:29ec4cd73a2585739580c7fe1302c272160206ac607eed4a0a9e76598ee58382"
     }
   ],
   "excluded": [
@@ -37,7 +37,7 @@
       "reason": "rated E (blocker)"
     }
   ],
-  "processed_at": "2026-11-05T21:19:08+00:00",
+  "processed_at": "2026-11-07T02:00:34+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/batch-release",

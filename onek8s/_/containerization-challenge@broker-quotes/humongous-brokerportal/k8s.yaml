@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: humongous-brokerportal
-        image: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.2119
+        image: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261107.200
         imagePullPolicy: IfNotPresent
         env:
         - name: ASPNETCORE_ENVIRONMENT

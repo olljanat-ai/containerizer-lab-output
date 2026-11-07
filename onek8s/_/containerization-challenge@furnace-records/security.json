@@ -32,7 +32,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "furnacerecords-api/k8s.yaml: Deployment/furnacerecords-api/furnacerecords-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -40,7 +40,7 @@
         "status": "inconclusive",
         "http": 503,
         "errors": [],
-        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {2f63f44c-0502-4ef3-a522-1ce61c066eeb} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\n"
+        "log": "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]\n      No XML encryptor configured. Key {04883d54-3bad-4cb0-b9df-2175435c03e6} may be persisted to storage in unencrypted form.\ninfo: Microsoft.Hosting.Lifetime[14]\n      Now listening on: http://[::]:8080\ninfo: Microsoft.Hosting.Lifetime[0]\n      Application started. Press Ctrl+C to shut down.\ninfo: Microsoft.Hosting.Lifetime[0]\n      Hosting environment: Production\ninfo: Microsoft.Hosting.Lifetime[0]\n      Content root path: /app\n"
       }
     },
     {
@@ -63,7 +63,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "furnacerecords-worker/k8s.yaml: Deployment/furnacerecords-worker/furnacerecords-worker",
-          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -71,7 +71,7 @@
         "status": "ok",
         "http": null,
         "errors": [],
-        "log": "_0`2.<<ExecuteAsync>b__0>d.MoveNext()\n      --- End of stack trace from previous location ---\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Query.Internal.SplitQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()\n         at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)\n         at FurnaceRecords.Worker.CertificateArchiver.ArchiveAsync(CancellationToken ct) in /src/src/FurnaceRecords.Worker/CertificateArchiver.cs:line 48\n         at FurnaceRecords.Worker.CertificateArchiver.ExecuteAsync(CancellationToken stoppingToken) in /src/src/FurnaceRecords.Worker/CertificateArchiver.cs:line 33\n      ClientConnectionId:00000000-0000-0000-0000-000000000000\n"
+        "log": "layClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()\n      --- End of stack trace from previous location ---\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()\n         at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)\n         at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)\n         at FurnaceRecords.Worker.OutboxDispatcher.DispatchAsync(CancellationToken ct) in /src/src/FurnaceRecords.Worker/OutboxDispatcher.cs:line 49\n         at FurnaceRecords.Worker.OutboxDispatcher.ExecuteAsync(CancellationToken stoppingToken) in /src/src/FurnaceRecords.Worker/OutboxDispatcher.cs:line 34\n      ClientConnectionId:00000000-0000-0000-0000-000000000000\n"
       }
     }
   ],

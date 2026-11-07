@@ -38,7 +38,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-allocation-api/k8s.yaml: Deployment/vanarsdel-allocation-api/vanarsdel-allocation-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -75,7 +75,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-backoffice/k8s.yaml: Deployment/vanarsdel-backoffice/vanarsdel-backoffice",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -106,7 +106,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-catalog-api/k8s.yaml: Deployment/vanarsdel-catalog-api/vanarsdel-catalog-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -137,7 +137,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-customers-api/k8s.yaml: Deployment/vanarsdel-customers-api/vanarsdel-customers-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -168,7 +168,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-gateway/k8s.yaml: Deployment/vanarsdel-gateway/vanarsdel-gateway",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -176,7 +176,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[21:36:26 INF] Starting gateway 4.12.0.0\n[21:36:27 WRN] No XML encryptor configured. Key {a27d0a85-1d02-4d05-8961-9207242512a5} may be persisted to storage in unencrypted form.\n[21:36:27 INF] Now listening on: http://[::]:8080\n[21:36:27 INF] Application started. Press Ctrl+C to shut down.\n[21:36:27 INF] Hosting environment: Production\n[21:36:27 INF] Content root path: /app\n[21:36:29 INF] HTTP GET /health responded 200 in 193.4090 ms\n"
+        "log": "[02:32:05 INF] Starting gateway 4.12.0.0\n[02:32:06 WRN] No XML encryptor configured. Key {2d990e28-ea40-447d-87f9-b18e286efa21} may be persisted to storage in unencrypted form.\n[02:32:06 INF] Now listening on: http://[::]:8080\n[02:32:06 INF] Application started. Press Ctrl+C to shut down.\n[02:32:06 INF] Hosting environment: Production\n[02:32:06 INF] Content root path: /app\n[02:32:08 INF] HTTP GET /health responded 200 in 266.1671 ms\n"
       }
     },
     {
@@ -199,7 +199,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-inventory-api/k8s.yaml: Deployment/vanarsdel-inventory-api/vanarsdel-inventory-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -236,7 +236,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-notifications/k8s.yaml: Deployment/vanarsdel-notifications/vanarsdel-notifications",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -273,7 +273,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-orders-api/k8s.yaml: Deployment/vanarsdel-orders-api/vanarsdel-orders-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -304,7 +304,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-pricing-api/k8s.yaml: Deployment/vanarsdel-pricing-api/vanarsdel-pricing-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -341,7 +341,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-returns-api/k8s.yaml: Deployment/vanarsdel-returns-api/vanarsdel-returns-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -372,7 +372,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-scheduler/k8s.yaml: Deployment/vanarsdel-scheduler/vanarsdel-scheduler",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -415,7 +415,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-storemanager/k8s.yaml: Deployment/vanarsdel-storemanager/vanarsdel-storemanager",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -423,7 +423,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[21:40:00 INF] Now listening on: http://[::]:8080\n[21:40:00 INF] Now listening on: http://[::]:8080\n[21:40:00 INF] Application started. Press Ctrl+C to shut down.\n[21:40:00 INF] Application started. Press Ctrl+C to shut down.\n[21:40:00 INF] Hosting environment: Production\n[21:40:00 INF] Hosting environment: Production\n[21:40:00 INF] Content root path: /app\n[21:40:00 INF] Content root path: /app\n"
+        "log": "[02:37:33 INF] Now listening on: http://[::]:8080\n[02:37:33 INF] Now listening on: http://[::]:8080\n[02:37:33 INF] Application started. Press Ctrl+C to shut down.\n[02:37:33 INF] Application started. Press Ctrl+C to shut down.\n[02:37:33 INF] Hosting environment: Production\n[02:37:33 INF] Hosting environment: Production\n[02:37:33 INF] Content root path: /app\n[02:37:33 INF] Content root path: /app\n"
       }
     },
     {
@@ -446,7 +446,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "vanarsdel-storeops-api/k8s.yaml: Deployment/vanarsdel-storeops-api/vanarsdel-storeops-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261105.2119 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261107.200 is not pinned to a digest"
         }
       ],
       "scans": [],

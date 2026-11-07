@@ -17,38 +17,38 @@
     {
       "component": "Humongous.BrokerPortal",
       "folder": "humongous-brokerportal",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261105.2119",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261107.200",
       "rating": "A",
       "verdict": "info",
       "role": "web",
       "project": "src/Humongous.BrokerPortal/Humongous.BrokerPortal.csproj",
       "project_name": "Humongous.BrokerPortal",
       "verification": "not run",
-      "digest": "sha256:ce4092dce728740792a414532a60b1f98919274ebc2e7c10263a8b7dd0cf4a97"
+      "digest": "sha256:6fb862d1b8778c839f7e192be97310e8582ec373b0500c2248a8c56156c1ad07"
     },
     {
       "component": "Humongous.Documents",
       "folder": "humongous-documents",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261105.2119",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261107.200",
       "rating": "A",
       "verdict": "config",
       "role": "worker",
       "project": "src/Humongous.Documents/Humongous.Documents.csproj",
       "project_name": "Humongous.Documents",
       "verification": "not run",
-      "digest": "sha256:201dd67f9395d72931b5a547d4bd5915987abe8953f823657e82925babbb5206"
+      "digest": "sha256:0ea73aa8a220396e2fd6701b81f6c4419cc18061905f99b48c97c0b6ed8a9bed"
     },
     {
       "component": "Humongous.Workbench",
       "folder": "humongous-workbench",
-      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261105.2119",
+      "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261107.200",
       "rating": "A",
       "verdict": "config",
       "role": "web",
       "project": "src/Humongous.Workbench/Humongous.Workbench.csproj",
       "project_name": "Humongous.Workbench",
       "verification": "not run",
-      "digest": "sha256:5de271be3bdd78230446d6cc4886a75a36c3e26921d5e3afa2786274dd147813"
+      "digest": "sha256:3012e427e0d3f5300179029b7135a633e4726d72953b5584c659db1a0f4af29c"
     }
   ],
   "excluded": [
@@ -65,7 +65,7 @@
       "reason": "rated E (blocker)"
     }
   ],
-  "processed_at": "2026-11-05T21:19:08+00:00",
+  "processed_at": "2026-11-07T02:00:34+00:00",
   "overridden": [],
   "seconds": 0.0,
   "source_key": "https://github.com/onek8s/containerization-challenge#scenarios/broker-quotes",
