@@ -31,7 +31,8 @@ kubectl apply -f flux/git/image-automation.yaml   # optional
 - `oci/sync.yaml`: the same, from an OCI artifact (`flux push artifact oci://<registry>/containerization-challenge-freight-rates/manifests:1.0.0
   --path=onek8s/_/containerization-challenge@freight-rates`), accepted only when signed with the cosign key in Secret `containerization-challenge-freight-rates-cosign-pub`.
 - `git/image-automation.yaml`: `ImageRepository`, `ImagePolicy` (semver `>=1.0.0`) and
-  `ImageUpdateAutomation`; the `$imagepolicy` markers in `kustomization.yaml` say what it may change.
+  `ImageUpdateAutomation`; the `$imagepolicy` markers on the image tags in `<component>/helmrelease.yaml` say what it
+  may change.
   It needs a deploy key with write access, so keep it separate from the read-only sync key if you
   can.
 

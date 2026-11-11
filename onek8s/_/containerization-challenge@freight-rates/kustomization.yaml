@@ -6,6 +6,3 @@ resources:
 - security.yaml
 - freightrates-api/helmrelease.yaml
 - lab/k8s.yaml
-images:
-  - name: localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-freight-rates:freightrates-api:tag"}

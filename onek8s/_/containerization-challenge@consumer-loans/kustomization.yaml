@@ -7,8 +7,3 @@ resources:
 - lab/k8s.yaml
 - lucerne-lending-customerportal/helmrelease.yaml
 - lucerne-lending-documents/helmrelease.yaml
-images:
-  - name: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-consumer-loans:lucerne-lending-customerportal:tag"}
-  - name: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-consumer-loans:lucerne-lending-documents:tag"}

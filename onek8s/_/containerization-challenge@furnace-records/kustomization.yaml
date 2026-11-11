@@ -7,8 +7,3 @@ resources:
 - furnacerecords-api/helmrelease.yaml
 - furnacerecords-worker/helmrelease.yaml
 - lab/k8s.yaml
-images:
-  - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-api:tag"}
-  - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-worker:tag"}

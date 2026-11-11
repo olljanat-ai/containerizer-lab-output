@@ -115,5 +115,6 @@ Put these in the secret store before the first sync (docs/external-secrets.md); 
 
 - `security.yaml`: default-deny NetworkPolicy, LimitRange and ResourceQuota for the namespace
 - `namespace.yaml`: Pod Security Admission `restricted` (enforce, warn, audit)
-- `<component>/k8s.yaml`: hardened workloads, own ServiceAccount, least-privilege NetworkPolicy, ExternalSecrets
+- `<component>/helmrelease.yaml`: the component's values for the shared chart `charts/containerizer-app`, which renders the
+  hardened workload, own ServiceAccount, least-privilege NetworkPolicy and ExternalSecrets
 - `cluster/audit-policy.yaml`, `cluster/verify-images.yaml`, `cluster/secret-store.yaml` (the secret store and this namespace's read access): for the cluster operator, not applied with the app

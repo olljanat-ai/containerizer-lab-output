@@ -7,8 +7,3 @@ resources:
 - fieldservice-web/helmrelease.yaml
 - fieldservice-worker/helmrelease.yaml
 - lab/k8s.yaml
-images:
-  - name: localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-web
-    newTag: 1.20261104.2110-refactor.192 # {"$imagepolicy": "containerization-challenge-field-service:fieldservice-web:tag"}
-  - name: localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker
-    newTag: 1.20261104.2110-refactor.192 # {"$imagepolicy": "containerization-challenge-field-service:fieldservice-worker:tag"}
