@@ -1,0 +1,98 @@
+# Component controltower-tower-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: controltower-tower-api
+  labels:
+    app.kubernetes.io/name: controltower-tower-api
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-control-tower
+  serviceAccountName: containerization-challenge-control-tower-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-tower-api:tag"}
+    env:
+    - name: ConnectionStrings__RabbitMq
+      valueFrom:
+        secretKeyRef:
+          name: lab-rabbitmq
+          key: connection-string
+    - name: ConnectionStrings__ControlTower
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: CONTROLTOWER_LOG_DIR
+      value: /app/logs
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: DataProtection__KeyFolder
+      value: /data/controltower/keys/tower
+    port: 8080
+    volumes:
+    - name: w0-logs
+      mountPath: /app/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-tower
+      mountPath: /data/controltower/keys/tower
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w2-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: controltower-tower-api-containerization-challenge-control-tower.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 22
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+        - service: sftp
+          port: 2022
+          perApp: true
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__ControlTower
+      - ConnectionStrings__RabbitMq

@@ -1,0 +1,79 @@
+# Component freightrates-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: freightrates-api
+  labels:
+    app.kubernetes.io/name: freightrates-api
+    app.kubernetes.io/part-of: containerization-challenge-freight-rates
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-freight-rates
+  serviceAccountName: containerization-challenge-freight-rates-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-freight-rates:freightrates-api:tag"}
+    env:
+    - name: ConnectionStrings__FreightRates
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: DOTNET_ROLL_FORWARD
+      value: Major
+    port: 8080
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: freightrates-api-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: freightrates-api-containerization-challenge-freight-rates.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,http-apis,configured-ports,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        - port: 5101
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    dataProtection:
+      enabled: true
+      keyId: 7dbabf1f-e362-5ce7-a162-b2f91ba479a6
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__FreightRates

@@ -1,0 +1,123 @@
+# Component vanarsdel-customers-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vanarsdel-customers-api
+  labels:
+    app.kubernetes.io/name: vanarsdel-customers-api
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-retail-backoffice
+  serviceAccountName: containerization-challenge-retail-backoffice-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-customers-api:tag"}
+    env:
+    - name: ConnectionStrings__Customers
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: ConnectionStrings__CustomersMongo
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-customers-api-secrets
+          key: ConnectionStrings__CustomersMongo
+          optional: true
+    - name: Messaging__Password
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-customers-api-secrets
+          key: Messaging__Password
+          optional: true
+    - name: Serilog__WriteTo__1__Args__apiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-customers-api-secrets
+          key: Serilog__WriteTo__1__Args__apiKey
+          optional: true
+    - name: ServiceIdentity__ClientSecret
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-customers-api-secrets
+          key: ServiceIdentity__ClientSecret
+          optional: true
+    port: 8080
+    probe:
+      type: tcpSocket
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: vanarsdel-customers-api-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: vanarsdel-customers-api-containerization-challenge-ret-e9b57d70.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,mongodb,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 27017
+          protocol: TCP
+        - port: 6379
+          protocol: TCP
+        - port: 6380
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 5341
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+    dataProtection:
+      enabled: true
+      keyId: c6f6014b-0afe-5e45-a200-5f6ca0c75b3d
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__Customers
+      - ConnectionStrings__CustomersMongo
+      - Messaging__Password
+      - Serilog__WriteTo__1__Args__apiKey
+      - ServiceIdentity__ClientSecret

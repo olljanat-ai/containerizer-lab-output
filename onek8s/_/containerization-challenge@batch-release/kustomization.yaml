@@ -4,7 +4,7 @@ namespace: containerization-challenge-batch-release
 resources:
 - namespace.yaml
 - security.yaml
-- batchrelease-api/k8s.yaml
+- batchrelease-api/helmrelease.yaml
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api

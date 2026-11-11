@@ -1,0 +1,139 @@
+# Component vanarsdel-inventory-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vanarsdel-inventory-api
+  labels:
+    app.kubernetes.io/name: vanarsdel-inventory-api
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-retail-backoffice
+  serviceAccountName: containerization-challenge-retail-backoffice-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-inventory-api:tag"}
+    env:
+    - name: ConnectionStrings__Inventory
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Kestrel__Endpoints__Grpc__Url
+      value: http://+:8080
+    - name: Kestrel__Endpoints__Http__Url
+      value: http://+:8081
+    - name: Kestrel__Endpoints__Https__Certificate__Path
+      value: /secrets/inventory.corp.local.pfx
+    - name: Kestrel__Endpoints__Https__Url
+      value: http://+:8082
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: Kestrel__Endpoints__Https__Certificate__Password
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-inventory-api-secrets
+          key: Kestrel__Endpoints__Https__Certificate__Password
+          optional: true
+    - name: Messaging__Password
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-inventory-api-secrets
+          key: Messaging__Password
+          optional: true
+    - name: Serilog__WriteTo__1__Args__apiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-inventory-api-secrets
+          key: Serilog__WriteTo__1__Args__apiKey
+          optional: true
+    - name: ServiceIdentity__ClientSecret
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-inventory-api-secrets
+          key: ServiceIdentity__ClientSecret
+          optional: true
+    port: 8080
+    probe:
+      type: tcpSocket
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: vanarsdel-inventory-api-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: secret-files
+      mountPath: /secrets
+      readOnly: true
+      secret:
+        secretName: vanarsdel-inventory-api-files
+        optional: true
+        defaultMode: 288
+    ingress:
+      enabled: true
+      host: vanarsdel-inventory-api-containerization-challenge-ret-d9dcf778.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 6379
+          protocol: TCP
+        - port: 6380
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 5341
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+    dataProtection:
+      enabled: true
+      keyId: fafd81cb-8aa7-505d-9c60-e372756115f1
+    externalSecrets:
+    - name: files
+      keys:
+      - inventory.corp.local.pfx
+    - name: secrets
+      keys:
+      - ConnectionStrings__Inventory
+      - Kestrel__Endpoints__Https__Certificate__Password
+      - Messaging__Password
+      - Serilog__WriteTo__1__Args__apiKey
+      - ServiceIdentity__ClientSecret

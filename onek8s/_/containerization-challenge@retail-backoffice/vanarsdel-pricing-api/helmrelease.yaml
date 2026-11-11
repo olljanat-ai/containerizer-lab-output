@@ -1,0 +1,115 @@
+# Component vanarsdel-pricing-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vanarsdel-pricing-api
+  labels:
+    app.kubernetes.io/name: vanarsdel-pricing-api
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-retail-backoffice
+  serviceAccountName: containerization-challenge-retail-backoffice-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-pricing-api:tag"}
+    strategy: Recreate
+    env:
+    - name: ConnectionStrings__Pricing
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: Messaging__Password
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-pricing-api-secrets
+          key: Messaging__Password
+          optional: true
+    - name: Serilog__WriteTo__1__Args__apiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-pricing-api-secrets
+          key: Serilog__WriteTo__1__Args__apiKey
+          optional: true
+    - name: ServiceIdentity__ClientSecret
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-pricing-api-secrets
+          key: ServiceIdentity__ClientSecret
+          optional: true
+    port: 8080
+    probe:
+      type: tcpSocket
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: vanarsdel-pricing-api-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: vanarsdel-pricing-api-containerization-challenge-retai-58aa02d4.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 6379
+          protocol: TCP
+        - port: 6380
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 5341
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+    dataProtection:
+      enabled: true
+      keyId: 5ae73f3e-5638-572c-8bb1-bcfc0897e08b
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__Pricing
+      - Messaging__Password
+      - Serilog__WriteTo__1__Args__apiKey
+      - ServiceIdentity__ClientSecret

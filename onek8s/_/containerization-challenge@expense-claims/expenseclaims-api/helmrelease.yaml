@@ -1,0 +1,91 @@
+# Component expenseclaims-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: expenseclaims-api
+  labels:
+    app.kubernetes.io/name: expenseclaims-api
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-expense-claims
+  serviceAccountName: containerization-challenge-expense-claims-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-api
+      tag: 1.20261105.2123-refactor.210 # {"$imagepolicy": "containerization-challenge-expense-claims:expenseclaims-api:tag"}
+    podAnnotations:
+      containerizer.io/exceptions: file-uploads
+      containerizer.io/exception.file-uploads: ASP.NET Core buffers uploads larger than 64 KB to temporary files.
+    resources:
+      limits:
+        ephemeral-storage: 2Gi
+    env:
+    - name: ConnectionStrings__ExpenseClaims
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Receipts__RootPath
+      value: /data/expensereceipts
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    port: 8080
+    volumes:
+    - name: w0-logs
+      mountPath: /app/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-expensereceipts
+      mountPath: /data/expensereceipts
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w2-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: expenseclaims-api-dataprotection
+    - name: w3-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 1Gi
+    ingress:
+      enabled: true
+      host: expenseclaims-api-containerization-challenge-expense-claims.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    dataProtection:
+      enabled: true
+      keyId: baee1426-2895-5348-8c3c-f451fd9b0a1c
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__ExpenseClaims

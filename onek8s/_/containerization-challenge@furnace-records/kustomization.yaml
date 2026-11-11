@@ -4,8 +4,8 @@ namespace: containerization-challenge-furnace-records
 resources:
 - namespace.yaml
 - security.yaml
-- furnacerecords-api/k8s.yaml
-- furnacerecords-worker/k8s.yaml
+- furnacerecords-api/helmrelease.yaml
+- furnacerecords-worker/helmrelease.yaml
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api

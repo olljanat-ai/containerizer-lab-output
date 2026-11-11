@@ -1,0 +1,213 @@
+# Component controltower-carriergateway, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: controltower-carriergateway
+  labels:
+    app.kubernetes.io/name: controltower-carriergateway
+    app.kubernetes.io/part-of: containerization-challenge-control-tower
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-control-tower
+  serviceAccountName: containerization-challenge-control-tower-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-carriergateway:tag"}
+    env:
+    - name: Carriers__Sftp__NRDL__Host
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: host
+    - name: Carriers__Sftp__NRDL__Port
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: port
+    - name: Carriers__Sftp__NRDL__UserName
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: username
+    - name: Carriers__Sftp__NSFL__Host
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: host
+    - name: Carriers__Sftp__NSFL__Password
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: password
+    - name: Carriers__Sftp__NSFL__UserName
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: username
+    - name: Carriers__Sftp__OCNX__Host
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: host
+    - name: Carriers__Sftp__OCNX__UserName
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: username
+    - name: Carriers__Sftp__VNRL__Host
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: host
+    - name: Carriers__Sftp__VNRL__Password
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: password
+    - name: Carriers__Sftp__VNRL__Port
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: port
+    - name: Carriers__Sftp__VNRL__UserName
+      valueFrom:
+        secretKeyRef:
+          name: lab-sftp
+          key: username
+    - name: ConnectionStrings__RabbitMq
+      valueFrom:
+        secretKeyRef:
+          name: lab-rabbitmq
+          key: connection-string
+    - name: ConnectionStrings__ControlTower
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: CONTROLTOWER_LOG_DIR
+      value: /app/logs
+    - name: Carriers__Sftp__NRDL__PrivateKeyFile
+      value: /secrets/nrdl_rsa.pem
+    - name: Carriers__Sftp__OCNX__PrivateKeyFile
+      value: /secrets/ocnx_rsa.pem
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Gateway__WebhookUrls
+      value: http://+:8080
+    - name: Gateway__WorkFolder
+      value: /data/controltower/edi
+    - name: Carriers__Api__AFX__ClientSecret
+      valueFrom:
+        secretKeyRef:
+          name: controltower-carriergateway-secrets
+          key: Carriers__Api__AFX__ClientSecret
+          optional: true
+    - name: Carriers__Api__BALX__ApiKey
+      valueFrom:
+        secretKeyRef:
+          name: controltower-carriergateway-secrets
+          key: Carriers__Api__BALX__ApiKey
+          optional: true
+    - name: Carriers__Api__PRCL__ApiKey
+      valueFrom:
+        secretKeyRef:
+          name: controltower-carriergateway-secrets
+          key: Carriers__Api__PRCL__ApiKey
+          optional: true
+    - name: Carriers__Api__PRCL__WebhookSecret
+      valueFrom:
+        secretKeyRef:
+          name: controltower-carriergateway-secrets
+          key: Carriers__Api__PRCL__WebhookSecret
+          optional: true
+    port: 8080
+    volumes:
+    - name: w0-logs
+      mountPath: /app/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-edi
+      mountPath: /data/controltower/edi
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w2-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: controltower-carriergateway-dataprotection
+    - name: w3-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: secret-files
+      mountPath: /secrets
+      readOnly: true
+      secret:
+        secretName: controltower-carriergateway-files
+        optional: true
+        defaultMode: 288
+    ingress:
+      enabled: true
+      host: controltower-carriergateway-containerization-challenge-512c0b90.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,rabbitmq,sftp,http-apis,lab-sqlserver,lab-rabbitmq,lab-sftp
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 22
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+        - service: sftp
+          port: 2022
+          perApp: true
+    dataProtection:
+      enabled: true
+      keyId: 28ac2556-18c3-5cb2-9cb1-63253dc7c16f
+    externalSecrets:
+    - name: files
+      keys:
+      - nrdl_rsa.pem
+      - ocnx_rsa.pem
+    - name: secrets
+      keys:
+      - ConnectionStrings__ControlTower
+      - ConnectionStrings__RabbitMq
+      - Carriers__Api__AFX__ClientSecret
+      - Carriers__Api__BALX__ApiKey
+      - Carriers__Api__PRCL__ApiKey
+      - Carriers__Api__PRCL__WebhookSecret
+      - Carriers__Sftp__NSFL__Password
+      - Carriers__Sftp__VNRL__Password

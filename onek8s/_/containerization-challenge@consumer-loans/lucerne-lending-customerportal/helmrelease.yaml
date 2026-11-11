@@ -1,0 +1,84 @@
+# Component lucerne-lending-customerportal, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lucerne-lending-customerportal
+  labels:
+    app.kubernetes.io/name: lucerne-lending-customerportal
+    app.kubernetes.io/part-of: containerization-challenge-consumer-loans
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-consumer-loans
+  serviceAccountName: containerization-challenge-consumer-loans-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-consumer-loans:lucerne-lending-customerportal:tag"}
+    strategy: Recreate
+    env:
+    - name: ConnectionStrings__PortalIdentity
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: DataProtection__KeysFolder
+      value: /data/consumerloans/portal/keys
+    - name: NLog__variables__logDir
+      value: /data/logs/consumerloans/portal
+    port: 8080
+    probe:
+      type: tcpSocket
+    volumes:
+    - name: w0-logs
+      mountPath: /app/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-keys
+      mountPath: /data/consumerloans/portal/keys
+      persistentVolumeClaim:
+        size: 1Gi
+    - name: w2-portal
+      mountPath: /data/logs/consumerloans/portal
+      persistentVolumeClaim:
+        size: 1Gi
+    - name: w3-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: lucerne-lending-customerportal-containerization-challe-9dd739dd.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__PortalIdentity

@@ -5,7 +5,7 @@ resources:
 - namespace.yaml
 - security.yaml
 - lab/k8s.yaml
-- policychanges-api/k8s.yaml
+- policychanges-api/helmrelease.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api
     newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-policy-changes:policychanges-api:tag"}

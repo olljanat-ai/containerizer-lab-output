@@ -1,0 +1,97 @@
+# Component vanarsdel-gateway, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vanarsdel-gateway
+  labels:
+    app.kubernetes.io/name: vanarsdel-gateway
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-retail-backoffice
+  serviceAccountName: containerization-challenge-retail-backoffice-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-gateway:tag"}
+    env:
+    - name: ConnectionStrings__DefaultConnection
+      valueFrom:
+        secretKeyRef:
+          name: lab-rabbitmq
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: Serilog__WriteTo__1__Args__apiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-gateway-secrets
+          key: Serilog__WriteTo__1__Args__apiKey
+          optional: true
+    port: 8080
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: vanarsdel-gateway-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: vanarsdel-gateway-containerization-challenge-retail-backoffice.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 6379
+          protocol: TCP
+        - port: 6380
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 5341
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+    dataProtection:
+      enabled: true
+      keyId: c92f07de-4a67-5d0f-8adf-e6a4ea06a10c
+    externalSecrets:
+    - name: secrets
+      keys:
+      - Serilog__WriteTo__1__Args__apiKey

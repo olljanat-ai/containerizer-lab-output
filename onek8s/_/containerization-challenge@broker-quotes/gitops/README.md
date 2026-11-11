@@ -35,4 +35,7 @@ kubectl apply -f flux/git/image-automation.yaml   # optional
   It needs a deploy key with write access, so keep it separate from the read-only sync key if you
   can.
 
-No Helm chart is generated, so there is no `HelmRelease`: the app is plain Kustomize.
+Each component is a `HelmRelease` (`<component>/helmrelease.yaml`) of the shared chart
+`charts/containerizer-app` at the root of this repository, read from the same `GitRepository`; its
+`values` hold only what differs from the chart's defaults. helm-controller installs it with the
+namespace's reconciler ServiceAccount, like the `Kustomization`.

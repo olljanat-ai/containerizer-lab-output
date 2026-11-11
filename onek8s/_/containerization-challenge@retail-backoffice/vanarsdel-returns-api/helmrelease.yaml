@@ -1,0 +1,140 @@
+# Component vanarsdel-returns-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vanarsdel-returns-api
+  labels:
+    app.kubernetes.io/name: vanarsdel-returns-api
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-retail-backoffice
+  serviceAccountName: containerization-challenge-retail-backoffice-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-returns-api:tag"}
+    env:
+    - name: ConnectionStrings__Returns
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Psp__CertificatePath
+      value: /secrets/psp-merchant.pfx
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: Messaging__Password
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-returns-api-secrets
+          key: Messaging__Password
+          optional: true
+    - name: Returns__CarrierApiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-returns-api-secrets
+          key: Returns__CarrierApiKey
+          optional: true
+    - name: Returns__CarrierWebhookSecret
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-returns-api-secrets
+          key: Returns__CarrierWebhookSecret
+          optional: true
+    - name: Serilog__WriteTo__1__Args__apiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-returns-api-secrets
+          key: Serilog__WriteTo__1__Args__apiKey
+          optional: true
+    - name: ServiceIdentity__ClientSecret
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-returns-api-secrets
+          key: ServiceIdentity__ClientSecret
+          optional: true
+    port: 8080
+    probe:
+      type: tcpSocket
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: vanarsdel-returns-api-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: secret-files
+      mountPath: /secrets
+      readOnly: true
+      secret:
+        secretName: vanarsdel-returns-api-files
+        optional: true
+        defaultMode: 288
+    ingress:
+      enabled: true
+      host: vanarsdel-returns-api-containerization-challenge-retai-70d776d1.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,redis,rabbitmq,azure-service-bus,seq,http-apis,configured-ports,lab-sqlserver,lab-rabbitmq
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 6379
+          protocol: TCP
+        - port: 6380
+          protocol: TCP
+        - port: 5671
+          protocol: TCP
+        - port: 5672
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 5341
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+        - service: rabbitmq
+          port: 5672
+    dataProtection:
+      enabled: true
+      keyId: e7fe0106-bbb4-5ddc-b04f-2dae14f37026
+    externalSecrets:
+    - name: files
+      keys:
+      - psp-merchant.pfx
+    - name: secrets
+      keys:
+      - ConnectionStrings__Returns
+      - Messaging__Password
+      - Returns__CarrierApiKey
+      - Returns__CarrierWebhookSecret
+      - Serilog__WriteTo__1__Args__apiKey
+      - ServiceIdentity__ClientSecret

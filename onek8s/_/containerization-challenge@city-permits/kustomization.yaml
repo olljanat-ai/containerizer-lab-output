@@ -4,8 +4,8 @@ namespace: containerization-challenge-city-permits
 resources:
 - namespace.yaml
 - security.yaml
-- citypermits-inspections/k8s.yaml
-- citypermits-opendata/k8s.yaml
+- citypermits-inspections/helmrelease.yaml
+- citypermits-opendata/helmrelease.yaml
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections

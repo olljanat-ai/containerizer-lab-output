@@ -1,0 +1,80 @@
+# Component citypermits-inspections, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: citypermits-inspections
+  labels:
+    app.kubernetes.io/name: citypermits-inspections
+    app.kubernetes.io/part-of: containerization-challenge-city-permits
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-city-permits
+  serviceAccountName: containerization-challenge-city-permits-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-inspections:tag"}
+    strategy: Recreate
+    env:
+    - name: ConnectionStrings__Permits
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Kestrel__Endpoints__Http__Url
+      value: http://+:8080
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    port: 8080
+    probe:
+      type: tcpSocket
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: citypermits-inspections-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: citypermits-inspections-containerization-challenge-city-permits.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    dataProtection:
+      enabled: true
+      keyId: 82dd14b0-e9e0-5251-bd0a-c770cc49d1ad
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__Permits

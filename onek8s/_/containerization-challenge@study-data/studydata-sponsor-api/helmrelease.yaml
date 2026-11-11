@@ -1,0 +1,79 @@
+# Component studydata-sponsor-api, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: studydata-sponsor-api
+  labels:
+    app.kubernetes.io/name: studydata-sponsor-api
+    app.kubernetes.io/part-of: containerization-challenge-study-data
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-study-data
+  serviceAccountName: containerization-challenge-study-data-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-study-data:studydata-sponsor-api:tag"}
+    env:
+    - name: ConnectionStrings__StudyData
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: DOTNET_ROLL_FORWARD
+      value: Major
+    - name: Logging__LogFile
+      value: /data/studydata/logs/sponsor-.log
+    port: 8080
+    volumes:
+    - name: w0-logs
+      mountPath: /data/studydata/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: studydata-sponsor-api-dataprotection
+    - name: w2-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: studydata-sponsor-api-containerization-challenge-study-data.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    dataProtection:
+      enabled: true
+      keyId: c33df411-a45d-57f0-bdb1-28d9317386a8
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__StudyData

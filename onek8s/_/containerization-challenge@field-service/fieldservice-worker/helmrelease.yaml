@@ -1,0 +1,57 @@
+# Component fieldservice-worker, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fieldservice-worker
+  labels:
+    app.kubernetes.io/name: fieldservice-worker
+    app.kubernetes.io/part-of: containerization-challenge-field-service
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-field-service
+  serviceAccountName: containerization-challenge-field-service-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-field-service-refactor-192/fieldservice-worker
+      tag: 1.20261104.2110-refactor.192 # {"$imagepolicy": "containerization-challenge-field-service:fieldservice-worker:tag"}
+    env:
+    - name: ConnectionStrings__FieldService
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: DOTNET_ROLL_FORWARD
+      value: Major
+    volumes:
+    - name: w0-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__FieldService

@@ -5,19 +5,19 @@ resources:
 - namespace.yaml
 - security.yaml
 - lab/k8s.yaml
-- vanarsdel-allocation-api/k8s.yaml
-- vanarsdel-backoffice/k8s.yaml
-- vanarsdel-catalog-api/k8s.yaml
-- vanarsdel-customers-api/k8s.yaml
-- vanarsdel-gateway/k8s.yaml
-- vanarsdel-inventory-api/k8s.yaml
-- vanarsdel-notifications/k8s.yaml
-- vanarsdel-orders-api/k8s.yaml
-- vanarsdel-pricing-api/k8s.yaml
-- vanarsdel-returns-api/k8s.yaml
-- vanarsdel-scheduler/k8s.yaml
-- vanarsdel-storemanager/k8s.yaml
-- vanarsdel-storeops-api/k8s.yaml
+- vanarsdel-allocation-api/helmrelease.yaml
+- vanarsdel-backoffice/helmrelease.yaml
+- vanarsdel-catalog-api/helmrelease.yaml
+- vanarsdel-customers-api/helmrelease.yaml
+- vanarsdel-gateway/helmrelease.yaml
+- vanarsdel-inventory-api/helmrelease.yaml
+- vanarsdel-notifications/helmrelease.yaml
+- vanarsdel-orders-api/helmrelease.yaml
+- vanarsdel-pricing-api/helmrelease.yaml
+- vanarsdel-returns-api/helmrelease.yaml
+- vanarsdel-scheduler/helmrelease.yaml
+- vanarsdel-storemanager/helmrelease.yaml
+- vanarsdel-storeops-api/helmrelease.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api
     newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-allocation-api:tag"}

@@ -1,0 +1,92 @@
+# Component humongous-workbench, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: humongous-workbench
+  labels:
+    app.kubernetes.io/name: humongous-workbench
+    app.kubernetes.io/part-of: containerization-challenge-broker-quotes
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-broker-quotes
+  serviceAccountName: containerization-challenge-broker-quotes-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-broker-quotes:humongous-workbench:tag"}
+    env:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: DOTNET_ROLL_FORWARD
+      value: Major
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: Oidc__ClientSecret
+      valueFrom:
+        secretKeyRef:
+          name: humongous-workbench-secrets
+          key: Oidc__ClientSecret
+          optional: true
+    - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+      value: 'true'
+    - name: Oidc__Authority
+      value: https://containerizer-idp.sandbox.lab/oauth2/token
+    - name: Oidc__ClientId
+      value: containerization-challenge-broker-quotes--humongous-workbench
+    port: 8080
+    volumes:
+    - name: w0-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: humongous-workbench-dataprotection
+    - name: w1-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: humongous-workbench-containerization-challenge-broker-quotes.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: http-apis
+      egress:
+        publicPorts:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        extra:
+        - to:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: kube-system
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/name: traefik
+          ports:
+          - port: 8443
+            protocol: TCP
+    dataProtection:
+      enabled: true
+      keyId: e9bb91ce-1264-5c28-9044-44ce83a1949d
+    externalSecrets:
+    - name: secrets
+      keys:
+      - Oidc__ClientSecret

@@ -1,0 +1,83 @@
+# Component vanarsdel-storemanager, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vanarsdel-storemanager
+  labels:
+    app.kubernetes.io/name: vanarsdel-storemanager
+    app.kubernetes.io/part-of: containerization-challenge-retail-backoffice
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-retail-backoffice
+  serviceAccountName: containerization-challenge-retail-backoffice-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager
+      tag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-retail-backoffice:vanarsdel-storemanager:tag"}
+    env:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: ASPNETCORE_URLS
+      value: http://+:8080
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    - name: Serilog__WriteTo__1__Args__apiKey
+      valueFrom:
+        secretKeyRef:
+          name: vanarsdel-storemanager-secrets
+          key: Serilog__WriteTo__1__Args__apiKey
+          optional: true
+    port: 8080
+    volumes:
+    - name: w0-logs
+      mountPath: /app/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-wwwroot
+      mountPath: /app/wwwroot
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w2-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: vanarsdel-storemanager-dataprotection
+    - name: w3-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: vanarsdel-storemanager-containerization-challenge-reta-184cba0d.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: seq,configured-ports
+      egress:
+        publicPorts:
+        - port: 5341
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+    dataProtection:
+      enabled: true
+      keyId: 920cd74a-0961-54ca-b176-e92150e53186
+    externalSecrets:
+    - name: secrets
+      keys:
+      - Serilog__WriteTo__1__Args__apiKey

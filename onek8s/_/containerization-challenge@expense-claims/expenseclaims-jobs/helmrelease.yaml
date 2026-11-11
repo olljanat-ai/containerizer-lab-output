@@ -1,0 +1,109 @@
+# Component expenseclaims-jobs, from the shared chart charts/containerizer-app (values below override its values.yaml)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: expenseclaims-jobs
+  labels:
+    app.kubernetes.io/name: expenseclaims-jobs
+    app.kubernetes.io/part-of: containerization-challenge-expense-claims
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./charts/containerizer-app
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: containerization-challenge-expense-claims
+  serviceAccountName: containerization-challenge-expense-claims-reconciler
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: localhost:5000/sandbox/containerization-challenge-expense-claims/expenseclaims-jobs
+      tag: 1.20261105.2123-refactor.210 # {"$imagepolicy": "containerization-challenge-expense-claims:expenseclaims-jobs:tag"}
+    env:
+    - name: ConnectionStrings__ExpenseClaims
+      valueFrom:
+        secretKeyRef:
+          name: lab-sqlserver
+          key: connection-string
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_HTTP_PORTS
+      value: '8080'
+    - name: Bank__OutboundFolder
+      value: /data/interfaces/bank/outbound
+    - name: CardImport__InboundFolder
+      value: /data/interfaces/cards/inbound
+    - name: DOTNET_ENVIRONMENT
+      value: Production
+    - name: HrImport__InboundFolder
+      value: /data/interfaces/hr/inbound
+    - name: Serilog__WriteTo__0__Name
+      value: Console
+    port: 8080
+    volumes:
+    - name: w0-logs
+      mountPath: /app/logs
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w1-outbound
+      mountPath: /data/interfaces/bank/outbound
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w2-inbound
+      mountPath: /data/interfaces/cards/inbound
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w3-inbound
+      mountPath: /data/interfaces/hr/inbound
+      emptyDir:
+        sizeLimit: 256Mi
+    - name: w4-dataprotection-keys
+      mountPath: /home/app/.aspnet/DataProtection-Keys
+      readOnly: true
+      secret:
+        secretName: expenseclaims-jobs-dataprotection
+    - name: w5-tmp
+      mountPath: /tmp
+      emptyDir:
+        sizeLimit: 256Mi
+    ingress:
+      enabled: true
+      host: expenseclaims-jobs-containerization-challenge-expense-claims.sandbox.lab
+    networkPolicy:
+      annotations:
+        containerizer.io/egress: sql-server,smtp,http-apis,configured-ports,lab-sqlserver
+      egress:
+        publicPorts:
+        - port: 1433
+          protocol: TCP
+        - port: 25
+          protocol: TCP
+        - port: 465
+          protocol: TCP
+        - port: 587
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+        - port: 7048
+          protocol: TCP
+        - port: 8080
+          protocol: TCP
+        lab:
+        - service: sqlserver
+          port: 1433
+    dataProtection:
+      enabled: true
+      keyId: 0c64e217-c5c4-598d-ac22-b5fe0ddd67cd
+    externalSecrets:
+    - name: secrets
+      keys:
+      - ConnectionStrings__ExpenseClaims

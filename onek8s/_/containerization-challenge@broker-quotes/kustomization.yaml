@@ -4,9 +4,9 @@ namespace: containerization-challenge-broker-quotes
 resources:
 - namespace.yaml
 - security.yaml
-- humongous-brokerportal/k8s.yaml
-- humongous-documents/k8s.yaml
-- humongous-workbench/k8s.yaml
+- humongous-brokerportal/helmrelease.yaml
+- humongous-documents/helmrelease.yaml
+- humongous-workbench/helmrelease.yaml
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal
