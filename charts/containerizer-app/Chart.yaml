@@ -1,0 +1,8 @@
+apiVersion: v2
+name: containerizer-app
+description: >-
+  Shared chart for one component of a containerized application: hardened workload
+  (Deployment or CronJob), own ServiceAccount, least-privilege NetworkPolicy, Service,
+  Ingress and External Secrets Operator secrets.
+type: application
+version: 0.1.0

@@ -1,0 +1,29 @@
+{{- if and .Values.port .Values.service.enabled .Values.ingress.enabled }}
+{{- $host := required "ingress.host is required" .Values.ingress.host }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "containerizer-app.name" . }}
+  labels:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+  annotations:
+    containerizer.io/url: https://{{ $host }}/
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  tls:
+  - hosts:
+    - {{ $host }}
+  rules:
+  - host: {{ $host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "containerizer-app.name" . }}
+            port:
+              name: http
+{{- end }}

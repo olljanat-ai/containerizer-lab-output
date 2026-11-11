@@ -1,0 +1,136 @@
+# Component name used for every object and the app.kubernetes.io/name label.
+# Defaults to the release name.
+nameOverride: ""
+# app.kubernetes.io/part-of label shared by all components of one application.
+# Defaults to the release namespace.
+partOf: ""
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# Deployment (long-running) or CronJob (scheduled).
+kind: Deployment
+replicas: 1
+# RollingUpdate, or Recreate when two pods must not run at the same time.
+strategy: RollingUpdate
+cronJob:
+  schedule: ""
+  concurrencyPolicy: Forbid
+  restartPolicy: OnFailure
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  fsGroup: 1654
+  seccompProfile:
+    type: RuntimeDefault
+  fsGroupChangePolicy: OnRootMismatch
+  runAsUser: 1654
+  runAsGroup: 1654
+
+securityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+    - ALL
+  privileged: false
+  seccompProfile:
+    type: RuntimeDefault
+  appArmorProfile:
+    type: RuntimeDefault
+
+# Container environment, as in a pod spec.
+env: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+    ephemeral-storage: 64Mi
+  limits:
+    memory: 512Mi
+    ephemeral-storage: 1Gi
+
+# Container port, named "http". Leave empty for components that serve nothing (workers):
+# they then get no probes, Service, Ingress or ingress rule.
+port: null
+
+# Probe on the http port: httpGet (with path) or tcpSocket.
+probe:
+  type: httpGet
+  path: /health
+  readiness:
+    periodSeconds: 10
+  liveness:
+    periodSeconds: 20
+    initialDelaySeconds: 20
+  startup:
+    periodSeconds: 5
+    failureThreshold: 30
+
+# Volumes and where they are mounted. Each entry has name, mountPath, optional readOnly
+# and exactly one source: emptyDir, secret, or persistentVolumeClaim. A
+# persistentVolumeClaim entry ({size, accessModes}) creates PVC <name>-<volume name>.
+volumes: []
+
+service:
+  enabled: true
+  port: 80
+
+ingress:
+  enabled: false
+  host: ""
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+
+networkPolicy:
+  annotations: {}
+  # Accept connections on the http port from every namespace (ingress controller, other apps).
+  # Pods of the same application are always allowed.
+  ingressFromAllNamespaces: true
+  egress:
+    # Ports reachable on any address outside the cluster (cloud metadata endpoints excluded)
+    # and in any namespace: [{port, protocol}]
+    publicPorts: []
+    blockedCidrs:
+      ipv4:
+      - 169.254.169.254/32
+      - 169.254.170.2/32
+      - 100.100.100.200/32
+      ipv6:
+      - fd00:ec2::254/128
+    # Sandbox lab services in namespace containerizer-lab: [{service, port, protocol, perApp}].
+    # perApp selects only the lab instance of this application.
+    lab: []
+    labNamespace: containerizer-lab
+    # Further egress rules, as in a NetworkPolicy.
+    extra: []
+
+# ASP.NET Core Data Protection key ring, generated in the cluster once (no secret store):
+# Secret <name>-dataprotection with one key. Mount it with a volumes entry.
+dataProtection:
+  enabled: false
+  keyId: ""
+  creationDate: "2026-01-01T00:00:00Z"
+  expirationDate: "2126-01-01T00:00:00Z"
+
+# Secrets read from the secret store, never from Git: one ExternalSecret per entry,
+# Secret <name>-<entry name>, each key read from property <key> of remote key
+# <part-of>--<name> (or remoteKey).
+externalSecrets: []
+#  - name: secrets
+#    keys:
+#    - ConnectionStrings__Default
+secretStore:
+  kind: ClusterSecretStore
+  name: app-secrets
+  refreshInterval: 1h
+  remoteKey: ""

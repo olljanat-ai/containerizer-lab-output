@@ -1,0 +1,17 @@
+{{- if eq .Values.kind "Deployment" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "containerizer-app.name" . }}
+  labels:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  strategy:
+    type: {{ .Values.strategy }}
+  selector:
+    matchLabels:
+      {{- include "containerizer-app.labels" . | nindent 6 }}
+  template:
+    {{- include "containerizer-app.podTemplate" . | nindent 4 }}
+{{- end }}

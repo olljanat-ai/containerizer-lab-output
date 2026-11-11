@@ -1,0 +1,56 @@
+{{- if .Values.dataProtection.enabled }}
+{{- $name := printf "%s-dataprotection" (include "containerizer-app.name" .) }}
+{{- $keyId := required "dataProtection.keyId is required" .Values.dataProtection.keyId }}
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+spec:
+  length: 64
+  digits: 10
+  symbols: 0
+  noUpper: false
+  allowRepeat: true
+---
+# ASP.NET Core Data Protection key, generated in the cluster once (no secret store); replace with your own key ring or PersistKeysTo* in code if you prefer
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+spec:
+  refreshPolicy: CreatedOnce
+  refreshInterval: '0'
+  target:
+    name: {{ $name }}
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      engineVersion: v2
+      data:
+        key-{{ $keyId }}.xml: |
+          <?xml version="1.0" encoding="utf-8"?>
+          <key id="{{ $keyId }}" version="1">
+            <creationDate>{{ .Values.dataProtection.creationDate }}</creationDate>
+            <activationDate>{{ .Values.dataProtection.creationDate }}</activationDate>
+            <expirationDate>{{ .Values.dataProtection.expirationDate }}</expirationDate>
+            <descriptor deserializerType="Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection">
+              <descriptor>
+                <encryption algorithm="AES_256_CBC" />
+                <validation algorithm="HMACSHA256" />
+                <masterKey p4:requiresEncryption="true" xmlns:p4="http://schemas.asp.net/2015/03/dataProtection">
+                  <value>{{ "{{" }} .password | b64enc {{ "}}" }}</value>
+                </masterKey>
+              </descriptor>
+            </descriptor>
+          </key>
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: Password
+        name: {{ $name }}
+{{- end }}

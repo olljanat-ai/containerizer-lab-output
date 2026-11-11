@@ -1,0 +1,15 @@
+{{- if and .Values.port .Values.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "containerizer-app.name" . }}
+  labels:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    targetPort: http
+{{- end }}

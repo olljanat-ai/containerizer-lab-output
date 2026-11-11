@@ -1,0 +1,17 @@
+{{- range .Values.volumes }}
+{{- if .persistentVolumeClaim }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "containerizer-app.name" $ }}-{{ .name }}
+  labels:
+    {{- include "containerizer-app.labels" $ | nindent 4 }}
+spec:
+  accessModes:
+    {{- toYaml (default (list "ReadWriteOnce") .persistentVolumeClaim.accessModes) | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ required "persistentVolumeClaim.size is required" .persistentVolumeClaim.size }}
+{{- end }}
+{{- end }}

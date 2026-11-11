@@ -1,0 +1,15 @@
+{{- if eq .Values.kind "CronJob" }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "containerizer-app.name" . }}
+  labels:
+    {{- include "containerizer-app.labels" . | nindent 4 }}
+spec:
+  schedule: {{ required "cronJob.schedule is required" .Values.cronJob.schedule | quote }}
+  concurrencyPolicy: {{ .Values.cronJob.concurrencyPolicy }}
+  jobTemplate:
+    spec:
+      template:
+        {{- include "containerizer-app.podTemplate" . | nindent 8 }}
+{{- end }}
