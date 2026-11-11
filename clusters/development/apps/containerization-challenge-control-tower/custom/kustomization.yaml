@@ -1,0 +1,13 @@
+# containerization-challenge-control-tower in cluster "development": follows every new build of the app folder.
+# Pin an image with
+#   images: [{name: <image>, newTag: <tag>}]
+# Containerizer writes this file once and never rewrites it: it is yours. Other per-cluster settings go
+# here too, as kustomize patches, e.g. replicas of a Deployment or an Ingress host:
+#   patches:
+#   - target: {kind: Deployment, name: <component>}
+#     patch: '[{"op": "replace", "path": "/spec/replicas", "value": 3}]'
+# and, for a component of the shared Helm chart, its values (the hardening cannot be changed):
+#   - target: {group: helm.toolkit.fluxcd.io, kind: HelmRelease, name: <component>}
+#     patch: '[{"op": "add", "path": "/spec/values/objects", "value": {...}}]'
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component

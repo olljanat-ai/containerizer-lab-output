@@ -1,0 +1,11 @@
+# Cluster "development". Containerizer writes this file once and never rewrites it: it is yours.
+#
+# deploy: all     every app in this repository, new ones as soon as a scan writes them
+#         listed  only the app namespaces under `apps` (see the namespaces in sandbox/namespaces.txt)
+deploy: all
+apps: []
+#  - containerization-challenge-shop
+
+# The registry this cluster pulls from, e.g. registry.example.com/apps: images become
+# <registry>/<namespace>/<component> (where the generated CI pipelines push). Empty: the images as built.
+registry: ""
