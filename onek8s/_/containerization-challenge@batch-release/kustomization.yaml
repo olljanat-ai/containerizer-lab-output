@@ -8,4 +8,4 @@ resources:
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-batch-release:batchrelease-api:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-batch-release:batchrelease-api:tag"}

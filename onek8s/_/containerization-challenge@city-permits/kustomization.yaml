@@ -9,6 +9,6 @@ resources:
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-inspections:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-inspections:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-opendata:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-city-permits:citypermits-opendata:tag"}

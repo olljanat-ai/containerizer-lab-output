@@ -50,7 +50,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "citypermits-inspections/k8s.yaml: Deployment/citypermits-inspections/citypermits-inspections",
-          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261107.200 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261114.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -58,7 +58,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[02:09:04 WRN] No XML encryptor configured. Key {4d665abb-a308-43c7-8a34-590d28e2dc5d} may be persisted to storage in unencrypted form.\n[02:09:04 WRN] Overriding address(es) 'http://+:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[02:09:04 INF] Now listening on: http://[::]:8080\n[02:09:04 INF] Application started. Press Ctrl+C to shut down.\n[02:09:04 INF] Hosting environment: Production\n[02:09:04 INF] Content root path: /app/\n[02:09:05 INF] HTTP GET /index.html responded 200 in 151.8989 ms\n"
+        "log": "[02:04:34 WRN] No XML encryptor configured. Key {99f6b5bb-78e3-4fc8-8b3b-5dbc6ba5d046} may be persisted to storage in unencrypted form.\n[02:04:34 WRN] Overriding address(es) 'http://+:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[02:04:34 INF] Now listening on: http://[::]:8080\n[02:04:34 INF] Application started. Press Ctrl+C to shut down.\n[02:04:34 INF] Hosting environment: Production\n[02:04:34 INF] Content root path: /app/\n[02:04:37 INF] HTTP GET /index.html responded 200 in 61.4166 ms\n"
       }
     },
     {
@@ -81,7 +81,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "citypermits-opendata/k8s.yaml: Deployment/citypermits-opendata/citypermits-opendata",
-          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261107.200 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261114.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -89,7 +89,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[02:10:00 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[02:10:00 INF] Now listening on: http://[::]:8080\n[02:10:00 INF] Application started. Press Ctrl+C to shut down.\n[02:10:00 INF] Hosting environment: Production\n[02:10:00 INF] Content root path: /app\n[02:10:03 INF] HTTP GET /health responded 200 in 109.7203 ms\n"
+        "log": "[02:04:59 WRN] Overriding address(es) 'http://*:8080'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.\n[02:04:59 INF] Now listening on: http://[::]:8080\n[02:04:59 INF] Application started. Press Ctrl+C to shut down.\n[02:04:59 INF] Hosting environment: Production\n[02:04:59 INF] Content root path: /app\n[02:05:03 INF] HTTP GET /health responded 200 in 106.1384 ms\n"
       }
     }
   ],

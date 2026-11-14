@@ -11,10 +11,10 @@ resources:
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-carriergateway:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-carriergateway:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-events:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-events:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-telematics:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-telematics:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-tower-api:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-control-tower:controltower-tower-api:tag"}

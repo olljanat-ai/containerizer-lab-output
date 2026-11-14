@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: freightrates-api
-        image: localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261107.200
+        image: localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261114.200
         imagePullPolicy: IfNotPresent
         env:
         - name: ConnectionStrings__FreightRates

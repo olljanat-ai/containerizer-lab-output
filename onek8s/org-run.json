@@ -3,8 +3,8 @@
     "provider": "github",
     "org": "onek8s",
     "registry": "localhost:5000/sandbox",
-    "tag": "1.20261107.200",
-    "started": "2026-11-07T02:00:30+00:00",
+    "tag": "1.20261114.200",
+    "started": "2026-11-14T02:00:39+00:00",
     "stale_days": 183,
     "verify": false,
     "gate": true
@@ -237,7 +237,7 @@
         {
           "component": "BatchRelease.Api",
           "folder": "batchrelease-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-batch-release/batchrelease-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -250,7 +250,7 @@
         {
           "component": "Humongous.BrokerPortal",
           "folder": "humongous-brokerportal",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-brokerportal:1.20261114.200",
           "rating": "A",
           "verdict": "info",
           "role": "web",
@@ -263,7 +263,7 @@
         {
           "component": "Humongous.Documents",
           "folder": "humongous-documents",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-documents:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -276,7 +276,7 @@
         {
           "component": "Humongous.Workbench",
           "folder": "humongous-workbench",
-          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-broker-quotes/humongous-workbench:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -289,7 +289,7 @@
         {
           "component": "CityPermits.Inspections",
           "folder": "citypermits-inspections",
-          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-inspections:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -302,7 +302,7 @@
         {
           "component": "CityPermits.OpenData",
           "folder": "citypermits-opendata",
-          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-city-permits/citypermits-opendata:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -315,7 +315,7 @@
         {
           "component": "Lucerne.Lending.CustomerPortal",
           "folder": "lucerne-lending-customerportal",
-          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -328,7 +328,7 @@
         {
           "component": "Lucerne.Lending.Documents",
           "folder": "lucerne-lending-documents",
-          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -341,7 +341,7 @@
         {
           "component": "ControlTower.CarrierGateway",
           "folder": "controltower-carriergateway",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-carriergateway:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -354,7 +354,7 @@
         {
           "component": "ControlTower.Events",
           "folder": "controltower-events",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-events:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -367,7 +367,7 @@
         {
           "component": "ControlTower.Telematics",
           "folder": "controltower-telematics",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-telematics:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -380,7 +380,7 @@
         {
           "component": "ControlTower.Tower.Api",
           "folder": "controltower-tower-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-control-tower/controltower-tower-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -458,7 +458,7 @@
         {
           "component": "FreightRates.Api",
           "folder": "freightrates-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-freight-rates/freightrates-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -471,7 +471,7 @@
         {
           "component": "FurnaceRecords.Api",
           "folder": "furnacerecords-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -484,7 +484,7 @@
         {
           "component": "FurnaceRecords.Worker",
           "folder": "furnacerecords-worker",
-          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -510,7 +510,7 @@
         {
           "component": "PolicyChanges.Api",
           "folder": "policychanges-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-policy-changes/policychanges-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -523,7 +523,7 @@
         {
           "component": "VanArsdel.Allocation.Api",
           "folder": "vanarsdel-allocation-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-allocation-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -536,7 +536,7 @@
         {
           "component": "VanArsdel.BackOffice",
           "folder": "vanarsdel-backoffice",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-backoffice:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -549,7 +549,7 @@
         {
           "component": "VanArsdel.Catalog.Api",
           "folder": "vanarsdel-catalog-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-catalog-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -562,7 +562,7 @@
         {
           "component": "VanArsdel.Customers.Api",
           "folder": "vanarsdel-customers-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-customers-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -575,7 +575,7 @@
         {
           "component": "VanArsdel.Gateway",
           "folder": "vanarsdel-gateway",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-gateway:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -588,7 +588,7 @@
         {
           "component": "VanArsdel.Inventory.Api",
           "folder": "vanarsdel-inventory-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-inventory-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -601,7 +601,7 @@
         {
           "component": "VanArsdel.Notifications",
           "folder": "vanarsdel-notifications",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-notifications:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -614,7 +614,7 @@
         {
           "component": "VanArsdel.Orders.Api",
           "folder": "vanarsdel-orders-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-orders-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -627,7 +627,7 @@
         {
           "component": "VanArsdel.Pricing.Api",
           "folder": "vanarsdel-pricing-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-pricing-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -640,7 +640,7 @@
         {
           "component": "VanArsdel.Returns.Api",
           "folder": "vanarsdel-returns-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-returns-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -653,7 +653,7 @@
         {
           "component": "VanArsdel.Scheduler",
           "folder": "vanarsdel-scheduler",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-scheduler:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "worker",
@@ -666,7 +666,7 @@
         {
           "component": "VanArsdel.StoreManager",
           "folder": "vanarsdel-storemanager",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storemanager:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -679,7 +679,7 @@
         {
           "component": "VanArsdel.StoreOps.Api",
           "folder": "vanarsdel-storeops-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-retail-backoffice/vanarsdel-storeops-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -692,7 +692,7 @@
         {
           "component": "StudyData.Sponsor.Api",
           "folder": "studydata-sponsor-api",
-          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261107.200",
+          "image": "localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261114.200",
           "rating": "A",
           "verdict": "config",
           "role": "web",
@@ -1148,9 +1148,9 @@
           "reason": "rated D (rewrite)"
         }
       ],
-      "processed_at": "2026-11-07T02:00:34+00:00",
+      "processed_at": "2026-11-14T02:00:46+00:00",
       "overridden": [],
-      "seconds": 2368.0,
+      "seconds": 1716.2,
       "source_key": "",
       "dev_database": {},
       "lab_services": {

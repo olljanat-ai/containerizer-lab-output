@@ -50,7 +50,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "lucerne-lending-customerportal/k8s.yaml: Deployment/lucerne-lending-customerportal/lucerne-lending-customerportal",
-          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261107.200 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-customerportal:1.20261114.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -87,7 +87,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "lucerne-lending-documents/k8s.yaml: Deployment/lucerne-lending-documents/lucerne-lending-documents",
-          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261107.200 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-consumer-loans/lucerne-lending-documents:1.20261114.200 is not pinned to a digest"
         }
       ],
       "scans": [],

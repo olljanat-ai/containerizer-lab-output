@@ -5,7 +5,7 @@ apiVersion: containerizer.eu/v1
 kind: Connectivity
 application: containerization-challenge-freight-rates
 namespace: containerization-challenge-freight-rates
-generatedAt: '2026-11-07T02:22:22Z'
+generatedAt: '2026-11-14T02:12:50Z'
 observed: false
 note: 'Approved destinations are documented for the real environment: use them (FQDN, port, protocol) for its firewall rules.
   Approval opens nothing in the sandbox: it stays isolated, its NetworkPolicies allow only what was inferred and confirmed

@@ -9,6 +9,6 @@ resources:
 - lab/k8s.yaml
 images:
   - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-api
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-api:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-api:tag"}
   - name: localhost:5000/sandbox/containerization-challenge-furnace-records/furnacerecords-worker
-    newTag: 1.20261107.200 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-worker:tag"}
+    newTag: 1.20261114.200 # {"$imagepolicy": "containerization-challenge-furnace-records:furnacerecords-worker:tag"}

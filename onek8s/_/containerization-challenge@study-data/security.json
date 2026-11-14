@@ -32,7 +32,7 @@
           "check": "image-digest",
           "severity": "info",
           "target": "studydata-sponsor-api/k8s.yaml: Deployment/studydata-sponsor-api/studydata-sponsor-api",
-          "message": "image localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261107.200 is not pinned to a digest"
+          "message": "image localhost:5000/sandbox/containerization-challenge-study-data/studydata-sponsor-api:1.20261114.200 is not pinned to a digest"
         }
       ],
       "scans": [],
@@ -40,7 +40,7 @@
         "status": "ok",
         "http": 200,
         "errors": [],
-        "log": "[02:39:39 INF] User profile is available. Using '/home/app/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.\n[02:39:39 INF] Creating key {6f1a9274-c265-4466-acee-b692dc98185a} with creation date 2026-11-07 02:39:39Z, activation date 2026-11-07 02:39:39Z, and expiration date 2027-02-05 02:39:39Z.\n[02:39:39 WRN] No XML encryptor configured. Key {6f1a9274-c265-4466-acee-b692dc98185a} may be persisted to storage in unencrypted form.\n[02:39:39 INF] Writing data to file '/home/app/.aspnet/DataProtection-Keys/key-6f1a9274-c265-4466-acee-b692dc98185a.xml'.\n[02:39:39 INF] Now listening on: http://[::]:8080\n[02:39:39 INF] Application started. Press Ctrl+C to shut down.\n[02:39:39 INF] Hosting environment: Production\n[02:39:39 INF] Content root path: /app\n[02:39:42 INF] Request starting HTTP/1.1 GET http://127.0.0.1:58609/health - null null\n[02:39:42 INF] Executing endpoint 'HTTP: GET /health'\n[02:39:42 INF] Setting HTTP status code 200.\n[02:39:42 INF] Writing value of type '<>f__AnonymousType0`1' as Json.\n[02:39:42 INF] Executed endpoint 'HTTP: GET /health'\n[02:39:42 INF] HTTP GET /health responded 200 in 87.3993 ms\n[02:39:42 INF] Request finished HTTP/1.1 GET http://127.0.0.1:58609/health - 200 null application/json; charset=utf-8 149.8514ms\n"
+        "log": "[02:29:00 INF] User profile is available. Using '/home/app/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.\n[02:29:00 INF] Creating key {38afae8a-6b6c-4f87-bb94-28b4f5647aef} with creation date 2026-11-14 02:29:00Z, activation date 2026-11-14 02:29:00Z, and expiration date 2027-02-12 02:29:00Z.\n[02:29:00 WRN] No XML encryptor configured. Key {38afae8a-6b6c-4f87-bb94-28b4f5647aef} may be persisted to storage in unencrypted form.\n[02:29:00 INF] Writing data to file '/home/app/.aspnet/DataProtection-Keys/key-38afae8a-6b6c-4f87-bb94-28b4f5647aef.xml'.\n[02:29:00 INF] Now listening on: http://[::]:8080\n[02:29:00 INF] Application started. Press Ctrl+C to shut down.\n[02:29:00 INF] Hosting environment: Production\n[02:29:00 INF] Content root path: /app\n[02:29:03 INF] Request starting HTTP/1.1 GET http://127.0.0.1:34435/health - null null\n[02:29:03 INF] Executing endpoint 'HTTP: GET /health'\n[02:29:03 INF] Setting HTTP status code 200.\n[02:29:03 INF] Writing value of type '<>f__AnonymousType0`1' as Json.\n[02:29:03 INF] Executed endpoint 'HTTP: GET /health'\n[02:29:03 INF] HTTP GET /health responded 200 in 72.2923 ms\n[02:29:03 INF] Request finished HTTP/1.1 GET http://127.0.0.1:34435/health - 200 null application/json; charset=utf-8 134.71ms\n"
       }
     }
   ],
